@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A Service Finding Icons on Web Sites.">
+
+    <title>The Icon Finder</title>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
+    <link rel="stylesheet" href="./assets/main-min.css">
+
+    <meta property="og:title"       content="The Icon Finder" />
+    <meta property="og:description" content="A Service Finding Icons on Web Sites." />
+    <meta property="og:image"       content="http://icons.better-idea.org/apple-touch-icon.png" />
+
+    <link rel="icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  </head>
+
+  <body>
+    <div id="layout">
+
+      <div id="main">
+        <div class="header">
+          <div class="title">
+            <h1><a href="/" class="homelink">The Icon Finder
+                <img class="logo" src="./assets/icon.svg" alt='Site logo'></a>
+            </h1>
+          </div>
+          <h2>A Service Finding Icons on Web Sites.</h2>
+        </div>
+
+        <div class="content">
+          <h2 class="content-subhead">What Is This About?</h2>
+          <p>
+          Web sites used to have a <code><a href="http://en.wikipedia.org/wiki/Favicon">favicon.ico</a></code> &dash; or not.
+          With the introduction of the <code><a href="https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html">apple-touch-icon.png</a></code> finding “the” icon for a site became more complicated.
+          This service finds all those icons and sorts them by size.
+          </p>
+
+          <h2 class="content-subhead">Find Icons</h2>
+
+          <form action="/icons#result" method="GET" class="pure-form pure-g">
+            <div class="pure-u-1 pure-u-sm-3-5 pure-u-lg-3-5 pure-u-xl-3-5">
+              <div class="lrpad">
+                <input name="url" class="pure-input-1" type="text" placeholder="Web Site" autocomplete="off" autocorrect="off"
+                autocapitalize="off" spellcheck="false">
+              </div>
+            </div>
+            <div class="pure-u-1 pure-u-sm-1-5 pure-u-lg-1-5 pure-u-xl-1-5">
+              <div class="lrpad">
+                <button type="submit" class="pure-button pure-button-primary pure-input-1">Go</button>
+              </div>
+            </div>
+          </form>
+          <div class="example">
+            Examples: 
+            <a href="/icons?url=github.com#result">github.com</a>,
+            <a href="/icons?url=instagram.com#result">instagram.com</a>
+          </div>
+
+          <h2 class="content-subhead">HTTP API</h2>
+          <p>
+          There is an API call at
+          <code><a href="/api/icons">http://icons.better-idea.org/<wbr>api/icons</a></code>
+          for programmatic use.
+          This call supports both listing all icons and redirection to the largest icon.
+          </p>
+
+          <h3>Example: All Icons</h3>
+          <p>
+          <code>
+            GET <a href="/api/icons?url=stackoverflow.com">http://icons.better-idea.org/<wbr>api/icons?<wbr>url=stackoverflow.com</a>
+          </code>
+          </p>
+
+          <p>
+          <script src="https://gist.github.com/mat/926b80601c624b0db925.js?file=icons.json"></script>
+          </p>
+
+          <h3>Example: Redirect</h3>
+          For automatic redirection to the largest icon append the <code>i_am_feeling_lucky=yes</code> parameter.
+          <p>
+          <code>
+            GET <a href="/api/icons?url=stackoverflow.com&amp;i_am_feeling_lucky=yes">
+              http://icons.better-idea.org/<wbr>api/icons?<wbr>url=stackoverflow.com<wbr>&amp;i_am_feeling_lucky=yes</a>
+          </code>
+          </p>
+
+          <h3>Errors</h3>
+          Errors are returned with status <code>404</code> and an <code>error</code> field in the response.
+          <p>
+          <code>
+            GET <a href="/api/icons?url=broken-example.com">
+              http://icons.better-idea.org/<wbr>api/icons?<wbr>url=broken-example.com</a>
+          </code>
+          </p>
+
+          <p>
+          <script src="https://gist.github.com/mat/926b80601c624b0db925.js?file=error.json"></script>
+          </p>
+
+          <h2 class="content-subhead">Command Line Tool</h2>
+          <p>
+          If you want to run this locally head over to <a href="https://github.com/mat/besticon">besticon on GitHub</a> where you can find
+          source code and instructions on how to install this tool as standalone command line binary.
+          </p>
+
+          <h2 class="content-subhead">Acknowledgments</h2>
+          Fortunately this site is able to rely on several fine pieces of work from others. I'd like to thank
+          <ul>
+            <li>The creators of the delightfully <a href="http://purecss.io/">lightweight Pure CSS framework</a></li>
+            <li>Freepik for offering this <a href="http://sixrevisions.com/freebies/icons/free-icons-1000/">beautiful icon set</a></li>
+            <li>Heroku for their <a href="http://heroku.com">simple hosting</a></li>
+            <li>Ali for helping me with the icon</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer l-box">
+      <p>
+      <a href='http://icons.better-idea.org'>The Icon Finder</a> &dash; in search for icons since January 2015.
+      Written in <a href='http://golang.org'>Go</a>, 
+      source code <a href="https://github.com/mat/besticon">available</a>.
+      Created by <a href='http://www.better-idea.org'>Matthias Lüdtke</a>.
+      </p>
+    </div>
+
+  </body>
+</html>
+

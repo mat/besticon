@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Daring Fireball</title>
+	<meta name="viewport" content="width=600, initial-scale=0.5, minimum-scale=0.45" />
+	<link rel="apple-touch-icon-precomposed" href="/graphics/apple-touch-icon.png" />
+	<link rel="shortcut icon" href="/graphics/favicon.ico?v=005" />
+	<link rel="stylesheet" type="text/css" media="screen"  href="/css/fireball_screen.css?v1.53" />
+	<link rel="stylesheet" type="text/css" media="screen"  href="/css/ie_sucks.php" />
+	<link rel="stylesheet" type="text/css" media="print"   href="/css/fireball_print.css?v01" />
+	<link rel="alternate" type="application/atom+xml" href="/feeds/main" />
+	<script src="/js/js-global/FancyZoom.js" type="text/javascript"></script>
+	<script src="/js/js-global/FancyZoomHTML.js" type="text/javascript"></script>
+</head>
+<body onload="setupZoom()">
+<div id="Box">
+
+<div id="Banner">
+<a href="/" title="Daring Fireball: Home"><img src="/graphics/logos/" alt="Daring Fireball" height="56" /></a>
+</div>
+<div id="Sidebar">
+<p>By <strong>John&nbsp;Gruber</strong></p>
+
+<ul><!--&#9733;-->
+<li><a href="/archive/" title="Previous articles.">Archive</a></li>
+<!-- 
+<li><a href="/shirts" title="Buy some swell t-shirts.">T-Shirts</a></li>
+ -->
+<li><script type="text/javascript">
+// <![CDATA[
+function ReadCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1, c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+	}
+	return null;
+}
+var display_linked_list = ReadCookie('displayLinkedList');
+var li_linked = '<a href="/linked/" title="The Linked List.">Linked List<\/a>';
+if (display_linked_list == "hide") {
+	// Linked List is off on home page, so show it in menu:
+	document.write(li_linked + "<\/li>\n<li>");
+}
+else {
+	// Default to not putting separate LL item in sidebar:
+}
+// ]]>
+</script></li>
+<!-- 
+<li><a href="/shirts" title="The world’s finest t-shirts.">T-Shirts</a></li>
+ -->
+<li><a href="/thetalkshow/" title="The world’s most popular podcast.">The Talk Show</a></li>
+<li><a href="http://vesperapp.co/" title="A simple, elegant iPhone app for collecting notes, ideas, thoughts, and images."><span style="color: #AAA;">$2.99 →</span> Vesper</a></li><!-- 
+<li><a href="http://vesperapp.co/" title="A simple, elegant iPhone app for collecting notes, ideas, thoughts, and images.">Vesper</a></li>
+ -->
+<li><a href="/projects/" title="Software projects, including SmartyPants and Markdown.">Projects</a></li>
+<li><a href="/contact/" title="How to send email regarding Daring Fireball.">Contact</a></li>
+<li><a href="/colophon/" title="About this site and the tools used to produce it.">Colophon</a></li>
+<li><a href="/feeds/">RSS Feed</a></li>
+<li><a href="https://twitter.com/daringfireball">Twitter</a></li>
+<li><a href="/feeds/sponsors/">Sponsorship</a></li>
+</ul>
+
+</div> <!-- Sidebar -->
+
+<div id="Main">
+
+<dl class="linkedlist">
+<dt>
+<a href="http://www.vox.com/2014/11/25/7281165/darren-wilsons-story-side">Darren Wilson’s Testimony Is&#160;Unbelievable</a>&nbsp;<a class="permalink" title="Permanent link to ‘Darren Wilson’s Testimony Is Unbelievable’" href="http://daringfireball.net/linked/2014/11/25/wilson-unbelievable">&#9733;</a>
+</dt>
+<dd>
+<p>Ezra Klein, writing at Vox:</p>
+
+<blockquote>
+  <p>But on Monday night, St. Louis County prosecutor Robert McCulloch
+released the evidence given to the grand jury, including the
+interview police did with Wilson in the immediate aftermath of the
+shooting. And so we got to read, for the first time, Wilson&#8217;s
+full, immediate account of his altercation with Brown.</p>
+
+<p>And it is unbelievable.</p>
+
+<p>I mean that in the literal sense of the term: &#8220;difficult or
+impossible to believe.&#8221; But I want to be clear here. I&#8217;m not
+saying Wilson is lying. I&#8217;m not saying his testimony is false. I
+am saying that the events, as he describes them, are simply
+bizarre. His story is difficult to believe.</p>
+</blockquote>
+
+<p>The whole thing is absurd. The medical examiner didn&#8217;t take photos of Mike Brown&#8217;s body <a href="https://twitter.com/aurabogado/status/537133810002190336">because his camera ran out of batteries</a>? The fix was so clearly in.</p>
+
+</dd>
+
+
+<dt>
+<a href="http://www.quirksmode.org/blog/archives/2014/11/android_gradien.html">Android Gradient Screenshot&#160;Madness</a>&nbsp;<a class="permalink" title="Permanent link to ‘Android Gradient Screenshot Madness’" href="http://daringfireball.net/linked/2014/11/25/koch-android-gradients">&#9733;</a>
+</dt>
+<dd>
+<p>Peter-Paul Koch:</p>
+
+<blockquote>
+  <p>It turns out that there are differences between gradients on the
+various Android devices. This is <em>not</em> a browser thing, but an
+actual device thing. I compared the same gradient test on
+different Android devices in Firefox, Android WebKit, and Chrome,
+and found the same differences between the browsers. It became
+obvious that there are incompatibilities between these Androids’
+graphical &#8230; thingies, and that browsers don’t (can’t?) work
+around them.</p>
+
+<p>So I thought I’d write a snarky post embellished with some
+screenshots. It was when I had made those screenshots that the
+other shoe dropped: <em>the screenshots show different gradients than
+the screen</em>. In other words, Android screenshots cannot be trusted
+to show subtle browser differences. Actual external pictures taken
+with a camera are mandatory.</p>
+</blockquote>
+
+<p>(<a href="https://twitter.com/b01dface/status/537309532444057600">Thanks to Alan Hogan</a>.)</p>
+
+</dd>
+
+
+</dl>
+
+<h2 class="dateline">Monday, 24 November 2014</h2>
+<dl class="linkedlist">
+<dt>
+<a href="http://www.newyorker.com/tech/elements/group-rules-web">Paul Ford on HTML5 and the World of Web&#160;Standards</a>&nbsp;<a class="permalink" title="Permanent link to ‘Paul Ford on HTML5 and the World of Web Standards’" href="http://daringfireball.net/linked/2014/11/24/ford-html5">&#9733;</a>
+</dt>
+<dd>
+<p>Paul Ford, writing for The New Yorker:</p>
+
+<blockquote>
+  <p>You might have read that, on October 28th, <a href="http://www.w3.org/TR/html5/">W3C officially
+recommended HTML5</a>. And you might
+know that this has something to do with apps and the Web. The
+question is: Does this concern you?</p>
+
+<p>The answer, at least for citizens of the Internet, is yes: it <em>is</em>
+worth understanding both what HTML5 is and who controls the W3C.
+And it is worth knowing a little bit about the mysterious,
+conflict-driven cultural process whereby HTML5 became a
+“recommendation.” Billions of humans will use the Web over the
+next decade, yet not many of those people are in a position to
+define what is “the Web” and what isn’t. The W3C <em>is</em> in that
+position. So who is in this cabal? What is it up to? Who writes
+the checks?</p>
+</blockquote>
+
+<p>Ford achieves something extraordinary with this piece &#8212; it works well as an introduction to the world of web standards for the uninitiated, but works also as a cogent overview for those of us who are intimately familiar with the W3C (idealistic) / WHATWG (practical) political saga.</p>
+
+<p>Ford is on a roll. It&#8217;s amazing how many of my <a href="http://daringfireball.net/linked/2014/11/07/ford-retro-computing">favorite</a> <a href="http://daringfireball.net/linked/2014/08/14/ford-polite">pieces</a> of the last few months have his byline.</p>
+
+</dd>
+
+
+<dt>
+<a href="http://prometheus.med.utah.edu/~bwjones/2014/10/iphone-6-pixels/">iPhone 6 Pixels</a>&nbsp;<a class="permalink" title="Permanent link to ‘iPhone 6 Pixels’" href="http://daringfireball.net/linked/2014/11/24/bryan-jones-pixels">&#9733;</a>
+</dt>
+<dd>
+<p>Bryan Jones put the iPhone 6 (regular) display under a microscope:</p>
+
+<blockquote>
+  <p>When the iPhone 5 came out, Apple bonded the display to the glass
+in an effort to get the pixels closer to the surface and Apple has
+appeared to make the pixels in the 6 even closer still. Some of
+what we are seeing with the iPhone 6 may be a polarizing filter
+underneath the glass, but even so, the glass appears thinner and
+required less focus distance adjustment to get from the surface of
+the glass to the pixel on another microscope. I don’t know what
+that precise distance is in microns between the surface of the
+glass and the pixels, but it was a shorter distance as judged by
+rotation of the focus knob in the iPhone 6 vs. the iPhone 5. What
+this accomplishes is making the display appear to be higher
+resolution. The blacks are blacker, contrast is higher and colors
+are more vibrant, even with the same OS.</p>
+</blockquote>
+
+</dd>
+
+
+<dt>
+<a href="http://www.thecleverest.com/retina-osx-on-the-original-macintosh/">Retina OS X on the Original&#160;Macintosh</a>&nbsp;<a class="permalink" title="Permanent link to ‘Retina OS X on the Original Macintosh’" href="http://daringfireball.net/linked/2014/11/24/retina-os-x-on-the-original-macintosh">&#9733;</a>
+</dt>
+<dd>
+<p>Mike Solomon, writing at The Cleverest:</p>
+
+<blockquote>
+  <p>I saw <a href="http://thingsofinterest.com/2014/10/22/difference-30-years-makes-imac-retina-5k-display-vs-original-macintosh/">this great post</a> about how tiny the original Macintosh screen was compared with the current (and enormous) Retina 5K iMac screen.</p>
+
+<p>So I thought I’d take the opposite approach. Below are 1-to-1 pixel mockups of how Mac OSX Yosemite would have appeared on the original Macintosh’s 512×342 pixel screen.</p>
+</blockquote>
+
+</dd>
+
+
+</dl>
+
+<h2 class="dateline">Saturday, 22 November 2014</h2>
+<dl class="linkedlist">
+<dt>
+<a href="http://desk.pm/">Desk</a>&nbsp;<a class="permalink" title="Permanent link to ‘Desk’" href="http://daringfireball.net/linked/2014/11/22/desk">&#9733;</a>
+</dt>
+<dd>
+<p>My thanks to John Saddington for sponsoring this week&#8217;s DF RSS feed to promote Desk, his blogging app for the Mac. <a href="http://john.do/">Saddington has been blogging</a> for more than a decade, but never found a blogging app that stuck. So, he built one for himself, focused on what matters most: <em>writing</em>. It&#8217;s called Desk, and it&#8217;s exclusively for OS X. (And it has one of the best app icons I&#8217;ve ever seen &#8212; perfect metaphor, beautifully rendered.)</p>
+
+<p>Desk has a simple, writing-focused UI. It supports both Markdown (of course) and WYSIWYG for editing, and has direct posting support for a slew of popular platforms, including WordPress, Blogger, Tumblr, Typepad, Movable Type, Facebook Notes, and Squarespace. Visually, though, Desk is utterly minimal &#8212; while you&#8217;re writing, everything fades away but your prose.</p>
+
+<p>You can purchase a copy via the <a href="http://bit.ly/deskapp">Mac App Store</a> or check out <a href="http://desk.pm/">Desk&#8217;s beautiful website</a>. Or, follow Desk&#8217;s development through the <a href="http://blog.desk.pm/">Desk App Blog</a> (written using Desk, of course).</p>
+
+</dd>
+
+
+</dl>
+
+<h2 class="dateline">Friday, 21 November 2014</h2>
+<dl class="linkedlist">
+<dt>
+<a href="http://www.nytimes.com/2014/11/19/magazine/the-secret-life-of-passwords.html">The Secret Life of&#160;Passwords</a>&nbsp;<a class="permalink" title="Permanent link to ‘The Secret Life of Passwords’" href="http://daringfireball.net/linked/2014/11/21/secret-life-of-passwords">&#9733;</a>
+</dt>
+<dd>
+<p>Terrific feature by Ian Urbina for the NYT Magazine:</p>
+
+<blockquote>
+  <p>Several years ago I began asking my friends and family to tell me
+their passwords. I had come to believe that these tiny
+personalized codes get a bum rap. Yes, I understand why passwords
+are universally despised: the strains they put on our memory, the
+endless demand to update them, their sheer number. I hate them,
+too. But there is more to passwords than their annoyance. In our
+authorship of them, in the fact that we construct them so that we
+(and only we) will remember them, they take on secret lives. Many
+of our passwords are suffused with pathos, mischief, sometimes
+even poetry. Often they have rich back stories. A motivational
+mantra, a swipe at the boss, a hidden shrine to a lost love, an
+inside joke with ourselves, a defining emotional scar &#8212; these
+keepsake passwords, as I came to call them, are like tchotchkes of
+our inner lives. They derive from anything: Scripture, horoscopes,
+nicknames, lyrics, book passages. Like a tattoo on a private part
+of the body, they tend to be intimate, compact and expressive.</p>
+</blockquote>
+
+</dd>
+
+
+<dt>
+<a href="http://www.technologyreview.com/news/532606/three-questions-with-slacks-ceo/">Stewart Butterfield on&#160;Slack</a>&nbsp;<a class="permalink" title="Permanent link to ‘Stewart Butterfield on Slack’" href="http://daringfireball.net/linked/2014/11/21/butterfield">&#9733;</a>
+</dt>
+<dd>
+<p>Stewart Butterfield, in an interview with Rachel Metz for MIT Technology Review:</p>
+
+<blockquote>
+  <p>I try to instill this into the rest of the team but certainly I
+feel that what we have right now is just a giant piece of shit.
+Like, it’s just terrible and we should be humiliated that we offer
+this to the public. Not everyone finds that motivational, though.</p>
+</blockquote>
+
+<p>I love that attitude. Rather than be satisfied with Slack&#8217;s growth and success, he&#8217;s focused on how to make it <em>way</em> better, not just a little better.</p>
+
+</dd>
+
+
+<dt>
+<a href="http://furbo.org/2014/11/20/a-day-with-apple-watch/">Craig Hockenberry on&#160;WatchKit</a>&nbsp;<a class="permalink" title="Permanent link to ‘Craig Hockenberry on WatchKit’" href="http://daringfireball.net/linked/2014/11/21/chockwatch">&#9733;</a>
+</dt>
+<dd>
+<p>Craig Hockenberry:</p>
+
+<blockquote>
+  <p>Bluetooth Low Energy must be <em>really</em> low power: the design of
+WKInterfaceObject means it’s going to be on <em>a lot</em>. Every
+interaction with the watch has the potential to move actions and
+data between your pocket and wrist using the radio.</p>
+
+<p>But more importantly, this API design gives Apple a simple way to
+put a cap on power consumption. We saw this approach in the <a href="http://furbo.org/2008/03/16/brain-surgeons/">early
+days of the iPhone</a> and that worked out pretty well, didn’t it?</p>
+
+<p>One final thought about the API design: your code <em>never</em> runs on
+the watch.</p>
+</blockquote>
+
+</dd>
+
+
+<dt>
+<a href="http://nypost.com/2014/11/21/amazon-plans-a-streaming-video-alternative/">NY Post: Amazon Planning an Ad-Based Streaming-Video&#160;Service</a>&nbsp;<a class="permalink" title="Permanent link to ‘NY Post: Amazon Planning an Ad-Based Streaming-Video Service’" href="http://daringfireball.net/linked/2014/11/21/amazon-video-ads">&#9733;</a>
+</dt>
+<dd>
+<p>Claire Atkinson, reporting for the NY Post:</p>
+
+<blockquote>
+  <p>The e-commerce giant will roll out a new ad-supported streaming
+offering early next year that will be separate from its $99-a-year
+Prime membership, which includes a video service, sources said.</p>
+
+<p>The ad-supported option &#8212; part of an overhaul of its media
+offerings &#8212; poses a serious challenge to streaming rivals such as
+Hulu and Netflix, analysts said.</p>
+</blockquote>
+
+<p>When TiVo came out 15 years ago, we began using computers to let us skip past commercials. Now, with streaming, we&#8217;re using computers to present un-skippable ads.</p>
+
+</dd>
+
+
+<dt>
+<a href="http://www.cnbc.com/id/102208901">Financial Times: European Parliament to Call for the Break-Up of&#160;Google</a>&nbsp;<a class="permalink" title="Permanent link to ‘Financial Times: European Parliament to Call for the Break-Up of Google’" href="http://daringfireball.net/linked/2014/11/21/google-eu">&#9733;</a>
+</dt>
+<dd>
+<p>Alex Barker and Murad Ahmed, reporting for The Financial Times:</p>
+
+<blockquote>
+  <p>The European parliament is poised to call for a break-up of
+Google, in one of the most brazen assaults so far on the
+technology group&#8217;s power.</p>
+
+<p>The gambit increases the political pressure on the European
+Commission, the EU&#8217;s executive arm, to take a tougher line on
+Google, either in its antitrust investigation into the company or
+through the introduction of laws to curb its reach.</p>
+
+<p>A draft motion seen by the Financial Times says that &#8220;unbundling
+[of] search engines from other commercial services&#8221; should be
+considered as a potential solution to Google&#8217;s dominance. It has
+the backing of the parliament&#8217;s two main political blocs, the
+European People&#8217;s Party and the Socialists.</p>
+</blockquote>
+
+<p>Good luck with that.</p>
+
+</dd>
+
+
+<dt>
+<a href="http://techcrunch.com/2014/11/19/its-time-for-apple-to-open-up/">I’m Sure Apple Will Get Right on&#160;This</a>&nbsp;<a class="permalink" title="Permanent link to ‘I’m Sure Apple Will Get Right on This’" href="http://daringfireball.net/linked/2014/11/21/prisco-apple-open-up">&#9733;</a>
+</dt>
+<dd>
+<p>John Prisco, president of anti-virus software maker <a href="http://www.triumfant.com/default.asp">Triumfant</a>, writing for TechCrunch:</p>
+
+<blockquote>
+  <p>Apple had good intentions. It kept everything close to the vest,
+with a closed off development community and rigorous control over
+applications. Apple has been brilliant at maintaining the purity
+of the brand and until relatively recently, that has been enough
+to provide additional protections against malicious attacks. But
+the genie is out of the iBottle.</p>
+
+<p>Google, on the other hand, does allow this level of collaboration.
+With Android, security professionals can conduct analysis where it
+matters &#8212; with operating system-level interrogation and anomaly
+detection. With the Apple iOS, you can’t do that. You’re blocked
+off. What is then forced is an approach that requires only looking
+at the app with the AppWrapper. There is no way to develop a
+guardian for the operating system, so you will never be protected.</p>
+</blockquote>
+
+<p>It&#8217;s not Apple who is in trouble because iOS doesn&#8217;t allow third-party anti-virus/security software to run at the operating system level. It&#8217;s the purveyors of anti-virus/security software who are in trouble.</p>
+
+</dd>
+
+
+<dt>
+<a href="http://recode.net/2014/11/20/a-note-to-recode-readers/">Recode Drops Comments</a>&nbsp;<a class="permalink" title="Permanent link to ‘Recode Drops Comments’" href="http://daringfireball.net/linked/2014/11/21/recode-comments">&#9733;</a>
+</dt>
+<dd>
+<p>Walt Mossberg and Kara Swisher:</p>
+
+<blockquote>
+  <p>The biggest change for some of you, however, will be that we have
+decided to remove the commenting function from the site. We
+thought about this decision long and hard, since we do value
+reader opinion. But we concluded that, as social media has
+continued its robust growth, the bulk of discussion of our stories
+is increasingly taking place there, making onsite comments less
+and less used and less and less useful.</p>
+</blockquote>
+
+<p>A blog without comments?</p>
+
+</dd>
+
+
+</dl>
+
+<h2 class="dateline">Thursday, 20 November 2014</h2>
+<dl class="linkedlist">
+<dt>
+<a href="https://goodwebbundle.com/">The Good Web&#160;Bundle</a>&nbsp;<a class="permalink" title="Permanent link to ‘The Good Web Bundle’" href="http://daringfireball.net/linked/2014/11/20/good-web-bundle">&#9733;</a>
+</dt>
+<dd>
+<p>Full membership on five great web apps/communities &#8212; MetaFilter, Mlkshk, NewsBlur, The Toast, and ThinkUp &#8212; at half price. A great deal and a great way to support five indie websites.</p>
+
+</dd>
+
+
+</dl>
+
+<h2 class="dateline">Wednesday, 19 November 2014</h2>
+<dl class="linkedlist">
+<dt>
+<a href="http://www.macrumors.com/2014/11/19/apple-replaces-free-button-with-get/">‘Get’ Is the New&#160;‘Free’</a>&nbsp;<a class="permalink" title="Permanent link to ‘‘Get’ Is the New ‘Free’’" href="http://daringfireball.net/linked/2014/11/19/get-free">&#9733;</a>
+</dt>
+<dd>
+<p>Juli Clover, reporting for MacRumors:</p>
+
+<blockquote>
+  <p>Apple has changed the wording for free games in its App Store, and
+the app purchase buttons that once read &#8220;Free&#8221; for apps with no
+cost now read &#8220;Get&#8221; instead. The change has been implemented on
+both the iOS App Store and the desktop App Store. [&#8230;]</p>
+
+<p>It is not entirely clear why Apple has decided to replace Free
+with Get, but it may have to do with the growing sentiment that
+apps with in-app purchases are not free. Earlier this year, the
+European Commission <a href="http://www.macrumors.com/2014/02/27/eu-in-app-purchases/">asked Apple and Google</a> to implement changes to
+the way they sell apps, to avoid misleading customers about &#8220;free&#8221;
+games that are not actually free.</p>
+</blockquote>
+
+</dd>
+
+
+<dt>
+<a href="http://thecreatorsproject.vice.com/blog/supercut-reveals-kubricks-love-of-red">Red: A Kubrick&#160;Supercut</a>&nbsp;<a class="permalink" title="Permanent link to ‘Red: A Kubrick Supercut’" href="http://daringfireball.net/linked/2014/11/19/red">&#9733;</a>
+</dt>
+<dd>
+<p>90-second supercut of Kubrick&#8217;s use of the color red, by Rishi Kaneria.</p>
+
+<p>(<a href="http://www.coudal.com/archive.php?cat=cat_stanley_kubrick">Via Coudal</a>, of course.)</p>
+
+</dd>
+
+
+<dt>
+<a href="http://david-smith.org/blog/2014/11/18/initial-impressions-for-watchkit/">David Smith on&#160;WatchKit</a>&nbsp;<a class="permalink" title="Permanent link to ‘David Smith on WatchKit’" href="http://daringfireball.net/linked/2014/11/19/smith-watchkit">&#9733;</a>
+</dt>
+<dd>
+<p>David Smith:</p>
+
+<blockquote>
+  <p>Today Apple unveiled <a href="https://developer.apple.com/watchkit/">WatchKit</a>. I am very pleasantly surprised by
+how capable it is. In my <a href="http://david-smith.org/blog/2014/11/06/expectations-for-watchkit/">Expectations for WatchKit</a> article I
+outlined that I thought we’d see a two phase roll-out of the
+platform. Starting with pretty limited capabilities that would
+then be expanded at next year’s WWDC. It turns out that I was only
+half correct. It is two phase but the first phase is much more
+capable than I was expecting.</p>
+
+<p>In the first phase we will be able to build Glances, Actionable
+Notifications and iPhone powered apps. The last of which has me
+most excited.</p>
+</blockquote>
+
+</dd>
+
+
+<dt>
+<a href="http://www.imore.com/what-you-need-know-about-watchkit">iMore’s WatchKit Overview</a>&nbsp;<a class="permalink" title="Permanent link to ‘iMore’s WatchKit Overview’" href="http://daringfireball.net/linked/2014/11/19/caldwell-watchkit">&#9733;</a>
+</dt>
+<dd>
+<p>Good summary of WatchKit from Serenity Caldwell. Or rather, a good summary of this <em>initial</em> release of WatchKit. As she points out, Apple even stated <a href="http://www.apple.com/pr/library/2014/11/18Developers-Start-Designing-Apps-for-Apple-Watch.html">in its press release yesterday</a>, &#8220;Starting later next year, developers will be able to create fully native apps for Apple Watch.&#8221; The long and short of this initial WatchKit SDK is that the Watch acts as a remote display, with limited interactivity, for code that runs in an extension on your iPhone. Apple Watch&#8217;s system apps are not limited like that &#8212; they run natively on the watch itself. Eventually, third-party apps will too.</p>
+
+<p>In a sense, this is like 2007 all over again. The native APIs almost certainly aren&#8217;t finished, and battery life is a huge concern. But with the Watch, Apple is ahead of where they were with the iPhone. This initial SDK is limited, but it&#8217;s way better than <a href="http://daringfireball.net/2007/06/wwdc_2007_keynote">the shit sandwich</a> we got for the original iPhone at WWDC in 2007.</p>
+
+</dd>
+
+
+<dt>
+<a href="http://www.androidpolice.com/2014/11/18/google-play-services-update-adds-trusted-places-feature-to-lollipops-smart-lock/">‘Trusted Places’ Feature Allows Location-Based Unlocking for Android&#160;Devices</a>&nbsp;<a class="permalink" title="Permanent link to ‘‘Trusted Places’ Feature Allows Location-Based Unlocking for Android Devices’" href="http://daringfireball.net/linked/2014/11/19/android-location-unlock">&#9733;</a>
+</dt>
+<dd>
+<p>Ryan Whitwam, writing for Android Police:</p>
+
+<blockquote>
+  <p>Smart Lock in Lollipop encompasses both trusted face and trusted
+devices, but a new option is joining the party &#8212; trusted places.
+The latest Google Play Services for Lollipop devices is adding
+this option to the menu automagically. Just choose a trusted
+place, and your phone will remain unlocked when it&#8217;s in that
+geographic area.</p>
+</blockquote>
+
+<p>Cool feature. <del>I can&#8217;t find it, but</del> I recall suggesting something like this as an iOS feature a year or two ago. Touch ID mitigates the need to some extent, but I still think it&#8217;d be nice to have my iPad remain unlocked while it&#8217;s in my home. (And it&#8217;s going to be a few years until most iOS devices in use have Touch ID.)</p>
+
+<p><strong>Update:</strong> <a href="http://daringfireball.net/linked/2014/07/03/location-based-security">Here&#8217;s a post from June</a> where I wrote about it, vis-à-vis an Apple patent filing for location-based security.</p>
+
+</dd>
+
+
+</dl>
+
+<h2 class="dateline">Tuesday, 18 November 2014</h2>
+<dl class="linkedlist">
+<dt>
+<a href="http://www.macstories.net/ios/you-can-now-search-for-every-tweet-ever-sent-in-the-twitter-app/">You Can Now Search for Every Tweet Ever Sent in the Twitter&#160;App</a>&nbsp;<a class="permalink" title="Permanent link to ‘You Can Now Search for Every Tweet Ever Sent in the Twitter App’" href="http://daringfireball.net/linked/2014/11/18/twitter-search">&#9733;</a>
+</dt>
+<dd>
+<p>Federico Viticci:</p>
+
+<blockquote>
+  <p>Right now, old tweets can be found in search by switching to the
+All tab of the Twitter app, and Twitter supports a basic syntax to
+filter down tweets for users and dates. I was able to use two
+different search operators for usernames and dates:</p>
+
+<ul>
+<li>from:username &#8212; load all tweets sent from a user;</li>
+<li>since:2009-04-20 until:2009-04-21 &#8212; load tweets from
+specific days.</li>
+</ul>
+
+<p>Search operators can be used in the Twitter app and combined with
+hashtags and text to look more precisely in search results and
+find a tweet you&#8217;re looking for. You can even save advanced
+searches you come up with and reuse them at any time. And this
+makes for a convenient way to delete old tweets as well: find the
+tweet, and use the Delete button in the app to remove it.</p>
+</blockquote>
+
+<p>What a great feature, and great technical achievement. The entire Twitter archive must be incomprehensibly big.</p>
+
+<p>(Sure would be cool if Twitter made this available to third-party clients.)</p>
+
+</dd>
+
+
+<dt>
+<a href="https://twitter.com/craigmod/status/534361082002161664">1922 Cutaway Diagram of the Washington DC Evening Star&#160;Building</a>&nbsp;<a class="permalink" title="Permanent link to ‘1922 Cutaway Diagram of the Washington DC Evening Star Building’" href="http://daringfireball.net/linked/2014/11/18/evening-star-cutaway">&#9733;</a>
+</dt>
+<dd>
+<p>Just gorgeous. This is why they made the iMac 5K Retina Display. (<a href="http://kottke.org/14/11/this-building-is-a-organism-for-making-newspapers">Via Kottke</a>.)</p>
+
+</dd>
+
+
+<dt>
+<a href="http://gizmodo.com/barbie-f-cks-it-up-again-1660326671">Barbie Fucks It Up&#160;Again</a>&nbsp;<a class="permalink" title="Permanent link to ‘Barbie Fucks It Up Again’" href="http://daringfireball.net/linked/2014/11/18/barbie-pamie">&#9733;</a>
+</dt>
+<dd>
+<p>Pamela Ribon reviews the children&#8217;s book <em>Barbie: I Can Be a Computer Engineer</em>. You know this book is going to be bad. You know it&#8217;s going to contain dreadful, harmful gender stereotypes. But it is so much worse than you (probably) expect.</p>
+
+<p>I&#8217;ve been waiting to link to this piece all day, but Ribon&#8217;s website (the excellent <a href="http://pamie.com/">Pamie.com</a>) has been down all day because this has gotten so much attention.</p>
+
+</dd>
+
+
+</dl>
+
+<hr class="ookiaks" />
+
+
+<div class="article">
+<h1><a href="http://daringfireball.net/2014/11/iphone_6_df_split" title="Permanent link to ‘iPhone 6 vs. 6 Plus Split Among Daring Fireball Readers’">iPhone 6 vs. 6 Plus Split Among Daring Fireball&#160;Readers</a></h1>
+<h6 class="dateline">Tuesday, 18 November 2014</h6>
+
+<p>Thanks to <a href="https://twitter.com/_/status/534794382420213761">this tweet from Dave Rutledge</a>, I figured how to get Google Analytics to show me the split in screen sizes for mobile devices visiting Daring Fireball. Just counting &#8220;mobile devices&#8221; for the last 7 days:</p>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Device</th>
+  <th align="right">% Mobile Sessions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td align="left">320×568 (iPhone 5/5S/5C)</td>
+  <td align="right">30.1</td>
+</tr>
+<tr>
+  <td align="left">768×1024 (all iPads)</td>
+  <td align="right">29.0</td>
+</tr>
+<tr>
+  <td align="left">375×667 (iPhone 6)</td>
+  <td align="right">23.7</td>
+</tr>
+<tr>
+  <td align="left">414×736 (iPhone 6 Plus)</td>
+  <td align="right">7.0</td>
+</tr>
+<tr>
+  <td align="left">320×480 (old iPhones)</td>
+  <td align="right">4.1</td>
+</tr>
+</tbody>
+</table>
+
+<p>Those percentages are <em>only</em> for mobile device sessions. (Mobile devices account for 44 percent of all DF sessions.) Two points of interest to me:</p>
+
+<ol>
+<li><p>This is more confirmation <a href="http://daringfireball.net/linked/2014/11/14/iphone6-iphone-6plus">that the split is around 3-to-1</a> between the 6 and 6 Plus. As many readers have pointed out, the 6 Plus is still supply constrained, so the split might tilt back toward the 6 Plus once both of them are available everywhere for immediate purchase.</p></li>
+<li><p>There are already slightly more DF readers using one of the iPhones 6 than the iPhone 5/5C/5S combined. You&#8217;re my people.</p></li>
+</ol>
+
+<h2>Bonus Stat #1: iPhone 5 Adoption Back in 2012</h2>
+
+<p>There&#8217;s no way to use screen resolutions to look at last year&#8217;s 5S and 5C launch, because their displays were the same size as the iPhone 5 from 2012. But we <em>can</em> look at 2012 and see the uptake for 4-inch iPhone 5 six weeks after it debuted.</p>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Device</th>
+  <th align="right">% Mobile Sessions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td align="left">768×1024 (all iPads)</td>
+  <td align="right">37.4</td>
+</tr>
+<tr>
+  <td align="left">320×480 (older iPhone)</td>
+  <td align="right">30.4</td>
+</tr>
+<tr>
+  <td align="left">320×568 (iPhone 5)</td>
+  <td align="right">26.2</td>
+</tr>
+</tbody>
+</table>
+
+<p>In other words, two years ago, 26.2 percent of mobile-device-using DF visitors were using a brand-new iPhone 5. This year, for the iPhones 6 combined, that number is 30.7. Higher, but not drastically so. This could be one of those things where DF readers are very unlike the public at large &#8212; I suspect DF readers have always been the type of people who buy new iPhones as soon as they come out.</p>
+
+<p>What&#8217;s more interesting is this. In November 2012, &#8220;mobile devices&#8221; only accounted for 32.7 percent of total sessions; as stated above, today that&#8217;s up to 44 percent. In 2012, the iPad (all models combined) accounted for about 12 percent of DF sessions; today, 13 percent. So it&#8217;s roughly flat. (DF traffic overall is roughly flat too.) iPhones accounted for about 19 percent of <em>all</em> traffic to DF back in 2012; today that number is <em>29 percent</em>. The growth in mobile usage among DF readers over the last two years is almost entirely from the iPhone.</p>
+
+<h2>Bonus Stat #2: OS Usage</h2>
+
+<p>While I&#8217;m looking at DF&#8217;s web stats, here&#8217;s the OS usage for all sessions (not just mobile) for the last week:&nbsp;<a class="permalink" title="Permanent link to ‘iPhone 6 vs. 6 Plus Split Among Daring Fireball Readers’" href="http://daringfireball.net/2014/11/iphone_6_df_split">&#9733;</a></p>
+
+<table>
+<thead>
+<tr>
+  <th align="left">OS</th>
+  <th align="right">% Total Sessions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td align="left">iOS</td>
+  <td align="right">44.0</td>
+</tr>
+<tr>
+  <td align="left">Mac OS X</td>
+  <td align="right">39.1</td>
+</tr>
+<tr>
+  <td align="left">Windows</td>
+  <td align="right">12.6</td>
+</tr>
+<tr>
+  <td align="left">Android</td>
+  <td align="right">2.1</td>
+</tr>
+<tr>
+  <td align="left">&#8220;Linux&#8221;</td>
+  <td align="right">1.7</td>
+</tr>
+<tr>
+  <td align="left">Windows Phone (<em>sad trombone sound</em>)</td>
+  <td align="right">0.2</td>
+</tr>
+</tbody>
+</table>
+
+</div> <!-- article -->
+
+<hr class="ookiaks" />
+
+
+<h2 class="dateline">Tuesday, 18 November 2014</h2>
+<dl class="linkedlist">
+<dt>
+<a href="http://www.buzzfeed.com/bensmith/uber-executive-suggests-digging-up-dirt-on-journalists">Uber Executive Suggests Digging Up Dirt on&#160;Journalists</a>&nbsp;<a class="permalink" title="Permanent link to ‘Uber Executive Suggests Digging Up Dirt on Journalists’" href="http://daringfireball.net/linked/2014/11/18/uber-dirt">&#9733;</a>
+</dt>
+<dd>
+<p>Ben Smith, Buzzfeed:</p>
+
+<blockquote>
+  <p>A senior executive at Uber suggested that the company should
+consider hiring a team of opposition researchers to dig up dirt on
+its critics in the media &#8212; and specifically to spread details of
+the personal life of a female journalist who has criticized the
+company.</p>
+
+<p>The executive, Emil Michael, made the comments in a conversation
+he later said he believed was off the record. In a statement
+through Uber Monday evening, he said he regretted them and that
+they didn’t reflect his or the company’s views.</p>
+</blockquote>
+
+<p>Whose views do they represent then, if not his own or Uber&#8217;s?</p>
+
+<blockquote>
+  <p>Over dinner, he outlined the notion of spending “a million
+dollars” to hire four top opposition researchers and four
+journalists. That team could, he said, help Uber fight back
+against the press &#8212; they’d look into “your personal lives, your
+families,” and give the media a taste of its own medicine.</p>
+
+<p>Michael was particularly focused on one journalist, Sarah Lacy,
+the editor of the Silicon Valley website PandoDaily, a sometimes
+combative voice inside the industry. Lacy recently accused Uber of
+“sexism and misogyny.” <a href="http://pando.com/2014/10/22/the-horrific-trickle-down-of-asshole-culture-at-a-company-like-uber/">She
+wrote</a>
+that she was deleting her Uber app after <a href="http://www.buzzfeed.com/charliewarzel/french-uber-bird-hunting-promotion-pairs-lyon-riders-with-a">BuzzFeed News
+reported</a>
+that Uber appeared to be working with a French escort service. “I
+don’t know how many more signals we need that the company simply
+doesn’t respect us or prioritize our safety,” she wrote.</p>
+</blockquote>
+
+<p>I&#8217;m sure this will change Lacy&#8217;s mind about Uber. She&#8217;s probably re-installing the app right now.</p>
+
+<blockquote>
+  <p>At the Waverly Inn dinner, it was suggested that a plan like the
+one Michael floated could become a problem for Uber.</p>
+
+<p>Michael responded: “Nobody would know it was us.”</p>
+</blockquote>
+
+<p>There is something very wrong with this company. It&#8217;s like Richard Nixon came back from the grave and is running a startup.</p>
+
+</dd>
+
+
+<dt>
+<a href="http://www.theverge.com/2014/11/18/7239709/nokia-n1-tablet-price-release-date">Nokia N1 Tablet</a>&nbsp;<a class="permalink" title="Permanent link to ‘Nokia N1 Tablet’" href="http://daringfireball.net/linked/2014/11/18/nokia-n1">&#9733;</a>
+</dt>
+<dd>
+<p>There are shameless rip-offs, and then there are shameless rip-offs. (But my son pointed out that Nokia&#8217;s speaker grills at the bottom have three rows of dots, not two, so that&#8217;s original.)</p>
+
+</dd>
+
+
+<dt>
+<a href="https://developer.apple.com/watchkit/">WatchKit</a>&nbsp;<a class="permalink" title="Permanent link to ‘WatchKit’" href="http://daringfireball.net/linked/2014/11/18/watchkit-hig">&#9733;</a>
+</dt>
+<dd>
+<p>WatchKit has dropped, including the <a href="https://developer.apple.com/library/prerelease/ios/documentation/UserExperience/Conceptual/WatchHumanInterfaceGuidelines/index.html">Apple Watch Human Interface Guidelines</a>. There&#8217;s much to digest, but a few quick thoughts:</p>
+
+<ul>
+<li><p>The displays of the two watch sizes have different pixel dimensions: 272&#8201;&#215;&#8201;340 for the 38mm Apple Watch; 312&#8201;&#215;&#8201;390 for the 42mm.</p></li>
+<li><p>The system font is named San Francisco. That <a href="http://en.wikipedia.org/wiki/San_Francisco_(typeface)">rings a bell</a>. There are two versions: San Francisco Text, for sizes 19pt and smaller, and San Francisco Display, for sizes 20pt and up. Display is set tighter; Text has bigger punctuation marks and larger apertures on glyphs like &#8220;a&#8221; and &#8220;e&#8221;.</p></li>
+<li><p>From the Watch HIG: &#8220;<em>Avoid using color to show interactivity.</em> Apply color as appropriate for your branding but do not use color solely to indicate interactivity for buttons and other controls.&#8221; Can we get this HIG guideline on iOS next year? <strong>Update:</strong> <a href="https://twitter.com/mrgan/status/534793433437577216">Neven Mrgan thinks</a> Apple means &#8220;use color <em>not just for</em> interactivity&#8221;, not that you shouldn&#8217;t use color alone to indicate interactivity.</p></li>
+<li><p>A lot of WatchKit is about offloading processing to the iPhone &#8212; the Watch is effectively a remote display for an extension running on your iPhone. This should be good for Watch battery life, but limiting when you&#8217;re not carrying your iPhone. This is not going to be a &#8220;leave your iPhone at home&#8221; device; more like &#8220;leave your iPhone in your purse or pocket.&#8221;</p></li>
+</ul>
+
+</dd>
+
+
+</dl>
+
+<hr class="ookiaks" />
+
+
+<div class="article">
+<h1><a href="http://daringfireball.net/2014/11/native_apps_are_part_of_the_web" title="Permanent link to ‘Native Apps Are Part of the Web’">Native Apps Are Part of the&#160;Web</a></h1>
+<h6 class="dateline">Monday, 17 November 2014</h6>
+
+<p>Christopher Mims, writing in the WSJ, &#8220;<a href="http://on.wsj.com/11hUNbi">The Web Is Dying; Apps Are Killing It</a>&#8221;:</p>
+
+<blockquote>
+  <p>Everything about apps feels like a win for users &#8212; they are
+faster and easier to use than what came before. But underneath all
+that convenience is something sinister: the end of the very
+openness that allowed Internet companies to grow into some of the
+most powerful or important companies of the 21st century.</p>
+</blockquote>
+
+<p>I can&#8217;t believe someone is still writing this in 2014. Users love apps, developers love apps &#8212; the only people who don&#8217;t love apps are pundits who don&#8217;t understand that apps aren&#8217;t really in opposition to the open Internet. They&#8217;re just superior clients to open Internet services. Instagram didn&#8217;t even have a web interface for years, but native app clients for iOS and Android didn&#8217;t lock Instagram into anything. Their back-end is just as open as it would have been if they had only had a web browser client interface. They just wouldn&#8217;t have gotten popular.</p>
+
+<p>I spoke about this four years ago at O&#8217;Reilly&#8217;s Web 2.0 conference, in a talk titled &#8220;<a href="http://www.youtube.com/watch?v=m_Z_Eq95LvA">Apple and the Open Web: A Love Story</a>&#8221;. The gist of it being that native iOS apps (and native apps for Android, Mac OS X, Windows, and everything else) aren&#8217;t in opposition to the &#8220;web&#8221;. They live on top of the web. A new layer. They are alternatives to websites that run in web browsers. They&#8217;re just better clients. There are two big four-letter &#8220;H&#8221; acronyms that powered the web from the beginning: HTML (client) and HTTP (networking protocol). Native apps are just an alternative to HTML running in a web browser (and many native apps still use HTML web views embedded within the apps themselves to render parts of their interface). Almost all native apps use HTTP/S for networking, though. </p>
+
+<p>It&#8217;s just a conceptual simplification. Instead of a web app running inside a browser running as an app inside an OS (three levels of abstraction), we just have apps running within an OS (two levels). Simpler, easier, more elegant.<sup id="fnr1-2014-11-17"><a href="#fn1-2014-11-17">1</a></sup></p>
+
+<p>Mims continues:</p>
+
+<blockquote>
+  <p>Take that most essential of activities for e-commerce: accepting
+credit cards. When Amazon.com made its debut on the Web, it had to
+pay a few percentage points in transaction fees. But Apple takes
+30% of every transaction conducted within an app sold through its
+app store, and “very few businesses in the world can withstand
+that haircut,” says Chris Dixon, a venture capitalist at
+Andreessen Horowitz.</p>
+</blockquote>
+
+<p>That&#8217;s patently false. Even with Mims&#8217;s own example, Amazon. Just a few minutes before sitting down to write this piece, I used Amazon&#8217;s iPhone app &#8212; the one distributed through Apple&#8217;s App Store &#8212; to buy some stuff. I added items to my cart, signed in with my getting-close-to-two-decades-old Amazon account, and I was done. Apple won&#8217;t see one penny of that transaction. Not one.</p>
+
+<p>If Amazon started using Apple Pay in their app, Apple would have gotten a fraction of a penny of each dollar I spent &#8212; but those pennies would have come from my credit card company, not Amazon.</p>
+
+<p>Retailers who sell through native apps do not pay Apple anything, let alone 30 percent. What Apple charges 30 percent for are purchases for <em>in-app digital content</em>. I can&#8217;t buy Kindle books in the Kindle app, or Amazon MP3 music, because of this &#8212; but I can buy everything else from Amazon.</p>
+
+<blockquote>
+  <p>The Web was intended to expose information. It was so devoted to
+sharing above all else that it didn’t include any way to pay for
+things &#8212; something some of its early architects regret to this
+day, since it forced the Web to <a href="http://www.nytimes.com/2014/11/06/technology/personaltech/banner-ads-the-monsters-that-swallowed-the-web.html?_r=0">survive on advertising</a>.</p>
+</blockquote>
+
+<p>Says the guy writing for the site with a rather strict paywall.</p>
+
+<p>And exposing information, freely, is where the web continues to thrive (says me, the native app proponent who publishes everything I write on a freely-accessible website). If something works great as a web app, let it be a web app. (There are some great web apps, perfectly suited for what they are.) If something works better as a native app, let it be a native app.</p>
+
+<blockquote>
+  <p>The Web wasn’t perfect, but it created a commons where people
+could exchange information and goods. It forced companies to
+build technology that was explicitly designed to be compatible
+with competitors’ technology. Microsoft’s Web browser had to
+faithfully render Apple’s website. If it didn’t, consumers would
+use another one, such as Firefox or Google’s Chrome, which has
+since taken over.</p>
+</blockquote>
+
+<p>So let me get this straight. Microsoft&#8217;s Internet Explorer &#8220;was explicitly designed to be compatible with competitors’ technology&#8221;. I can&#8217;t wait until Jeffrey Zeldman reads this. <a href="http://www.businessweek.com/stories/2007-08-06/jeffrey-zeldman-king-of-web-standardsbusinessweek-business-news-stock-market-and-financial-advice">From a 2007 Businessweek profile of Zeldman</a>:</p>
+
+<blockquote>
+  <p>This concept may seem obvious today, but during the Browser Wars
+of the 1990s, Microsoft and Netscape each claimed close to
+50% of the market, and their browsers were almost entirely
+incompatible. It wasn&#8217;t uncommon to type in a URL and find that
+the site didn&#8217;t work. Companies eager to open their virtual doors
+had to invest in multiple versions of their sites. In short, it
+was a bad situation for businesses and consumers alike. Yet the
+browser makers were behaving as many software companies do &#8212; by
+trying to out-feature the competition with the introduction of new
+proprietary technologies.</p>
+</blockquote>
+
+<p>Back to Mims:</p>
+
+<blockquote>
+  <p>“In a lot of tech processes, as things decline a little bit, the
+way the world reacts is that it tends to accelerate that decline,”
+says Mr. Dixon. “If you go to any Internet startup or large
+company, they have large teams focused on creating very high
+quality native apps, and they tend to de-prioritize the mobile Web
+by comparison.”</p>
+
+<p>Many industry watchers think this is just fine. Ben Thompson, an
+independent tech and mobile analyst, told me he sees the dominance
+of apps as the “natural state” for software.</p>
+
+<p>Ruefully, I have to agree. The history of computing is companies
+trying to use their market power to shut out rivals, even when
+it’s bad for innovation and the consumer.</p>
+</blockquote>
+
+<p>How has the rise of native mobile apps been anything but a renaissance of innovation? I&#8217;d argue we&#8217;ve seen far more innovation in the iPhone era (2007-2014) than from 2000-2007. I can&#8217;t see how anyone would argue that we&#8217;ve seen <em>less</em> innovation. We used to print driving directions from mapping websites; now we get audible turn-by-turn directions on our devices. The pre-mobile web was largely about consumption for most people: reading articles, watching videos, buying stuff. In today&#8217;s world, everyone is creating and sharing their own content &#8212; everything from photos to videos to their thoughts and observations. Mims claims native mobile apps are &#8220;bad for innovation and the consumer&#8221; while consumers around the world are doing remarkably innovative things using native mobile apps.</p>
+
+<blockquote>
+  <p>That doesn’t mean the Web will disappear. Facebook and Google
+still rely on it to furnish a stream of content that can be
+accessed from within their apps. But even the Web of documents and
+news items could go away. Facebook has announced plans to host
+publishers’ work within Facebook itself, leaving the Web nothing
+but a curiosity, a relic haunted by hobbyists.</p>
+</blockquote>
+
+<p>Here is where Mims most betrays his conflation of client software and &#8220;the Web&#8221;. For the sake of argument, imagine a world where all native apps went away. A world where we do everything through web browsers like Safari, Chrome, Mozilla, and IE. In that world, Facebook could do exactly the same thing &#8212; &#8220;host publishers&#8217; work within Facebook itself&#8221;. Exactly the same thing. The control Facebook is exerting here has nothing to do with native mobile apps in particular. They&#8217;ve <em>always</em> locked non-Facebook users (like me) out of most content posted to Facebook. Now they&#8217;re just talking about hosting even more Facebook-only content.</p>
+
+<p>Arguments about &#8220;open&#8221; and &#8220;closed&#8221; often devolve into unresolvable cross-talk where the two sides have different definitions of what <em>open</em> and <em>closed</em> really mean. But the weird thing about a truly open platform is that its openness allows closed things to be built on top of it. In broad strokes, that&#8217;s why GNU/GPL software isn&#8217;t &#8220;open&#8221; in the way that BSD software is (and why Richard Stallman <a href="https://www.gnu.org/philosophy/open-source-misses-the-point.html">outright rejects</a> the term &#8220;open source&#8221;). If you expand your view of &#8220;the web&#8221; from merely that which renders inside the confines of a web browser to instead encompass all network traffic sent over HTTP/S, the explosive growth of native mobile apps is just another stage in the growth of the web. Far from killing it, native apps have made the open web even stronger.&nbsp;<a class="permalink" title="Permanent link to ‘Native Apps Are Part of the Web’" href="http://daringfireball.net/2014/11/native_apps_are_part_of_the_web">&#9733;</a></p>
+
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1-2014-11-17">
+<p>Chrome OS is an attempt to simplify things a different way: web apps running inside a web browser that presents itself to the user as the OS.&nbsp;<a href="#fnr1-2014-11-17"  class="footnoteBackLink"  title="Jump back to footnote 1 in the text.">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+</div> <!-- article -->
+
+<hr class="ookiaks" />
+
+
+<h2 class="dateline">Monday, 17 November 2014</h2>
+<dl class="linkedlist">
+<dt>
+<a href="http://www.sony.net/SonyInfo/News/Press/201411/14-112E/index.html">Sony Announces New ‘Stacked CMOS Imaging Sensor’ for Phone&#160;Cameras</a>&nbsp;<a class="permalink" title="Permanent link to ‘Sony Announces New ‘Stacked CMOS Imaging Sensor’ for Phone Cameras’" href="http://daringfireball.net/linked/2014/11/17/sony-imx230-sensor">&#9733;</a>
+</dt>
+<dd>
+<p>Sony:</p>
+
+<blockquote>
+  <p>Sony Corporation today announces the commercialization of the
+Exmor RS IMX230 for smartphone cameras and other devices requiring
+increasingly sophisticated image-capture functionality. With 21
+effective megapixels, this stacked CMOS imaging sensor features
+compact size, higher image quality, and improved functionality.
+This is the industry&#8217;s first CMOS image sensor for smartphones to
+be equipped with an onboard image plane phase detection AF signal
+processing function to achieve excellent focus tracking of
+fast-moving subjects. The High Dynamic Range (HDR) function, which
+captures both backgrounds and subjects clearly and vividly even in
+high-contrast scenes such as backlit locations, now supports
+high-resolution still images and 4K video recording. This new CMOS
+image sensor will ship in April 2015.</p>
+</blockquote>
+
+<p>Looks impressive &#8212; and Apple has long used Sony sensors for iPhone cameras. (Sony&#8217;s specs only list video frame rates going to 120 FPS &#8212; the iPhone 6 supports 240. Not sure if that&#8217;s only for HDR video, though.)</p>
+
+</dd>
+
+
+</dl>
+
+<h2 class="dateline">Sunday, 16 November 2014</h2>
+<dl class="linkedlist">
+<dt>
+<a href="http://igloosoftware.com/df">Igloo</a>&nbsp;<a class="permalink" title="Permanent link to ‘Igloo’" href="http://daringfireball.net/linked/2014/11/16/igloo">&#9733;</a>
+</dt>
+<dd>
+<p>My thanks to Igloo for once again sponsoring last week&#8217;s DF RSS feed. Most &#8220;intranets&#8221; suck. They&#8217;re ugly, badly designed, and people wind up avoiding them by just emailing file attachments back and forth.</p>
+
+<p>Igloo bills itself as &#8220;an intranet you&#8217;ll actually like&#8221;. I&#8217;d say they&#8217;re <em>the</em> intranet that doesn&#8217;t suck. You get all sorts of cool features, like Twitter-like microblogs, file sharing, comments on everything, and the design can match <em>your</em> brand across all devices. It&#8217;s easy to use, and easy to setup, with no technical expertise required.</p>
+
+<p>Still need convincing? <a href="http://vimeo.com/64886237">They even have a Sandwich video</a>. Amazingly, Igloo is free to use for up to 10 people. <a href="http://igloosoftware.com/df">Try it for free</a> and see for yourself.</p>
+
+</dd>
+
+
+<dt>
+<a href="http://wholesalephonecompany.webs.com/">Wholesale Phone Company</a>&nbsp;<a class="permalink" title="Permanent link to ‘Wholesale Phone Company’" href="http://daringfireball.net/linked/2014/11/16/wholesale-phone-company">&#9733;</a>
+</dt>
+<dd>
+<p>[<strong>Update:</strong> The site has been taken offline, <a href="http://fireballed.org/linked/2014/11/16/wholesale-phone-company/">but there&#8217;s a cached version hosted at Fireballed.org</a>, which includes all the good stuff. It&#8217;s just missing an image or two.]</p>
+
+<p>I <a href="https://twitter.com/gruber/status/533693712719962112">tweeted</a> this yesterday, and still can&#8217;t stop laughing about it. It&#8217;s a counterfeit iPhone 6 being for $250. So many gems on this web page:</p>
+
+<blockquote>
+  <p>This phone is <em>the same as the Apple iPhone 6 without the Apple
+logo</em> on the back of the phone or the iPhone 6 text on the white
+box (sometimes the phone comes with an Apple like logo). The
+internals of this phone are the same as the Apple iPhone 6.</p>
+</blockquote>
+
+<p>And:</p>
+
+<blockquote>
+  <p>Do NOT pay $600, $700 or even $800 for the same phone.</p>
+
+<p>The quality, finish &amp; performance of this phone is the same as the
+Apple iPhone 6.</p>
+</blockquote>
+
+<p>From the specs list: </p>
+
+<blockquote>
+  <ul>
+<li>Video recording: Yes</li>
+<li>E-book format: Excel, PPT, Word</li>
+<li>Screen resolution: 854&#8201;&#215;&#8201;480 pixels</li>
+<li>Gravity Sensing System</li>
+</ul>
+</blockquote>
+
+<p>Who hasn&#8217;t enjoyed reading a good .xls novel? But it gets better: they embed an unboxing video from someone who specifically emphasizes in the video just how bad the performance of the phone is. The people selling this phone chose to embed that.</p>
+
+<p>I think my favorite thing, though, is the photograph of a warehouse at the very bottom of the page. (<a href="https://twitter.com/dbbrian/status/533699454717554688">Ripped-off</a>, <a href="https://twitter.com/joelhousman/status/533696469971517441">of course</a>.) There are no words to accompany it, but the implication is that this enormous, airy, well-lit, clean warehouse is where they&#8217;re selling these phones from. Convincing!</p>
+
+<p>I&#8217;m half-tempted to buy one of these on a lark.</p>
+
+</dd>
+
+
+</dl>
+
+<h2 class="dateline">Saturday, 15 November 2014</h2>
+<dl class="linkedlist">
+<dt>
+<a href="http://daringfireball.net/thetalkshow/2014/11/15/ep-100">The Talk Show: ‘People Are Gay All the&#160;Time’</a>&nbsp;<a class="permalink" title="Permanent link to ‘The Talk Show: ‘People Are Gay All the Time’’" href="http://daringfireball.net/linked/2014/11/15/the-talk-show-100">&#9733;</a>
+</dt>
+<dd>
+<p>Who else but very special guest John Moltz to ring in The Talk Show’s centurial episode. Topics include iPhone display sizes (and in particular, our mutual preference for the old 5S 4-inch size over the 4.7-inch iPhone 6); the new book Moltz co-wrote, <a href="http://www.peachpit.com/store/visual-guide-to-minecraft-dig-into-minecraft-with-this-9780134033150"><em>The Visual Guide to Minecraft</em></a>; writing tools, including word processors and Markdown; shopping for gaming PCs as a Mac person; Microsoft Office going free on mobile platforms; Twitter’s stilted strategy statement; President Obama’s statement on Net Neutrality; and Tim Cook’s eloquent essay announcing that he’s gay.</p>
+
+<p>Brought to you by four great sponsors:</p>
+
+<ul>
+<li><a href="http://www.igloosoftware.com/thetalkshow">Igloo</a>: The intranet you’ll actually like.</li>
+<li><a href="http://harrys.com/">Harry’s</a>: Quality men’s shaving products. Use code “talkshow” and save $5.</li>
+<li><a href="http://backblaze.com/daringfireball">Backblaze</a>: Unlimited, unthrottled online backup for your Mac, for just $5/month.</li>
+<li><a href="http://squarespace.com/thetalkshow">Squarespace</a>: Start here. Go anywhere. Use code “jg” and save 10 percent.</li>
+</ul>
+
+</dd>
+
+
+</dl>
+
+<h2 class="dateline">Friday, 14 November 2014</h2>
+<dl class="linkedlist">
+<dt>
+<a href="http://www.androidpolice.com/2014/11/11/nexus-9-vs-ipad-air-2-a-mostly-subjective-comparison/">David Ruddock Compares the Nexus 9 and iPad Air&#160;2</a>&nbsp;<a class="permalink" title="Permanent link to ‘David Ruddock Compares the Nexus 9 and iPad Air 2’" href="http://daringfireball.net/linked/2014/11/14/ruddock-nexus-ipad">&#9733;</a>
+</dt>
+<dd>
+<p>I really enjoy reviews like this one by David Ruddock at Android Police. It&#8217;s often very interesting to read something from the point of view of someone more deeply attuned to another platform. This, from the list of &#8220;cons&#8221; for the iPad, caught my eye:</p>
+
+<blockquote>
+  <ul>
+<li>Is an iPad, will result in some people thinking you&#8217;re an Apple
+sycophant / the kind of person who lingers at coffee shops for 8
+hours a day.</li>
+</ul>
+</blockquote>
+
+<p>I often need reminding just how weird some people&#8217;s ideas are about Apple and Apple users.</p>
+
+<p>Substantially, these few bits stood out to me. Battery life:</p>
+
+<blockquote>
+  <p>Standby life on the Nexus 9 isn’t fantastic, either - I’m getting
+around 15% idle drain quite reliably every 24 hours, which is
+absolutely at odds with Google’s 30-day standby estimate. Even if
+you don&#8217;t agree with my assessment of the usage time life,
+Android&#8217;s idle drain is still an absolute embarrassment. I could
+let my first Air sit for a week untouched and the battery gauge
+would barely budge - maybe a few percent. Android has never been
+great about this, and it doesn&#8217;t seem to be getting much better.</p>
+</blockquote>
+
+<p>Safari vs. Chrome:</p>
+
+<blockquote>
+  <p>You can throw benchmarks and timed tests at me until you&#8217;re blue
+in the face - mobile Safari kicks Chrome&#8217;s ass every day of the
+week. The smoothness alone is evidence to me that while Google may
+care about a browser&#8217;s technical proficiency, Apple cares at least
+as much about its usability and consistency, if not more.</p>
+
+<p>Chrome for Android&#8217;s usability is a victim of Google&#8217;s
+cross-platform utopian vision, and for now, it&#8217;s just not a
+fantastic touch browser. Safari may not always be faster in every
+benchmark or timed comparison, but it&#8217;s smoother in all the ways
+that matter.</p>
+</blockquote>
+
+<p>The feel:</p>
+
+<blockquote>
+  <p>From a smoothness and stability standpoint, iOS 8 feels so much
+more refined and predictable than Lollipop does on the Nexus 9.
+Apple is known for obsessing over things like animation draw times
+and smooth scrolling, trying to create an experience that never
+feels jarring or rough around the edges. Apple seems to toil
+indefatigably to ensure those home screen swipes and launch
+animations are perfect every time. Moving to the more powerful A8X
+chip with three cores now means that smoothness persists even
+during app installs or other background operations, an area where
+the first Air occasionally would have difficulty.</p>
+
+<p>This is such a huge thing, for me, from a UX standpoint. Google
+has tried to instill these values in Android with things like
+Project Butter, but it&#8217;s never seemed to pan out exactly in the
+way I think we all hoped would. The obsession with smoothness in
+iOS is almost religious. In Android, it&#8217;s always seemed like an
+attitude of &#8220;hey, if you can keep things at around 60FPS, that&#8217;d
+be great or whatever.&#8221; I realize animations and such things are
+far more aesthetic than functional, but they can have a huge
+effect on how you perceive performance and feel about a device.
+Using the iPad just <em>feels</em> nicer, I don&#8217;t find myself getting
+annoyed by it nearly as often as the Nexus.</p>
+</blockquote>
+
+<p>This ties into one of my recent themes here on DF, regarding Google&#8217;s own iOS apps, and the asymmetry of the Google/Apple Android/iOS rivalries. Ruddock is clearly an Android guy, but more so than that he&#8217;s a <em>Google</em> guy. He can use an iPad and still have a Gmail app, still have a Google Maps app, still use Google Docs, etc. Google&#8217;s wide support for iOS makes it a lot more likely that an all-in Google platform user might prefer an iPad to an Android tablet.</p>
+
+</dd>
+
+
+<dt>
+<a href="http://appleinsider.com/articles/14/11/14/iphone-6-outselling-iphone-6-plus-by-3-to-1-margin-in-us---report">Report Claims iPhone 6 Outselling iPhone 6 Plus by 3-to-1 Margin in&#160;US</a>&nbsp;<a class="permalink" title="Permanent link to ‘Report Claims iPhone 6 Outselling iPhone 6 Plus by 3-to-1 Margin in US’" href="http://daringfireball.net/linked/2014/11/14/iphone6-iphone-6plus">&#9733;</a>
+</dt>
+<dd>
+<p>Take it with a grain of salt since the numbers don&#8217;t come from Apple, but interesting if true. 3-to-1 sounds about right to me. But there was an app analytics report a few weeks ago <a href="http://venturebeat.com/2014/10/20/iphone-6-outselling-the-6-plus-by-a-6-to-1-margin/">that pegged the ratio at 6-to-1</a>, and <a href="http://appleinsider.com/articles/14/10/28/apples-iphone-6-plus-selling-unexpectedly-well-as-supply-equalizes-says-t-mobile-ceo">T-Mobile CEO John Legere told Recode it was closer to 50-50</a>.</p>
+
+<p><strong>Update:</strong> TV Pro &#8212; a TV guide app in Germany &#8212; <a href="http://blog.equinux.com/de/2014/11/iphone-6-in-deutschland-3x-beliebter-als-iphone-6-plus/">is seeing the same 3-to-1 split</a>.</p>
+
+</dd>
+
+
+<dt>
+<a href="http://www.reuters.com/article/2014/11/14/us-google-glass-insight-idUSKCN0IY18E20141114">Reuters: ‘Google Glass Future Clouded as Some Early Believers Lose&#160;Faith’</a>&nbsp;<a class="permalink" title="Permanent link to ‘Reuters: ‘Google Glass Future Clouded as Some Early Believers Lose Faith’’" href="http://daringfireball.net/linked/2014/11/14/google-glass-clouded">&#9733;</a>
+</dt>
+<dd>
+<p>Reuters:</p>
+
+<blockquote>
+  <p>While Glass may find some specialized, even lucrative, uses in the
+workplace, its prospects of becoming a consumer hit in the near
+future are slim, many developers say.</p>
+</blockquote>
+
+<p>Shocker.</p>
+
+<p>(<a href="http://thetechblock.com/interest-in-google-glass-is-dropping/">Via Abdel Ibrahim</a>.)</p>
+
+</dd>
+
+
+<dt>
+<a href="http://www.strictlyvc.com/2014/11/12/unrest-nest/">Strictly VC on Nest’s Company&#160;Culture</a>&nbsp;<a class="permalink" title="Permanent link to ‘Strictly VC on Nest’s Company Culture’" href="http://daringfireball.net/linked/2014/11/14/strictly-vc-nest">&#9733;</a>
+</dt>
+<dd>
+<p>Connie Loizos, reporting for Strictly VC:</p>
+
+<blockquote>
+  <p>Sources who spoke to StrictlyVC and asked to remain anonymous say
+Fadell has fashioned a hierarchical structure reminiscent of TV’s
+“Game of Thrones.”</p>
+
+<p>According to one employee, “Almost every decision, no matter how
+small,” goes through either Fadell or Matt Rogers, who cofounded
+Nest with Fadell and was previously a senior manager at Apple.
+(Through a spokesperson, Fadell and Rogers declined to answer
+questions for this story.)</p>
+
+<p>“It’s always, ‘Tony and Matt want us to do this. We have to hit
+this deadline because Tony and Matt want us to.’ You definitely
+see people taking the path of least resistance because they don’t
+want to upset Tony.”</p>
+
+<p>Another employee calls it a “huge meeting culture, to the point
+where anyone at the director level or up spends their entire day
+in meetings, many of them duplicative meetings about the same
+subject, over and over to the point where a lot of people have
+complained.”</p>
+</blockquote>
+
+<p>Sounds like Nest&#8217;s acquisition of Dropcam isn&#8217;t going smoothly.</p>
+
+</dd>
+
+
+<dt>
+<a href="https://medium.com/@alexepstein/apple-commits-energy-accounting-fraud-d53849063b0d">Are ‘Green Credits’ a Legitimate Way to Account for Energy&#160;Usage?</a>&nbsp;<a class="permalink" title="Permanent link to ‘Are ‘Green Credits’ a Legitimate Way to Account for Energy Usage?’" href="http://daringfireball.net/linked/2014/11/14/apple-energy-accounting">&#9733;</a>
+</dt>
+<dd>
+<p>Alex Epstein makes the case that Apple&#8217;s claim that its &#8220;data centers are powered by 100 percent renewable energy sources, which result in zero greenhouse gas emissions&#8221; is fraudulent:</p>
+
+<blockquote>
+  <p>Imagine this scenario: Apple CEO Tim Cook wants to take an ocean
+liner across the Atlantic. He has a problem. Ocean liners run on
+oil but Cook wants to be “green.”</p>
+
+<p>What can he do?</p>
+
+<p>Well, he could try his luck with a sailboat. But the wind is
+volatile and unreliable &#8212; not to mention that a wind-swept voyage
+across the ocean would be dangerous.</p>
+
+<p>But then, when all hope seems lost, Apple Board member Al Gore
+offers an idea. Use an ocean liner, but install sails on top, so
+that at least part of the time the boat is at least partially
+powered by wind.</p>
+</blockquote>
+
+<p>Epstein is the author of a new book titled <em><a href="http://www.amazon.com/The-Moral-Case-Fossil-Fuels/dp/1591847443/">The Moral Case for Fossil Fuels</a></em>, so he&#8217;s clearly coming at this from a certain perspective.</p>
+
+</dd>
+
+
+</dl>
+
+<h2 class="dateline">Wednesday, 12 November 2014</h2>
+<dl class="linkedlist">
+<dt>
+<a href="https://www.flickr.com/photos/europeanspaceagency/sets/72157638315605535/">More Photos of Comet 67P From&#160;ESA</a>&nbsp;<a class="permalink" title="Permanent link to ‘More Photos of Comet 67P From ESA’" href="http://daringfireball.net/linked/2014/11/12/67p">&#9733;</a>
+</dt>
+<dd>
+<p>Glorious.</p>
+
+</dd>
+
+
+<dt>
+<a href="https://ph.news.yahoo.com/people-freaking-over-twitter-clunky-001757157.html">Twitter’s New ‘Strategy&#160;Statement’</a>&nbsp;<a class="permalink" title="Permanent link to ‘Twitter’s New ‘Strategy Statement’’" href="http://daringfireball.net/linked/2014/11/12/twitter-strategy-statement">&#9733;</a>
+</dt>
+<dd>
+<p>Twitter:</p>
+
+<blockquote>
+  <p>Reach the largest daily audience in the world by connecting
+everyone to their world via our information sharing and
+distribution platform products and be one of the top revenue
+generating Internet companies in the world.</p>
+</blockquote>
+
+<p>That&#8217;s 220 characters. If any company should be able to fit its strategy into a single tweet, it&#8217;s Twitter. So clunky. Worrisome that they can&#8217;t express themselves clearly.</p>
+
+<p>I can just see the argument. &#8220;Let&#8217;s call them <em>platforms</em>.&#8221; &#8220;No, <em>products</em>.&#8221; &#8220;Platforms!&#8221; &#8220;Products!&#8221; &#8220;Wait, I&#8217;ve got it: <em>platform products</em>.&#8221;</p>
+
+<p><a href="https://twitter.com/bdesham/status/532719308728979456">Benjamin Esham on Twitter</a>:</p>
+
+<blockquote>
+  <p>I’m sure there’s an artful way to use “world” three times in the
+same sentence, but that ain’t it.</p>
+</blockquote>
+
+</dd>
+
+
+<dt>
+<a href="http://toucharcade.com/2014/11/12/one-star-reviews-flood-monument-valley-following-paid-expansion-release/">One Star Reviews Flood ‘Monument Valley’ Following Paid Expansion&#160;Release</a>&nbsp;<a class="permalink" title="Permanent link to ‘One Star Reviews Flood ‘Monument Valley’ Following Paid Expansion Release’" href="http://daringfireball.net/linked/2014/11/12/monument-valley">&#9733;</a>
+</dt>
+<dd>
+<p>Eli Hodapp, writing for Touch Arcade:</p>
+
+<blockquote>
+  <p>I don&#8217;t know how many of those angry single star iTunes reviewers
+read TouchArcade&#8230; But, <em>seriously</em> guys? It seems like the hive
+mind of the App Store is continually pushing developers in to this
+unrealistic corner of demanding absolutely everything but not
+being willing to pay anything. The fact of the matter is Monument
+Valley is an amazing game, made by real artists, working in a real
+studio, getting paid real salaries, with real families they go
+home to and support. They&#8217;re selling their game for a total of six
+bucks if you buy both the game itself <em>and</em> the expansion. I don&#8217;t
+fully understand what happened to get us on this horrible Biff
+with the almanac timeline of Earth where this kind of thing is
+unacceptable to iOS gamers.</p>
+</blockquote>
+
+<p>Two fucking dollars. I&#8217;m going to the App Store to leave a 5-star review; such a <a href="https://itunes.apple.com/us/app/monument-valley/id728293409?mt=8&amp;uo=4&amp;at=10lMbH">beautiful and original work of art</a>, and the App Store rating is being trashed by cheapskate morons.</p>
+
+</dd>
+
+
+<dt>
+<a href="http://www.nytimes.com/interactive/2014/11/12/science/space/rosetta-philae-comet-landing.html">Landing on a Comet, 317 Million Miles From&#160;Home</a>&nbsp;<a class="permalink" title="Permanent link to ‘Landing on a Comet, 317 Million Miles From Home’" href="http://daringfireball.net/linked/2014/11/12/comet-photos">&#9733;</a>
+</dt>
+<dd>
+<p>These photos from the Rosetta spacecraft and Philae lander are just hauntingly beautiful. Can&#8217;t stop looking at them.</p>
+
+</dd>
+
+
+<dt>
+<a href="http://cir.ca/news/esa-lands-spacecraft-on-comet">ESA Philae Probe Successfully Lands on&#160;Comet</a>&nbsp;<a class="permalink" title="Permanent link to ‘ESA Philae Probe Successfully Lands on Comet’" href="http://daringfireball.net/linked/2014/11/12/philae-probe">&#9733;</a>
+</dt>
+<dd>
+<p>Circa:</p>
+
+<blockquote>
+  <p>The European Space Agency (ESA) Philae probe successfully landed
+on the Comet 67P, a first in space exploration.</p>
+
+<p>The Rosetta satellite and its probe payload arrived at the Comet
+67P/Churyumov-Gerasimenko Aug. 6 after 10 years, five months, and
+four days in space. Rosetta traveled 6.4 billion kilometers (3.98
+billion miles) on its journey and orbited the sun five times.</p>
+</blockquote>
+
+<p>10-year mission. 4 billion miles. Landing on a comet traveling 40,000 miles per hour. Science.</p>
+
+</dd>
+
+
+</dl>
+
+<h2 class="dateline">Tuesday, 11 November 2014</h2>
+<dl class="linkedlist">
+<dt>
+<a href="http://www.studioneat.com/blogs/main/15828468-a-new-business-model-for-slow-fast-slow">App as Calling&#160;Card</a>&nbsp;<a class="permalink" title="Permanent link to ‘App as Calling Card’" href="http://daringfireball.net/linked/2014/11/11/app-calling-card">&#9733;</a>
+</dt>
+<dd>
+<p>Dan Provost, Studio Neat:</p>
+
+<blockquote>
+  <p>Tom and I have been reading and thinking about these things for a
+while, and a few months ago we had a realization. Studio Neat is
+in a unique position. We are not just app developers, we also sell
+physical products. Products that are meant to work with the apps
+in a way that enhances both, as is the case with the Glif and Slow
+Fast Slow or Frameographer. What if we make apps that are free
+with &#8220;ads&#8221;, but the ad is simply for our other products? You know,
+the products that actually make money?</p>
+
+<p>It was an intriguing enough idea that we decided to try it, first
+with Slow Fast Slow. As of today, you can <a href="https://itunes.apple.com/us/app/slow-fast-slow/id727309825?mt=8">download</a> Slow Fast Slow
+for free. If you are unaware, Slow Fast Slow is our app for
+manipulating the speed of videos with our interactive timeline. It
+works amazingly well with the new 240 fps videos on the iPhones 6.</p>
+</blockquote>
+
+</dd>
+
+
+</dl>
+
+<hr class="ookiaks" />
+
+
+<div class="article">
+<h1><a href="http://daringfireball.net/2014/11/googles_app_aesthetic" title="Permanent link to ‘Google’s App Aesthetic’">Google’s App Aesthetic</a></h1>
+<h6 class="dateline">Monday,  3 November 2014</h6>
+
+<p>New today: updated Android apps <a href="http://gmailblog.blogspot.com/2014/11/a-new-day-for-google-calendar.html" title="Official Gmail Blog: A New Day for Google Calendar">for Google Calendar</a> and <a href="http://gmailblog.blogspot.com/2014/11/a-more-modern-gmail-app-for-android.html" title="Official Gmail Blog: A More Modern Gmail App for Android">Gmail</a>. Both look interesting &#8212; <a href="https://twitter.com/BenedictEvans/status/529380058238947328" title="Tweet from Benedict Evans.">as Benedict Evans succinctly put it</a>, “Google is reworking Mail and Calendar from database displays to task-led interfaces. I wonder how far they&#8217;ll take that.” </p>
+
+<p>And intriguingly, as Google&#8217;s new &#8220;<a href="http://www.google.com/design/spec" title="Google’s Material Design spec">material&#8221; design</a> language evolves, it&#8217;s very clearly heading in a different direction than iOS. Talking about <em>flatness</em> is simply too superficial to be a useful discussion. Superficially, iOS and Android seemingly converged toward flatness (and Windows Phone, of course, was there already), but once you get past those surface similarities, all three mobile platforms are evolving in noticeably different ways.</p>
+
+<p>But Google’s “Material Design” isn’t merely the design language for Android, it’s the design language for all the company’s software. One result of this is that Google&#8217;s iOS apps feel less and less like iOS apps with each major release. To me, they look and feel like Android apps running on iOS. Android users might disagree with that assessment, as much of what makes a good Android app Android-y is not how the software <em>looks</em> but the way it interacts with the system. But these Google apps certainly don’t look or feel quite like iOS apps. Their brand-new you-need-a-beta-invitation <a href="http://www.google.com/inbox/">Inbox app</a> is also interesting (I got an invitation last week), but even though it&#8217;s a brand-new app, if anything, it feels <em>less</em> like an iOS app than Google’s other iOS apps. For one thing, Inbox uses a blue background for the status bar, which is the system-standard cue to indicate that cellular tethering is engaged. Another example: None of the Google iOS apps I have on my iPhone (Maps, Gmail, Inbox) support the iOS standard swipe-from-left-edge shortcut to go back in the view hierarchy. That&#8217;s a two-year-old standard design pattern for iOS, and I find it downright essential with the bigger displays on the new iPhones. (In hindsight, it seems fairly obvious that Apple added this gesture in iOS 7 because they knew then that bigger-screen iPhones were in the pipeline.)</p>
+
+<p>One last thought. Lost in the competition between platforms (iOS vs. Android) is the more philosophical competition between native and in-browser web apps. In the early days of iOS, say, <a href="http://daringfireball.net/2009/11/iphone_web_apps_alternative" title="Yours truly, back in 2009: “iPhone Web Apps as an Alternative to the App Store”">circa</a> 2008-2011, it was easy to conflate these two battles in public debate, because Apple was seen as the primary proponent of native app development, and Google was seen as a proponent of cross-platform web apps. No more. Google today (like Facebook) seems all-in on native apps, at least (again, like Facebook) for post-PC devices. Just a few years ago, I used to see a lot more arguments from web-app proponents that native apps&#8217; dominance on mobile devices would be short-lived. I don&#8217;t see so much of that any more.</p>
+
+<p>One reason some people argue in favor of in-browser HTML/CSS/JavaScript web apps is that it&#8217;s the last bastion for <em><a href="http://en.wikipedia.org/wiki/Write_once,_run_anywhere">write-once-run-everywhere</a></em>. The lament I hear most frequently about mobile development is that if you want to reach the widest possible audience, you have to write at least two apps, iOS and Android. If you include Windows Phone, now you&#8217;re up to three. My take has always been: Tough luck. The point of making apps shouldn&#8217;t be about making life easier for developers, it&#8217;s about making the best possible apps for users. If you value user experience above developer convenience, it&#8217;s easy to see why native apps are winning the war. But even on the desktop, with PC browsers, write-once-run-everywhere is often just a pipe dream. <a href="/misc/2014/11/wally-world-is-closed.png">Here&#8217;s the screen I see</a> when I try to log into the desktop web app version of Google Inbox using Safari on OS X Yosemite.</p>
+
+<p>I don&#8217;t think the web version of Inbox is Chrome-only because Google wants to lock people into Chrome. I don&#8217;t think it&#8217;s about spite. I think it was just a practical decision that fell out of a desire to push the limits of the in-browser web app experience, rather than limit themselves to a common baseline of functionality available across the <em>X</em> top browsers. Cynics surely look at this as the second coming of Microsoft&#8217;s IE-only web technologies from the late &#8217;90s, but my guess is that support for additional browsers <em>is</em> coming, that Safari is probably high on that list, and they shipped Chrome-first only because it was the fastest way they could ship. One reason Google created Chrome in the first place was to have a browser they controlled to better enable the sort of web apps they wanted to build.</p>
+
+<p>In short, though, a Chrome-only app from Google &#8212; even if only temporary &#8212; is not how the world of standards-supporting web apps was supposed to work, in the aftermath of the breakup of Microsoft&#8217;s IE hegemony. But I’m not surprised. Practicality trumps idealism in the long-run, and the idea that the post-IE world of web browsers would lead to a world of universal cross-platform software is pretty much the definition of an idealistic crusade.</p>
+
+<p>I see a certain irony in all this. Google is cultivating a single look-and-feel for their apps. But for mobile they’re creating them as separate native Android and iOS apps. But their latest web app for desktop PCs, Inbox, only runs in one browser, Chrome.&nbsp;<a class="permalink" title="Permanent link to ‘Google’s App Aesthetic’" href="http://daringfireball.net/2014/11/googles_app_aesthetic">&#9733;</a></p>
+
+</div> <!-- article -->
+
+<hr class="ookiaks" />
+
+
+<div id="Footer">
+<form id="SiteSearch" action="https://daringfireball.net/search" method="get" style="margin-bottom: 2.5em;">
+<div>
+<input name="q" type="text" value="" style="margin-right: 8px; width: 26em;" />
+<input type="submit" value="Search" />
+</div>
+</form>
+
+<p class="smallprint">
+<a href="/linked/" title="Recent Linked List entries and archive.">Linked List</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/preferences/" title="Customize the font size and presentation options for this web site.">Display Preferences</a><br />
+Copyright &copy; 2002–2014 The Daring Fireball Company LLC.</p>
+</div>
+
+<div id="SidebarTheDeck">
+<script type="text/javascript">
+// <![CDATA[
+	(function(id) {
+		document.write('<script type="text/javascript" src="' +
+			'//connect.decknetwork.net/deck' + id + '_js.php?' +
+			(new Date().getTime()) + '"></' + 'script>');
+	})("DF");
+	var deckDiv = document.getElementById("SidebarTheDeck");
+	var sidebarDiv = document.getElementById("Sidebar");
+	sidebarDiv.appendChild(deckDiv);
+// ]]>
+</script>
+
+<p id="ViaTheDeck"><a href="http://decknetwork.net/">
+<img src="//daringfireball.net/graphics/madison/via_the_deck.png"    alt="Ads via The Deck" class="the_deck_promo" width="70" />
+<span>Ads via The Deck</span>
+</a></p>
+
+</div>
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-593949-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+<!-- Asynchronously load Mint -->
+<script type="text/javascript">
+(function () {
+	var ma = document.createElement('script');
+	ma.type = 'text/javascript';
+	ma.src = '/mint/?js';
+	ma.async = true;
+	var s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(ma, s);
+})();
+</script>
+</div> <!-- Main -->
+
+</div> <!-- Box -->
+</body>
+</html>
+<!-- 0.0012 seconds -->

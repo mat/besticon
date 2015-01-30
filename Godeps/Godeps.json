@@ -1,0 +1,74 @@
+{
+	"ImportPath": "github.com/mat/besticon",
+	"GoVersion": "go1.4.1",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "code.google.com/p/go.image/bmp",
+			"Comment": "null-45",
+			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
+		},
+		{
+			"ImportPath": "code.google.com/p/go.image/tiff",
+			"Comment": "null-45",
+			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
+		},
+		{
+			"ImportPath": "code.google.com/p/go.image/webp",
+			"Comment": "null-45",
+			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
+		},
+		{
+			"ImportPath": "code.google.com/p/go.net/html",
+			"Comment": "null-115",
+			"Rev": "b3b868a2af71e3fe11e3dc1345f0a0a64835724a"
+		},
+		{
+			"ImportPath": "code.google.com/p/go.net/publicsuffix",
+			"Comment": "null-115",
+			"Rev": "b3b868a2af71e3fe11e3dc1345f0a0a64835724a"
+		},
+		{
+			"ImportPath": "code.google.com/p/go.text/encoding",
+			"Comment": "null-90",
+			"Rev": "d65bffbc88a153d23a6d2a864531e6e7c2cde59b"
+		},
+		{
+			"ImportPath": "code.google.com/p/go.text/transform",
+			"Comment": "null-90",
+			"Rev": "d65bffbc88a153d23a6d2a864531e6e7c2cde59b"
+		},
+		{
+			"ImportPath": "github.com/moovweb/gokogiri",
+			"Comment": "4.8.28-33-g56545ca",
+			"Rev": "56545ca2ae760809669f000b924acd30769e4da3"
+		},
+		{
+			"ImportPath": "golang.org/x/image/riff",
+			"Comment": "null-45",
+			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
+		},
+		{
+			"ImportPath": "golang.org/x/image/tiff/lzw",
+			"Comment": "null-45",
+			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
+		},
+		{
+			"ImportPath": "golang.org/x/image/vp8",
+			"Comment": "null-45",
+			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
+		},
+		{
+			"ImportPath": "golang.org/x/image/vp8l",
+			"Comment": "null-45",
+			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
+		},
+		{
+			"ImportPath": "golang.org/x/image/webp/nycbcra",
+			"Comment": "null-45",
+			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
+		}
+	]
+}

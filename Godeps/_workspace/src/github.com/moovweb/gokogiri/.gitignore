@@ -1,0 +1,10 @@
+*.out
+build/*
+_*
+*.6
+*.o
+libxml/test/ctest/test
+.DS_Store
+test_output.txt
+.jank
+jank.yml

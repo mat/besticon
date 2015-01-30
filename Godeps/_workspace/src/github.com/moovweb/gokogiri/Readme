@@ -1,0 +1,22 @@
+Gokogiri
+by Zhigang Chen and Hampton Catlin
+
+A pretty straightforward and simple library for using LibXML in native Go.
+
+This is a major rewrite from v0 in the following places:
+
+    - Separation of XML and HTML
+    - Put more burden of memory allocation/deallocation on Go
+    - Fragment parsing -- no more deep-copy
+    - Serialization
+    - Some API adjustment
+
+To install
+
+    - sudo apt-get install libxml2-dev
+    - go get github.com/moovweb/gokogiri
+
+To run test
+
+    - go test github.com/moovweb/gokogiri/html
+    - go test github.com/moovweb/gokogiri/xml

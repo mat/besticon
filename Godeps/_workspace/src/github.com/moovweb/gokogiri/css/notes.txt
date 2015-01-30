@@ -1,0 +1,149 @@
+group         ->  selector (',' selector)*
+
+selector      ->  '>'? sequence (combinator sequence)*
+
+sequence      ->  spaces? element qualifier*
+              ->  spaces? qualifier+
+
+combinator    ->  spaces? ('+' | '~' | '>')
+              ->  spaces
+
+element       ->  universal | type
+
+universal     ->  LEXEME ('*')
+
+type          ->  LEXEME (\w+)
+
+qualifier     ->  attribute
+              ->  class
+              ->  id
+              ->  pseudo-class
+
+attribute     ->  LEXEME (complicated regexp)
+
+class         ->  LEXEME ('.' identifier)
+
+id            ->  LEXEME ('#' identifier)
+
+pseudo-class  ->  ':first-child'
+              ->  ':first-of-type'
+              ->  ':only-child'
+              ->  ':only-of-type'
+              ->  ':empty'
+              ->  (':nth-child' | 'nth-of-type') '(' predicate ')'
+              ->  ':not' '(' (element | qualifier) ')
+
+predicate     ->  LEXEME(odd|even)
+              ->  LEXEME([-+]?\d+n[-+]\d+)
+
+
+
+
+<P> > <A>:first-child<B>
+<P>/*[1][./self::<A> and <B>]<B>
+#<P>//*/*[1][./self::<A>]<B>
+
+<A>:first-child<B>
+/*[position() = 1 and ./self::<A> and <B>]
+//*/*[position = 1 and ./self::<A> and <B>]
+
+
+div, DEEP
+/descendant-or-self::*/*[./self::div]
+
+div, FLAT
+/child::*[./self::div]
+
+div span
+/descendant-or-self::*/*[./self::div] /descendant-or-self::*/*[./self::span]
+
+div > span
+/descendant-or-self::*/*[./self::div] /child::*[./self::span]
+
+div ~ span
+/descendant-or-self::*/*[./self::div] /following-sibling::*[./self::span]
+
+div + span
+/descendant-or-self::*/*[./self::div] /following-sibling::*[./self::span and position()=1]
+
+div:first-child, DEEP
+/descendant-or-self::*/*[./self::div and position()=1]
+
+div:first-child, FLAT
+/child::*[./self::div and position()=1]
+
+div:first-of-type, DEEP
+/descendant-or-self::*/*[./self::div][position()=1]
+
+div:last-of-type, DEEP
+/descendant-or-self::*/*[./self::div][position()=last()]
+
+
+div:nth-child(odd), DEEP
+/child::*[./self::div and position() mod 2 = 1]
+
+div:nth-child(a), DEEP
+/child::*[./self::div and position()=a]
+
+
+
+<A>:first-child
+descendant-or-self::*/*[./self::<A> and position()=1]
+
+
+<A>:first-child:last-child
+
+/*[position() = 1 and ./self::<A>]
+
+
+foo + bar + hux --> foo [+ bar] [+ hux]
+foo/following-sibling::*[1]/self::bar/following-sibling::*[1]/self::hux
+
+foo ~ bar ~ hux
+foo/following-sibling::bar/following-sibling::hux
+
+foo bar
+foo//bar
+
+foo > bar
+foo/bar
+
+div.foo:nth-of-type(3)
+div[@class='foo'][3]
+
+div:nth-child(3).foo
+
+*[3][./self::div][@class='foo']
+
+foo.bar:first-child
+*[1][./self::foo[@class='bar']]
+
+<something>:first-child
+*[position()=1][./self::<something>]
+
+<something>:not(:first-child)
+*[not(position()=1)][./self::<something>]
+
+
+div:nth-child(3)
+*[3][./self::div]
+
+// div *[3][./self::
+
+
+:nth-child(an+b)
+*[(position() - b) mod a = 0]
+
+
+:not(div)
+*[not(./self::div)]
+
+:first-child
+*[position() = 1]
+:nth-child(4)
+*[position() = 4]
+
+:not(:first-child)
+*[not(position() = 1)]
+:not(:nth-child(4))
+*[not(position() = 4)]

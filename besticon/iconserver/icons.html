@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Icons for {{ .Host }}">
+
+    <title>The Icon Finder</title>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
+    <link rel="stylesheet" href="./assets/main-min.css">
+
+    <meta property="og:title"       content="The Icon Finder" />
+    <meta property="og:description" content="Icons for {{ .Host }}" />
+    <meta property="og:image"       content="{{ .Best }}" />
+
+    <link rel="icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  </head>
+
+  <body>
+    <div id="layout">
+
+      <div id="main">
+        <div class="header">
+          <div class="title">
+            <h1><a href="/" class="homelink">The Icon Finder
+                <img class="logo" src="./assets/icon.svg" alt='Site logo'></a>
+            </h1>
+          </div>
+          <h2>A Service Finding Icons on Web Sites.</h2>
+        </div>
+
+        <div class="content">
+          <h2 id="result" class="content-subhead">Find Icons</h2>
+
+          <form action="/icons#result" method="GET" class="pure-form pure-g">
+            <div class="pure-u-1 pure-u-sm-3-5 pure-u-lg-3-5 pure-u-xl-3-5">
+              <div class="lrpad">
+                <input name="url" class="pure-input-1" type="text" placeholder="Web Site" autocomplete="off" autocorrect="off"
+                autocapitalize="off" spellcheck="false" value="{{.URL}}">
+              </div>
+            </div>
+            <div class="pure-u-1 pure-u-sm-1-5 pure-u-lg-1-5 pure-u-xl-1-5">
+              <div class="lrpad">
+                <button type="submit" class="pure-button pure-button-primary pure-input-1">Go</button>
+              </div>
+            </div>
+          </form>
+
+          {{ if .Error }}
+          <div id="error">
+            {{ .Error }}
+          </div>
+          {{ end }}
+
+          {{ if ((len .Icons) ne 0) }}
+          <h2 class="content-subhead">Icons for {{ .Host }}</h2>
+
+          <table class="pure-table pure-table-horizontal">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Dimensions</th>
+                <th>URL</th>
+                <th>Format</th>
+              </tr>
+            </thead>
+            {{range .Icons}}
+            <tr class='icon'>
+              <td><a href='{{.URL}}'><img src='{{.URL}}' alt=''></a></td>
+              <td class='dimensions'>{{.Width}}x{{.Height}}</td>
+              <td class='url'><a href='{{.URL}}'>{{.URL}}</a></td>
+              <td class='format'>{{.Format}}</td>
+            </tr>
+            {{end}}
+          </table>
+          {{ end }}
+
+          <h2 class="content-subhead">JSON Result</h2>
+          This result may be exported to JSON using the API response at
+          <a href="/api/icons?url={{ .URL }}">http://<wbr>icons.better-idea.org/<wbr>api/icons?<wbr>url={{ .URL }}</a>.
+        </div>
+      </div>
+    </div>
+
+    <div class="footer l-box">
+      <p>
+      <a href='http://icons.better-idea.org'>The Icon Finder</a> &dash; in search for icons since January 2015.
+      Written in <a href='http://golang.org'>Go</a>, 
+      source code <a href="https://github.com/mat/besticon">available</a>.
+      Created by <a href='http://www.better-idea.org'>Matthias Lüdtke</a>.
+      </p>
+    </div>
+
+  </body>
+</html>
+
