@@ -60,8 +60,8 @@ func logResponse(w io.Writer, res *http.Response, body bool) {
 
 const recordSeparator string = "*************vcr*************\n"
 
-func (t recorderTransport) logSeparator() {
-	fmt.Fprintf(t.writer, recordSeparator)
+func logSeparator(w io.Writer) {
+	fmt.Fprintf(w, recordSeparator)
 }
 
 var defaultTransport = &http.Transport{}
@@ -79,7 +79,7 @@ func (t *recorderTransport) RoundTrip(r *http.Request) (*http.Response, error) {
 
 	logRequest(t.writer, r)
 	logResponse(t.writer, resp, true)
-	t.logSeparator()
+	logSeparator(t.writer)
 
 	return resp, err
 }
