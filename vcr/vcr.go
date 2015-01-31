@@ -3,6 +3,7 @@ package vcr
 import (
 	"bufio"
 	"bytes"
+	"compress/gzip"
 	"errors"
 	"fmt"
 	"io"
@@ -15,6 +16,33 @@ import (
 	"strings"
 	"sync"
 )
+
+func Client(vcrPath string) (*http.Client, io.Closer, error) {
+	gz, e := os.Open(vcrPath)
+
+	// Record VCR
+	if e != nil {
+		f, e := os.Create(vcrPath)
+		if e != nil {
+			return nil, f, e
+		}
+		gz := gzip.NewWriter(f)
+		client := NewRecordingClient(gz)
+		return &client, gz, nil
+	}
+
+	// Replay VCR
+	f, e := gzip.NewReader(gz)
+	if e != nil {
+		return nil, f, e
+	}
+	client, e := NewReplayerClient(f)
+	if e != nil {
+		return nil, f, e
+	}
+
+	return &client, f, nil
+}
 
 func logRequest(w io.Writer, req *http.Request) error {
 	b, err := httputil.DumpRequestOut(req, false)

@@ -44,7 +44,11 @@ type Icon struct {
 // FetchBestIcon takes a siteURL and returns the icon with
 // the largest dimensions for this site or an error.
 func FetchBestIcon(siteURL string) (*Icon, error) {
-	icons, e := FetchIcons(siteURL)
+	return fetchBestIconWithClient(siteURL, &http.Client{})
+}
+
+func fetchBestIconWithClient(siteURL string, c *http.Client) (*Icon, error) {
+	icons, e := fetchIconsWithClient(siteURL, c)
 	if e != nil {
 		return nil, e
 	}
