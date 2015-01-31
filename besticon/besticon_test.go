@@ -63,11 +63,12 @@ func TestNetflixWitCookieRedirects(t *testing.T) {
 	assertEquals(t, expectedImages, actualImages)
 }
 
-func TestGoogleWithOnePixelGifs(t *testing.T) {
-	actualImages, err := fetchIconsWithVCR("google.vcr", "google.com")
+func TestAolWithOnePixelGifs(t *testing.T) {
+	actualImages, err := fetchIconsWithVCR("aol.vcr", "aol.com")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
-		{URL: "http://www.google.de/favicon.ico?gfe_rd=cr&ei=JSbJVO7AFaeh8wfo-oHIAQ", Width: 32, Height: 32, Format: "ico", Bytes: 5430, Error: error(nil), Sha1sum: "e2020bf4f2b65f62434c62ea967973140b3300df"},
+		{URL: "http://www.aol.com/favicon.ico", Width: 32, Height: 32, Format: "ico", Bytes: 7886, Error: error(nil), Sha1sum: "c474f8307362367be553b884878e221f25fcb80b"},
+		{URL: "http://www.aol.com/favicon.ico?v=2", Width: 32, Height: 32, Format: "ico", Bytes: 7886, Error: error(nil), Sha1sum: "c474f8307362367be553b884878e221f25fcb80b"},
 	}
 
 	assertEquals(t, expectedImages, actualImages)
