@@ -27,9 +27,9 @@ func TestGetIcons(t *testing.T) {
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "text/html; charset=utf-8", w.Header().Get("Content-Type"))
 
-	assertStringContains(t, w.Body.String(), "Icons for apple.com")
+	assertStringContains(t, w.Body.String(), "Icons on apple.com")
 
-	assertStringContains(t, w.Body.String(), "<img src='http://www.apple.com/favicon.ico' alt=''>")
+	assertStringContains(t, w.Body.String(), "<img src='http://www.apple.com/favicon.ico'")
 	assertStringContains(t, w.Body.String(), "<a href='http://www.apple.com/favicon.ico'>")
 	assertStringContains(t, w.Body.String(), "<td class='dimensions'>32x32</td>")
 }
