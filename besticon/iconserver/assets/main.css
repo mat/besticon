@@ -8,7 +8,7 @@ body {
 }
 
 td img {
-  max-width: 75px;
+  max-width: 57px;
 }
 
 td.url {
@@ -123,3 +123,12 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     .footer a {
         color: #ddd;
     }
+
+
+@media (max-width: 42em) {
+  td.url, th.url {
+    display:none; 
+    visibility:hidden;
+  }
+}
+
