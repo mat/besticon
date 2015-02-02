@@ -329,6 +329,10 @@ func sha1Sum(b []byte) string {
 	return fmt.Sprintf("%x", bs)
 }
 
+func (i *Icon) ImgWidth() int {
+	return i.Width / 2.0
+}
+
 type byWidthHeight []Icon
 
 func (a byWidthHeight) Len() int      { return len(a) }

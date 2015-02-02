@@ -64,15 +64,15 @@
                 <th></th>
                 <th>Size</th>
                 <th class='url'>URL</th>
-                <th>Format</th>
+                <th>Type</th>
               </tr>
             </thead>
             {{range .Icons}}
             <tr class='icon'>
-              <td><a href='{{.URL}}'><img src='{{.URL}}' alt=''></a></td>
+              <td><a href='{{.URL}}'><img src='{{.URL}}' width='{{ .ImgWidth }}' alt=''></a></td>
               <td class='dimensions'>{{.Width}}x{{.Height}}</td>
               <td class='url'><a href='{{.URL}}'>{{.URL}}</a></td>
-              <td class='format'>{{.Format}}</td>
+              <td class='type'>{{.Format}}</td>
             </tr>
             {{end}}
           </table>
