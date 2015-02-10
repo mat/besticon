@@ -125,7 +125,7 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
 
 
-@media (max-width: 42em) {
+@media (max-width: 35.5em) {
   td.url, th.url {
     display:none; 
     visibility:hidden;
