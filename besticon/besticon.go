@@ -97,26 +97,26 @@ func fetchIconsWithClient(siteURL string, c *http.Client) ([]Icon, error) {
 }
 
 func fetchHTML(url string, c *http.Client) ([]byte, *url.URL, error) {
-	resp, e := get(c, url)
+	r, e := get(c, url)
 	if e != nil {
 		return nil, nil, e
 	}
 
-	if !(resp.StatusCode >= 200 && resp.StatusCode < 300) {
+	if !(r.StatusCode >= 200 && r.StatusCode < 300) {
 		return nil, nil, errors.New("besticon: not found")
 	}
 
-	b, e := ioutil.ReadAll(resp.Body)
+	b, e := ioutil.ReadAll(r.Body)
 	if e != nil {
 		return nil, nil, e
 	}
-	defer resp.Body.Close()
+	defer r.Body.Close()
 	if len(b) == 0 {
 		return nil, nil, errors.New("besticon: empty response")
 	}
 
 	reader := bytes.NewReader(b)
-	contentType := resp.Header.Get("Content-Type")
+	contentType := r.Header.Get("Content-Type")
 	utf8reader, e := charset.NewReader(reader, contentType)
 	if e != nil {
 		return nil, nil, e
@@ -126,7 +126,7 @@ func fetchHTML(url string, c *http.Client) ([]byte, *url.URL, error) {
 		return nil, nil, e
 	}
 
-	return utf8bytes, resp.Request.URL, nil
+	return utf8bytes, r.Request.URL, nil
 }
 
 var iconPaths = []string{
