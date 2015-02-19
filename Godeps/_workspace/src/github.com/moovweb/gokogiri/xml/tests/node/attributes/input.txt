@@ -1,1 +1,0 @@
-<foo id="a" myname="ff"><bar class="shine"/></foo>

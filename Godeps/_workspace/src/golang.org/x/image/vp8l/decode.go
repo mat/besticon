@@ -6,7 +6,7 @@
 //
 // The VP8L specification is at:
 // https://developers.google.com/speed/webp/docs/riff_container
-package vp8l
+package vp8l // import "golang.org/x/image/vp8l"
 
 import (
 	"bufio"

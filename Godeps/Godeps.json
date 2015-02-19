@@ -6,6 +6,11 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "code.google.com/p/cascadia",
+			"Comment": "null-31",
+			"Rev": "5d796540e3cb93ea0556c897e6a3c7690f614d35"
+		},
+		{
 			"ImportPath": "code.google.com/p/go.image/bmp",
 			"Comment": "null-45",
 			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
@@ -21,54 +26,51 @@
 			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
 		},
 		{
-			"ImportPath": "code.google.com/p/go.net/html",
-			"Comment": "null-115",
-			"Rev": "b3b868a2af71e3fe11e3dc1345f0a0a64835724a"
+			"ImportPath": "code.google.com/p/go.net/html/charset",
+			"Comment": "null-240",
+			"Rev": "937a34c9de13c766c814510f76bca091dee06028"
 		},
 		{
 			"ImportPath": "code.google.com/p/go.net/publicsuffix",
-			"Comment": "null-115",
-			"Rev": "b3b868a2af71e3fe11e3dc1345f0a0a64835724a"
+			"Comment": "null-240",
+			"Rev": "937a34c9de13c766c814510f76bca091dee06028"
 		},
 		{
-			"ImportPath": "code.google.com/p/go.text/encoding",
-			"Comment": "null-90",
-			"Rev": "d65bffbc88a153d23a6d2a864531e6e7c2cde59b"
-		},
-		{
-			"ImportPath": "code.google.com/p/go.text/transform",
-			"Comment": "null-90",
-			"Rev": "d65bffbc88a153d23a6d2a864531e6e7c2cde59b"
-		},
-		{
-			"ImportPath": "github.com/moovweb/gokogiri",
-			"Comment": "4.8.28-33-g56545ca",
-			"Rev": "56545ca2ae760809669f000b924acd30769e4da3"
+			"ImportPath": "github.com/PuerkitoBio/goquery",
+			"Comment": "v0.3.2-69-g4cf64c5",
+			"Rev": "4cf64c51f7e80d56d9ae2ffe7d684d3dd5dbd5d0"
 		},
 		{
 			"ImportPath": "golang.org/x/image/riff",
-			"Comment": "null-45",
-			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
+			"Rev": "7f6859d3853a76e5c6de50cac970173a9b803517"
 		},
 		{
 			"ImportPath": "golang.org/x/image/tiff/lzw",
-			"Comment": "null-45",
-			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
+			"Rev": "7f6859d3853a76e5c6de50cac970173a9b803517"
 		},
 		{
 			"ImportPath": "golang.org/x/image/vp8",
-			"Comment": "null-45",
-			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
+			"Rev": "7f6859d3853a76e5c6de50cac970173a9b803517"
 		},
 		{
 			"ImportPath": "golang.org/x/image/vp8l",
-			"Comment": "null-45",
-			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
+			"Rev": "7f6859d3853a76e5c6de50cac970173a9b803517"
 		},
 		{
 			"ImportPath": "golang.org/x/image/webp/nycbcra",
-			"Comment": "null-45",
-			"Rev": "ecb55bf6755d151e154a780019bab0a812b3a8da"
+			"Rev": "7f6859d3853a76e5c6de50cac970173a9b803517"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html",
+			"Rev": "947224908606a5aa6af4427c3a2cea51387aa38a"
+		},
+		{
+			"ImportPath": "golang.org/x/text/encoding",
+			"Rev": "ed53bb6dd60bfaea3616dab9e3c8bf7bfec09c9f"
+		},
+		{
+			"ImportPath": "golang.org/x/text/transform",
+			"Rev": "ed53bb6dd60bfaea3616dab9e3c8bf7bfec09c9f"
 		}
 	]
 }

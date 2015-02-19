@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"os"
 	"reflect"
+	"sort"
 	"testing"
 )
 
@@ -102,13 +103,6 @@ func TestARDWithSortBySize(t *testing.T) {
 	assertEquals(t, expectedImages, actualImages)
 }
 
-func TestParsingNotHTML(t *testing.T) {
-	actualImages, err := fetchIconsWithVCR("not_image.vcr", "http://wikipedia.org/favicon.ico")
-
-	assertEquals(t, 0, len(actualImages))
-	assertEquals(t, errors.New("besticon: could not parse html"), err)
-}
-
 func TestParsingEmptyResponse(t *testing.T) {
 	actualImages, err := fetchIconsWithVCR("empty_body.vcr", "foobar.com")
 
@@ -119,6 +113,7 @@ func TestParsingEmptyResponse(t *testing.T) {
 func mustFindIconLinks(html []byte) []string {
 	links, e := findIcons(html)
 	check(e)
+	sort.Strings(links)
 	return links
 }
 
@@ -134,17 +129,21 @@ func TestFindBestIconNoIcons(t *testing.T) {
 }
 
 func TestLinkExtraction(t *testing.T) {
-	assertEquals(t, []string{"/graphics/favicon.ico?v=005",
-		"/graphics/apple-touch-icon.png"},
-		mustFindIconLinks(mustReadFile("testdata/daringfireball.html")))
+	links := mustFindIconLinks(mustReadFile("testdata/daringfireball.html"))
+	assertEquals(t, []string{
+		"/graphics/apple-touch-icon.png",
+		"/graphics/favicon.ico?v=005",
+	}, links)
 
-	assertEquals(t, []string{"/wp-content/assets/dist/img/icon/favicon.ico",
-		"/wp-content/assets/dist/img/icon/apple-touch-icon.png",
-		"/wp-content/assets/dist/img/icon/apple-touch-icon-precomposed.png",
-		"/wp-content/assets/dist/img/icon/apple-touch-icon-57x57-precomposed.png",
+	links = mustFindIconLinks(mustReadFile("testdata/newyorker.html"))
+	assertEquals(t, []string{
 		"/wp-content/assets/dist/img/icon/apple-touch-icon-114x114-precomposed.png",
-		"/wp-content/assets/dist/img/icon/apple-touch-icon-144x144-precomposed.png"},
-		mustFindIconLinks(mustReadFile("testdata/newyorker.html")))
+		"/wp-content/assets/dist/img/icon/apple-touch-icon-144x144-precomposed.png",
+		"/wp-content/assets/dist/img/icon/apple-touch-icon-57x57-precomposed.png",
+		"/wp-content/assets/dist/img/icon/apple-touch-icon-precomposed.png",
+		"/wp-content/assets/dist/img/icon/apple-touch-icon.png",
+		"/wp-content/assets/dist/img/icon/favicon.ico",
+	}, links)
 }
 
 func TestImageSizeDetection(t *testing.T) {

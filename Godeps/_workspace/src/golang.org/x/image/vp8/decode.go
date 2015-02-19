@@ -5,7 +5,7 @@
 // Package vp8 implements a decoder for the VP8 lossy image format.
 //
 // The VP8 specification is RFC 6386.
-package vp8
+package vp8 // import "golang.org/x/image/vp8"
 
 // This file implements the top-level decoding algorithm.
 

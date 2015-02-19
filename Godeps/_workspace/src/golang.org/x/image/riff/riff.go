@@ -11,7 +11,7 @@
 //
 // A detailed description of the format is at
 // http://www.tactilemedia.com/info/MCI_Control_Info.html
-package riff
+package riff // import "golang.org/x/image/riff"
 
 import (
 	"errors"

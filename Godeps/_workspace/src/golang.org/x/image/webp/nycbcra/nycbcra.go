@@ -4,7 +4,7 @@
 
 // Package nycbcra provides non-alpha-premultiplied Y'CbCr-with-alpha image and
 // color types.
-package nycbcra
+package nycbcra // import "golang.org/x/image/webp/nycbcra"
 
 import (
 	"image"

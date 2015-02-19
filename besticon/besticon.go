@@ -26,8 +26,7 @@ import (
 
 	"code.google.com/p/go.net/html/charset"
 	"code.google.com/p/go.net/publicsuffix"
-	"github.com/moovweb/gokogiri"
-	"github.com/moovweb/gokogiri/xml"
+	"github.com/PuerkitoBio/goquery"
 )
 
 // Icon holds icon information.
@@ -164,46 +163,30 @@ func assembleIconLinks(siteURL *url.URL, html []byte) ([]string, error) {
 	return result, nil
 }
 
-var xpaths = []string{
-	"//link[@rel='icon']/@href",
-	"//link[@rel='shortcut icon']/@href",
-	"//link[@rel='apple-touch-icon']/@href",
-	"//link[@rel='apple-touch-icon-precomposed']/@href",
-}
+var csspaths = strings.Join([]string{
+	"link[rel='icon']",
+	"link[rel='shortcut icon']",
+	"link[rel='apple-touch-icon']",
+	"link[rel='apple-touch-icon-precomposed']",
+}, ", ")
 
 var errParseHTML = errors.New("besticon: could not parse html")
 
 func findIcons(html []byte) ([]string, error) {
-	doc, e := gokogiri.ParseHtml(html)
+	doc, e := goquery.NewDocumentFromReader(bytes.NewReader(html))
 	if e != nil || doc == nil {
 		return nil, errParseHTML
 	}
-	defer doc.Free()
-
-	root := doc.Root()
-	if root == nil {
-		return nil, errParseHTML
-	}
 
 	hits := []string{}
-	for _, xpath := range xpaths {
-		hits = append(hits, extractContent(root, xpath)...)
-	}
+	doc.Find(csspaths).Each(func(i int, s *goquery.Selection) {
+		href, ok := s.Attr("href")
+		if ok && href != "" {
+			hits = append(hits, href)
+		}
+	})
 
 	return hits, nil
-}
-
-func extractContent(root *xml.ElementNode, xpath string) []string {
-	nodes, e := root.Search(xpath)
-	if e != nil {
-		return []string{}
-	}
-
-	hits := []string{}
-	for _, node := range nodes {
-		hits = append(hits, node.Content())
-	}
-	return hits
 }
 
 func fetchAllIcons(urls []string, c *http.Client) []Icon {

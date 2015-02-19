@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<foo xmlns:foo="bar">
-  <foo:bar1/>
-  <bar2/>
-</foo>
