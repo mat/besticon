@@ -102,6 +102,10 @@ func fetchHTML(url string, c *http.Client) ([]byte, *url.URL, error) {
 		return nil, nil, e
 	}
 
+	if !(resp.StatusCode >= 200 && resp.StatusCode < 300) {
+		return nil, nil, errors.New("besticon: not found")
+	}
+
 	b, e := ioutil.ReadAll(resp.Body)
 	if e != nil {
 		return nil, nil, e

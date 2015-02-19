@@ -103,6 +103,13 @@ func TestARDWithSortBySize(t *testing.T) {
 	assertEquals(t, expectedImages, actualImages)
 }
 
+func TestParsingInexistentSite(t *testing.T) {
+	actualImages, err := fetchIconsWithVCR("not_existent.vcr", "http://wikipedia.org/does-not-exist")
+
+	assertEquals(t, errors.New("besticon: not found"), err)
+	assertEquals(t, 0, len(actualImages))
+}
+
 func TestParsingEmptyResponse(t *testing.T) {
 	actualImages, err := fetchIconsWithVCR("empty_body.vcr", "foobar.com")
 
