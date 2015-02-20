@@ -11,7 +11,6 @@ Source code powering The Icon Finder at <http://icons.better-idea.org>.
 ### Dependencies
 
  - <http://golang.org>
- - libxml2
 
 ### Setup
 
