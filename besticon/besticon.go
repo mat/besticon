@@ -14,6 +14,7 @@ import (
 	"net/url"
 	"sort"
 	"strings"
+	"time"
 
 	// Load support for common image formats.
 	_ "code.google.com/p/go.image/bmp"
@@ -63,7 +64,8 @@ func fetchBestIconWithClient(siteURL string, c *http.Client) (*Icon, error) {
 // FetchIcons takes a siteURL and returns all icons for this site
 // or an error.
 func FetchIcons(siteURL string) ([]Icon, error) {
-	return fetchIconsWithClient(siteURL, &http.Client{})
+	c := &http.Client{Timeout: 60 * time.Second}
+	return fetchIconsWithClient(siteURL, c)
 }
 
 // fetchIconsWithClient modifies c's checkRedirect and Jar!
