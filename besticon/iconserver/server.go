@@ -138,7 +138,7 @@ func writePage(w http.ResponseWriter, pi pageInfo) {
 
 func startServer(port int) {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, path.Join(root, "index.html"))
+		http.ServeFile(w, r, path.Join(root, "/assets/index.html"))
 	})
 	http.HandleFunc("/icons", iconsHandler)
 	http.HandleFunc("/api/icons", apiHandler)
@@ -175,7 +175,7 @@ func init() {
 	if root == "" {
 		root = "./besticon/iconserver"
 	}
-	iconsHTML = template.Must(template.ParseFiles(path.Join(root, "icons.html")))
+	iconsHTML = template.Must(template.ParseFiles(path.Join(root, "/assets/icons.html")))
 }
 
 var root string
