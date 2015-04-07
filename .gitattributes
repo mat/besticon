@@ -1,0 +1,4 @@
+besticon/testdata/* linguist-vendored
+Godeps/* linguist-vendored
+*.html linguist-vendored
+
