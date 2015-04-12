@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"flag"
@@ -10,7 +11,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"path"
 	"strconv"
 
 	"github.com/mat/besticon/besticon"
@@ -138,26 +138,31 @@ func writePage(w http.ResponseWriter, pi pageInfo) {
 }
 
 func startServer(port int) {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, path.Join(root, "/assets/index.html"))
-	})
+	serveAsset("/", "besticon/iconserver/assets/index.html")
+
 	http.HandleFunc("/icons", iconsHandler)
 	http.HandleFunc("/api/icons", apiHandler)
 
-	http.HandleFunc("/assets/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, path.Join(root, r.URL.Path))
-	})
-	http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, path.Join(root, "/assets/favicon.ico"))
-	})
-	http.HandleFunc("/apple-touch-icon.png", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, path.Join(root, "/assets/apple-touch-icon.png"))
-	})
+	serveAsset("/assets/main-min.css", "besticon/iconserver/assets/main-min.css")
+	serveAsset("/assets/icon.svg", "besticon/iconserver/assets/icon.svg")
+	serveAsset("/favicon.ico", "besticon/iconserver/assets/favicon.ico")
+	serveAsset("/apple-touch-icon.png", "besticon/iconserver/assets/apple-touch-icon.png")
 
 	e := http.ListenAndServe(":"+strconv.Itoa(port), nil)
 	if e != nil {
 		fmt.Printf("cannot start server: %s\n", e)
 	}
+}
+
+func serveAsset(path string, assetPath string) {
+	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+		assetInfo, err := assets.AssetInfo(assetPath)
+		if err != nil {
+			panic(err)
+		}
+
+		http.ServeContent(w, r, assetInfo.Name(), assetInfo.ModTime(), bytes.NewReader(assets.MustAsset(assetPath)))
+	})
 }
 
 func main() {
