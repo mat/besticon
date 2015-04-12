@@ -1,6 +1,6 @@
 
 test_all: test
-	ICON_SERVER_ROOT=`pwd`/besticon/iconserver go test -v github.com/mat/besticon/besticon/iconserver
+	go test -v github.com/mat/besticon/besticon/iconserver
 	go get ./...
 
 test:
@@ -10,7 +10,7 @@ test:
 test_race:
 	go test -v -race github.com/mat/besticon/ico
 	go test -v -race github.com/mat/besticon/besticon
-	ICON_SERVER_ROOT=`pwd`/besticon/iconserver go test -v -race github.com/mat/besticon/besticon/iconserver
+	go test -v -race github.com/mat/besticon/besticon/iconserver
 
 update_godeps: 
 	godep save ./...

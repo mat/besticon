@@ -177,16 +177,10 @@ func main() {
 }
 
 func init() {
-	root = os.Getenv("ICON_SERVER_ROOT")
-	if root == "" {
-		root = "./besticon/iconserver"
-	}
-
 	bytes := assets.MustAsset("besticon/iconserver/assets/icons.html")
 	iconsHTML = template.Must(template.New("icons.html").Parse(string(bytes)))
 }
 
-var root string
 var iconsHTML *template.Template
 
 var logger = log.New(os.Stdout, "besticon: ", log.LstdFlags|log.Lmicroseconds)
