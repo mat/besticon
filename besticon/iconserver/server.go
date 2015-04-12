@@ -14,6 +14,7 @@ import (
 	"strconv"
 
 	"github.com/mat/besticon/besticon"
+	"github.com/mat/besticon/besticon/iconserver/assets"
 )
 
 func iconsHandler(w http.ResponseWriter, r *http.Request) {
@@ -175,7 +176,9 @@ func init() {
 	if root == "" {
 		root = "./besticon/iconserver"
 	}
-	iconsHTML = template.Must(template.ParseFiles(path.Join(root, "/assets/icons.html")))
+
+	bytes := assets.MustAsset("besticon/iconserver/assets/icons.html")
+	iconsHTML = template.Must(template.New("icons.html").Parse(string(bytes)))
 }
 
 var root string

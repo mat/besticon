@@ -34,6 +34,7 @@ install_devtools:
 	go get golang.org/x/tools/cmd/vet
 	go get github.com/golang/lint/golint
 	go get github.com/tools/godep
+	go get -u github.com/jteeuwen/go-bindata/...
 
 check:
 	find . -name "*.go" | grep -v Godeps/ | xargs go tool vet -all
@@ -56,4 +57,7 @@ test_websites:
 
 minify_css:
 	curl -X POST -s --data-urlencode 'input@besticon/iconserver/assets/main.css' http://cssminifier.com/raw > besticon/iconserver/assets/main-min.css
+
+update_assets:
+	go-bindata -pkg assets  -o besticon/iconserver/assets/assets.go besticon/iconserver/assets/
 
