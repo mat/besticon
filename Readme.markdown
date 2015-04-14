@@ -1,9 +1,34 @@
-# Besticon
+# besticon (The Icon Finder)
 
 Source code powering The Icon Finder at <http://icons.better-idea.org>.
 
 [![Build Status](http://img.shields.io/travis/mat/besticon/master.svg?style=flat-square)](http://travis-ci.org/mat/besticon)
 [![GoDoc](https://godoc.org/github.com/mat/besticon?status.svg)](https://godoc.org/github.com/mat/besticon/besticon)
+
+
+
+## Server Executable
+
+### Dependencies
+
+ - <http://golang.org>
+
+### Building
+
+Using `go get` is the easiest way to fetch the source code and build the server:
+
+	$ go get -u github.com/mat/besticon/besticon/iconserver
+
+You may also add the `GOOS` and `GOARCH` environment variables to build the executable for a different target operating system:
+
+	$ GOOS=linux go get -u github.com/mat/besticon/besticon/iconserver
+
+### Running
+
+To start the server on port 8080 use
+
+	$ $GOPATH/bin/iconserver --port=8080
+
 
 
 ## Command Line Tool
