@@ -12,14 +12,13 @@ import (
 	"net/url"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/mat/besticon/besticon"
 	"github.com/mat/besticon/besticon/iconserver/assets"
 )
 
 func iconsHandler(w http.ResponseWriter, r *http.Request) {
-	lg(r)
-
 	url := r.FormValue(urlParam)
 	if len(url) == 0 {
 		http.Redirect(w, r, "/", http.StatusFound)
@@ -42,8 +41,6 @@ const urlParam = "url"
 const bestParam = "i_am_feeling_lucky"
 
 func apiHandler(w http.ResponseWriter, r *http.Request) {
-	lg(r)
-
 	url := r.FormValue(urlParam)
 	if len(url) == 0 {
 		errMissingURL := errors.New("need url query parameter")
@@ -148,7 +145,7 @@ func startServer(port int) {
 	serveAsset("/favicon.ico", "besticon/iconserver/assets/favicon.ico")
 	serveAsset("/apple-touch-icon.png", "besticon/iconserver/assets/apple-touch-icon.png")
 
-	e := http.ListenAndServe(":"+strconv.Itoa(port), nil)
+	e := http.ListenAndServe(":"+strconv.Itoa(port), NewLoggingMux())
 	if e != nil {
 		fmt.Printf("cannot start server: %s\n", e)
 	}
@@ -183,9 +180,47 @@ func init() {
 
 var iconsHTML *template.Template
 
-var logger = log.New(os.Stdout, "besticon: ", log.LstdFlags|log.Lmicroseconds)
+var logger = log.New(os.Stdout, "besticon: ", log.LstdFlags|log.Ltime)
 
-func lg(r *http.Request) {
-	bytes, _ := json.Marshal(r)
-	logger.Print(string(bytes))
+type loggingWriter struct {
+	http.ResponseWriter
+	status int
+	length int
+}
+
+func (w *loggingWriter) WriteHeader(status int) {
+	w.status = status
+	w.ResponseWriter.WriteHeader(status)
+}
+
+func (w *loggingWriter) Write(b []byte) (int, error) {
+	if w.status == 0 {
+		w.status = 200
+	}
+
+	bytesWritten, err := w.ResponseWriter.Write(b)
+	if err == nil {
+		w.length += bytesWritten
+	}
+	return bytesWritten, err
+}
+
+func NewLoggingMux() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		start := time.Now()
+		writer := loggingWriter{w, 0, 0}
+		http.DefaultServeMux.ServeHTTP(&writer, req)
+		end := time.Now()
+		duration := end.Sub(start)
+
+		logger.Printf("%s %s %d \"%s\" %s %v %d",
+			req.Method,
+			req.URL,
+			writer.status,
+			req.UserAgent(),
+			req.Referer(),
+			duration,
+			writer.length,
+		)
+	}
 }
