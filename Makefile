@@ -25,7 +25,7 @@ deploy:
 install:
 	go get ./...
 
-run_server: minify_css
+run_server: minify_css update_assets
 	go run besticon/iconserver/server.go -port=3000
 
 install_devtools:

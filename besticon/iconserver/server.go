@@ -140,8 +140,11 @@ func startServer(port int) {
 	http.HandleFunc("/icons", iconsHandler)
 	http.HandleFunc("/api/icons", apiHandler)
 
-	serveAsset("/assets/main-min.css", "besticon/iconserver/assets/main-min.css")
-	serveAsset("/assets/icon.svg", "besticon/iconserver/assets/icon.svg")
+	serveAsset("/pure-0.5.0-min.css", "besticon/iconserver/assets/pure-0.5.0-min.css")
+	serveAsset("/grids-responsive-0.5.0-min.css", "besticon/iconserver/assets/grids-responsive-0.5.0-min.css")
+	serveAsset("/main-min.css", "besticon/iconserver/assets/main-min.css")
+
+	serveAsset("/icon.svg", "besticon/iconserver/assets/icon.svg")
 	serveAsset("/favicon.ico", "besticon/iconserver/assets/favicon.ico")
 	serveAsset("/apple-touch-icon.png", "besticon/iconserver/assets/apple-touch-icon.png")
 
