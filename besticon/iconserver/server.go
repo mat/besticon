@@ -68,6 +68,23 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func statsHandler(w http.ResponseWriter, r *http.Request) {
+	stats := stats{}
+	stats.Stats = append(stats.Stats, pair{"Current Time", time.Now().String()})
+	stats.Stats = append(stats.Stats, pair{"Last Deploy", parseUnixTimeStamp(os.Getenv("DEPLOYED_AT")).String()})
+	stats.Stats = append(stats.Stats, pair{"Deployed Git Revision", os.Getenv("GIT_REVISION")})
+	writeStatsPage(w, stats)
+}
+
+func parseUnixTimeStamp(s string) time.Time {
+	ts, err := strconv.Atoi(s)
+	if err != nil {
+		return time.Unix(0, 0)
+	}
+
+	return time.Unix(int64(ts), 0)
+}
+
 func writeAPIError(w http.ResponseWriter, status int, e error) {
 	data := struct {
 		Error string `json:"error"`
@@ -99,6 +116,13 @@ type pageInfo struct {
 	URL   string
 	Icons []besticon.Icon
 	Error error
+}
+
+type stats struct {
+	Stats []pair
+}
+type pair struct {
+	Name, Value string
 }
 
 func (pi pageInfo) Host() string {
@@ -134,11 +158,23 @@ func writePage(w http.ResponseWriter, pi pageInfo) {
 	}
 }
 
+func writeStatsPage(w http.ResponseWriter, stats stats) {
+	w.Header().Add("Content-Type", "text/html; charset=utf-8")
+
+	e := statsHTML.Execute(w, stats)
+	if e != nil {
+		e = fmt.Errorf("server: could not generate output: %s", e)
+		logger.Print(e)
+		w.Write([]byte(e.Error()))
+	}
+}
+
 func startServer(port int) {
 	serveAsset("/", "besticon/iconserver/assets/index.html")
 
 	http.HandleFunc("/icons", iconsHandler)
 	http.HandleFunc("/api/icons", apiHandler)
+	http.HandleFunc("/stats", statsHandler)
 
 	serveAsset("/pure-0.5.0-min.css", "besticon/iconserver/assets/pure-0.5.0-min.css")
 	serveAsset("/grids-responsive-0.5.0-min.css", "besticon/iconserver/assets/grids-responsive-0.5.0-min.css")
@@ -177,11 +213,17 @@ func main() {
 }
 
 func init() {
-	bytes := assets.MustAsset("besticon/iconserver/assets/icons.html")
-	iconsHTML = template.Must(template.New("icons.html").Parse(string(bytes)))
+	iconsHTML = templateFromAsset("besticon/iconserver/assets/icons.html", "icons.html")
+	statsHTML = templateFromAsset("besticon/iconserver/assets/stats.html", "stats.html")
+}
+
+func templateFromAsset(assetPath, templateName string) *template.Template {
+	bytes := assets.MustAsset(assetPath)
+	return template.Must(template.New(templateName).Parse(string(bytes)))
 }
 
 var iconsHTML *template.Template
+var statsHTML *template.Template
 
 var logger = log.New(os.Stdout, "besticon: ", log.LstdFlags|log.Ltime)
 

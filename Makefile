@@ -26,7 +26,7 @@ install:
 	go get ./...
 
 run_server: minify_css update_assets
-	go run besticon/iconserver/server.go -port=3000
+	DEPLOYED_AT=`date +%s` GIT_REVISION=`git describe --always` go run besticon/iconserver/server.go -port=3000
 
 install_devtools:
 	go get golang.org/x/tools/cmd/cover
