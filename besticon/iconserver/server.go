@@ -28,12 +28,12 @@ func iconsHandler(w http.ResponseWriter, r *http.Request) {
 	icons, e := besticon.FetchIcons(url)
 	switch {
 	case e != nil:
-		writePageWithError(w, pageInfo{URL: url, Error: e})
+		renderHTMLTemplate(w, 404, iconsHTML, pageInfo{URL: url, Error: e})
 	case len(icons) <= 0:
 		errNoIcons := errors.New("this poor site has no icons at all :-(")
-		writePageWithError(w, pageInfo{URL: url, Error: errNoIcons})
+		renderHTMLTemplate(w, 404, iconsHTML, pageInfo{URL: url, Error: errNoIcons})
 	default:
-		writePage(w, pageInfo{Icons: icons, URL: url})
+		renderHTMLTemplate(w, 200, iconsHTML, pageInfo{Icons: icons, URL: url})
 	}
 }
 
@@ -73,7 +73,7 @@ func statsHandler(w http.ResponseWriter, r *http.Request) {
 	stats.Stats = append(stats.Stats, pair{"Current Time", time.Now().String()})
 	stats.Stats = append(stats.Stats, pair{"Last Deploy", parseUnixTimeStamp(os.Getenv("DEPLOYED_AT")).String()})
 	stats.Stats = append(stats.Stats, pair{"Deployed Git Revision", os.Getenv("GIT_REVISION")})
-	writeStatsPage(w, stats)
+	renderHTMLTemplate(w, 200, statsHTML, stats)
 }
 
 func parseUnixTimeStamp(s string) time.Time {
@@ -142,30 +142,15 @@ func (pi pageInfo) Best() string {
 	return ""
 }
 
-func writePageWithError(w http.ResponseWriter, pi pageInfo) {
-	w.WriteHeader(http.StatusNotFound)
-	writePage(w, pi)
-}
-
-func writePage(w http.ResponseWriter, pi pageInfo) {
+func renderHTMLTemplate(w http.ResponseWriter, httpStatus int, templ *template.Template, data interface{}) {
 	w.Header().Add("Content-Type", "text/html; charset=utf-8")
+	w.WriteHeader(httpStatus)
 
-	e := iconsHTML.Execute(w, pi)
-	if e != nil {
-		e = fmt.Errorf("server: could not generate output: %s", e)
-		logger.Print(e)
-		w.Write([]byte(e.Error()))
-	}
-}
-
-func writeStatsPage(w http.ResponseWriter, stats stats) {
-	w.Header().Add("Content-Type", "text/html; charset=utf-8")
-
-	e := statsHTML.Execute(w, stats)
-	if e != nil {
-		e = fmt.Errorf("server: could not generate output: %s", e)
-		logger.Print(e)
-		w.Write([]byte(e.Error()))
+	err := templ.Execute(w, data)
+	if err != nil {
+		err = fmt.Errorf("server: could not generate output: %s", err)
+		logger.Print(err)
+		w.Write([]byte(err.Error()))
 	}
 }
 
