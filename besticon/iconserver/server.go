@@ -21,7 +21,7 @@ import (
 func iconsHandler(w http.ResponseWriter, r *http.Request) {
 	url := r.FormValue(urlParam)
 	if len(url) == 0 {
-		http.Redirect(w, r, "/", http.StatusFound)
+		http.Redirect(w, r, "/", 302)
 		return
 	}
 
@@ -44,7 +44,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	url := r.FormValue(urlParam)
 	if len(url) == 0 {
 		errMissingURL := errors.New("need url query parameter")
-		writeAPIError(w, http.StatusBadRequest, errMissingURL)
+		writeAPIError(w, 400, errMissingURL)
 		return
 	}
 
@@ -52,15 +52,15 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	if bestMode {
 		icon, e := besticon.FetchBestIcon(url)
 		if e != nil {
-			writeAPIError(w, http.StatusNotFound, e)
+			writeAPIError(w, 404, e)
 			return
 		}
 
-		http.Redirect(w, r, icon.URL, http.StatusFound)
+		http.Redirect(w, r, icon.URL, 302)
 	} else {
 		icons, e := besticon.FetchIcons(url)
 		if e != nil {
-			writeAPIError(w, http.StatusNotFound, e)
+			writeAPIError(w, 404, e)
 			return
 		}
 
@@ -85,13 +85,13 @@ func parseUnixTimeStamp(s string) time.Time {
 	return time.Unix(int64(ts), 0)
 }
 
-func writeAPIError(w http.ResponseWriter, status int, e error) {
+func writeAPIError(w http.ResponseWriter, httpStatus int, e error) {
 	data := struct {
 		Error string `json:"error"`
 	}{
 		e.Error(),
 	}
-	writeJSONResponse(w, status, data)
+	renderJSONResponse(w, httpStatus, data)
 }
 
 func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon) {
@@ -102,12 +102,12 @@ func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon) {
 		url,
 		icons,
 	}
-	writeJSONResponse(w, 200, data)
+	renderJSONResponse(w, 200, data)
 }
 
-func writeJSONResponse(w http.ResponseWriter, status int, data interface{}) {
+func renderJSONResponse(w http.ResponseWriter, httpStatus int, data interface{}) {
 	w.Header().Add("Content-Type", "application/json")
-	w.WriteHeader(status)
+	w.WriteHeader(httpStatus)
 	enc := json.NewEncoder(w)
 	enc.Encode(data)
 }
