@@ -169,6 +169,7 @@ func startServer(port int) {
 	serveAsset("/favicon.ico", "besticon/iconserver/assets/favicon.ico")
 	serveAsset("/apple-touch-icon.png", "besticon/iconserver/assets/apple-touch-icon.png")
 
+	logger.Print("Starting server on port ", port, "...")
 	e := http.ListenAndServe(":"+strconv.Itoa(port), NewLoggingMux())
 	if e != nil {
 		fmt.Printf("cannot start server: %s\n", e)
