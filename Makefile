@@ -61,3 +61,6 @@ minify_css:
 update_assets:
 	go-bindata -pkg assets -ignore assets.go -o besticon/iconserver/assets/assets.go besticon/iconserver/assets/ 
 
+build_linux_amd64:
+	GOOS=linux GOARCH=amd64 go build -o bin/linux_amd64/iconserver besticon/iconserver/server.go
+
