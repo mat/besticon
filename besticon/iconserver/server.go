@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"expvar"
 	"flag"
 	"fmt"
 	"html/template"
@@ -25,7 +26,7 @@ func iconsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	icons, e := besticon.FetchIcons(url)
+	icons, e := fetchIcons(url)
 	switch {
 	case e != nil:
 		renderHTMLTemplate(w, 404, iconsHTML, pageInfo{URL: url, Error: e})
@@ -50,7 +51,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 
 	bestMode := r.FormValue(bestParam) == "yes"
 	if bestMode {
-		icon, e := besticon.FetchBestIcon(url)
+		icon, e := fetchBestIcon(url)
 		if e != nil {
 			writeAPIError(w, 404, e)
 			return
@@ -58,7 +59,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 
 		http.Redirect(w, r, icon.URL, 302)
 	} else {
-		icons, e := besticon.FetchIcons(url)
+		icons, e := fetchIcons(url)
 		if e != nil {
 			writeAPIError(w, 404, e)
 			return
@@ -66,6 +67,24 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 
 		writeAPIIcons(w, url, icons)
 	}
+}
+
+func fetchIcons(url string) ([]besticon.Icon, error) {
+	fetchCount.Add(1)
+	icons, err := besticon.FetchIcons(url)
+	if err != nil {
+		fetchErrors.Add(1)
+	}
+	return icons, err
+}
+
+func fetchBestIcon(url string) (*besticon.Icon, error) {
+	fetchCount.Add(1)
+	icon, err := besticon.FetchBestIcon(url)
+	if err != nil {
+		fetchErrors.Add(1)
+	}
+	return icon, err
 }
 
 func statsHandler(w http.ResponseWriter, r *http.Request) {
@@ -255,3 +274,8 @@ func NewLoggingMux() http.HandlerFunc {
 		)
 	}
 }
+
+var (
+	fetchCount  = expvar.NewInt("fetchCount")
+	fetchErrors = expvar.NewInt("fetchErrors")
+)
