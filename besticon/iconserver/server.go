@@ -19,6 +19,11 @@ import (
 	"github.com/mat/besticon/besticon/iconserver/assets"
 )
 
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("index")
+	renderHTMLTemplate(w, 200, indexHTML, nil)
+}
+
 func iconsHandler(w http.ResponseWriter, r *http.Request) {
 	url := r.FormValue(urlParam)
 	if len(url) == 0 {
@@ -174,8 +179,7 @@ func renderHTMLTemplate(w http.ResponseWriter, httpStatus int, templ *template.T
 }
 
 func startServer(port int) {
-	serveAsset("/", "besticon/iconserver/assets/index.html")
-
+	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/icons", iconsHandler)
 	http.HandleFunc("/api/icons", apiHandler)
 	http.HandleFunc("/stats", statsHandler)
@@ -218,15 +222,17 @@ func main() {
 }
 
 func init() {
+	indexHTML = templateFromAsset("besticon/iconserver/assets/index.html", "index.html")
 	iconsHTML = templateFromAsset("besticon/iconserver/assets/icons.html", "icons.html")
 	statsHTML = templateFromAsset("besticon/iconserver/assets/stats.html", "stats.html")
 }
 
 func templateFromAsset(assetPath, templateName string) *template.Template {
 	bytes := assets.MustAsset(assetPath)
-	return template.Must(template.New(templateName).Parse(string(bytes)))
+	return template.Must(template.New(templateName).Funcs(funcMap).Parse(string(bytes)))
 }
 
+var indexHTML *template.Template
 var iconsHTML *template.Template
 var statsHTML *template.Template
 
@@ -279,3 +285,11 @@ var (
 	fetchCount  = expvar.NewInt("fetchCount")
 	fetchErrors = expvar.NewInt("fetchErrors")
 )
+
+var funcMap = template.FuncMap{
+	"GoogleAnalyticsID": GoogleAnalyticsID,
+}
+
+func GoogleAnalyticsID() string {
+	return os.Getenv("ICONS_ANALYTICS_ID")
+}

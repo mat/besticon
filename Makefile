@@ -20,13 +20,13 @@ install_godeps:
 
 deploy:
 	git push heroku master
-	heroku config:set GIT_REVISION=`git describe --always` DEPLOYED_AT=`date +%s`
+	heroku config:set GIT_REVISION=`git describe --always` DEPLOYED_AT=`date +%s` ICONS_ANALYTICS_ID=$(ICONS_ANALYTICS_ID)
 
 install:
 	go get ./...
 
 run_server:
-	DEPLOYED_AT=`date +%s` GIT_REVISION=`git describe --always` go run besticon/iconserver/server.go -port=3000
+	ICONS_ANALYTICS_ID=$(ICONS_ANALYTICS_ID) DEPLOYED_AT=`date +%s` GIT_REVISION=`git describe --always` go run besticon/iconserver/server.go -port=3000
 
 install_devtools:
 	go get golang.org/x/tools/cmd/cover
