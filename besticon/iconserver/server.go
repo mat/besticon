@@ -281,6 +281,11 @@ func NewLoggingMux() http.HandlerFunc {
 	}
 }
 
+func init() {
+	expvar.NewString("timeStartup").Set(time.Now().String())
+	expvar.Publish("timeCurrent", expvar.Func(func() interface{} { return time.Now() }))
+}
+
 var (
 	fetchCount  = expvar.NewInt("fetchCount")
 	fetchErrors = expvar.NewInt("fetchErrors")
