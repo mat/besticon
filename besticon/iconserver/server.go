@@ -269,13 +269,13 @@ func NewLoggingMux() http.HandlerFunc {
 		end := time.Now()
 		duration := end.Sub(start)
 
-		logger.Printf("%s %s %d \"%s\" %s %v %d",
+		logger.Printf("%s %s %d \"%s\" %s %.2fms %d",
 			req.Method,
 			req.URL,
 			writer.status,
 			req.UserAgent(),
 			req.Referer(),
-			duration,
+			float64(duration)/float64(time.Millisecond),
 			writer.length,
 		)
 	}
