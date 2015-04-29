@@ -191,6 +191,7 @@ func startServer(port int) {
 	serveAsset("/icon.svg", "besticon/iconserver/assets/icon.svg")
 	serveAsset("/favicon.ico", "besticon/iconserver/assets/favicon.ico")
 	serveAsset("/apple-touch-icon.png", "besticon/iconserver/assets/apple-touch-icon.png")
+	serveAsset("/robots.txt", "besticon/iconserver/assets/robots.txt")
 
 	logger.Print("Starting server on port ", port, "...")
 	e := http.ListenAndServe(":"+strconv.Itoa(port), NewLoggingMux())
