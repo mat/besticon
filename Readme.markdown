@@ -2,8 +2,8 @@
 
 Source code powering The Icon Finder at <http://icons.better-idea.org>.
 
+[![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://godoc.org/github.com/mat/besticon/besticon)
 [![Build Status](http://img.shields.io/travis/mat/besticon/master.svg?style=flat-square)](http://travis-ci.org/mat/besticon)
-[![GoDoc](https://godoc.org/github.com/mat/besticon?status.svg)](https://godoc.org/github.com/mat/besticon/besticon)
 
 [![Screenshot of The Icon Finder](the-icon-finder.png)](http://icons.better-idea.org)
 
