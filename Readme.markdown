@@ -18,11 +18,11 @@ Source code powering The Icon Finder at <http://icons.better-idea.org>.
 
 Using `go get` is the easiest way to fetch the source code and build the server:
 
-	$ go get -u github.com/mat/besticon/besticon/iconserver
+	$ go get -u github.com/mat/besticon/...
 
 You may also add the `GOOS` and `GOARCH` environment variables to build the executable for a different target operating system:
 
-	$ GOOS=linux go get -u github.com/mat/besticon/besticon/iconserver
+	$ GOOS=linux go get -u github.com/mat/besticon/...
 
 ### Running
 
@@ -40,7 +40,7 @@ To start the server on port 8080 use
 
 ### Setup
 
-    go get github.com/mat/besticon/besticon/besticon
+    $ go get -u github.com/mat/besticon/...
 
 ### Usage
 
