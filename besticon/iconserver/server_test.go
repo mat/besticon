@@ -10,9 +10,18 @@ import (
 )
 
 func TestGetIndex(t *testing.T) {
-	// TODO
-	// assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
-	// assertStringContains(t, w.Body.String(), "<title>Best Icon Finder</title>")
+	req, err := http.NewRequest("GET", "/", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	indexHandler(w, req)
+
+	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "text/html; charset=utf-8", w.Header().Get("Content-Type"))
+
+	assertStringContains(t, w.Body.String(), "<title>The Icon Finder</title>")
 }
 
 func TestGetIcons(t *testing.T) {
