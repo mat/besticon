@@ -71,11 +71,6 @@ func TestDecodeConfigWithBrokenIco(t *testing.T) {
 	assertEquals(t, errors.New("unexpected EOF"), err)
 }
 
-func GetFirstIconInFile(filename string) icondirEntry {
-	dir := mustParseIcoFile(filename)
-	return dir.Entries[0]
-}
-
 func GetNumberOfIconsInFile(filename string) int {
 	dir := mustParseIcoFile(filename)
 	return int(dir.Count)
