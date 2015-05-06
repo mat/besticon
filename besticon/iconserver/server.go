@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"runtime"
 	"strconv"
 	"time"
 
@@ -283,6 +284,9 @@ func NewLoggingMux() http.HandlerFunc {
 }
 
 func init() {
+	expvar.NewString("goVersion").Set(runtime.Version())
+	expvar.NewString("iconVersion").Set(os.Getenv("GIT_REVISION"))
+
 	expvar.NewString("timeStartup").Set(time.Now().String())
 	expvar.Publish("timeCurrent", expvar.Func(func() interface{} { return time.Now() }))
 }
