@@ -65,8 +65,3 @@ The *source code* of besticon is released under the [MIT License](http://www.ope
 
 The *icon* used for the website/server is licensed under [these terms](http://sixrevisions.com/freebies/icons/free-icons-1000/).
 
-
-## Disclaimer & Self-hosting
-I can’t guarantee this service will still be running in 10 years from now - sometimes one has got to move on.
-
-That said, if you want to run this server on your own machines you can head over to besticon on GitHub where you can find source code and instructions on how to install this tool as standalone command line binary.
