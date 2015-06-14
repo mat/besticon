@@ -82,7 +82,7 @@ func fetchIconsWithClient(siteURL string, c *http.Client) ([]Icon, error) {
 		return nil, e
 	}
 
-	links, e := assembleIconLinks(url, html)
+	links, e := findIconLinks(url, html)
 	if e != nil {
 		return nil, e
 	}
@@ -139,21 +139,24 @@ var iconPaths = []string{
 
 type empty struct{}
 
-func assembleIconLinks(siteURL *url.URL, html []byte) ([]string, error) {
+func findIconLinks(siteURL *url.URL, html []byte) ([]string, error) {
+	doc, e := docFromHTML(html)
+	if e != nil {
+		return nil, e
+	}
+
+	baseURL := determineBaseURL(siteURL, doc)
 	links := make(map[string]empty)
 
 	// Add common, hard coded icon paths
 	for _, path := range iconPaths {
-		links[urlFromBase(siteURL, path)] = empty{}
+		links[urlFromBase(baseURL, path)] = empty{}
 	}
 
 	// Add icons found in page
-	urls, e := findIcons(html)
-	if e != nil {
-		return nil, e
-	}
+	urls := extractIconTags(doc)
 	for _, url := range urls {
-		url, e := absoluteURL(siteURL, url)
+		url, e := absoluteURL(baseURL, url)
 		if e == nil {
 			links[url] = empty{}
 		}
@@ -169,6 +172,27 @@ func assembleIconLinks(siteURL *url.URL, html []byte) ([]string, error) {
 	return result, nil
 }
 
+func determineBaseURL(siteURL *url.URL, doc *goquery.Document) *url.URL {
+	baseTagHref := extractBaseTag(doc)
+	if baseTagHref != "" {
+		baseTagURL, e := url.Parse(baseTagHref)
+		if e != nil {
+			return siteURL
+		}
+		return baseTagURL
+	}
+
+	return siteURL
+}
+
+func docFromHTML(html []byte) (*goquery.Document, error) {
+	doc, e := goquery.NewDocumentFromReader(bytes.NewReader(html))
+	if e != nil || doc == nil {
+		return nil, errParseHTML
+	}
+	return doc, nil
+}
+
 var csspaths = strings.Join([]string{
 	"link[rel='icon']",
 	"link[rel='shortcut icon']",
@@ -178,12 +202,15 @@ var csspaths = strings.Join([]string{
 
 var errParseHTML = errors.New("besticon: could not parse html")
 
-func findIcons(html []byte) ([]string, error) {
-	doc, e := goquery.NewDocumentFromReader(bytes.NewReader(html))
-	if e != nil || doc == nil {
-		return nil, errParseHTML
-	}
+func extractBaseTag(doc *goquery.Document) string {
+	href := ""
+	doc.Find("head base[href]").First().Each(func(i int, s *goquery.Selection) {
+		href, _ = s.Attr("href")
+	})
+	return href
+}
 
+func extractIconTags(doc *goquery.Document) []string {
 	hits := []string{}
 	doc.Find(csspaths).Each(func(i int, s *goquery.Selection) {
 		href, ok := s.Attr("href")
@@ -191,8 +218,7 @@ func findIcons(html []byte) ([]string, error) {
 			hits = append(hits, href)
 		}
 	})
-
-	return hits, nil
+	return hits
 }
 
 func fetchAllIcons(urls []string, c *http.Client) []Icon {

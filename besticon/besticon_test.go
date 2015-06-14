@@ -90,6 +90,16 @@ func TestGithubWithIconHrefLinks(t *testing.T) {
 	assertEquals(t, expectedImages, actualImages)
 }
 
+func TestEat24WithBaseTag(t *testing.T) {
+	actualImages, err := fetchIconsWithVCR("eat24.vcr", "eat24.com")
+	assertEquals(t, nil, err)
+	expectedImages := []Icon{
+		{URL: "http://eat24hours.com/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 1406, Sha1sum: "f8914a1135e718b11cc93b7a362655ca358c16fb"},
+	}
+
+	assertEquals(t, expectedImages, actualImages)
+}
+
 func TestARDWithSortBySize(t *testing.T) {
 	actualImages, err := fetchIconsWithVCR("ard.vcr", "ard.de")
 	assertEquals(t, nil, err)
@@ -118,8 +128,9 @@ func TestParsingEmptyResponse(t *testing.T) {
 }
 
 func mustFindIconLinks(html []byte) []string {
-	links, e := findIcons(html)
+	doc, e := docFromHTML(html)
 	check(e)
+	links := extractIconTags(doc)
 	sort.Strings(links)
 	return links
 }
