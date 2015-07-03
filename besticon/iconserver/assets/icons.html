@@ -60,11 +60,7 @@
             </div>
           </form>
 
-          {{ if .Error }}
-          <div id="error">
-            {{ .Error }}
-          </div>
-          {{ end }}
+          {{ with .Error }} <div id="error"> {{ .}} </div> {{ end }}
 
           {{ if ((len .Icons) ne 0) }}
           <h2 class="content-subhead">Icons on {{ .Host }}</h2>
