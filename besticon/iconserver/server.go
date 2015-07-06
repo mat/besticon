@@ -21,7 +21,6 @@ import (
 )
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("index")
 	renderHTMLTemplate(w, 200, indexHTML, nil)
 }
 
