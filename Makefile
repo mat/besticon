@@ -29,9 +29,7 @@ run_server:
 	ICONS_ANALYTICS_ID=$(ICONS_ANALYTICS_ID) DEPLOYED_AT=`date +%s` GIT_REVISION=`git describe --always` go run besticon/iconserver/server.go -port=3000
 
 install_devtools:
-	go get golang.org/x/tools/cmd/cover
-	go get golang.org/x/tools/cmd/godoc
-	go get golang.org/x/tools/cmd/vet
+	go get golang.org/x/tools/cmd/...
 	go get github.com/golang/lint/golint
 	go get github.com/tools/godep
 	go get -u github.com/jteeuwen/go-bindata/...
