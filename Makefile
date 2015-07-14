@@ -12,7 +12,7 @@ test_race:
 	go test -v -race github.com/mat/besticon/besticon
 	go test -v -race github.com/mat/besticon/besticon/iconserver
 
-update_godeps: 
+update_godeps:
 	godep save ./...
 
 install_godeps:
@@ -57,7 +57,7 @@ minify_css:
 	curl -X POST -s --data-urlencode 'input@besticon/iconserver/assets/main.css' http://cssminifier.com/raw > besticon/iconserver/assets/main-min.css
 
 update_assets:
-	go-bindata -pkg assets -ignore assets.go -o besticon/iconserver/assets/assets.go besticon/iconserver/assets/ 
+	go-bindata -pkg assets -ignore assets.go -o besticon/iconserver/assets/assets.go besticon/iconserver/assets/
 
 build_linux_amd64:
 	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/linux_amd64/iconserver besticon/iconserver/server.go
