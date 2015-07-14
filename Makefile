@@ -65,3 +65,5 @@ build_linux_amd64:
 build_docker_image: build_linux_amd64
 	docker build -t matthiasluedtke/iconserver .
 
+gotags:
+	gotags -tag-relative=true -R=true -sort=true -f="tags" -fields=+l .
