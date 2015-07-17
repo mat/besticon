@@ -194,7 +194,7 @@ func startServer(port int) {
 	serveAsset("/robots.txt", "besticon/iconserver/assets/robots.txt")
 
 	logger.Print("Starting server on port ", port, "...")
-	e := http.ListenAndServe(":"+strconv.Itoa(port), NewLoggingMux())
+	e := http.ListenAndServe(":"+strconv.Itoa(port), newLoggingMux())
 	if e != nil {
 		fmt.Printf("cannot start server: %s\n", e)
 	}
@@ -262,7 +262,7 @@ func (w *loggingWriter) Write(b []byte) (int, error) {
 	return bytesWritten, err
 }
 
-func NewLoggingMux() http.HandlerFunc {
+func newLoggingMux() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		start := time.Now()
 		writer := loggingWriter{w, 0, 0}
@@ -296,9 +296,9 @@ var (
 )
 
 var funcMap = template.FuncMap{
-	"GoogleAnalyticsID": GoogleAnalyticsID,
+	"GoogleAnalyticsID": googleAnalyticsID,
 }
 
-func GoogleAnalyticsID() string {
+func googleAnalyticsID() string {
 	return os.Getenv("ICONS_ANALYTICS_ID")
 }
