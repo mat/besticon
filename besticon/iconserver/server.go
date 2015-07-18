@@ -297,8 +297,13 @@ var (
 
 var funcMap = template.FuncMap{
 	"GoogleAnalyticsID": googleAnalyticsID,
+	"ImgWidth":          imgWidth,
 }
 
 func googleAnalyticsID() string {
 	return os.Getenv("ICONS_ANALYTICS_ID")
+}
+
+func imgWidth(i *besticon.Icon) int {
+	return i.Width / 2.0
 }

@@ -76,7 +76,7 @@
             </thead>
             {{range .Icons}}
             <tr class='icon'>
-              <td><a href='{{.URL}}'><img src='{{.URL}}' width='{{ .ImgWidth }}' alt=''></a></td>
+              <td><a href='{{.URL}}'><img src='{{.URL}}' width='{{ ImgWidth . }}' alt=''></a></td>
               <td class='dimensions'>{{.Width}}x{{.Height}}</td>
               <td class='url'><a href='{{.URL}}'>{{.URL}}</a></td>
               <td class='type'>{{.Format}}</td>
@@ -95,7 +95,7 @@
     <div class="footer l-box">
       <p>
       <a href='http://icons.better-idea.org'>The Icon Finder</a> &dash; in search for icons since January 2015.
-      Written in <a href='http://golang.org'>Go</a>, 
+      Written in <a href='http://golang.org'>Go</a>,
       source on <a href="https://github.com/mat/besticon">GitHub</a>.
       Created by <a href='http://www.better-idea.org'>Matthias Lüdtke</a>.
       </p>
@@ -103,4 +103,3 @@
 
   </body>
 </html>
-
