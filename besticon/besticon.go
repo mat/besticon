@@ -16,14 +16,15 @@ import (
 	"strings"
 	"time"
 
-	// Load support for common image formats.
+	// Load support image formats.
+	_ "image/gif"
+	_ "image/jpeg"
+	_ "image/png"
+	// ...even more image formats.
 	_ "code.google.com/p/go.image/bmp"
 	_ "code.google.com/p/go.image/tiff"
 	_ "code.google.com/p/go.image/webp"
 	_ "github.com/mat/besticon/ico"
-	_ "image/gif"
-	_ "image/jpeg"
-	_ "image/png"
 
 	"code.google.com/p/go.net/html/charset"
 	"code.google.com/p/go.net/publicsuffix"
