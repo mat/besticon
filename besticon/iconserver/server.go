@@ -8,7 +8,6 @@ import (
 	"flag"
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -207,7 +206,8 @@ func serveAsset(path string, assetPath string) {
 			panic(err)
 		}
 
-		http.ServeContent(w, r, assetInfo.Name(), assetInfo.ModTime(), bytes.NewReader(assets.MustAsset(assetPath)))
+		http.ServeContent(w, r, assetInfo.Name(), assetInfo.ModTime(),
+			bytes.NewReader(assets.MustAsset(assetPath)))
 	})
 }
 
@@ -236,51 +236,6 @@ func templateFromAsset(assetPath, templateName string) *template.Template {
 var indexHTML *template.Template
 var iconsHTML *template.Template
 var statsHTML *template.Template
-
-var logger = log.New(os.Stdout, "besticon: ", log.LstdFlags|log.Ltime)
-
-type loggingWriter struct {
-	http.ResponseWriter
-	status int
-	length int
-}
-
-func (w *loggingWriter) WriteHeader(status int) {
-	w.status = status
-	w.ResponseWriter.WriteHeader(status)
-}
-
-func (w *loggingWriter) Write(b []byte) (int, error) {
-	if w.status == 0 {
-		w.status = 200
-	}
-
-	bytesWritten, err := w.ResponseWriter.Write(b)
-	if err == nil {
-		w.length += bytesWritten
-	}
-	return bytesWritten, err
-}
-
-func newLoggingMux() http.HandlerFunc {
-	return func(w http.ResponseWriter, req *http.Request) {
-		start := time.Now()
-		writer := loggingWriter{w, 0, 0}
-		http.DefaultServeMux.ServeHTTP(&writer, req)
-		end := time.Now()
-		duration := end.Sub(start)
-
-		logger.Printf("%s %s %d \"%s\" %s %.2fms %d",
-			req.Method,
-			req.URL,
-			writer.status,
-			req.UserAgent(),
-			req.Referer(),
-			float64(duration)/float64(time.Millisecond),
-			writer.length,
-		)
-	}
-}
 
 func init() {
 	expvar.NewString("goVersion").Set(runtime.Version())
