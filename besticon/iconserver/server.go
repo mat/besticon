@@ -4,14 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"expvar"
 	"flag"
 	"fmt"
 	"html/template"
 	"net/http"
 	"net/url"
 	"os"
-	"runtime"
 	"strconv"
 	"time"
 
@@ -236,19 +234,6 @@ func templateFromAsset(assetPath, templateName string) *template.Template {
 var indexHTML *template.Template
 var iconsHTML *template.Template
 var statsHTML *template.Template
-
-func init() {
-	expvar.NewString("goVersion").Set(runtime.Version())
-	expvar.NewString("iconVersion").Set(os.Getenv("GIT_REVISION"))
-
-	expvar.NewString("timeStartup").Set(time.Now().String())
-	expvar.Publish("timeCurrent", expvar.Func(func() interface{} { return time.Now() }))
-}
-
-var (
-	fetchCount  = expvar.NewInt("fetchCount")
-	fetchErrors = expvar.NewInt("fetchErrors")
-)
 
 var funcMap = template.FuncMap{
 	"GoogleAnalyticsID": googleAnalyticsID,
