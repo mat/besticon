@@ -11,7 +11,6 @@ import (
 	"net/url"
 	"os"
 	"strconv"
-	"time"
 
 	"github.com/mat/besticon/besticon"
 	"github.com/mat/besticon/besticon/iconserver/assets"
@@ -89,23 +88,6 @@ func fetchBestIcon(url string) (*besticon.Icon, error) {
 	return icon, err
 }
 
-func statsHandler(w http.ResponseWriter, r *http.Request) {
-	stats := stats{}
-	stats.Stats = append(stats.Stats, pair{"Current Time", time.Now().String()})
-	stats.Stats = append(stats.Stats, pair{"Last Deploy", parseUnixTimeStamp(os.Getenv("DEPLOYED_AT")).String()})
-	stats.Stats = append(stats.Stats, pair{"Deployed Git Revision", os.Getenv("GIT_REVISION")})
-	renderHTMLTemplate(w, 200, statsHTML, stats)
-}
-
-func parseUnixTimeStamp(s string) time.Time {
-	ts, err := strconv.Atoi(s)
-	if err != nil {
-		return time.Unix(0, 0)
-	}
-
-	return time.Unix(int64(ts), 0)
-}
-
 func writeAPIError(w http.ResponseWriter, httpStatus int, e error) {
 	data := struct {
 		Error string `json:"error"`
@@ -137,13 +119,6 @@ type pageInfo struct {
 	URL   string
 	Icons []besticon.Icon
 	Error error
-}
-
-type stats struct {
-	Stats []pair
-}
-type pair struct {
-	Name, Value string
 }
 
 func (pi pageInfo) Host() string {
@@ -179,7 +154,6 @@ func startServer(port int) {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/icons", iconsHandler)
 	http.HandleFunc("/api/icons", apiHandler)
-	http.HandleFunc("/stats", statsHandler)
 
 	serveAsset("/pure-0.5.0-min.css", "besticon/iconserver/assets/pure-0.5.0-min.css")
 	serveAsset("/grids-responsive-0.5.0-min.css", "besticon/iconserver/assets/grids-responsive-0.5.0-min.css")
@@ -223,7 +197,6 @@ func main() {
 func init() {
 	indexHTML = templateFromAsset("besticon/iconserver/assets/index.html", "index.html")
 	iconsHTML = templateFromAsset("besticon/iconserver/assets/icons.html", "icons.html")
-	statsHTML = templateFromAsset("besticon/iconserver/assets/stats.html", "stats.html")
 }
 
 func templateFromAsset(assetPath, templateName string) *template.Template {
@@ -233,7 +206,6 @@ func templateFromAsset(assetPath, templateName string) *template.Template {
 
 var indexHTML *template.Template
 var iconsHTML *template.Template
-var statsHTML *template.Template
 
 var funcMap = template.FuncMap{
 	"GoogleAnalyticsID": googleAnalyticsID,
