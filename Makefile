@@ -26,8 +26,8 @@ install:
 	go get ./...
 
 run_server:
-	go build github.com/mat/besticon/besticon/iconserver
-	ICONS_ANALYTICS_ID=$(ICONS_ANALYTICS_ID) DEPLOYED_AT=`date +%s` GIT_REVISION=`git describe --always` ./iconserver -port=3000
+	go build -o bin/iconserver github.com/mat/besticon/besticon/iconserver
+	ICONS_ANALYTICS_ID=$(ICONS_ANALYTICS_ID) DEPLOYED_AT=`date +%s` GIT_REVISION=`git describe --always` ./bin/iconserver -port=3000
 
 install_devtools:
 	go get golang.org/x/tools/cmd/...
