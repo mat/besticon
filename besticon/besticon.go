@@ -8,10 +8,13 @@ import (
 	"errors"
 	"fmt"
 	"image"
+	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/http/cookiejar"
 	"net/url"
+	"os"
 	"sort"
 	"strings"
 	"time"
@@ -275,7 +278,30 @@ func get(client *http.Client, url string) (*http.Response, error) {
 	}
 
 	setDefaultHeaders(req)
-	return client.Do(req)
+
+	start := time.Now()
+	resp, err := client.Do(req)
+	end := time.Now()
+	duration := end.Sub(start)
+
+	if err != nil {
+		logger.Printf("Error: %s %s %s %.2fms",
+			req.Method,
+			req.URL,
+			err,
+			float64(duration)/float64(time.Millisecond),
+		)
+	} else {
+		logger.Printf("%s %s %d %.2fms %d",
+			req.Method,
+			req.URL,
+			resp.StatusCode,
+			float64(duration)/float64(time.Millisecond),
+			resp.ContentLength,
+		)
+	}
+
+	return resp, err
 }
 
 func setDefaultHeaders(req *http.Request) {
@@ -364,3 +390,14 @@ type byURL []Icon
 func (a byURL) Len() int           { return len(a) }
 func (a byURL) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a byURL) Less(i, j int) bool { return (a[i].URL < a[j].URL) }
+
+var logger *log.Logger
+
+// SetLogOutput sets the output for the package's logger.
+func SetLogOutput(w io.Writer) {
+	logger = log.New(w, "http:  ", log.LstdFlags|log.Lmicroseconds)
+}
+
+func init() {
+	SetLogOutput(os.Stdout)
+}

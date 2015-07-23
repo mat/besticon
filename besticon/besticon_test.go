@@ -3,13 +3,14 @@ package besticon
 import (
 	"errors"
 	"fmt"
-	"github.com/mat/besticon/vcr"
 	"image"
 	"io/ioutil"
 	"os"
 	"reflect"
 	"sort"
 	"testing"
+
+	"github.com/mat/besticon/vcr"
 )
 
 func TestKicktipp(t *testing.T) {

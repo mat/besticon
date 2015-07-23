@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-var logger = log.New(os.Stdout, "besticon: ", log.LstdFlags|log.Ltime)
+var logger = log.New(os.Stdout, "server: ", log.LstdFlags|log.Lmicroseconds)
 
 type loggingWriter struct {
 	http.ResponseWriter

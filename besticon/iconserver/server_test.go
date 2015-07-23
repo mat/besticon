@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
+
+	"github.com/mat/besticon/besticon"
 )
 
 func TestGetIndex(t *testing.T) {
@@ -89,4 +92,8 @@ func fail(t *testing.T, failureMessage string) {
 	t.Errorf("\t%s\n"+
 		"\r\t",
 		failureMessage)
+}
+
+func init() {
+	besticon.SetLogOutput(ioutil.Discard)
 }
