@@ -48,11 +48,7 @@ type Icon struct {
 // FetchBestIcon takes a siteURL and returns the icon with
 // the largest dimensions for this site or an error.
 func FetchBestIcon(siteURL string) (*Icon, error) {
-	return fetchBestIconWithClient(siteURL, &http.Client{})
-}
-
-func fetchBestIconWithClient(siteURL string, c *http.Client) (*Icon, error) {
-	icons, e := fetchIconsWithClient(siteURL, c)
+	icons, e := FetchIcons(siteURL)
 	if e != nil {
 		return nil, e
 	}
@@ -68,20 +64,12 @@ func fetchBestIconWithClient(siteURL string, c *http.Client) (*Icon, error) {
 // FetchIcons takes a siteURL and returns all icons for this site
 // or an error.
 func FetchIcons(siteURL string) ([]Icon, error) {
-	c := &http.Client{Timeout: 60 * time.Second}
-	return fetchIconsWithClient(siteURL, c)
-}
-
-// fetchIconsWithClient modifies c's checkRedirect and Jar!
-func fetchIconsWithClient(siteURL string, c *http.Client) ([]Icon, error) {
-	configureClient(c)
-
 	siteURL = strings.TrimSpace(siteURL)
 	if !strings.HasPrefix(siteURL, "http") {
 		siteURL = "http://" + siteURL
 	}
 
-	html, url, e := fetchHTML(siteURL, c)
+	html, url, e := fetchHTML(siteURL)
 	if e != nil {
 		return nil, e
 	}
@@ -91,7 +79,7 @@ func fetchIconsWithClient(siteURL string, c *http.Client) ([]Icon, error) {
 		return nil, e
 	}
 
-	icons := fetchAllIcons(links, c)
+	icons := fetchAllIcons(links)
 	icons = rejectBrokenIcons(icons)
 
 	// Order when finished: (width/height, bytes, url)
@@ -102,8 +90,8 @@ func fetchIconsWithClient(siteURL string, c *http.Client) ([]Icon, error) {
 	return icons, nil
 }
 
-func fetchHTML(url string, c *http.Client) ([]byte, *url.URL, error) {
-	r, e := get(c, url)
+func fetchHTML(url string) ([]byte, *url.URL, error) {
+	r, e := get(url)
 	if e != nil {
 		return nil, nil, e
 	}
@@ -225,11 +213,11 @@ func extractIconTags(doc *goquery.Document) []string {
 	return hits
 }
 
-func fetchAllIcons(urls []string, c *http.Client) []Icon {
+func fetchAllIcons(urls []string) []Icon {
 	ch := make(chan Icon)
 
 	for _, u := range urls {
-		go func(u string) { ch <- fetchIconDetails(u, c) }(u)
+		go func(u string) { ch <- fetchIconDetails(u) }(u)
 	}
 
 	icons := []Icon{}
@@ -240,10 +228,10 @@ func fetchAllIcons(urls []string, c *http.Client) []Icon {
 	return icons
 }
 
-func fetchIconDetails(url string, c *http.Client) Icon {
+func fetchIconDetails(url string) Icon {
 	i := Icon{URL: url}
 
-	response, e := get(c, url)
+	response, e := get(url)
 	if e != nil {
 		i.Error = e
 		return i
@@ -271,7 +259,7 @@ func fetchIconDetails(url string, c *http.Client) Icon {
 	return i
 }
 
-func get(client *http.Client, url string) (*http.Response, error) {
+func get(url string) (*http.Response, error) {
 	req, e := http.NewRequest("GET", url, nil)
 	if e != nil {
 		return nil, e
@@ -307,11 +295,6 @@ func get(client *http.Client, url string) (*http.Response, error) {
 func setDefaultHeaders(req *http.Request) {
 	req.Header.Set("Accept", "*/*")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.3 Safari/534.53.10")
-}
-
-func configureClient(c *http.Client) {
-	c.Jar = mustInitCookieJar()
-	c.CheckRedirect = checkRedirect
 }
 
 func mustInitCookieJar() *cookiejar.Jar {
@@ -390,6 +373,18 @@ type byURL []Icon
 func (a byURL) Len() int           { return len(a) }
 func (a byURL) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a byURL) Less(i, j int) bool { return (a[i].URL < a[j].URL) }
+
+var client *http.Client
+
+func init() {
+	setHttpClient(&http.Client{Timeout: 60 * time.Second})
+}
+
+func setHttpClient(c *http.Client) {
+	c.Jar = mustInitCookieJar()
+	c.CheckRedirect = checkRedirect
+	client = c
+}
 
 var logger *log.Logger
 
