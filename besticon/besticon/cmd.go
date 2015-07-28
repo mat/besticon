@@ -3,11 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/mat/besticon/besticon"
+	"io/ioutil"
 	"os"
+
+	"github.com/mat/besticon/besticon"
 )
 
 func main() {
+	besticon.SetLogOutput(ioutil.Discard) // Disable verbose logging
+
 	all := flag.Bool("all", false, "Display all Icons, not just the best.")
 	flag.Parse()
 
