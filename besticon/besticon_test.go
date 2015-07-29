@@ -183,7 +183,7 @@ func fetchIconsWithVCR(vcrFile string, url string) ([]Icon, error) {
 	}
 	defer f.Close()
 
-	setHttpClient(c)
+	setHTTPClient(c)
 	return FetchIcons(url)
 }
 
@@ -195,7 +195,7 @@ func fetchBestIconWithVCR(vcrFile string, url string) (*Icon, error) {
 	}
 	defer f.Close()
 
-	setHttpClient(c)
+	setHTTPClient(c)
 	i, err := FetchBestIcon(url)
 	return i, err
 }

@@ -377,10 +377,10 @@ func (a byURL) Less(i, j int) bool { return (a[i].URL < a[j].URL) }
 var client *http.Client
 
 func init() {
-	setHttpClient(&http.Client{Timeout: 60 * time.Second})
+	setHTTPClient(&http.Client{Timeout: 60 * time.Second})
 }
 
-func setHttpClient(c *http.Client) {
+func setHTTPClient(c *http.Client) {
 	c.Jar = mustInitCookieJar()
 	c.CheckRedirect = checkRedirect
 	client = c
