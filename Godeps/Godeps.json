@@ -41,6 +41,14 @@
 			"Rev": "4cf64c51f7e80d56d9ae2ffe7d684d3dd5dbd5d0"
 		},
 		{
+			"ImportPath": "github.com/golang/groupcache",
+			"Rev": "604ed5785183e59ae2789449d89e73f3a2a77987"
+		},
+		{
+			"ImportPath": "github.com/golang/protobuf/proto",
+			"Rev": "efd7476481382c195beb33acd8ec2f1527167fb4"
+		},
+		{
 			"ImportPath": "golang.org/x/image/riff",
 			"Rev": "7f6859d3853a76e5c6de50cac970173a9b803517"
 		},

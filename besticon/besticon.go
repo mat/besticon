@@ -47,8 +47,8 @@ type Icon struct {
 
 // FetchBestIcon takes a siteURL and returns the icon with
 // the largest dimensions for this site or an error.
-func FetchBestIcon(siteURL string) (*Icon, error) {
-	icons, e := FetchIcons(siteURL)
+func FetchBestIcon(siteURL string, useCache bool) (*Icon, error) {
+	icons, e := FetchIcons(siteURL, useCache)
 	if e != nil {
 		return nil, e
 	}
@@ -63,10 +63,14 @@ func FetchBestIcon(siteURL string) (*Icon, error) {
 
 // FetchIcons takes a siteURL and returns all icons for this site
 // or an error.
-func FetchIcons(siteURL string) ([]Icon, error) {
+func FetchIcons(siteURL string, useCache bool) ([]Icon, error) {
 	siteURL = strings.TrimSpace(siteURL)
 	if !strings.HasPrefix(siteURL, "http") {
 		siteURL = "http://" + siteURL
+	}
+
+	if useCache && cacheEnabled() {
+		return resultFromCache(siteURL)
 	}
 
 	html, url, e := fetchHTML(siteURL)

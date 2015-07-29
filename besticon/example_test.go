@@ -3,7 +3,7 @@ package besticon
 import "fmt"
 
 func ExampleFetchBestIcon() {
-	i, err := FetchBestIcon("github.com")
+	i, err := FetchBestIcon("github.com", false)
 	if err != nil {
 		fmt.Println("could not fetch icon: ", err)
 	} else {

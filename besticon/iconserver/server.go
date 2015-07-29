@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/mat/besticon/besticon"
 	"github.com/mat/besticon/besticon/iconserver/assets"
@@ -72,7 +73,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 
 func fetchIcons(url string) ([]besticon.Icon, error) {
 	fetchCount.Add(1)
-	icons, err := besticon.FetchIcons(url)
+	icons, err := besticon.FetchIcons(url, true)
 	if err != nil {
 		fetchErrors.Add(1)
 	}
@@ -81,7 +82,7 @@ func fetchIcons(url string) ([]besticon.Icon, error) {
 
 func fetchBestIcon(url string) (*besticon.Icon, error) {
 	fetchCount.Add(1)
-	icon, err := besticon.FetchBestIcon(url)
+	icon, err := besticon.FetchBestIcon(url, true)
 	if err != nil {
 		fetchErrors.Add(1)
 	}
@@ -218,4 +219,15 @@ func googleAnalyticsID() string {
 
 func imgWidth(i *besticon.Icon) int {
 	return i.Width / 2.0
+}
+
+func init() {
+	besticon.SetCacheMaxSize(64)
+
+	ticker := time.NewTicker(time.Second * 5)
+	go func() {
+		for range ticker.C {
+			logger.Printf("Cache: %+v", besticon.GetCacheStats())
+		}
+	}()
 }

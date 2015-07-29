@@ -22,7 +22,7 @@ func main() {
 
 	url := os.Args[len(os.Args)-1]
 
-	icons, err := besticon.FetchIcons(url)
+	icons, err := besticon.FetchIcons(url, false)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s:  failed to fetch icons: %s\n", url, err)
 		os.Exit(1)
