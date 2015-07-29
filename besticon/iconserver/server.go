@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"expvar"
 	"flag"
 	"fmt"
 	"html/template"
@@ -223,6 +224,12 @@ func imgWidth(i *besticon.Icon) int {
 
 func init() {
 	besticon.SetCacheMaxSize(64)
+
+	expvar.Publish("cacheBytes", expvar.Func(func() interface{} { return besticon.GetCacheStats().Bytes }))
+	expvar.Publish("cacheItems", expvar.Func(func() interface{} { return besticon.GetCacheStats().Items }))
+	expvar.Publish("cacheGets", expvar.Func(func() interface{} { return besticon.GetCacheStats().Gets }))
+	expvar.Publish("cacheHits", expvar.Func(func() interface{} { return besticon.GetCacheStats().Hits }))
+	expvar.Publish("cacheEvictions", expvar.Func(func() interface{} { return besticon.GetCacheStats().Evictions }))
 
 	ticker := time.NewTicker(time.Second * 5)
 	go func() {
