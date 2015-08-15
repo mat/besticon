@@ -231,7 +231,7 @@ func init() {
 	expvar.Publish("cacheHits", expvar.Func(func() interface{} { return besticon.GetCacheStats().Hits }))
 	expvar.Publish("cacheEvictions", expvar.Func(func() interface{} { return besticon.GetCacheStats().Evictions }))
 
-	ticker := time.NewTicker(time.Second * 5)
+	ticker := time.NewTicker(time.Minute * 1)
 	go func() {
 		for range ticker.C {
 			logger.Printf("Cache: %+v", besticon.GetCacheStats())
