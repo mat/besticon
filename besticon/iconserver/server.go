@@ -157,14 +157,14 @@ func startServer(port int) {
 	http.HandleFunc("/icons", iconsHandler)
 	http.HandleFunc("/api/icons", apiHandler)
 
-	serveAsset("/pure-0.5.0-min.css", "besticon/iconserver/assets/pure-0.5.0-min.css")
-	serveAsset("/grids-responsive-0.5.0-min.css", "besticon/iconserver/assets/grids-responsive-0.5.0-min.css")
-	serveAsset("/main-min.css", "besticon/iconserver/assets/main-min.css")
+	serveAsset("/pure-0.5.0-min.css", "besticon/iconserver/assets/pure-0.5.0-min.css", oneYear)
+	serveAsset("/grids-responsive-0.5.0-min.css", "besticon/iconserver/assets/grids-responsive-0.5.0-min.css", oneYear)
+	serveAsset("/main-min.css", "besticon/iconserver/assets/main-min.css", oneYear)
 
-	serveAsset("/icon.svg", "besticon/iconserver/assets/icon.svg")
-	serveAsset("/favicon.ico", "besticon/iconserver/assets/favicon.ico")
-	serveAsset("/apple-touch-icon.png", "besticon/iconserver/assets/apple-touch-icon.png")
-	serveAsset("/robots.txt", "besticon/iconserver/assets/robots.txt")
+	serveAsset("/icon.svg", "besticon/iconserver/assets/icon.svg", oneYear)
+	serveAsset("/favicon.ico", "besticon/iconserver/assets/favicon.ico", oneYear)
+	serveAsset("/apple-touch-icon.png", "besticon/iconserver/assets/apple-touch-icon.png", oneYear)
+	serveAsset("/robots.txt", "besticon/iconserver/assets/robots.txt", nocache)
 
 	logger.Print("Starting server on port ", port, "...")
 	e := http.ListenAndServe(":"+strconv.Itoa(port), newLoggingMux())
@@ -173,11 +173,20 @@ func startServer(port int) {
 	}
 }
 
-func serveAsset(path string, assetPath string) {
+const (
+	oneYear = 365 * 24 * 3600
+	nocache = -1
+)
+
+func serveAsset(path string, assetPath string, maxAgeSeconds int) {
 	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 		assetInfo, err := assets.AssetInfo(assetPath)
 		if err != nil {
 			panic(err)
+		}
+
+		if maxAgeSeconds != nocache {
+			w.Header().Add("Cache-Control", fmt.Sprintf("max-age=%d", maxAgeSeconds))
 		}
 
 		http.ServeContent(w, r, assetInfo.Name(), assetInfo.ModTime(),
