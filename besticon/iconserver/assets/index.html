@@ -67,7 +67,7 @@
             </div>
           </form>
           <div class="example">
-            Examples: 
+            Examples:
             <a href="/icons?url=github.com#result">github.com</a>,
             <a href="/icons?url=instagram.com#result">instagram.com</a>
           </div>
@@ -75,14 +75,14 @@
           <h2 class="content-subhead">HTTP API</h2>
           <p>
           The API call at
-          <code><a href="/api/icons?url=stackoverflow.com">http://icons.better-idea.org/<wbr>api/icons</a></code>
+          <code><a href="/api/icons?pretty=yes&amp;url=stackoverflow.com">http://icons.better-idea.org/<wbr>api/icons</a></code>
           supports both listing all icons and redirection to the largest icon.
           </p>
 
           <h3>Example: All Icons</h3>
           <p>
           <code>
-            GET <a href="/api/icons?url=stackoverflow.com">http://icons.better-idea.org/<wbr>api/icons?<wbr>url=stackoverflow.com</a>
+            GET <a href="/api/icons?pretty=yes&amp;url=stackoverflow.com">http://icons.better-idea.org/<wbr>api/icons?<wbr>url=stackoverflow.com</a>
           </code>
           </p>
 
@@ -103,7 +103,7 @@
           Errors are returned with status <code>404</code> and an <code>error</code> field in the response.
           <p>
           <code>
-            GET <a href="/api/icons?url=broken-example.com">
+            GET <a href="/api/icons?pretty=yes&amp;url=broken-example.com">
               http://icons.better-idea.org/<wbr>api/icons?<wbr>url=broken-example.com</a>
           </code>
           </p>
@@ -118,13 +118,13 @@
           </p>
 
           <p>
-          That said, if you want to run this on your own machines you can head over to 
+          That said, if you want to run this on your own machines you can head over to
           <a href="https://github.com/mat/besticon">besticon on GitHub</a> where you can find
           source code and instructions on how to install and run the server, it's quite easy.
           </p>
 
           <p>
-          Please feel free to <a href="https://github.com/mat/besticon/issues/new">open an issue</a> 
+          Please feel free to <a href="https://github.com/mat/besticon/issues/new">open an issue</a>
           over at GitHub if you happen to stumble upon an error or a site that does not work as expected.
           </p>
 
@@ -142,7 +142,7 @@
     <div class="footer l-box">
       <p>
       <a href='http://icons.better-idea.org'>The Icon Finder</a> &dash; in search for icons since January 2015.
-      Written in <a href='http://golang.org'>Go</a>, 
+      Written in <a href='http://golang.org'>Go</a>,
       source on <a href="https://github.com/mat/besticon">GitHub</a>.
       Created by <a href='http://www.better-idea.org'>Matthias Lüdtke</a>.
       </p>
@@ -150,4 +150,3 @@
 
   </body>
 </html>
-

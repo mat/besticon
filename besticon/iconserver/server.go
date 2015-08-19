@@ -43,12 +43,14 @@ func iconsHandler(w http.ResponseWriter, r *http.Request) {
 
 const urlParam = "url"
 const bestParam = "i_am_feeling_lucky"
+const prettyParam = "pretty"
 
 func apiHandler(w http.ResponseWriter, r *http.Request) {
+	pretty := r.FormValue(prettyParam) == "yes"
 	url := r.FormValue(urlParam)
 	if len(url) == 0 {
 		errMissingURL := errors.New("need url query parameter")
-		writeAPIError(w, 400, errMissingURL)
+		writeAPIError(w, 400, errMissingURL, pretty)
 		return
 	}
 
@@ -56,7 +58,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	if bestMode {
 		icon, e := fetchBestIcon(url)
 		if e != nil {
-			writeAPIError(w, 404, e)
+			writeAPIError(w, 404, e, pretty)
 			return
 		}
 
@@ -64,11 +66,11 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		icons, e := fetchIcons(url)
 		if e != nil {
-			writeAPIError(w, 404, e)
+			writeAPIError(w, 404, e, pretty)
 			return
 		}
 
-		writeAPIIcons(w, url, icons)
+		writeAPIIcons(w, url, icons, pretty)
 	}
 }
 
@@ -90,16 +92,21 @@ func fetchBestIcon(url string) (*besticon.Icon, error) {
 	return icon, err
 }
 
-func writeAPIError(w http.ResponseWriter, httpStatus int, e error) {
+func writeAPIError(w http.ResponseWriter, httpStatus int, e error, pretty bool) {
 	data := struct {
 		Error string `json:"error"`
 	}{
 		e.Error(),
 	}
-	renderJSONResponse(w, httpStatus, data)
+
+	if pretty {
+		renderJSONResponsePretty(w, httpStatus, data)
+	} else {
+		renderJSONResponse(w, httpStatus, data)
+	}
 }
 
-func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon) {
+func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon, pretty bool) {
 	data := struct {
 		URL   string          `json:"url"`
 		Icons []besticon.Icon `json:"icons"`
@@ -107,14 +114,31 @@ func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon) {
 		url,
 		icons,
 	}
-	renderJSONResponse(w, 200, data)
+
+	if pretty {
+		renderJSONResponsePretty(w, 200, data)
+	} else {
+		renderJSONResponse(w, 200, data)
+	}
 }
 
+const (
+	contentType     = "Content-Type"
+	applicationJSON = "application/json"
+)
+
 func renderJSONResponse(w http.ResponseWriter, httpStatus int, data interface{}) {
-	w.Header().Add("Content-Type", "application/json")
+	w.Header().Add(contentType, applicationJSON)
 	w.WriteHeader(httpStatus)
 	enc := json.NewEncoder(w)
 	enc.Encode(data)
+}
+
+func renderJSONResponsePretty(w http.ResponseWriter, httpStatus int, data interface{}) {
+	w.Header().Add(contentType, applicationJSON)
+	w.WriteHeader(httpStatus)
+	b, _ := json.MarshalIndent(data, "", "  ")
+	w.Write(b)
 }
 
 type pageInfo struct {
@@ -141,7 +165,7 @@ func (pi pageInfo) Best() string {
 }
 
 func renderHTMLTemplate(w http.ResponseWriter, httpStatus int, templ *template.Template, data interface{}) {
-	w.Header().Add("Content-Type", "text/html; charset=utf-8")
+	w.Header().Add(contentType, "text/html; charset=utf-8")
 	w.WriteHeader(httpStatus)
 
 	err := templ.Execute(w, data)
