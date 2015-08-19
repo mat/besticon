@@ -42,7 +42,7 @@ func iconsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 const urlParam = "url"
-const bestParam = "i_am_feeling_lucky"
+const feelingLuckyParam = "i_am_feeling_lucky"
 const prettyParam = "pretty"
 
 func apiHandler(w http.ResponseWriter, r *http.Request) {
@@ -54,8 +54,8 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	bestMode := r.FormValue(bestParam) == "yes"
-	if bestMode {
+	bestOnly := r.FormValue(feelingLuckyParam) == "yes"
+	if bestOnly {
 		icon, e := fetchBestIcon(url)
 		if e != nil {
 			writeAPIError(w, 404, e, pretty)
