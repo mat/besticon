@@ -9,24 +9,18 @@ import (
 	"unicode/utf8"
 
 	"golang.org/x/text/encoding"
+	"golang.org/x/text/encoding/internal"
+	"golang.org/x/text/encoding/internal/identifier"
 	"golang.org/x/text/transform"
 )
 
 // EUCJP is the EUC-JP encoding.
-var EUCJP encoding.Encoding = eucJP{}
+var EUCJP encoding.Encoding = &eucJP
 
-type eucJP struct{}
-
-func (eucJP) NewDecoder() transform.Transformer {
-	return eucJPDecoder{}
-}
-
-func (eucJP) NewEncoder() transform.Transformer {
-	return eucJPEncoder{}
-}
-
-func (eucJP) String() string {
-	return "EUC-JP"
+var eucJP = internal.Encoding{
+	&internal.SimpleEncoding{eucJPDecoder{}, eucJPEncoder{}},
+	"EUC-JP",
+	identifier.EUCPkdFmtJapanese,
 }
 
 var errInvalidEUCJP = errors.New("japanese: invalid EUC-JP encoding")

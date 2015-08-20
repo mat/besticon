@@ -23,15 +23,16 @@ import (
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
-	// ...even more image formats.
-	_ "code.google.com/p/go.image/bmp"
-	_ "code.google.com/p/go.image/tiff"
-	_ "code.google.com/p/go.image/webp"
-	_ "github.com/mat/besticon/ico"
 
-	"code.google.com/p/go.net/html/charset"
-	"code.google.com/p/go.net/publicsuffix"
+	// ...even more image formats.
+	_ "github.com/mat/besticon/ico"
+	_ "golang.org/x/image/bmp"
+	_ "golang.org/x/image/tiff"
+	_ "golang.org/x/image/webp"
+
 	"github.com/PuerkitoBio/goquery"
+	"golang.org/x/net/html/charset"
+	"golang.org/x/net/publicsuffix"
 )
 
 // Icon holds icon information.

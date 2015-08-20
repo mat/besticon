@@ -270,25 +270,53 @@ func (d *Decoder) parseFilterHeader() {
 
 // parseOtherPartitions parses the other partitions, as specified in section 9.5.
 func (d *Decoder) parseOtherPartitions() error {
+	const maxNOP = 1 << 3
+	var partLens [maxNOP]int
+	d.nOP = 1 << d.fp.readUint(uniformProb, 2)
+
+	// The final partition length is implied by the the remaining chunk data
+	// (d.r.n) and the other d.nOP-1 partition lengths. Those d.nOP-1 partition
+	// lengths are stored as 24-bit uints, i.e. up to 16 MiB per partition.
+	n := 3 * (d.nOP - 1)
+	partLens[d.nOP-1] = d.r.n - n
+	if partLens[d.nOP-1] < 0 {
+		return io.ErrUnexpectedEOF
+	}
+	if n > 0 {
+		buf := make([]byte, n)
+		if err := d.r.ReadFull(buf); err != nil {
+			return err
+		}
+		for i := 0; i < d.nOP-1; i++ {
+			pl := int(buf[3*i+0]) | int(buf[3*i+1])<<8 | int(buf[3*i+2])<<16
+			if pl > partLens[d.nOP-1] {
+				return io.ErrUnexpectedEOF
+			}
+			partLens[i] = pl
+			partLens[d.nOP-1] -= pl
+		}
+	}
+
+	// We check if the final partition length can also fit into a 24-bit uint.
+	// Strictly speaking, this isn't part of the spec, but it guards against a
+	// malicious WEBP image that is too large to ReadFull the encoded DCT
+	// coefficients into memory, whether that's because the actual WEBP file is
+	// too large, or whether its RIFF metadata lists too large a chunk.
+	if 1<<24 <= partLens[d.nOP-1] {
+		return errors.New("vp8: too much data to decode")
+	}
+
 	buf := make([]byte, d.r.n)
 	if err := d.r.ReadFull(buf); err != nil {
 		return err
 	}
-	d.nOP = 1 << d.fp.readUint(uniformProb, 2)
-	n := 3 * (d.nOP - 1)
-	if n > len(buf) {
-		return io.ErrUnexpectedEOF
-	}
-	partLen, buf := buf[:n], buf[n:]
-	for i := 0; i < d.nOP-1; i++ {
-		m := int(partLen[3*i+0]) | int(partLen[3*i+1])<<8 | int(partLen[3*i+2])<<16
-		if m > len(buf) {
-			return io.ErrUnexpectedEOF
+	for i, pl := range partLens {
+		if i == d.nOP {
+			break
 		}
-		d.op[i].init(buf[:m])
-		buf = buf[m:]
+		d.op[i].init(buf[:pl])
+		buf = buf[pl:]
 	}
-	d.op[d.nOP-1].init(buf)
 	return nil
 }
 

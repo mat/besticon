@@ -2,13 +2,17 @@
 
 package charmap
 
-import "golang.org/x/text/encoding"
+import (
+	"golang.org/x/text/encoding"
+	"golang.org/x/text/encoding/internal/identifier"
+)
 
 // CodePage437 is the IBM Code Page 437 encoding.
 var CodePage437 encoding.Encoding = &codePage437
 
 var codePage437 = charmap{
 	name:          "IBM Code Page 437",
+	mib:           identifier.PC8CodePage437,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -183,6 +187,7 @@ var CodePage866 encoding.Encoding = &codePage866
 
 var codePage866 = charmap{
 	name:          "IBM Code Page 866",
+	mib:           identifier.IBM866,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -357,6 +362,7 @@ var ISO8859_2 encoding.Encoding = &iso8859_2
 
 var iso8859_2 = charmap{
 	name:          "ISO 8859-2",
+	mib:           identifier.ISOLatin2,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -531,6 +537,7 @@ var ISO8859_3 encoding.Encoding = &iso8859_3
 
 var iso8859_3 = charmap{
 	name:          "ISO 8859-3",
+	mib:           identifier.ISOLatin3,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -705,6 +712,7 @@ var ISO8859_4 encoding.Encoding = &iso8859_4
 
 var iso8859_4 = charmap{
 	name:          "ISO 8859-4",
+	mib:           identifier.ISOLatin4,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -879,6 +887,7 @@ var ISO8859_5 encoding.Encoding = &iso8859_5
 
 var iso8859_5 = charmap{
 	name:          "ISO 8859-5",
+	mib:           identifier.ISOLatinCyrillic,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -1053,6 +1062,7 @@ var ISO8859_6 encoding.Encoding = &iso8859_6
 
 var iso8859_6 = charmap{
 	name:          "ISO 8859-6",
+	mib:           identifier.ISOLatinArabic,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -1227,6 +1237,7 @@ var ISO8859_7 encoding.Encoding = &iso8859_7
 
 var iso8859_7 = charmap{
 	name:          "ISO 8859-7",
+	mib:           identifier.ISOLatinGreek,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -1401,6 +1412,7 @@ var ISO8859_8 encoding.Encoding = &iso8859_8
 
 var iso8859_8 = charmap{
 	name:          "ISO 8859-8",
+	mib:           identifier.ISOLatinHebrew,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -1575,6 +1587,7 @@ var ISO8859_10 encoding.Encoding = &iso8859_10
 
 var iso8859_10 = charmap{
 	name:          "ISO 8859-10",
+	mib:           identifier.ISOLatin6,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -1749,6 +1762,7 @@ var ISO8859_13 encoding.Encoding = &iso8859_13
 
 var iso8859_13 = charmap{
 	name:          "ISO 8859-13",
+	mib:           identifier.ISO885913,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -1923,6 +1937,7 @@ var ISO8859_14 encoding.Encoding = &iso8859_14
 
 var iso8859_14 = charmap{
 	name:          "ISO 8859-14",
+	mib:           identifier.ISO885914,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -2097,6 +2112,7 @@ var ISO8859_15 encoding.Encoding = &iso8859_15
 
 var iso8859_15 = charmap{
 	name:          "ISO 8859-15",
+	mib:           identifier.ISO885915,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -2271,6 +2287,7 @@ var ISO8859_16 encoding.Encoding = &iso8859_16
 
 var iso8859_16 = charmap{
 	name:          "ISO 8859-16",
+	mib:           identifier.ISO885916,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -2445,6 +2462,7 @@ var KOI8R encoding.Encoding = &koi8R
 
 var koi8R = charmap{
 	name:          "KOI8-R",
+	mib:           identifier.KOI8R,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -2619,6 +2637,7 @@ var KOI8U encoding.Encoding = &koi8U
 
 var koi8U = charmap{
 	name:          "KOI8-U",
+	mib:           identifier.KOI8U,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -2793,6 +2812,7 @@ var Macintosh encoding.Encoding = &macintosh
 
 var macintosh = charmap{
 	name:          "Macintosh",
+	mib:           identifier.Macintosh,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -2967,6 +2987,7 @@ var MacintoshCyrillic encoding.Encoding = &macintoshCyrillic
 
 var macintoshCyrillic = charmap{
 	name:          "Macintosh Cyrillic",
+	mib:           identifier.MacintoshCyrillic,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -3141,6 +3162,7 @@ var Windows874 encoding.Encoding = &windows874
 
 var windows874 = charmap{
 	name:          "Windows 874",
+	mib:           identifier.Windows874,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -3315,6 +3337,7 @@ var Windows1250 encoding.Encoding = &windows1250
 
 var windows1250 = charmap{
 	name:          "Windows 1250",
+	mib:           identifier.Windows1250,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -3489,6 +3512,7 @@ var Windows1251 encoding.Encoding = &windows1251
 
 var windows1251 = charmap{
 	name:          "Windows 1251",
+	mib:           identifier.Windows1251,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -3663,6 +3687,7 @@ var Windows1252 encoding.Encoding = &windows1252
 
 var windows1252 = charmap{
 	name:          "Windows 1252",
+	mib:           identifier.Windows1252,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -3837,6 +3862,7 @@ var Windows1253 encoding.Encoding = &windows1253
 
 var windows1253 = charmap{
 	name:          "Windows 1253",
+	mib:           identifier.Windows1253,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -4011,6 +4037,7 @@ var Windows1254 encoding.Encoding = &windows1254
 
 var windows1254 = charmap{
 	name:          "Windows 1254",
+	mib:           identifier.Windows1254,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -4185,6 +4212,7 @@ var Windows1255 encoding.Encoding = &windows1255
 
 var windows1255 = charmap{
 	name:          "Windows 1255",
+	mib:           identifier.Windows1255,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -4359,6 +4387,7 @@ var Windows1256 encoding.Encoding = &windows1256
 
 var windows1256 = charmap{
 	name:          "Windows 1256",
+	mib:           identifier.Windows1256,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -4533,6 +4562,7 @@ var Windows1257 encoding.Encoding = &windows1257
 
 var windows1257 = charmap{
 	name:          "Windows 1257",
+	mib:           identifier.Windows1257,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -4707,6 +4737,7 @@ var Windows1258 encoding.Encoding = &windows1258
 
 var windows1258 = charmap{
 	name:          "Windows 1258",
+	mib:           identifier.Windows1258,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -4883,6 +4914,7 @@ var XUserDefined encoding.Encoding = &xUserDefined
 
 var xUserDefined = charmap{
 	name:          "X-User-Defined",
+	mib:           identifier.XUserDefined,
 	asciiSuperset: true,
 	low:           0x80,
 	replacement:   0x1a,
@@ -5050,4 +5082,35 @@ var xUserDefined = charmap{
 		0xf000f7f0, 0xf100f7f1, 0xf200f7f2, 0xf300f7f3, 0xf400f7f4, 0xf500f7f5, 0xf600f7f6, 0xf700f7f7,
 		0xf800f7f8, 0xf900f7f9, 0xfa00f7fa, 0xfb00f7fb, 0xfc00f7fc, 0xfd00f7fd, 0xfe00f7fe, 0xff00f7ff,
 	},
+}
+var listAll = []encoding.Encoding{
+	CodePage437,
+	CodePage866,
+	ISO8859_2,
+	ISO8859_3,
+	ISO8859_4,
+	ISO8859_5,
+	ISO8859_6, ISO8859_6E, ISO8859_6I,
+	ISO8859_7,
+	ISO8859_8, ISO8859_8E, ISO8859_8I,
+	ISO8859_10,
+	ISO8859_13,
+	ISO8859_14,
+	ISO8859_15,
+	ISO8859_16,
+	KOI8R,
+	KOI8U,
+	Macintosh,
+	MacintoshCyrillic,
+	Windows874,
+	Windows1250,
+	Windows1251,
+	Windows1252,
+	Windows1253,
+	Windows1254,
+	Windows1255,
+	Windows1256,
+	Windows1257,
+	Windows1258,
+	XUserDefined,
 }

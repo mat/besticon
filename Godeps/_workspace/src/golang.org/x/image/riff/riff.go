@@ -136,11 +136,10 @@ func (z *Reader) Next() (chunkID FourCC, chunkLen uint32, chunkData io.Reader, e
 		return FourCC{}, 0, nil, z.err
 	}
 	chunkID = FourCC{z.buf[0], z.buf[1], z.buf[2], z.buf[3]}
-	chunkLen = u32(z.buf[4:])
-	z.chunkLen = chunkLen
-	z.padded = chunkLen&1 == 1
+	z.chunkLen = u32(z.buf[4:])
+	z.padded = z.chunkLen&1 == 1
 	z.chunkReader = &chunkReader{z}
-	return chunkID, chunkLen, z.chunkReader, nil
+	return chunkID, z.chunkLen, z.chunkReader, nil
 }
 
 type chunkReader struct {

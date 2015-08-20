@@ -9,8 +9,58 @@ package charmap // import "golang.org/x/text/encoding/charmap"
 import (
 	"unicode/utf8"
 
+	"golang.org/x/text/encoding"
+	"golang.org/x/text/encoding/internal"
+	"golang.org/x/text/encoding/internal/identifier"
 	"golang.org/x/text/transform"
 )
+
+// These encodings vary only in the way clients should interpret them. Their
+// coded character set is identical and a single implementation can be shared.
+var (
+	// ISO8859_6E is the ISO 8859-6E encoding.
+	ISO8859_6E encoding.Encoding = &iso8859_6E
+
+	// ISO8859_6I is the ISO 8859-6I encoding.
+	ISO8859_6I encoding.Encoding = &iso8859_6I
+
+	// ISO8859_8E is the ISO 8859-8E encoding.
+	ISO8859_8E encoding.Encoding = &iso8859_8E
+
+	// ISO8859_8I is the ISO 8859-8I encoding.
+	ISO8859_8I encoding.Encoding = &iso8859_8I
+
+	iso8859_6E = internal.Encoding{
+		ISO8859_6,
+		"ISO-8859-6E",
+		identifier.ISO88596E,
+	}
+
+	iso8859_6I = internal.Encoding{
+		ISO8859_6,
+		"ISO-8859-6I",
+		identifier.ISO88596I,
+	}
+
+	iso8859_8E = internal.Encoding{
+		ISO8859_8,
+		"ISO-8859-8E",
+		identifier.ISO88598E,
+	}
+
+	iso8859_8I = internal.Encoding{
+		ISO8859_8,
+		"ISO-8859-8I",
+		identifier.ISO88598I,
+	}
+)
+
+// All is a list of all defined encodings in this package.
+var All = listAll
+
+// TODO: implement these encodings, in order of importance.
+// ASCII, ISO8859_1:       Rather common. Close to Windows 1252.
+// ISO8859_9:              Close to Windows 1254.
 
 // utf8Enc holds a rune's UTF-8 encoding in data[:len].
 type utf8Enc struct {
@@ -22,6 +72,8 @@ type utf8Enc struct {
 type charmap struct {
 	// name is the encoding's name.
 	name string
+	// mib is the encoding type of this encoder.
+	mib identifier.MIB
 	// asciiSuperset states whether the encoding is a superset of ASCII.
 	asciiSuperset bool
 	// low is the lower bound of the encoded byte for a non-ASCII rune. If
@@ -47,6 +99,10 @@ func (m *charmap) NewEncoder() transform.Transformer {
 
 func (m *charmap) String() string {
 	return m.name
+}
+
+func (m *charmap) ID() (mib identifier.MIB, other string) {
+	return m.mib, ""
 }
 
 // charmapDecoder implements transform.Transformer by decoding to UTF-8.

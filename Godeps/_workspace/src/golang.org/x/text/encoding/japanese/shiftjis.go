@@ -9,25 +9,19 @@ import (
 	"unicode/utf8"
 
 	"golang.org/x/text/encoding"
+	"golang.org/x/text/encoding/internal"
+	"golang.org/x/text/encoding/internal/identifier"
 	"golang.org/x/text/transform"
 )
 
 // ShiftJIS is the Shift JIS encoding, also known as Code Page 932 and
 // Windows-31J.
-var ShiftJIS encoding.Encoding = shiftJIS{}
+var ShiftJIS encoding.Encoding = &shiftJIS
 
-type shiftJIS struct{}
-
-func (shiftJIS) NewDecoder() transform.Transformer {
-	return shiftJISDecoder{}
-}
-
-func (shiftJIS) NewEncoder() transform.Transformer {
-	return shiftJISEncoder{}
-}
-
-func (shiftJIS) String() string {
-	return "Shift JIS"
+var shiftJIS = internal.Encoding{
+	&internal.SimpleEncoding{shiftJISDecoder{}, shiftJISEncoder{}},
+	"Shift JIS",
+	identifier.ShiftJIS,
 }
 
 var errInvalidShiftJIS = errors.New("japanese: invalid Shift JIS encoding")

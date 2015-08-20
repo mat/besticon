@@ -9,24 +9,26 @@ import (
 	"unicode/utf8"
 
 	"golang.org/x/text/encoding"
+	"golang.org/x/text/encoding/internal"
+	"golang.org/x/text/encoding/internal/identifier"
 	"golang.org/x/text/transform"
 )
 
 // HZGB2312 is the HZ-GB2312 encoding.
-var HZGB2312 encoding.Encoding = hzGB2312{}
+var HZGB2312 encoding.Encoding = &hzGB2312
 
-type hzGB2312 struct{}
+var hzGB2312 = internal.Encoding{
+	internal.FuncEncoding{hzGB2312NewDecoder, hzGB2312NewEncoder},
+	"HZ-GB2312",
+	identifier.HZGB2312,
+}
 
-func (hzGB2312) NewDecoder() transform.Transformer {
+func hzGB2312NewDecoder() transform.Transformer {
 	return new(hzGB2312Decoder)
 }
 
-func (hzGB2312) NewEncoder() transform.Transformer {
+func hzGB2312NewEncoder() transform.Transformer {
 	return new(hzGB2312Encoder)
-}
-
-func (hzGB2312) String() string {
-	return "HZ-GB2312"
 }
 
 var errInvalidHZGB2312 = errors.New("simplifiedchinese: invalid HZ-GB2312 encoding")

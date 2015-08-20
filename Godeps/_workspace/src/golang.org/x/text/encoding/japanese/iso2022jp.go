@@ -9,24 +9,26 @@ import (
 	"unicode/utf8"
 
 	"golang.org/x/text/encoding"
+	"golang.org/x/text/encoding/internal"
+	"golang.org/x/text/encoding/internal/identifier"
 	"golang.org/x/text/transform"
 )
 
 // ISO2022JP is the ISO-2022-JP encoding.
-var ISO2022JP encoding.Encoding = iso2022JP{}
+var ISO2022JP encoding.Encoding = &iso2022JP
 
-type iso2022JP struct{}
+var iso2022JP = internal.Encoding{
+	internal.FuncEncoding{iso2022JPNewDecoder, iso2022JPNewEncoder},
+	"ISO-2022-JP",
+	identifier.ISO2022JP,
+}
 
-func (iso2022JP) NewDecoder() transform.Transformer {
+func iso2022JPNewDecoder() transform.Transformer {
 	return new(iso2022JPDecoder)
 }
 
-func (iso2022JP) NewEncoder() transform.Transformer {
+func iso2022JPNewEncoder() transform.Transformer {
 	return new(iso2022JPEncoder)
-}
-
-func (iso2022JP) String() string {
-	return "ISO-2022-JP"
 }
 
 var errInvalidISO2022JP = errors.New("japanese: invalid ISO-2022-JP encoding")
@@ -266,6 +268,17 @@ func (e *iso2022JPEncoder) Transform(dst, src []byte, atEOF bool) (nDst, nSrc in
 		dst[nDst] = uint8(r - (0xff61 - 0x21))
 		nDst++
 		continue
+	}
+	if atEOF && err == nil && *e != asciiState {
+		if nDst+3 > len(dst) {
+			err = transform.ErrShortDst
+		} else {
+			*e = asciiState
+			dst[nDst+0] = asciiEsc
+			dst[nDst+1] = '('
+			dst[nDst+2] = 'B'
+			nDst += 3
+		}
 	}
 	return nDst, nSrc, err
 }

@@ -9,24 +9,21 @@ import (
 	"unicode/utf8"
 
 	"golang.org/x/text/encoding"
+	"golang.org/x/text/encoding/internal"
+	"golang.org/x/text/encoding/internal/identifier"
 	"golang.org/x/text/transform"
 )
 
+// All is a list of all defined encodings in this package.
+var All = []encoding.Encoding{EUCKR}
+
 // EUCKR is the EUC-KR encoding, also known as Code Page 949.
-var EUCKR encoding.Encoding = eucKR{}
+var EUCKR encoding.Encoding = &eucKR
 
-type eucKR struct{}
-
-func (eucKR) NewDecoder() transform.Transformer {
-	return eucKRDecoder{}
-}
-
-func (eucKR) NewEncoder() transform.Transformer {
-	return eucKREncoder{}
-}
-
-func (eucKR) String() string {
-	return "EUC-KR"
+var eucKR = internal.Encoding{
+	&internal.SimpleEncoding{eucKRDecoder{}, eucKREncoder{}},
+	"EUC-KR",
+	identifier.EUCKR,
 }
 
 var errInvalidEUCKR = errors.New("korean: invalid EUC-KR encoding")

@@ -496,7 +496,7 @@ func (d *decoder) lz77Param(symbol uint32) (uint32, error) {
 	offset := (2 + symbol&1) << extraBits
 	n, err := d.read(extraBits)
 	if err != nil {
-		return 0, nil
+		return 0, err
 	}
 	return offset + n + 1, nil
 }

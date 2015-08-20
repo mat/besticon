@@ -9,34 +9,35 @@ import (
 	"unicode/utf8"
 
 	"golang.org/x/text/encoding"
+	"golang.org/x/text/encoding/internal"
+	"golang.org/x/text/encoding/internal/identifier"
 	"golang.org/x/text/transform"
 )
 
 var (
 	// GB18030 is the GB18030 encoding.
-	GB18030 encoding.Encoding = gbk{gb18030: true}
+	GB18030 encoding.Encoding = &gbk18030
 	// GBK is the GBK encoding. It encodes an extension of the GB2312 character set
 	// and is also known as Code Page 936.
-	GBK encoding.Encoding = gbk{gb18030: false}
+	GBK encoding.Encoding = &gbk
 )
 
-type gbk struct {
-	gb18030 bool
+var gbk = internal.Encoding{
+	&internal.SimpleEncoding{
+		gbkDecoder{gb18030: false},
+		gbkEncoder{gb18030: false},
+	},
+	"GBK",
+	identifier.GBK,
 }
 
-func (g gbk) NewDecoder() transform.Transformer {
-	return gbkDecoder{gb18030: g.gb18030}
-}
-
-func (g gbk) NewEncoder() transform.Transformer {
-	return gbkEncoder{gb18030: g.gb18030}
-}
-
-func (g gbk) String() string {
-	if g.gb18030 {
-		return "GB18030"
-	}
-	return "GBK"
+var gbk18030 = internal.Encoding{
+	&internal.SimpleEncoding{
+		gbkDecoder{gb18030: true},
+		gbkEncoder{gb18030: true},
+	},
+	"GB18030",
+	identifier.GB18030,
 }
 
 var (
