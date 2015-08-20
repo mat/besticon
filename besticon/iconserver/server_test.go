@@ -57,6 +57,25 @@ func TestGetApiIcons(t *testing.T) {
 
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "application/json", w.Header().Get("Content-Type"))
+	assertStringEquals(t, "max-age=604800", w.Header().Get("Cache-Control"))
+
+	assertStringContains(t, w.Body.String(), `"url":"http://www.apple.com/favicon.ico"`)
+	assertStringContains(t, w.Body.String(), `"width":32`)
+	assertStringContains(t, w.Body.String(), `"height":32`)
+}
+
+func TestGetApiIconsWithMaxAge(t *testing.T) {
+	req, err := http.NewRequest("GET", "/api/icons?url=apple.com&max_age=2h", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	apiHandler(w, req)
+
+	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "application/json", w.Header().Get("Content-Type"))
+	assertStringEquals(t, "max-age=7200", w.Header().Get("Cache-Control"))
 
 	assertStringContains(t, w.Body.String(), `"url":"http://www.apple.com/favicon.ico"`)
 	assertStringContains(t, w.Body.String(), `"width":32`)

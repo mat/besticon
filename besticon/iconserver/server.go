@@ -42,9 +42,14 @@ func iconsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-const urlParam = "url"
-const feelingLuckyParam = "i_am_feeling_lucky"
-const prettyParam = "pretty"
+const (
+	urlParam          = "url"
+	feelingLuckyParam = "i_am_feeling_lucky"
+	prettyParam       = "pretty"
+	maxAge            = "max_age"
+)
+
+const defaultMaxAge = time.Duration(604800) * time.Second // 7 days
 
 func apiHandler(w http.ResponseWriter, r *http.Request) {
 	pretty := r.FormValue(prettyParam) == "yes"
@@ -71,7 +76,11 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		writeAPIIcons(w, url, icons, pretty)
+		maxAge, err := time.ParseDuration(r.FormValue(maxAge))
+		if err != nil || maxAge.Seconds() < 1 {
+			maxAge = defaultMaxAge
+		}
+		writeAPIIcons(w, url, icons, maxAge, pretty)
 	}
 }
 
@@ -107,7 +116,7 @@ func writeAPIError(w http.ResponseWriter, httpStatus int, e error, pretty bool) 
 	}
 }
 
-func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon, pretty bool) {
+func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon, maxAge time.Duration, pretty bool) {
 	data := struct {
 		URL   string          `json:"url"`
 		Icons []besticon.Icon `json:"icons"`
@@ -116,6 +125,7 @@ func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon, pre
 		icons,
 	}
 
+	w.Header().Add(cacheControl, fmt.Sprintf("max-age=%d", int64(maxAge.Seconds())))
 	if pretty {
 		renderJSONResponsePretty(w, 200, data)
 	} else {
@@ -126,6 +136,7 @@ func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon, pre
 const (
 	contentType     = "Content-Type"
 	applicationJSON = "application/json"
+	cacheControl    = "Cache-Control"
 )
 
 func renderJSONResponse(w http.ResponseWriter, httpStatus int, data interface{}) {
@@ -211,7 +222,7 @@ func serveAsset(path string, assetPath string, maxAgeSeconds int) {
 		}
 
 		if maxAgeSeconds != nocache {
-			w.Header().Add("Cache-Control", fmt.Sprintf("max-age=%d", maxAgeSeconds))
+			w.Header().Add(cacheControl, fmt.Sprintf("max-age=%d", maxAgeSeconds))
 		}
 
 		http.ServeContent(w, r, assetInfo.Name(), assetInfo.ModTime(),
