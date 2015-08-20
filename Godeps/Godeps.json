@@ -6,6 +6,10 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/NYTimes/gziphandler",
+			"Rev": "85a3cc491e0680de278b1d270735eacdfd0236c9"
+		},
+		{
 			"ImportPath": "github.com/PuerkitoBio/goquery",
 			"Comment": "v0.3.2-79-gb444041",
 			"Rev": "b4440419d81240f8451a505b2f806c853bc2befc"

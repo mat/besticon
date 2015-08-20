@@ -14,6 +14,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/NYTimes/gziphandler"
 	"github.com/mat/besticon/besticon"
 	"github.com/mat/besticon/besticon/iconserver/assets"
 )
@@ -177,9 +178,9 @@ func renderHTMLTemplate(w http.ResponseWriter, httpStatus int, templ *template.T
 }
 
 func startServer(port int) {
-	http.HandleFunc("/", indexHandler)
-	http.HandleFunc("/icons", iconsHandler)
-	http.HandleFunc("/api/icons", apiHandler)
+	httpHandle("/", indexHandler)
+	httpHandle("/icons", iconsHandler)
+	httpHandle("/api/icons", apiHandler)
 
 	serveAsset("/pure-0.5.0-min.css", "besticon/iconserver/assets/pure-0.5.0-min.css", oneYear)
 	serveAsset("/grids-responsive-0.5.0-min.css", "besticon/iconserver/assets/grids-responsive-0.5.0-min.css", oneYear)
@@ -203,7 +204,7 @@ const (
 )
 
 func serveAsset(path string, assetPath string, maxAgeSeconds int) {
-	http.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
+	httpHandle(path, func(w http.ResponseWriter, r *http.Request) {
 		assetInfo, err := assets.AssetInfo(assetPath)
 		if err != nil {
 			panic(err)
@@ -216,6 +217,10 @@ func serveAsset(path string, assetPath string, maxAgeSeconds int) {
 		http.ServeContent(w, r, assetInfo.Name(), assetInfo.ModTime(),
 			bytes.NewReader(assets.MustAsset(assetPath)))
 	})
+}
+
+func httpHandle(path string, f http.HandlerFunc) {
+	http.Handle(path, gziphandler.GzipHandler(http.HandlerFunc(f)))
 }
 
 func main() {
