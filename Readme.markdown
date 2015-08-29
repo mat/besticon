@@ -10,13 +10,13 @@ Source code powering The Icon Finder at <http://icons.better-idea.org>.
 
 ## Server Executable
 
-### Dependencies
+### Pre-built Binaries
 
- - <http://golang.org>
+Binaries for different operating systems are available at <https://gobuilder.me/github.com/mat/besticon/besticon/iconserver>
 
 ### Building
 
-Using `go get` is the easiest way to fetch the source code and build the server:
+If you have Go already installed on your system using `go get` is probably the easiest way to fetch the source code and build the server:
 
 	$ go get -u github.com/mat/besticon/...
 
@@ -28,7 +28,7 @@ You may also add the `GOOS` and `GOARCH` environment variables to build the exec
 
 To start the server on port 8080 use
 
-	$ $GOPATH/bin/iconserver --port=8080
+	$ iconserver --port=8080
 
 
 
@@ -64,4 +64,3 @@ Finding all icons, sorted by biggest icon first:
 The *source code* of besticon is released under the [MIT License](http://www.opensource.org/licenses/MIT).
 
 The *icon* used for the website/server is licensed under [these terms](http://sixrevisions.com/freebies/icons/free-icons-1000/).
-
