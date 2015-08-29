@@ -1,0 +1,7 @@
+---
+readme_file: Readme.markdown
+triggers:
+  - github.com/mat/besticon/besticon/iconserver
+artifacts:
+  Readme.markdown: Readme.markdown
+  LICENSE: LICENSE
