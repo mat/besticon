@@ -1,11 +1,11 @@
-# besticon (The Icon Finder)
+# besticon (The Favicon Finder)
 
-Source code powering The Icon Finder at <http://icons.better-idea.org>.
+Source code powering The Favicon Finder at <http://icons.better-idea.org>.
 
 [![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://godoc.org/github.com/mat/besticon/besticon)
 [![Build Status](http://img.shields.io/travis/mat/besticon/master.svg?style=flat-square)](http://travis-ci.org/mat/besticon)
 
-[![Screenshot of The Icon Finder](the-icon-finder.png)](http://icons.better-idea.org)
+[![Screenshot of The Favicon Finder](the-icon-finder.png)](http://icons.better-idea.org)
 
 
 ## Server Executable
@@ -46,12 +46,12 @@ To start the server on port 8080 use
 
 Finding the biggest icon:
 
-	$ besticon http://github.com 
+	$ besticon http://github.com
 	http://github.com:  https://github.com/apple-touch-icon-144.png
 
 Finding all icons, sorted by biggest icon first:
 
-	$ besticon --all http://github.com 
+	$ besticon --all http://github.com
 	http://github.com:  https://github.com/apple-touch-icon-144.png
 	http://github.com:  https://github.com/apple-touch-icon.png
 	http://github.com:  https://github.com/apple-touch-icon-114.png

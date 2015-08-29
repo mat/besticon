@@ -24,7 +24,7 @@ func TestGetIndex(t *testing.T) {
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "text/html; charset=utf-8", w.Header().Get("Content-Type"))
 
-	assertStringContains(t, w.Body.String(), "<title>The Icon Finder</title>")
+	assertStringContains(t, w.Body.String(), "<title>The Favicon Finder</title>")
 }
 
 func TestGetIcons(t *testing.T) {
