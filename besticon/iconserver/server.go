@@ -20,7 +20,11 @@ import (
 )
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	renderHTMLTemplate(w, 200, indexHTML, nil)
+	if r.URL.Path == "" || r.URL.Path == "/" {
+		renderHTMLTemplate(w, 200, indexHTML, nil)
+	} else {
+		renderHTMLTemplate(w, 404, notFoundHTML, nil)
+	}
 }
 
 func iconsHandler(w http.ResponseWriter, r *http.Request) {
@@ -248,6 +252,7 @@ func main() {
 func init() {
 	indexHTML = templateFromAsset("besticon/iconserver/assets/index.html", "index.html")
 	iconsHTML = templateFromAsset("besticon/iconserver/assets/icons.html", "icons.html")
+	notFoundHTML = templateFromAsset("besticon/iconserver/assets/not_found.html", "not_found.html")
 }
 
 func templateFromAsset(assetPath, templateName string) *template.Template {
@@ -257,6 +262,7 @@ func templateFromAsset(assetPath, templateName string) *template.Template {
 
 var indexHTML *template.Template
 var iconsHTML *template.Template
+var notFoundHTML *template.Template
 
 var funcMap = template.FuncMap{
 	"GoogleAnalyticsID": googleAnalyticsID,

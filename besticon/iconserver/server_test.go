@@ -95,6 +95,21 @@ func TestGetApiIconsRedirect(t *testing.T) {
 	assertStringEquals(t, "http://www.apple.com/apple-touch-icon.png", w.Header().Get("Location"))
 }
 
+func TestGet404(t *testing.T) {
+	req, err := http.NewRequest("GET", "/does-not-exist", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	indexHandler(w, req)
+
+	assertStringEquals(t, "404", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "text/html; charset=utf-8", w.Header().Get("Content-Type"))
+
+	assertStringContains(t, w.Body.String(), "The requested page does not exist :-(")
+}
+
 func assertStringContains(t *testing.T, haystack string, needle string) {
 	if !strings.Contains(haystack, needle) {
 		fail(t, fmt.Sprintf("Expected '%s' to be contained in '%s'", needle, haystack))
