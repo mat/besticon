@@ -10,7 +10,6 @@ import (
 	"html/template"
 	"net/http"
 	"net/url"
-	"os"
 	"strconv"
 	"time"
 
@@ -265,12 +264,7 @@ var iconsHTML *template.Template
 var notFoundHTML *template.Template
 
 var funcMap = template.FuncMap{
-	"GoogleAnalyticsID": googleAnalyticsID,
-	"ImgWidth":          imgWidth,
-}
-
-func googleAnalyticsID() string {
-	return os.Getenv("ICONS_ANALYTICS_ID")
+	"ImgWidth": imgWidth,
 }
 
 func imgWidth(i *besticon.Icon) int {
