@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/golang/groupcache"
 )
@@ -20,8 +21,11 @@ func resultFromCache(siteURL string) ([]Icon, error) {
 		return FetchIcons(siteURL, false)
 	}
 
+	// Let results expire after a day
+	now := time.Now()
+	key := fmt.Sprintf("%d-%02d-%02d-%s", now.Year(), now.Month(), now.Day(), siteURL)
 	var data []byte
-	err := iconCache.Get(nil, siteURL, groupcache.AllocatingByteSliceSink(&data))
+	err := iconCache.Get(siteURL, key, groupcache.AllocatingByteSliceSink(&data))
 	if err != nil {
 		logger.Println("ERR:", err)
 		return FetchIcons(siteURL, false)
@@ -39,7 +43,8 @@ func resultFromCache(siteURL string) ([]Icon, error) {
 	return res.Icons, nil
 }
 
-func generatorFunc(ctx groupcache.Context, siteURL string, sink groupcache.Sink) error {
+func generatorFunc(ctx groupcache.Context, key string, sink groupcache.Sink) error {
+	siteURL := ctx.(string)
 	icons, err := FetchIcons(siteURL, false)
 
 	res := result{Icons: icons}
