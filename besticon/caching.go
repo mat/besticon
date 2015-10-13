@@ -23,7 +23,7 @@ func resultFromCache(siteURL string) ([]Icon, error) {
 	var data []byte
 	err := iconCache.Get(nil, siteURL, groupcache.AllocatingByteSliceSink(&data))
 	if err != nil {
-		fmt.Print("ERR: ", err)
+		logger.Println("ERR:", err)
 		return FetchIcons(siteURL, false)
 	}
 
