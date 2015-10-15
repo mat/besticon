@@ -208,7 +208,7 @@ func startServer(port int) {
 	logger.Print("Starting server on port ", port, "...")
 	e := http.ListenAndServe(":"+strconv.Itoa(port), newLoggingMux())
 	if e != nil {
-		logger.Fatal("cannot start server: %s\n", e)
+		logger.Fatalf("cannot start server: %s\n", e)
 	}
 }
 
