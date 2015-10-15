@@ -35,7 +35,7 @@ install_devtools:
 	go get github.com/tools/godep
 	go get -u github.com/jteeuwen/go-bindata/...
 
-check:
+style:
 	find . -name "*.go" | grep -v Godeps/ | xargs go tool vet -all
 	find . -name "*.go" | grep -v Godeps/ | xargs golint
 
