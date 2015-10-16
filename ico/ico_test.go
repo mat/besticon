@@ -10,7 +10,7 @@ import (
 )
 
 func TestParseICO(t *testing.T) {
-	assertEquals(t, 3, GetNumberOfIconsInFile("favicon.ico"))
+	assertEquals(t, 3, GetNumberOfIconsInFile(t, "favicon.ico"))
 }
 
 func TestParseICODetails(t *testing.T) {
@@ -19,11 +19,11 @@ func TestParseICODetails(t *testing.T) {
 		icondirEntry{Width: 0x20, Height: 0x20, Colors: 0x10, Reserved: 0x0, Planes: 0x1, Bits: 0x4, Bytes: 0x2e8, Offset: 0x69e},
 		icondirEntry{Width: 0x10, Height: 0x10, Colors: 0x10, Reserved: 0x0, Planes: 0x1, Bits: 0x4, Bytes: 0x128, Offset: 0x986},
 	}
-	assertEquals(t, icondir{Reserved: 0, Type: 1, Count: 3, Entries: entries}, mustParseIcoFile("favicon.ico"))
+	assertEquals(t, icondir{Reserved: 0, Type: 1, Count: 3, Entries: entries}, mustParseIcoFile(t, "favicon.ico"))
 }
 
 func TestFindBestIcon(t *testing.T) {
-	dir := mustParseIcoFile("favicon.ico")
+	dir := mustParseIcoFile(t, "favicon.ico")
 	best := dir.FindBestIcon()
 
 	assertEquals(t,
@@ -32,11 +32,11 @@ func TestFindBestIcon(t *testing.T) {
 }
 
 func TestColorCount(t *testing.T) {
-	dir := mustParseIcoFile("favicon.ico")
+	dir := mustParseIcoFile(t, "favicon.ico")
 	best := dir.FindBestIcon()
 	assertEquals(t, 16, best.ColorCount())
 
-	dir = mustParseIcoFile("github.ico")
+	dir = mustParseIcoFile(t, "github.ico")
 	best = dir.FindBestIcon()
 	assertEquals(t, 256, best.ColorCount())
 }
@@ -44,7 +44,7 @@ func TestColorCount(t *testing.T) {
 func TestDecodeConfig(t *testing.T) {
 	f, err := os.Open("favicon.ico")
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	defer f.Close()
 
@@ -58,7 +58,7 @@ func TestDecodeConfig(t *testing.T) {
 func TestDecodeConfigWithBrokenIco(t *testing.T) {
 	f, err := os.Open("broken.ico")
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	defer f.Close()
 
@@ -72,11 +72,11 @@ func TestDecodeConfigWithBrokenIco(t *testing.T) {
 }
 
 func TestParse256WidthHeightIco(t *testing.T) {
-	assertEquals(t, 5, GetNumberOfIconsInFile("codeplex.ico"))
+	assertEquals(t, 5, GetNumberOfIconsInFile(t, "codeplex.ico"))
 
 	f, err := os.Open("codeplex.ico")
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 	defer f.Close()
 
@@ -87,8 +87,8 @@ func TestParse256WidthHeightIco(t *testing.T) {
 		imageConfig)
 }
 
-func GetNumberOfIconsInFile(filename string) int {
-	dir := mustParseIcoFile(filename)
+func GetNumberOfIconsInFile(t *testing.T, filename string) int {
+	dir := mustParseIcoFile(t, filename)
 	return int(dir.Count)
 }
 
@@ -102,10 +102,10 @@ func parseIcoFile(filename string) (*icondir, error) {
 	return ParseIco(f)
 }
 
-func mustParseIcoFile(filename string) icondir {
+func mustParseIcoFile(t *testing.T, filename string) icondir {
 	dir, err := parseIcoFile(filename)
 	if err != nil {
-		panic(err)
+		t.Fatal(err)
 	}
 
 	return *dir
