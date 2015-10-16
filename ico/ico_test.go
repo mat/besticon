@@ -27,7 +27,7 @@ func TestFindBestIcon(t *testing.T) {
 	best := dir.FindBestIcon()
 
 	assertEquals(t,
-		icondirEntry{Width: 0x30, Height: 0x30, Colors: 0x10, Reserved: 0x0, Planes: 0x1, Bits: 0x4, Bytes: 0x668, Offset: 0x36},
+		&icondirEntry{Width: 0x30, Height: 0x30, Colors: 0x10, Reserved: 0x0, Planes: 0x1, Bits: 0x4, Bytes: 0x668, Offset: 0x36},
 		best)
 }
 
@@ -69,6 +69,22 @@ func TestDecodeConfigWithBrokenIco(t *testing.T) {
 		imageConfig)
 
 	assertEquals(t, errors.New("unexpected EOF"), err)
+}
+
+func TestParse256WidthHeightIco(t *testing.T) {
+	assertEquals(t, 5, GetNumberOfIconsInFile("codeplex.ico"))
+
+	f, err := os.Open("codeplex.ico")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	imageConfig, _, err := image.DecodeConfig(f)
+
+	assertEquals(t,
+		image.Config{ColorModel: nil, Width: 256, Height: 256},
+		imageConfig)
 }
 
 func GetNumberOfIconsInFile(filename string) int {

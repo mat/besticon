@@ -4,6 +4,7 @@ package ico
 
 import (
 	"encoding/binary"
+	"errors"
 	"image"
 	"io"
 )
@@ -26,14 +27,18 @@ type icondirEntry struct {
 	Offset   uint32
 }
 
-func (dir *icondir) FindBestIcon() icondirEntry {
-	best := icondirEntry{}
+func (dir *icondir) FindBestIcon() *icondirEntry {
+	if len(dir.Entries) == 0 {
+		return nil
+	}
+
+	best := dir.Entries[0]
 	for _, e := range dir.Entries {
-		if (e.Width > best.Width) && (e.Height > best.Height) {
+		if (e.width() > best.width()) && (e.height() > best.height()) {
 			best = e
 		}
 	}
-	return best
+	return &best
 }
 
 // ParseIco parses the icon and returns meta information for the icons as icondir.
@@ -84,6 +89,20 @@ func (e *icondirEntry) ColorCount() int {
 	return int(e.Colors)
 }
 
+func (e *icondirEntry) width() int {
+	if e.Width == 0 {
+		return 256
+	}
+	return int(e.Width)
+}
+
+func (e *icondirEntry) height() int {
+	if e.Height == 0 {
+		return 256
+	}
+	return int(e.Height)
+}
+
 // DecodeConfig returns just the dimensions of the largest image
 // contained in the icon withou decoding the entire icon file.
 func DecodeConfig(r io.Reader) (image.Config, error) {
@@ -93,7 +112,10 @@ func DecodeConfig(r io.Reader) (image.Config, error) {
 	}
 
 	best := dir.FindBestIcon()
-	return image.Config{Width: int(best.Width), Height: int(best.Height)}, nil
+	if best == nil {
+		return image.Config{}, errors.New("ico file does not contain any icons")
+	}
+	return image.Config{Width: best.width(), Height: best.height()}, nil
 }
 
 const icoHeader = "\x00\x00\x01\x00"
