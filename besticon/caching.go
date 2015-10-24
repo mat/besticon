@@ -46,6 +46,10 @@ func resultFromCache(siteURL string) ([]Icon, error) {
 func generatorFunc(ctx groupcache.Context, key string, sink groupcache.Sink) error {
 	siteURL := ctx.(string)
 	icons, err := FetchIcons(siteURL, false)
+	if err != nil {
+		// Don't cache errors
+		return err
+	}
 
 	res := result{Icons: icons}
 	if err != nil {
