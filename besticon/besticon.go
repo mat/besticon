@@ -326,6 +326,10 @@ func absoluteURL(baseURL *url.URL, path string) (string, error) {
 	}
 
 	url.Scheme = baseURL.Scheme
+	if url.Scheme == "" {
+		url.Scheme = "http"
+	}
+
 	if url.Host == "" {
 		url.Host = baseURL.Host
 	}
@@ -335,6 +339,10 @@ func absoluteURL(baseURL *url.URL, path string) (string, error) {
 func urlFromBase(baseURL *url.URL, path string) string {
 	url := *baseURL
 	url.Path = path
+	if url.Scheme == "" {
+		url.Scheme = "http"
+	}
+
 	return url.String()
 }
 

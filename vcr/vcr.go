@@ -104,6 +104,9 @@ func (t *recorderTransport) RoundTrip(r *http.Request) (*http.Response, error) {
 	defer t.mutex.Unlock()
 
 	resp, err := defaultTransport.RoundTrip(r)
+	if err != nil {
+		panic(err)
+	}
 
 	logRequest(t.writer, r)
 	logResponse(t.writer, resp, true)

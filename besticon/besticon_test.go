@@ -101,6 +101,17 @@ func TestEat24WithBaseTag(t *testing.T) {
 	assertEquals(t, expectedImages, actualImages)
 }
 
+func TestAlibabaWithBaseTagWithoutScheme(t *testing.T) {
+	actualImages, err := fetchIconsWithVCR("alibaba.vcr", "alibaba.com")
+	assertEquals(t, nil, err)
+	expectedImages := []Icon{
+		{URL: "http://is.alicdn.com/simg/single/icon/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 1406, Sha1sum: "4ffbef9b6044c62cd6c8b1ee0913ba93e6e80072"},
+		{URL: "http://www.alibaba.com/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 1406, Sha1sum: "4ffbef9b6044c62cd6c8b1ee0913ba93e6e80072"},
+	}
+
+	assertEquals(t, expectedImages, actualImages)
+}
+
 func TestARDWithSortBySize(t *testing.T) {
 	actualImages, err := fetchIconsWithVCR("ard.vcr", "ard.de")
 	assertEquals(t, nil, err)
