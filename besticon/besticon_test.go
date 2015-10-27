@@ -58,7 +58,6 @@ func TestNetflixWitCookieRedirects(t *testing.T) {
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "https://assets.nflxext.com/en_us/icons/nficon2014.4.ico", Width: 256, Height: 256, Format: "ico", Bytes: 26306, Sha1sum: "b76e2bc10f53e3ac9ee677ea5d503e10355da6db"},
-		{URL: "https://assets.nflxext.com/en_us/layout/ecweb/netflix-app-icon_152.jpg", Width: 152, Height: 152, Format: "jpeg", Bytes: 5184, Sha1sum: "0edf41de3b2abf4c3135a564a6d47b87fab517e0"},
 		{URL: "https://www.netflix.com/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 1150, Sha1sum: "ffeb019da4d7fabc0dd55184396e3d3b4a335e23"},
 	}
 
@@ -179,9 +178,7 @@ func TestLinkExtraction(t *testing.T) {
 func TestImageSizeDetection(t *testing.T) {
 	assertEquals(t, 1, getImageWidthForFile("testdata/pixel.png"))
 	assertEquals(t, 1, getImageWidthForFile("testdata/pixel.gif"))
-	assertEquals(t, 199, getImageWidthForFile("testdata/mat.jpg"))
 	assertEquals(t, 48, getImageWidthForFile("testdata/favicon.ico"))
-	assertEquals(t, 16, getImageWidthForFile("testdata/rose.bmp"))
 }
 
 const testdataDir = "testdata/"

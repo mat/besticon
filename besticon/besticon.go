@@ -21,14 +21,10 @@ import (
 
 	// Load support image formats.
 	_ "image/gif"
-	_ "image/jpeg"
 	_ "image/png"
 
 	// ...even more image formats.
 	_ "github.com/mat/besticon/ico"
-	_ "golang.org/x/image/bmp"
-	_ "golang.org/x/image/tiff"
-	_ "golang.org/x/image/webp"
 
 	"github.com/PuerkitoBio/goquery"
 	"golang.org/x/net/html/charset"
