@@ -98,10 +98,10 @@ func fetchHTML(url string) ([]byte, *url.URL, error) {
 	}
 
 	b, e := ioutil.ReadAll(r.Body)
+	r.Body.Close()
 	if e != nil {
 		return nil, nil, e
 	}
-	defer r.Body.Close()
 	if len(b) == 0 {
 		return nil, nil, errors.New("besticon: empty response")
 	}
@@ -235,11 +235,11 @@ func fetchIconDetails(url string) Icon {
 	}
 
 	b, e := ioutil.ReadAll(response.Body)
+	response.Body.Close()
 	if e != nil {
 		i.Error = e
 		return i
 	}
-	defer response.Body.Close()
 
 	cfg, format, e := image.DecodeConfig(bytes.NewReader(b))
 	if e != nil {
