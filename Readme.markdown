@@ -10,19 +10,21 @@ Source code powering The Favicon Finder at <http://icons.better-idea.org>.
 
 ## Server Executable
 
-### Pre-built Binaries
+### Download binaries
 
-Binaries for different operating systems are available at <https://gobuilder.me/github.com/mat/besticon/besticon/iconserver>
+Binaries for some operating systems are available under <https://github.com/mat/besticon/releases/latest>
 
-### Building
+Find even more binaries on the excellent GoBuilder community site <https://gobuilder.me/github.com/mat/besticon/besticon/iconserver>
 
-If you have Go already installed on your system using `go get` is probably the easiest way to fetch the source code and build the server:
+### Build your own
+
+If you have Go installed on your system you can use `go get` to fetch the source code and build the server:
 
 	$ go get -u github.com/mat/besticon/...
 
-You may also add the `GOOS` and `GOARCH` environment variables to build the executable for a different target operating system:
+If you want to build exectuables for a different target operating system you can add the `GOOS` and `GOARCH` environment variables:
 
-	$ GOOS=linux go get -u github.com/mat/besticon/...
+	$ GOOS=linux GOARCH=amd64 go get -u github.com/mat/besticon/...
 
 ### Running
 
