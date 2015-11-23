@@ -2,11 +2,16 @@ package besticon
 
 import "sort"
 
-func sortIcons(icons []Icon) {
+func SortIcons(icons []Icon, sizeDescending bool) {
 	// Order after sorting: (width/height, bytes, url)
 	sort.Stable(byURL(icons))
 	sort.Stable(byBytes(icons))
-	sort.Stable(sort.Reverse(byWidthHeight(icons)))
+
+	if sizeDescending {
+		sort.Stable(sort.Reverse(byWidthHeight(icons)))
+	} else {
+		sort.Stable(byWidthHeight(icons))
+	}
 }
 
 type byWidthHeight []Icon

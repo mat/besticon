@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/mat/besticon/ico"
 	"os"
+
+	"github.com/mat/besticon/ico"
 )
 
 func main() {
@@ -27,7 +28,6 @@ func main() {
 				best.Width,
 				best.Height,
 				best.ColorCount())
-			//		fmt.Printf("%+v\n", dir)
 		}
 	}
 }

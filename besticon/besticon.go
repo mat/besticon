@@ -19,9 +19,13 @@ import (
 	"strings"
 	"time"
 
-	// Load support image formats.
+	"image/color"
+
+	// Load supported image formats.
 	_ "image/gif"
 	_ "image/png"
+
+	"github.com/mat/besticon/colorfinder"
 
 	// ...even more image formats.
 	_ "github.com/mat/besticon/ico"
@@ -31,21 +35,92 @@ import (
 	"golang.org/x/net/publicsuffix"
 )
 
+var defaultFormats []string
+
 // Icon holds icon information.
 type Icon struct {
-	URL     string `json:"url"`
-	Width   int    `json:"width"`
-	Height  int    `json:"height"`
-	Format  string `json:"format"`
-	Bytes   int    `json:"bytes"`
-	Error   error  `json:"error"`
-	Sha1sum string `json:"sha1sum"`
+	URL       string `json:"url"`
+	Width     int    `json:"width"`
+	Height    int    `json:"height"`
+	Format    string `json:"format"`
+	Bytes     int    `json:"bytes"`
+	Error     error  `json:"error"`
+	Sha1sum   string `json:"sha1sum"`
+	imageData []byte
+}
+
+type IconFinder struct {
+	FormatsAllowed []string
+	KeepImageBytes bool
+	icons          []Icon
+}
+
+func (f *IconFinder) FetchIcons(url string) (error, []Icon) {
+	var err error
+	f.icons, err = FetchIcons(url)
+	return err, f.Icons()
+}
+
+func (f *IconFinder) IconWithMinSize(minSize int) *Icon {
+	SortIcons(f.icons, false)
+
+	for _, ico := range f.icons {
+		if ico.Width >= minSize && ico.Height >= minSize {
+			return &ico
+		}
+	}
+	return nil
+}
+
+func (f *IconFinder) MainColorForIcons() *color.RGBA {
+	return MainColorForIcons(f.icons)
+}
+
+func (f *IconFinder) Icons() []Icon {
+	return discardUnwantedFormats(f.icons, f.FormatsAllowed)
+}
+
+func (ico *Icon) Image() *image.Image {
+	img, _, _ := image.Decode(bytes.NewReader(ico.imageData))
+	return &img
+}
+
+func discardUnwantedFormats(icons []Icon, wantedFormats []string) []Icon {
+	formats := defaultFormats
+	if len(wantedFormats) > 0 {
+		formats = wantedFormats
+	}
+
+	return filterIcons(icons, func(ico Icon) bool {
+		return includesString(formats, ico.Format)
+	})
+}
+
+type iconPredicate func(Icon) bool
+
+func filterIcons(icons []Icon, pred iconPredicate) []Icon {
+	result := []Icon{}
+	for _, ico := range icons {
+		if pred(ico) {
+			result = append(result, ico)
+		}
+	}
+	return result
+}
+
+func includesString(arr []string, str string) bool {
+	for _, e := range arr {
+		if e == str {
+			return true
+		}
+	}
+	return false
 }
 
 // FetchBestIcon takes a siteURL and returns the icon with
 // the largest dimensions for this site or an error.
-func FetchBestIcon(siteURL string, useCache bool) (*Icon, error) {
-	icons, e := FetchIcons(siteURL, useCache)
+func FetchBestIcon(siteURL string) (*Icon, error) {
+	icons, e := FetchIcons(siteURL)
 	if e != nil {
 		return nil, e
 	}
@@ -58,16 +133,34 @@ func FetchBestIcon(siteURL string, useCache bool) (*Icon, error) {
 	return &best, nil
 }
 
+func FetchOrGenerateIcon(siteURL string, size int) (*Icon, error) {
+	icons, err := FetchIcons(siteURL)
+	if err != nil {
+		return nil, err
+	}
+	if len(icons) < 1 {
+		return nil, errors.New("besticon: no icons found for site")
+	}
+
+	best := icons[0]
+	if best.Width >= size && best.Height > size {
+		return &best, nil
+	}
+
+	return &Icon{
+		Width:  size,
+		Height: size,
+		Format: "png",
+		URL:    fmt.Sprintf("/siteicon?url=%s&amp;size=%d", siteURL, size),
+	}, nil
+}
+
 // FetchIcons takes a siteURL and returns all icons for this site
 // or an error.
-func FetchIcons(siteURL string, useCache bool) ([]Icon, error) {
+func FetchIcons(siteURL string) ([]Icon, error) {
 	siteURL = strings.TrimSpace(siteURL)
 	if !strings.HasPrefix(siteURL, "http") {
 		siteURL = "http://" + siteURL
-	}
-
-	if useCache && cacheEnabled() {
-		return resultFromCache(siteURL)
 	}
 
 	html, url, e := fetchHTML(siteURL)
@@ -82,7 +175,7 @@ func FetchIcons(siteURL string, useCache bool) ([]Icon, error) {
 
 	icons := fetchAllIcons(links)
 	icons = rejectBrokenIcons(icons)
-	sortIcons(icons)
+	SortIcons(icons, true)
 
 	return icons, nil
 }
@@ -210,6 +303,36 @@ func extractIconTags(doc *goquery.Document) []string {
 	return hits
 }
 
+func MainColorForIcons(icons []Icon) *color.RGBA {
+	if len(icons) == 0 {
+		return nil
+	}
+
+	var icon *Icon
+	for _, ico := range icons {
+		if ico.Format == "png" {
+			icon = &ico
+			break
+		}
+	}
+	if icon == nil {
+		return nil
+	}
+
+	img := icon.Image()
+	if img == nil {
+		return nil
+	}
+
+	cf := colorfinder.ColorFinder{}
+	color, err := cf.FindMainColor(*img)
+	if err != nil {
+		return nil
+	}
+
+	return &color
+}
+
 func fetchAllIcons(urls []string) []Icon {
 	ch := make(chan Icon)
 
@@ -252,6 +375,9 @@ func fetchIconDetails(url string) Icon {
 	i.Format = format
 	i.Bytes = len(b)
 	i.Sha1sum = sha1Sum(b)
+	if keepImageBytes {
+		i.imageData = b
+	}
 
 	return i
 }
@@ -360,9 +486,13 @@ func sha1Sum(b []byte) string {
 }
 
 var client *http.Client
+var keepImageBytes bool
 
 func init() {
 	setHTTPClient(&http.Client{Timeout: 60 * time.Second})
+
+	// Needs to be kept in sync with those image/... imports
+	defaultFormats = []string{"png", "gif", "ico"}
 }
 
 func setHTTPClient(c *http.Client) {
@@ -380,4 +510,5 @@ func SetLogOutput(w io.Writer) {
 
 func init() {
 	SetLogOutput(os.Stdout)
+	keepImageBytes = true
 }

@@ -1,16 +1,22 @@
 
-test_all: test
+test_all: test test_bench
 	go test -v github.com/mat/besticon/besticon/iconserver
 	go get ./...
 
 test:
 	go test -v github.com/mat/besticon/ico
 	go test -v github.com/mat/besticon/besticon
+	go test -v github.com/mat/besticon/lettericon
+	go test -v github.com/mat/besticon/colorfinder
 
 test_race:
 	go test -v -race github.com/mat/besticon/ico
 	go test -v -race github.com/mat/besticon/besticon
 	go test -v -race github.com/mat/besticon/besticon/iconserver
+
+test_bench:
+	go test github.com/mat/besticon/lettericon -bench .
+	go test github.com/mat/besticon/colorfinder -bench .
 
 update_godeps:
 	godep save ./...

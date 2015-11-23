@@ -46,18 +46,17 @@ func TestGetIcons(t *testing.T) {
 	assertStringContains(t, w.Body.String(), "<td class='dimensions'>32x32</td>")
 }
 
-func TestGetApiIcons(t *testing.T) {
-	req, err := http.NewRequest("GET", "/api/icons?url=apple.com", nil)
+func TestGetAllIcons(t *testing.T) {
+	req, err := http.NewRequest("GET", "/allicons.json?url=apple.com", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	w := httptest.NewRecorder()
-	apiHandler(w, req)
+	alliconsHandler(w, req)
 
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "application/json", w.Header().Get("Content-Type"))
-	assertStringEquals(t, "max-age=604800", w.Header().Get("Cache-Control"))
 
 	assertStringContains(t, w.Body.String(), `"url":"http://www.apple.com/favicon.ico"`)
 	assertStringContains(t, w.Body.String(), `"width":32`)
@@ -65,34 +64,33 @@ func TestGetApiIcons(t *testing.T) {
 }
 
 func TestGetApiIconsWithMaxAge(t *testing.T) {
-	req, err := http.NewRequest("GET", "/api/icons?url=apple.com&max_age=2h", nil)
+	req, err := http.NewRequest("GET", "/allicons.json?url=apple.com&max_age=2h", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	w := httptest.NewRecorder()
-	apiHandler(w, req)
+	alliconsHandler(w, req)
 
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "application/json", w.Header().Get("Content-Type"))
-	assertStringEquals(t, "max-age=7200", w.Header().Get("Cache-Control"))
 
 	assertStringContains(t, w.Body.String(), `"url":"http://www.apple.com/favicon.ico"`)
 	assertStringContains(t, w.Body.String(), `"width":32`)
 	assertStringContains(t, w.Body.String(), `"height":32`)
 }
 
-func TestGetApiIconsRedirect(t *testing.T) {
-	req, err := http.NewRequest("GET", "/api/icons?url=apple.com&i_am_feeling_lucky=yes", nil)
+func TestGetObsoleteApiRedirect(t *testing.T) {
+	req, err := http.NewRequest("GET", "/api/icons?url=http%3A%2F%2Fapple.com&i_am_feeling_lucky=yes", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	w := httptest.NewRecorder()
-	apiHandler(w, req)
+	obsoleteAPIHandler(w, req)
 
 	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
-	assertStringEquals(t, "http://www.apple.com/apple-touch-icon.png", w.Header().Get("Location"))
+	assertStringEquals(t, "/icon?size=120&url=http%3A%2F%2Fapple.com&i_am_feeling_lucky=yes", w.Header().Get("Location"))
 }
 
 func TestGet404(t *testing.T) {

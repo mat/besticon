@@ -35,12 +35,12 @@
         <div class="content">
           <h2 class="content-subhead">What Is This About?</h2>
           <p>
-          Web sites used to have a <code><a href="http://en.wikipedia.org/wiki/Favicon">favicon.ico</a></code> &dash; or not.
+          Web sites used to have a <code><a href="http://en.wikipedia.org/wiki/Favicon">favicon.ico</a></code>, or not.
           With the introduction of the <code><a href="https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html">apple-touch-icon.png</a></code> finding “the” icon for a site became more complicated.
-          This service finds all those favicons and sorts them by size.
+          This service finds and &mdash; if necessary &mdash; generates icons for web sites.
           </p>
 
-          <h2 class="content-subhead">Find Icons</h2>
+          <h2 class="content-subhead">Find Icon</h2>
 
           <form action="/icons#result" method="GET" class="pure-form pure-g">
             <div class="pure-u-1 pure-u-sm-3-5 pure-u-lg-3-5 pure-u-xl-3-5">
@@ -58,82 +58,21 @@
           <div class="example">
             Examples:
             <a href="/icons?url=github.com#result">github.com</a>,
-            <a href="/icons?url=instagram.com#result">instagram.com</a>
+            <a href="/icons?url=yelp.com#result">yelp.com</a>,
+            <a href="/popular">Popular Sites</a>
           </div>
 
-          <h2 class="content-subhead">HTTP API</h2>
-          <p>
-          The API call at
-          <code><a href="/api/icons?pretty=yes&amp;url=stackoverflow.com">http://icons.better-idea.org/<wbr>api/icons</a></code>
-          supports both listing all icons and redirection to the largest icon.
-          </p>
+          <h2 class="content-subhead">URL API</h2>
 
-          <h3>Example: All Icons</h3>
+          You can just link to an icon using the required <code>url</code> and <code>size</code> parameters:
           <p>
           <code>
-            GET <a href="/api/icons?pretty=yes&amp;url=stackoverflow.com">http://icons.better-idea.org/<wbr>api/icons?<wbr>url=stackoverflow.com</a>
+            <a href="icon?url=github.com&amp;size=120">
+              http://icons.better-idea.org/<wbr>icon?<wbr>url=github.com<wbr>&amp;size=120</a>
           </code>
           </p>
+          Find more detailed information in the <a href="https://github.com/mat/besticon/blob/master/Readme.markdown">Readme on GitHub</a>.
 
-          <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .3em;padding:.2em .6em;"><pre style="margin: 0; line-height: 110%">
- {
-   <span style="font-weight: bold">&quot;url&quot;</span>: <span style="font-style: italic">&quot;stackoverflow.com&quot;</span>,
-   <span style="font-weight: bold">&quot;icons&quot;</span>: [
-     {
-       <span style="font-weight: bold">&quot;url&quot;</span>: <span style="font-style: italic">&quot;http://stackoverflow.com/apple-touch-icon.png&quot;</span>,
-       <span style="font-weight: bold">&quot;width&quot;</span>: 158,
-       <span style="font-weight: bold">&quot;height&quot;</span>: 158,
-       <span style="font-weight: bold">&quot;format&quot;</span>: <span style="font-style: italic">&quot;png&quot;</span>,
-       <span style="font-weight: bold">&quot;bytes&quot;</span>: 3733,
-       <span style="font-weight: bold">&quot;error&quot;</span>: <span style="font-weight: bold">null</span>,
-       <span style="font-weight: bold">&quot;sha1sum&quot;</span>: <span style="font-style: italic">&quot;41f6e13ade692735591bae7e7746ffce90ce752f&quot;</span>
-     },
-     {
-       <span style="font-weight: bold">&quot;url&quot;</span>: <span style="font-style: italic">&quot;http://cdn.sstatic.net/stackoverflow/img/favicon.ico?v=038622610830&quot;</span>,
-       <span style="font-weight: bold">&quot;width&quot;</span>: 32,
-       <span style="font-weight: bold">&quot;height&quot;</span>: 32,
-       <span style="font-weight: bold">&quot;format&quot;</span>: <span style="font-style: italic">&quot;ico&quot;</span>,
-       <span style="font-weight: bold">&quot;bytes&quot;</span>: 5430,
-       <span style="font-weight: bold">&quot;error&quot;</span>: <span style="font-weight: bold">null</span>,
-       <span style="font-weight: bold">&quot;sha1sum&quot;</span>: <span style="font-style: italic">&quot;03862261083091ecab73c50e5d9b9c060245fd35&quot;</span>
-     },
-     {
-       <span style="font-weight: bold">&quot;url&quot;</span>: <span style="font-style: italic">&quot;http://stackoverflow.com/favicon.ico&quot;</span>,
-       <span style="font-weight: bold">&quot;width&quot;</span>: 32,
-       <span style="font-weight: bold">&quot;height&quot;</span>: 32,
-       <span style="font-weight: bold">&quot;format&quot;</span>: <span style="font-style: italic">&quot;ico&quot;</span>,
-       <span style="font-weight: bold">&quot;bytes&quot;</span>: 5430,
-       <span style="font-weight: bold">&quot;error&quot;</span>: <span style="font-weight: bold">null</span>,
-       <span style="font-weight: bold">&quot;sha1sum&quot;</span>: <span style="font-style: italic">&quot;03862261083091ecab73c50e5d9b9c060245fd35&quot;</span>
-     }
-   ]
- }
-          </pre></div>
-
-          <h3>Example: Redirect</h3>
-          For automatic redirection to the largest icon append the <code>i_am_feeling_lucky=yes</code> parameter.
-          <p>
-          <code>
-            GET <a href="/api/icons?url=stackoverflow.com&amp;i_am_feeling_lucky=yes">
-              http://icons.better-idea.org/<wbr>api/icons?<wbr>url=stackoverflow.com<wbr>&amp;i_am_feeling_lucky=yes</a>
-          </code>
-          </p>
-
-          <h3>Errors</h3>
-          Errors are returned with status <code>404</code> and an <code>error</code> field in the response.
-          <p>
-          <code>
-            GET <a href="/api/icons?pretty=yes&amp;url=broken-example.com">
-              http://icons.better-idea.org/<wbr>api/icons?<wbr>url=broken-example.com</a>
-          </code>
-          </p>
-
-          <!-- HTML generated using hilite.me -->
-<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .3em;padding:.2em .6em;">
-<pre style="margin: 0; line-height: 100%">
-{
-   <span style="font-weight: bold">&quot;error&quot;</span>: <span style="font-style: italic">&quot;Get http://broken-example.com: dial tcp: lookup broken-example.com: no such host&quot;</span>
-}</pre></div>
 
           <h2 class="content-subhead">Disclaimer &amp; Self-hosting</h2>
           <p>

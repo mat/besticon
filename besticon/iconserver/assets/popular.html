@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Favicon Examples">
+
+  <title>Favicon Examples</title>
+
+  <link rel="stylesheet" href="./pure-0.5.0-min.css">
+  <link rel="stylesheet" href="./grids-responsive-0.5.0-min.css">
+  <link rel="stylesheet" href="./main-min.css">
+
+  <meta property="og:title"       content="The Favicon Finder" />
+  <meta property="og:description" content="Favicon Examples" />
+
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+
+<body>
+  <div id="layout">
+
+    <div id="main">
+      <div class="header">
+        <div class="title">
+          <h1><a href="/" class="homelink">The Favicon Finder
+            <img class="logo" src="./icon.svg" alt='Site logo'></a>
+          </h1>
+        </div>
+        <h2>A service finding icons on web sites</h2>
+      </div>
+
+      <div class="content">
+
+        <h2 class="content-subhead">Icon Examples</h2>
+
+        <form action="/popular" method="GET" class="pure-form">
+          <fieldset>
+            <label for="iconsize">
+              <input name="iconsize" type="number" placeholder="Icon Size" autocomplete="off" autocorrect="off"
+              autocapitalize="off" spellcheck="false"
+              title='Honestly, icons are actually rendered at "retina" resolution below meaning this size / 2.'
+              min="0" max="1000" step="4"
+              value="{{.IconSize}}">
+            </label>
+
+            <button type="submit" class="pure-button pure-button-primary">Set icon size</button>
+          </fieldset>
+        </form>
+
+        <table class="pure-table pure-table-horizontal">
+          <thead>
+            <tr>
+              <th>Site</th>
+              <th>64</th>
+              <th>120</th>
+              <th>{{$.IconSize}}</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          {{range $url := .URLs}}
+          <tr class='icon'>
+            <td>{{$url}}</td>
+            <td align='center'><img src="/icon?url={{$url}}&amp;size=64" alt='' style='max-width: 32px'></td>
+            <td align='center'><img src="/icon?url={{$url}}&amp;size=120" alt='' style='max-width: 60px'></td>
+            <td align='center'><img src="/icon?url={{$url}}&amp;size={{$.IconSize}}" alt='' style='max-width: {{$.DisplaySize}}px'></td>
+            <td><a href="/icons?url={{$url}}">Details</a></td>
+          </tr>
+          {{end}}
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer l-box">
+    <p>
+      <a href='http://icons.better-idea.org'>The Favicon Finder</a> &dash; in search for icons since January 2015.
+      Written in <a href='http://golang.org'>Go</a>,
+      source on <a href="https://github.com/mat/besticon">GitHub</a>.
+      Created by <a href='http://www.better-idea.org'>Matthias Lüdtke</a>.
+    </p>
+  </div>
+
+</body>
+</html>
