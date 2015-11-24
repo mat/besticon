@@ -53,8 +53,8 @@
           <thead>
             <tr>
               <th>Site</th>
-              <th>64</th>
-              <th>120</th>
+              <th>40</th>
+              <th>80</th>
               <th>{{$.IconSize}}</th>
               <th>&nbsp;</th>
             </tr>
@@ -62,8 +62,8 @@
           {{range $url := .URLs}}
           <tr class='icon'>
             <td>{{$url}}</td>
-            <td align='center'><img src="/icon?url={{$url}}&amp;size=64" alt='' style='max-width: 32px'></td>
-            <td align='center'><img src="/icon?url={{$url}}&amp;size=120" alt='' style='max-width: 60px'></td>
+            <td align='center'><img src="/icon?url={{$url}}&amp;size=40" alt='' style='max-width: 20px'></td>
+            <td align='center'><img src="/icon?url={{$url}}&amp;size=80" alt='' style='max-width: 40px'></td>
             <td align='center'><img src="/icon?url={{$url}}&amp;size={{$.IconSize}}" alt='' style='max-width: {{$.DisplaySize}}px'></td>
             <td><a href="/icons?url={{$url}}">Details</a></td>
           </tr>

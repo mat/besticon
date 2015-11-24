@@ -99,7 +99,7 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 func popularHandler(w http.ResponseWriter, r *http.Request) {
 	iconSize, err := strconv.Atoi(r.FormValue("iconsize"))
 	if iconSize > 1000 || iconSize < 10 || err != nil {
-		iconSize = 180
+		iconSize = 120
 	}
 
 	pageInfo := struct {
