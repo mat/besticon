@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"expvar"
 	"flag"
 	"fmt"
 	"html/template"
@@ -177,12 +178,20 @@ func writeAPIError(w http.ResponseWriter, httpStatus int, e error, pretty bool) 
 }
 
 func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon, pretty bool) {
-	data := struct {
+	// Don't return whole image data
+	newIcons := []besticon.Icon{}
+	for _, ico := range icons {
+		newIcon := ico
+		newIcon.ImageData = nil
+		newIcons = append(newIcons, newIcon)
+	}
+
+	data := &struct {
 		URL   string          `json:"url"`
 		Icons []besticon.Icon `json:"icons"`
 	}{
 		url,
-		icons,
+		newIcons,
 	}
 
 	if pretty {
@@ -332,4 +341,14 @@ var funcMap = template.FuncMap{
 
 func imgWidth(i *besticon.Icon) int {
 	return i.Width / 2.0
+}
+
+func init() {
+	besticon.SetCacheMaxSize(128)
+
+	expvar.Publish("cacheBytes", expvar.Func(func() interface{} { return besticon.GetCacheStats().Bytes }))
+	expvar.Publish("cacheItems", expvar.Func(func() interface{} { return besticon.GetCacheStats().Items }))
+	expvar.Publish("cacheGets", expvar.Func(func() interface{} { return besticon.GetCacheStats().Gets }))
+	expvar.Publish("cacheHits", expvar.Func(func() interface{} { return besticon.GetCacheStats().Hits }))
+	expvar.Publish("cacheEvictions", expvar.Func(func() interface{} { return besticon.GetCacheStats().Evictions }))
 }

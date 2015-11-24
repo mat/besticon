@@ -46,7 +46,7 @@ type Icon struct {
 	Bytes     int    `json:"bytes"`
 	Error     error  `json:"error"`
 	Sha1sum   string `json:"sha1sum"`
-	imageData []byte
+	ImageData []byte `json:",omitempty"`
 }
 
 type IconFinder struct {
@@ -57,7 +57,13 @@ type IconFinder struct {
 
 func (f *IconFinder) FetchIcons(url string) (error, []Icon) {
 	var err error
-	f.icons, err = FetchIcons(url)
+
+	if cacheEnabled() {
+		f.icons, err = resultFromCache(url)
+	} else {
+		f.icons, err = FetchIcons(url)
+	}
+
 	return err, f.Icons()
 }
 
@@ -81,7 +87,7 @@ func (f *IconFinder) Icons() []Icon {
 }
 
 func (ico *Icon) Image() *image.Image {
-	img, _, _ := image.Decode(bytes.NewReader(ico.imageData))
+	img, _, _ := image.Decode(bytes.NewReader(ico.ImageData))
 	return &img
 }
 
@@ -376,7 +382,7 @@ func fetchIconDetails(url string) Icon {
 	i.Bytes = len(b)
 	i.Sha1sum = sha1Sum(b)
 	if keepImageBytes {
-		i.imageData = b
+		i.ImageData = b
 	}
 
 	return i

@@ -61,6 +61,9 @@ func TestGetAllIcons(t *testing.T) {
 	assertStringContains(t, w.Body.String(), `"url":"http://www.apple.com/favicon.ico"`)
 	assertStringContains(t, w.Body.String(), `"width":32`)
 	assertStringContains(t, w.Body.String(), `"height":32`)
+
+	// Make sure we don't return inlined image data
+	assertDoesNotExceed(t, len(w.Body.String()), 2000)
 }
 
 func TestGetApiIconsWithMaxAge(t *testing.T) {
@@ -117,6 +120,12 @@ func assertStringContains(t *testing.T, haystack string, needle string) {
 func assertStringEquals(t *testing.T, expected string, actual string) {
 	if expected != actual {
 		fail(t, fmt.Sprintf("Expected '%s' to be '%s'", actual, expected))
+	}
+}
+
+func assertDoesNotExceed(t *testing.T, actual int, maximum int) {
+	if actual >= maximum {
+		fail(t, fmt.Sprintf("Expected '%d' to be < '%d'", actual, maximum))
 	}
 }
 

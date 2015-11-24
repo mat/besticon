@@ -29,6 +29,14 @@
 			"Rev": "f29eb116deb328d02ee5c573f02d442ca67d5532"
 		},
 		{
+			"ImportPath": "github.com/golang/groupcache",
+			"Rev": "604ed5785183e59ae2789449d89e73f3a2a77987"
+		},
+		{
+			"ImportPath": "github.com/golang/protobuf/proto",
+			"Rev": "73aaaa9eb61d74fbf7e256ca586a3a565b308eea"
+		},
+		{
 			"ImportPath": "golang.org/x/image/font",
 			"Rev": "2dc9880a10bbd310009571a348cc0d2e0b5bc4b2"
 		},
