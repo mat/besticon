@@ -9,8 +9,13 @@ import (
 )
 
 var (
-	fetchCount  = expvar.NewInt("fetchCount")
-	fetchErrors = expvar.NewInt("fetchErrors")
+	indexCount        = expvar.NewInt("/")
+	iconCount         = expvar.NewInt("/icon")
+	lettericonsCount  = expvar.NewInt("/lettericons")
+	obsoleteApiCount  = expvar.NewInt("/api/icons")
+	iconsCount        = expvar.NewInt("/icons")
+	popularCount      = expvar.NewInt("/popular")
+	alliconsJSONCount = expvar.NewInt("/allicons.json")
 )
 
 func init() {

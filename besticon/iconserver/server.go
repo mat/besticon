@@ -21,6 +21,8 @@ import (
 )
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
+	indexCount.Add(1)
+
 	if r.URL.Path == "" || r.URL.Path == "/" {
 		renderHTMLTemplate(w, 200, indexHTML, nil)
 	} else {
@@ -29,6 +31,8 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func iconsHandler(w http.ResponseWriter, r *http.Request) {
+	iconsCount.Add(1)
+
 	url := r.FormValue(urlParam)
 	if len(url) == 0 {
 		http.Redirect(w, r, "/", 302)
@@ -55,6 +59,8 @@ func iconsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func iconHandler(w http.ResponseWriter, r *http.Request) {
+	iconCount.Add(1)
+
 	url := r.FormValue("url")
 	if len(url) == 0 {
 		writeAPIError(w, 400, errors.New("need url parameter"), true)
@@ -97,6 +103,8 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func popularHandler(w http.ResponseWriter, r *http.Request) {
+	popularCount.Add(1)
+
 	iconSize, err := strconv.Atoi(r.FormValue("iconsize"))
 	if iconSize > 1000 || iconSize < 10 || err != nil {
 		iconSize = 120
@@ -123,6 +131,8 @@ const (
 const defaultMaxAge = time.Duration(604800) * time.Second // 7 days
 
 func alliconsHandler(w http.ResponseWriter, r *http.Request) {
+	alliconsJSONCount.Add(1)
+
 	url := r.FormValue(urlParam)
 	if len(url) == 0 {
 		errMissingURL := errors.New("need url query parameter")
@@ -149,6 +159,8 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func lettericonHandler(w http.ResponseWriter, r *http.Request) {
+	lettericonsCount.Add(1)
+
 	charParam, col, size := lettericon.ParseIconPath(r.URL.Path)
 
 	w.Header().Add("Content-Type", "image/png")
@@ -156,6 +168,8 @@ func lettericonHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func obsoleteAPIHandler(w http.ResponseWriter, r *http.Request) {
+	obsoleteApiCount.Add(1)
+
 	if r.FormValue("i_am_feeling_lucky") == "yes" {
 		http.Redirect(w, r, fmt.Sprintf("/icon?size=120&%s", r.URL.RawQuery), 302)
 	} else {
