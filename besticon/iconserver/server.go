@@ -21,8 +21,6 @@ import (
 )
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	indexCount.Add(1)
-
 	if r.URL.Path == "" || r.URL.Path == "/" {
 		renderHTMLTemplate(w, 200, indexHTML, nil)
 	} else {
@@ -31,8 +29,6 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func iconsHandler(w http.ResponseWriter, r *http.Request) {
-	iconsCount.Add(1)
-
 	url := r.FormValue(urlParam)
 	if len(url) == 0 {
 		http.Redirect(w, r, "/", 302)
@@ -59,8 +55,6 @@ func iconsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func iconHandler(w http.ResponseWriter, r *http.Request) {
-	iconCount.Add(1)
-
 	url := r.FormValue("url")
 	if len(url) == 0 {
 		writeAPIError(w, 400, errors.New("need url parameter"), true)
@@ -103,8 +97,6 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func popularHandler(w http.ResponseWriter, r *http.Request) {
-	popularCount.Add(1)
-
 	iconSize, err := strconv.Atoi(r.FormValue("iconsize"))
 	if iconSize > 1000 || iconSize < 10 || err != nil {
 		iconSize = 120
@@ -131,8 +123,6 @@ const (
 const defaultMaxAge = time.Duration(604800) * time.Second // 7 days
 
 func alliconsHandler(w http.ResponseWriter, r *http.Request) {
-	alliconsJSONCount.Add(1)
-
 	url := r.FormValue(urlParam)
 	if len(url) == 0 {
 		errMissingURL := errors.New("need url query parameter")
@@ -159,8 +149,6 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func lettericonHandler(w http.ResponseWriter, r *http.Request) {
-	lettericonsCount.Add(1)
-
 	charParam, col, size := lettericon.ParseIconPath(r.URL.Path)
 
 	w.Header().Add("Content-Type", "image/png")
@@ -168,8 +156,6 @@ func lettericonHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func obsoleteAPIHandler(w http.ResponseWriter, r *http.Request) {
-	obsoleteApiCount.Add(1)
-
 	if r.FormValue("i_am_feeling_lucky") == "yes" {
 		http.Redirect(w, r, fmt.Sprintf("/icon?size=120&%s", r.URL.RawQuery), 302)
 	} else {
@@ -271,13 +257,13 @@ func renderHTMLTemplate(w http.ResponseWriter, httpStatus int, templ *template.T
 }
 
 func startServer(port int) {
-	httpHandleGzip("/", indexHandler)
-	httpHandleGzip("/icons", iconsHandler)
-	http.HandleFunc("/icon", iconHandler)
-	httpHandleGzip("/popular", popularHandler)
-	httpHandleGzip("/allicons.json", alliconsHandler)
-	http.HandleFunc("/lettericons/", lettericonHandler)
-	http.HandleFunc("/api/icons", obsoleteAPIHandler)
+	registerGzipHandler("/", indexHandler)
+	registerGzipHandler("/icons", iconsHandler)
+	registerHandler("/icon", iconHandler)
+	registerGzipHandler("/popular", popularHandler)
+	registerGzipHandler("/allicons.json", alliconsHandler)
+	registerHandler("/lettericons/", lettericonHandler)
+	registerHandler("/api/icons", obsoleteAPIHandler)
 
 	serveAsset("/pure-0.5.0-min.css", "besticon/iconserver/assets/pure-0.5.0-min.css", oneYear)
 	serveAsset("/grids-responsive-0.5.0-min.css", "besticon/iconserver/assets/grids-responsive-0.5.0-min.css", oneYear)
@@ -302,7 +288,7 @@ const (
 )
 
 func serveAsset(path string, assetPath string, maxAgeSeconds int) {
-	httpHandleGzip(path, func(w http.ResponseWriter, r *http.Request) {
+	registerGzipHandler(path, func(w http.ResponseWriter, r *http.Request) {
 		assetInfo, err := assets.AssetInfo(assetPath)
 		if err != nil {
 			panic(err)
@@ -317,8 +303,12 @@ func serveAsset(path string, assetPath string, maxAgeSeconds int) {
 	})
 }
 
-func httpHandleGzip(path string, f http.HandlerFunc) {
-	http.Handle(path, gziphandler.GzipHandler(http.HandlerFunc(f)))
+func registerHandler(path string, f http.HandlerFunc) {
+	http.Handle(path, newExpvarHandler(path, f))
+}
+
+func registerGzipHandler(path string, f http.HandlerFunc) {
+	http.Handle(path, gziphandler.GzipHandler(newExpvarHandler(path, f)))
 }
 
 func main() {

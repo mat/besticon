@@ -2,21 +2,26 @@ package main
 
 import (
 	"expvar"
+	"net/http"
 	"os"
 	"runtime"
 	"strconv"
 	"time"
 )
 
-var (
-	indexCount        = expvar.NewInt("/")
-	iconCount         = expvar.NewInt("/icon")
-	lettericonsCount  = expvar.NewInt("/lettericons")
-	obsoleteApiCount  = expvar.NewInt("/api/icons")
-	iconsCount        = expvar.NewInt("/icons")
-	popularCount      = expvar.NewInt("/popular")
-	alliconsJSONCount = expvar.NewInt("/allicons.json")
-)
+type expvarHandler struct {
+	counter *expvar.Int
+	handler http.Handler
+}
+
+func newExpvarHandler(path string, f http.Handler) expvarHandler {
+	return expvarHandler{counter: expvar.NewInt(path), handler: f}
+}
+
+func (h expvarHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	h.counter.Add(1)
+	h.handler.ServeHTTP(w, r)
+}
 
 func init() {
 	expvar.NewString("goVersion").Set(runtime.Version())
