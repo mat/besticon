@@ -66,8 +66,31 @@ minify_css:
 update_assets:
 	go-bindata -pkg assets -ignore assets.go -o besticon/iconserver/assets/assets.go besticon/iconserver/assets/
 
+#
+## Building ##
+#
+
+clean:
+	rm -rf bin/*
+
+build_darwin_amd64:
+	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/darwin_amd64/iconserver github.com/mat/besticon/besticon/iconserver
+
 build_linux_amd64:
 	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/linux_amd64/iconserver github.com/mat/besticon/besticon/iconserver
+
+build_windows_amd64:
+	GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/windows_amd64/iconserver.exe github.com/mat/besticon/besticon/iconserver
+
+build_all_platforms: build_darwin_amd64 build_linux_amd64 build_windows_amd64
+	find bin/ -type file | xargs file
+
+github_package: build_all_platforms
+	zip -o -j iconserver_darwin-amd64 bin/darwin_amd64/*
+	zip -o -j iconserver_linux_amd64 bin/linux_amd64/*
+	zip -o -j iconserver_windows_amd64 bin/windows_amd64/*
+	file iconserver*.zip
+	ls -alht iconserver*.zip
 
 build_docker_image: build_linux_amd64
 	docker build -t matthiasluedtke/iconserver .
