@@ -66,9 +66,14 @@ If you want to build executables for a different target operating system you can
 
 ### Running
 
-To start the server on port 8080 use
+To start the server on default port 8080 just do
 
-	$ iconserver --port=8080
+	$ iconserver
+	
+To use a different port use
+
+	$ PORT=80 iconserver
+
 
 
 ## Libraries etc.

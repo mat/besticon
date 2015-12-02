@@ -33,7 +33,7 @@ install:
 
 run_server:
 	go build -o bin/iconserver github.com/mat/besticon/besticon/iconserver
-	DEPLOYED_AT=`date +%s` GIT_REVISION=`git describe --always` ./bin/iconserver -port=3000
+	PORT=3000 DEPLOYED_AT=`date +%s` GIT_REVISION=`git describe --always` ./bin/iconserver
 
 install_devtools:
 	go get golang.org/x/tools/cmd/...

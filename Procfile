@@ -1,1 +1,1 @@
-web: iconserver -port=$PORT
+web: iconserver

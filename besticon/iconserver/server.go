@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"expvar"
-	"flag"
 	"fmt"
 	"html/template"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -256,7 +256,7 @@ func renderHTMLTemplate(w http.ResponseWriter, httpStatus int, templ *template.T
 	}
 }
 
-func startServer(port int) {
+func startServer(port string) {
 	registerGzipHandler("/", indexHandler)
 	registerGzipHandler("/icons", iconsHandler)
 	registerHandler("/icon", iconHandler)
@@ -275,8 +275,9 @@ func startServer(port int) {
 	serveAsset("/robots.txt", "besticon/iconserver/assets/robots.txt", nocache)
 	serveAsset("/test-lettericons", "besticon/iconserver/assets/test-lettericons.html", nocache)
 
-	logger.Print("Starting server on port ", port, "...")
-	e := http.ListenAndServe(":"+strconv.Itoa(port), newLoggingMux())
+	addr := "0.0.0.0:" + port
+	logger.Print("Starting server on ", addr, "...")
+	e := http.ListenAndServe(addr, newLoggingMux())
 	if e != nil {
 		logger.Fatalf("cannot start server: %s\n", e)
 	}
@@ -312,14 +313,11 @@ func registerGzipHandler(path string, f http.HandlerFunc) {
 }
 
 func main() {
-	port := flag.Int("port", 0, "Port in server mode")
-	flag.Parse()
-
-	if *port > 0 {
-		startServer(*port)
-	} else {
-		flag.PrintDefaults()
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
 	}
+	startServer(port)
 }
 
 func init() {

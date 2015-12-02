@@ -5,7 +5,8 @@
 # Run with
 #   nohup iconserver.sh > /var/log/iconserver.log &
 
-DAEMON="/usr/sbin/iconserver --port 80"
+export PORT=80
+DAEMON="/usr/sbin/iconserver"
 
 until $DAEMON; do
    echo "Server 'iconserver' crashed with exit code $?.  Respawning.." >&2
