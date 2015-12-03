@@ -7,6 +7,8 @@ import (
 	"runtime"
 	"strconv"
 	"time"
+
+	"github.com/mat/besticon/besticon"
 )
 
 type expvarHandler struct {
@@ -25,7 +27,7 @@ func (h expvarHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func init() {
 	expvar.NewString("goVersion").Set(runtime.Version())
-	expvar.NewString("iconVersion").Set(os.Getenv("GIT_REVISION"))
+	expvar.NewString("iconVersion").Set(besticon.VersionString)
 
 	expvar.NewString("timeLastDeploy").Set(parseUnixTimeStamp(os.Getenv("DEPLOYED_AT")).String())
 	expvar.NewString("timeStartup").Set(time.Now().String())

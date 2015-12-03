@@ -26,14 +26,14 @@ install_godeps:
 
 deploy:
 	git push heroku master
-	heroku config:set GIT_REVISION=`git describe --always` DEPLOYED_AT=`date +%s`
+	heroku config:set DEPLOYED_AT=`date +%s`
 
 install:
 	go get ./...
 
 run_server:
 	go build -o bin/iconserver github.com/mat/besticon/besticon/iconserver
-	PORT=3000 DEPLOYED_AT=`date +%s` GIT_REVISION=`git describe --always` ./bin/iconserver
+	PORT=3000 DEPLOYED_AT=`date +%s` ./bin/iconserver
 
 install_devtools:
 	go get golang.org/x/tools/cmd/...
@@ -73,13 +73,13 @@ update_assets:
 clean:
 	rm -rf bin/*
 
-build_darwin_amd64:
+build_darwin_amd64: update-version.go
 	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/darwin_amd64/iconserver github.com/mat/besticon/besticon/iconserver
 
-build_linux_amd64:
+build_linux_amd64: update-version.go
 	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/linux_amd64/iconserver github.com/mat/besticon/besticon/iconserver
 
-build_windows_amd64:
+build_windows_amd64: update-version.go
 	GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/windows_amd64/iconserver.exe github.com/mat/besticon/besticon/iconserver
 
 build_all_platforms: build_darwin_amd64 build_linux_amd64 build_windows_amd64
@@ -97,3 +97,6 @@ build_docker_image: build_linux_amd64
 
 gotags:
 	gotags -tag-relative=true -R=true -sort=true -f="tags" -fields=+l .
+
+update-version.go:
+	echo "package besticon\n\n// Version string, same as VERSION, generated my Make\nconst VersionString = \"`cat VERSION`\"" > besticon/version.go
