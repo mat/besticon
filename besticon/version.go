@@ -1,4 +1,4 @@
 package besticon
 
 // Version string, same as VERSION, generated my Make
-const VersionString = "v2.2"
+const VersionString = "v2.3"
