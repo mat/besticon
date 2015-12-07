@@ -13,6 +13,8 @@ test_race:
 	go test -v -race github.com/mat/besticon/ico
 	go test -v -race github.com/mat/besticon/besticon
 	go test -v -race github.com/mat/besticon/besticon/iconserver
+	go test -v -race github.com/mat/besticon/lettericon
+	go test -v -race github.com/mat/besticon/colorfinder
 
 test_bench:
 	go test github.com/mat/besticon/lettericon -bench .
