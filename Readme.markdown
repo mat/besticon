@@ -4,9 +4,6 @@ Source code powering The Favicon Finder at <http://icons.better-idea.org>.
 
 [![Build Status](https://travis-ci.org/mat/besticon.svg?branch=master)](https://travis-ci.org/mat/besticon)
 
-[![Screenshot of The Favicon Finder](the-icon-finder.png)](http://icons.better-idea.org)
-
-
 ## API
 
 ### GET /icon
@@ -74,6 +71,8 @@ To use a different port use
 
 	$ PORT=80 iconserver
 
+Now when you open <http://localhost:8080/icons?url=instagram.com> you should see something like
+![Screenshot of The Favicon Finder](the-icon-finder.png)
 
 
 ## Libraries etc.
