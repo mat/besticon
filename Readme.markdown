@@ -1,4 +1,4 @@
-# besticon (The Favicon Finder)
+# favicon-service (besticon)
 
 Source code powering The Favicon Finder at <http://icons.better-idea.org>.
 
