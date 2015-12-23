@@ -91,6 +91,12 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	fallbackIconURL := r.FormValue("fallback_icon_url")
+	if fallbackIconURL != "" {
+		http.Redirect(w, r, fallbackIconURL, 302)
+		return
+	}
+
 	iconColor := finder.MainColorForIcons()
 	letter := lettericon.MainLetterFromURL(url)
 	redirectPath := lettericon.IconPath(letter, size, iconColor)

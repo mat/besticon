@@ -15,6 +15,8 @@ Parameter | Example         | Description    | Default
 url       | http://yelp.com |                                   | required
 size      | 120             | Desired **minimum** icon size | required
 formats   | png,ico         | Comma-separated list of accepted image formats: png, ico, gif | `png,ico,gif`
+fallback\_icon\_url   | *HTTP image URL*         | If provided, a redirect to this image will be returned in case no suitable icon could be found. This overrides the default fallback image behaviour.  | 
+
 
 #### Examples
 

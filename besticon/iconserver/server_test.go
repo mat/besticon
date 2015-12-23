@@ -46,6 +46,32 @@ func TestGetIcons(t *testing.T) {
 	assertStringContains(t, w.Body.String(), "<td class='dimensions'>32x32</td>")
 }
 
+func TestGetIcon(t *testing.T) {
+	req, err := http.NewRequest("GET", "/icon?url=apple.com&size=120", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	iconHandler(w, req)
+
+	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "http://www.apple.com/apple-touch-icon.png", w.Header().Get("Location"))
+}
+
+func TestGetIconWithFallBackURL(t *testing.T) {
+	req, err := http.NewRequest("GET", "/icon?url=apple.com&size=800&fallback_icon_url=http%3A%2F%2Fexample.com", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	iconHandler(w, req)
+
+	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "http://example.com", w.Header().Get("Location"))
+}
+
 func TestGetAllIcons(t *testing.T) {
 	req, err := http.NewRequest("GET", "/allicons.json?url=apple.com", nil)
 	if err != nil {
