@@ -74,7 +74,7 @@ update_assets:
 
 clean:
 	rm -rf bin/*
-	rm iconserver*.zip
+	rm -f iconserver*.zip
 
 build_darwin_amd64: update-version.go
 	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/darwin_amd64/iconserver github.com/mat/besticon/besticon/iconserver
