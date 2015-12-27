@@ -122,6 +122,30 @@ func TestIconPath(t *testing.T) {
 	assertEquals(t, "/lettericons/Z-100-640ac8.png", IconPath("z", "100", &color.RGBA{100, 10, 200, 0}))
 }
 
+func TestParseIconPath(t *testing.T) {
+	var char string
+	var col *color.RGBA
+	var size int
+
+	char, _, _ = ParseIconPath("lettericons/")
+	assertEquals(t, "", char)
+
+	char, _, _ = ParseIconPath("lettericons/A")
+	assertEquals(t, "A", char)
+
+	char, _, _ = ParseIconPath("lettericons/B.png")
+	assertEquals(t, "B", char)
+
+	char, _, size = ParseIconPath("lettericons/C-120.png")
+	assertEquals(t, "C", char)
+	assertEquals(t, 120, size)
+
+	char, col, size = ParseIconPath("lettericons/D-150-ababab.png")
+	assertEquals(t, "D", char)
+	assertEquals(t, 150, size)
+	assertEquals(t, &color.RGBA{171, 171, 171, 0xff}, col)
+}
+
 func assertColor(t *testing.T, hexColor string, expectedColor color.Color) {
 	actualColor, err := ColorFromHex(hexColor)
 	if err != nil {

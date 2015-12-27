@@ -199,12 +199,12 @@ const maxIconSize = 1024
 func ParseIconPath(fullpath string) (string, *color.RGBA, int) {
 	_, filename := path.Split(fullpath)
 	filename = strings.TrimSuffix(filename, ".png")
-	params := strings.SplitN(filename, "-", 3)
-
-	charParam := ""
-	if len(params) >= 1 {
-		charParam = string(params[0][0])
+	params := strings.Split(filename, "-")
+	if len(params) < 1 || len(params[0]) < 1 {
+		return "", nil, -1
 	}
+
+	charParam := string(params[0][0])
 	sizeParam := ""
 	if len(params) >= 2 {
 		sizeParam = params[1]
