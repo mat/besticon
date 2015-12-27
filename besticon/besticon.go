@@ -186,6 +186,8 @@ func FetchIcons(siteURL string) ([]Icon, error) {
 	return icons, nil
 }
 
+const maxResponseBodySize = 10485760 // 10MB
+
 func fetchHTML(url string) ([]byte, *url.URL, error) {
 	r, e := get(url)
 	if e != nil {
@@ -196,8 +198,7 @@ func fetchHTML(url string) ([]byte, *url.URL, error) {
 		return nil, nil, errors.New("besticon: not found")
 	}
 
-	b, e := ioutil.ReadAll(r.Body)
-	r.Body.Close()
+	b, e := getBodyBytes(r)
 	if e != nil {
 		return nil, nil, e
 	}
@@ -363,8 +364,7 @@ func fetchIconDetails(url string) Icon {
 		return i
 	}
 
-	b, e := ioutil.ReadAll(response.Body)
-	response.Body.Close()
+	b, e := getBodyBytes(response)
 	if e != nil {
 		i.Error = e
 		return i
@@ -419,6 +419,17 @@ func get(url string) (*http.Response, error) {
 	}
 
 	return resp, err
+}
+
+func getBodyBytes(r *http.Response) ([]byte, error) {
+	limitReader := io.LimitReader(r.Body, maxResponseBodySize)
+	b, e := ioutil.ReadAll(limitReader)
+	r.Body.Close()
+
+	if len(b) >= maxResponseBodySize {
+		return nil, errors.New("body too large")
+	}
+	return b, e
 }
 
 func setDefaultHeaders(req *http.Request) {
