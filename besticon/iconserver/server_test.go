@@ -60,7 +60,7 @@ func TestGetIcon(t *testing.T) {
 }
 
 func TestGetIconWithFallBackURL(t *testing.T) {
-	req, err := http.NewRequest("GET", "/icon?url=apple.com&size=800&fallback_icon_url=http%3A%2F%2Fexample.com", nil)
+	req, err := http.NewRequest("GET", "/icon?url=apple.com&size=400&fallback_icon_url=http%3A%2F%2Fexample.com", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
