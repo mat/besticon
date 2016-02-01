@@ -1,8 +1,18 @@
 # favicon-service (besticon)
 
-Source code powering The Favicon Finder at <http://icons.better-idea.org>.
+Source of <http://icons.better-idea.org>, a favicon service:
+
+  * Supports `favicon.ico` and `apple-touch-icon.png`
+  * Simple URL API
+  * Fallback icon generation
+  * Single binary download for easy self-hosting
 
 [![Build Status](https://travis-ci.org/mat/besticon.svg?branch=master)](https://travis-ci.org/mat/besticon)
+
+## What's this?
+
+Websites used to have a `favicon.ico`, or not. With the introduction of the `apple-touch-icon.png` finding “the icon” for a website became more complicated. This service finds and — if necessary — generates icons for web sites.
+
 
 ## API
 
