@@ -84,7 +84,7 @@ To use a different port use
 	$ PORT=80 iconserver
 
 Now when you open <http://localhost:8080/icons?url=instagram.com> you should see something like
-![Screenshot of The Favicon Finder](the-icon-finder.png)
+![Screenshot of The Favicon Finder](https://github.com/mat/besticon/raw/master/the-icon-finder.png)
 
 
 ## Libraries etc.

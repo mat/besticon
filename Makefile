@@ -89,9 +89,9 @@ build_all_platforms: build_darwin_amd64 build_linux_amd64 build_windows_amd64
 	find bin/ -type file | xargs file
 
 github_package: clean build_all_platforms
-	zip -o -j iconserver_darwin-amd64 bin/darwin_amd64/*
-	zip -o -j iconserver_linux_amd64 bin/linux_amd64/*
-	zip -o -j iconserver_windows_amd64 bin/windows_amd64/*
+	zip -o -j iconserver_darwin-amd64 bin/darwin_amd64/* Readme.markdown LICENSE
+	zip -o -j iconserver_linux_amd64 bin/linux_amd64/* Readme.markdown LICENSE
+	zip -o -j iconserver_windows_amd64 bin/windows_amd64/* Readme.markdown LICENSE
 	file iconserver*.zip
 	ls -alht iconserver*.zip
 
