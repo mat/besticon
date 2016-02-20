@@ -357,7 +357,7 @@ func imgWidth(i *besticon.Icon) int {
 }
 
 func init() {
-	besticon.SetCacheMaxSize(128)
+	besticon.SetCacheMaxSize(32)
 
 	expvar.Publish("cacheBytes", expvar.Func(func() interface{} { return besticon.GetCacheStats().Bytes }))
 	expvar.Publish("cacheItems", expvar.Func(func() interface{} { return besticon.GetCacheStats().Items }))
