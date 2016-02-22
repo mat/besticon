@@ -317,7 +317,7 @@ func MainColorForIcons(icons []Icon) *color.RGBA {
 
 	var icon *Icon
 	for _, ico := range icons {
-		if ico.Format == "png" {
+		if ico.Format == "png" || ico.Format == "gif" {
 			icon = &ico
 			break
 		}
