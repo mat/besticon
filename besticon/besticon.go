@@ -86,9 +86,9 @@ func (f *IconFinder) Icons() []Icon {
 	return discardUnwantedFormats(f.icons, f.FormatsAllowed)
 }
 
-func (ico *Icon) Image() *image.Image {
-	img, _, _ := image.Decode(bytes.NewReader(ico.ImageData))
-	return &img
+func (ico *Icon) Image() (*image.Image, error) {
+	img, _, err := image.Decode(bytes.NewReader(ico.ImageData))
+	return &img, err
 }
 
 func discardUnwantedFormats(icons []Icon, wantedFormats []string) []Icon {
@@ -326,8 +326,8 @@ func MainColorForIcons(icons []Icon) *color.RGBA {
 		return nil
 	}
 
-	img := icon.Image()
-	if img == nil {
+	img, err := icon.Image()
+	if err != nil {
 		return nil
 	}
 

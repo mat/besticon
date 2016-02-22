@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"image"
+	"image/color"
 	"io/ioutil"
 	"os"
 	"reflect"
@@ -150,6 +151,12 @@ func TestFindBestIcon(t *testing.T) {
 	i, err := fetchBestIconWithVCR("github.com.vcr", "github.com")
 	assertEquals(t, nil, err)
 	assertEquals(t, &Icon{URL: "https://github.com/apple-touch-icon-144.png", Width: 144, Height: 144, Format: "png", Bytes: 796, Error: error(nil), Sha1sum: "2626d8f64d5d3a76bd535151dfe84b62d3f3ee63"}, i)
+}
+
+func TestMainColorForIconsWithBrokenImageData(t *testing.T) {
+	icn := Icon{Format: "png", ImageData: []byte("broken-image-data")}
+	colr := MainColorForIcons([]Icon{icn})
+	assertEquals(t, (*color.RGBA)(nil), colr)
 }
 
 func TestFindBestIconNoIcons(t *testing.T) {
