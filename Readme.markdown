@@ -87,6 +87,17 @@ Now when you open <http://localhost:8080/icons?url=instagram.com> you should see
 ![Screenshot of The Favicon Finder](https://github.com/mat/besticon/raw/master/the-icon-finder.png)
 
 
+## Configuration
+
+There is not a lot to configure but these environment variables exist
+
+Variable         | Description            | Default Value
+--------         | -----------            | -------------
+`PORT`           | HTTP server port       | 8080
+`CACHE_SIZE_MB`  | Size for the [groupcache](http://github.com/golang/groupcache)|32
+
+
+
 ## Libraries etc.
 
 Package | Description | License

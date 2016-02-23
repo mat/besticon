@@ -64,7 +64,7 @@ func generatorFunc(ctx groupcache.Context, key string, sink groupcache.Sink) err
 	return nil
 }
 
-func cacheEnabled() bool {
+func CacheEnabled() bool {
 	return iconCache != nil
 }
 

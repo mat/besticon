@@ -58,7 +58,7 @@ type IconFinder struct {
 func (f *IconFinder) FetchIcons(url string) (error, []Icon) {
 	var err error
 
-	if cacheEnabled() {
+	if CacheEnabled() {
 		f.icons, err = resultFromCache(url)
 	} else {
 		f.icons, err = FetchIcons(url)
