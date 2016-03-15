@@ -1,6 +1,6 @@
 # favicon-service (besticon)
 
-Source of <http://icons.better-idea.org>, a favicon service:
+Source of <https://icons.better-idea.org>, a favicon service:
 
   * Supports `favicon.ico` and `apple-touch-icon.png`
   * Simple URL API
@@ -21,20 +21,20 @@ Websites used to have a `favicon.ico`, or not. With the introduction of the `app
 This endpoint always returns an icon image for the given site — it redirects to an official icon if possible or creates and returns a fallback image if needed.
 
 Parameter | Example         | Description    | Default
---------  | --------        | --------       | ---- 
+--------  | --------        | --------       | ----
 url       | http://yelp.com |                                   | required
 size      | 120             | Desired **minimum** icon size | required
 formats   | png,ico         | Comma-separated list of accepted image formats: png, ico, gif | `png,ico,gif`
-fallback\_icon\_url   | *HTTP image URL*         | If provided, a redirect to this image will be returned in case no suitable icon could be found. This overrides the default fallback image behaviour.  | 
+fallback\_icon\_url   | *HTTP image URL*         | If provided, a redirect to this image will be returned in case no suitable icon could be found. This overrides the default fallback image behaviour.  |
 
 
 #### Examples
 
 |Input URL | Icon |
 |----------|------|
-|<http://icons.better-idea.org/icon?url=yelp.com&size=32>|![Icon for yelp.com](http://icons.better-idea.org/icon?url=yelp.com&size=32)|
-|<http://icons.better-idea.org/icon?url=yelp.com&size=64>|![Icon for yelp.com](http://icons.better-idea.org/icon?url=yelp.com&size=64)|
-|<http://icons.better-idea.org/icon?url=yelp.com>|size missing|
+|<https://icons.better-idea.org/icon?url=yelp.com&size=32>|![Icon for yelp.com](https://icons.better-idea.org/icon?url=yelp.com&size=32)|
+|<https://icons.better-idea.org/icon?url=yelp.com&size=64>|![Icon for yelp.com](https://icons.better-idea.org/icon?url=yelp.com&size=64)|
+|<https://icons.better-idea.org/icon?url=yelp.com>|size missing|
 
 
 
@@ -43,16 +43,16 @@ fallback\_icon\_url   | *HTTP image URL*         | If provided, a redirect to th
 This endpoint returns all icons for a given site.
 
 Parameter | Example         | Description | Default
---------  | --------        | ---------   | ---- 
+--------  | --------        | ---------   | ----
 url       | http://yelp.com |             | required
 formats   | png,ico         | Comma-separated list of accepted image formats: png, ico, gif | `png,ico,gif`
 pretty    | true            | Whether to return a pretty-printed JSON response, for debugging | `false`
 
 #### Examples
 
-* <http://icons.better-idea.org/allicons.json?url=github.com>
-* <http://icons.better-idea.org/allicons.json?url=github.com&formats=png>
-* <http://icons.better-idea.org/allicons.json?url=github.com&formats=png&pretty=true>
+* <https://icons.better-idea.org/allicons.json?url=github.com>
+* <https://icons.better-idea.org/allicons.json?url=github.com&formats=png>
+* <https://icons.better-idea.org/allicons.json?url=github.com&formats=png&pretty=true>
 
 
 ## Server Executable
@@ -78,7 +78,7 @@ If you want to build executables for a different target operating system you can
 To start the server on default port 8080 just do
 
 	$ iconserver
-	
+
 To use a different port use
 
 	$ PORT=80 iconserver
@@ -112,14 +112,14 @@ Package | Description | License
 <http://golang.org/x/net> | | [BSD style](https://github.com/golang/net/blob/master/LICENSE)|
 <http://golang.org/x/text> | | [BSD style](https://github.com/golang/text/blob/master/LICENSE)|
 | [Open Sans font](https://www.google.com/fonts/specimen/Open+Sans) used for the generated icons | | [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html) |
-| [The icon](http://sixrevisions.com/freebies/icons/free-icons-1000/) used on [icons.better-idea.org](http://icons.better-idea.org) | | [License](http://sixrevisions.com/freebies/icons/free-icons-1000/) |
+| [The icon](http://sixrevisions.com/freebies/icons/free-icons-1000/) used on [icons.better-idea.org](https://icons.better-idea.org) | | [License](http://sixrevisions.com/freebies/icons/free-icons-1000/) |
 
 
 ## License
 
 MIT License (MIT)
 
-Copyright (c) 2015-2016 Matthias Lüdtke, Hamburg - <http://github.com/mat>
+Copyright (c) 2015-2016 Matthias Lüdtke, Hamburg - <https://github.com/mat>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
