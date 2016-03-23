@@ -1,7 +1,9 @@
+build:
+	go get github.com/mat/besticon/besticon/iconserver
+	go get github.com/mat/besticon/besticon
 
-test_all: test test_bench
+test_all: build test test_bench
 	go test -v github.com/mat/besticon/besticon/iconserver
-	go get ./...
 
 test:
 	go test -v github.com/mat/besticon/ico
