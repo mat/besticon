@@ -114,6 +114,9 @@ Package | Description | License
 | [Open Sans font](https://www.google.com/fonts/specimen/Open+Sans) used for the generated icons | | [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html) |
 | [The icon](http://sixrevisions.com/freebies/icons/free-icons-1000/) used on [icons.better-idea.org](https://icons.better-idea.org) | | [License](http://sixrevisions.com/freebies/icons/free-icons-1000/) |
 
+## Contributors
+
+  * Erkie - https://github.com/erkie
 
 ## License
 
