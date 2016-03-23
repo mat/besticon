@@ -232,7 +232,7 @@ func ParseIconPath(fullpath string) (string, *color.RGBA, int) {
 
 func MainLetterFromURL(URL string) string {
 	URL = strings.TrimSpace(URL)
-	if !strings.HasPrefix(URL, "http") {
+	if !strings.HasPrefix(URL, "http:") && !strings.HasPrefix(URL, "https:") {
 		URL = "http://" + URL
 	}
 
