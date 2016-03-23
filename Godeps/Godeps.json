@@ -31,27 +31,27 @@
 		},
 		{
 			"ImportPath": "github.com/golang/groupcache",
-			"Rev": "604ed5785183e59ae2789449d89e73f3a2a77987"
+			"Rev": "4eab30f13db9d8b25c752e99d1583628ac2fa422"
 		},
 		{
 			"ImportPath": "github.com/golang/groupcache/consistenthash",
-			"Rev": "604ed5785183e59ae2789449d89e73f3a2a77987"
+			"Rev": "4eab30f13db9d8b25c752e99d1583628ac2fa422"
 		},
 		{
 			"ImportPath": "github.com/golang/groupcache/groupcachepb",
-			"Rev": "604ed5785183e59ae2789449d89e73f3a2a77987"
+			"Rev": "4eab30f13db9d8b25c752e99d1583628ac2fa422"
 		},
 		{
 			"ImportPath": "github.com/golang/groupcache/lru",
-			"Rev": "604ed5785183e59ae2789449d89e73f3a2a77987"
+			"Rev": "4eab30f13db9d8b25c752e99d1583628ac2fa422"
 		},
 		{
 			"ImportPath": "github.com/golang/groupcache/singleflight",
-			"Rev": "604ed5785183e59ae2789449d89e73f3a2a77987"
+			"Rev": "4eab30f13db9d8b25c752e99d1583628ac2fa422"
 		},
 		{
 			"ImportPath": "github.com/golang/protobuf/proto",
-			"Rev": "73aaaa9eb61d74fbf7e256ca586a3a565b308eea"
+			"Rev": "8d92cf5fc15a4382f8964b08e1f42a75c0591aa3"
 		},
 		{
 			"ImportPath": "golang.org/x/image/font",
