@@ -79,11 +79,7 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 		finder.FormatsAllowed = strings.Split(r.FormValue("formats"), ",")
 	}
 
-	err, _ = finder.FetchIcons(url)
-	if err != nil {
-		writeAPIError(w, 404, err, true)
-		return
-	}
+	finder.FetchIcons(url)
 
 	icon := finder.IconWithMinSize(minSize)
 	if icon != nil {
