@@ -115,6 +115,8 @@ func TestMainLetterFromURL(t *testing.T) {
 
 	assertEquals(t, "s", MainLetterFromURL("some-user.blogspot.com"))
 	assertEquals(t, "b", MainLetterFromURL("blogspot.com"))
+
+	assertEquals(t, "h", MainLetterFromURL("httpbin.org"))
 }
 
 func TestIconPath(t *testing.T) {

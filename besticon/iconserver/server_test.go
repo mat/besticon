@@ -72,6 +72,19 @@ func TestGetIconWithFallBackURL(t *testing.T) {
 	assertStringEquals(t, "http://example.com", w.Header().Get("Location"))
 }
 
+func TestGetIconWith404Page(t *testing.T) {
+	req, err := http.NewRequest("GET", "/icons?size=32&url=httpbin.org/status/404", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	iconHandler(w, req)
+
+	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "/lettericons/H-32.png", w.Header().Get("Location"))
+}
+
 func TestGetAllIcons(t *testing.T) {
 	req, err := http.NewRequest("GET", "/allicons.json?url=apple.com", nil)
 	if err != nil {
