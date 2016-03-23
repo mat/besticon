@@ -19,7 +19,7 @@ package main
 import (
 	"io"
 	"net/http"
-	"github.com/nytimes/gziphandler"
+	"github.com/NYTimes/gziphandler"
 )
 
 func main() {

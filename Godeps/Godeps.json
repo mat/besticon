@@ -8,7 +8,7 @@
 	"Deps": [
 		{
 			"ImportPath": "github.com/NYTimes/gziphandler",
-			"Rev": "85a3cc491e0680de278b1d270735eacdfd0236c9"
+			"Rev": "a88790d49798560db24af70fb6a10a66e2549a72"
 		},
 		{
 			"ImportPath": "github.com/PuerkitoBio/goquery",
