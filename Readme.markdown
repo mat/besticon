@@ -35,7 +35,7 @@ fallback\_icon\_url   | *HTTP image URL*         | If provided, a redirect to th
 |<https://icons.better-idea.org/icon?url=yelp.com&size=32>|![Icon for yelp.com](https://icons.better-idea.org/icon?url=yelp.com&size=32)|
 |<https://icons.better-idea.org/icon?url=yelp.com&size=64>|![Icon for yelp.com](https://icons.better-idea.org/icon?url=yelp.com&size=64)|
 |<https://icons.better-idea.org/icon?url=yelp.com>|size missing|
-
+|<https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=32>|![Icon for non-existent page](https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=32)|
 
 
 ### GET /allicons.json
