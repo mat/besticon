@@ -70,6 +70,9 @@ minify_css:
 update_assets:
 	go-bindata -pkg assets -ignore assets.go -o besticon/iconserver/assets/assets.go besticon/iconserver/assets/
 
+gotags:
+	gotags -tag-relative=true -R=true -sort=true -f="tags" -fields=+l .
+
 #
 ## Building ##
 #
@@ -78,13 +81,13 @@ clean:
 	rm -rf bin/*
 	rm -f iconserver*.zip
 
-build_darwin_amd64: update-version.go
+build_darwin_amd64:
 	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/darwin_amd64/iconserver github.com/mat/besticon/besticon/iconserver
 
-build_linux_amd64: update-version.go
+build_linux_amd64:
 	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/linux_amd64/iconserver github.com/mat/besticon/besticon/iconserver
 
-build_windows_amd64: update-version.go
+build_windows_amd64:
 	GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/windows_amd64/iconserver.exe github.com/mat/besticon/besticon/iconserver
 
 build_all_platforms: build_darwin_amd64 build_linux_amd64 build_windows_amd64
@@ -100,8 +103,17 @@ github_package: clean build_all_platforms
 build_docker_image: build_linux_amd64
 	docker build -t matthiasluedtke/iconserver .
 
-gotags:
-	gotags -tag-relative=true -R=true -sort=true -f="tags" -fields=+l .
+new_release: bump_version rewrite-version.go git_tag_version
 
-update-version.go:
+bump_version:
+	cat VERSION
+	head -n1 VERSION | awk -F. '{$$NF = $$NF + 1;} 1' | sed 's/ /./g' > NEW_VERSION
+	mv NEW_VERSION VERSION
+	cat VERSION
+
+rewrite-version.go:
 	echo "package besticon\n\n// Version string, same as VERSION, generated my Make\nconst VersionString = \"`cat VERSION`\"" > besticon/version.go
+
+git_tag_version:
+	git commit VERSION besticon/version.go -m "Release `cat VERSION`"
+	git tag `cat VERSION`
