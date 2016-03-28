@@ -278,7 +278,6 @@ func startServer(port string) {
 	serveAsset("/icon.svg", "besticon/iconserver/assets/icon.svg", oneYear)
 	serveAsset("/favicon.ico", "besticon/iconserver/assets/favicon.ico", oneYear)
 	serveAsset("/apple-touch-icon.png", "besticon/iconserver/assets/apple-touch-icon.png", oneYear)
-	serveAsset("/robots.txt", "besticon/iconserver/assets/robots.txt", nocache)
 
 	addr := "0.0.0.0:" + port
 	logger.Print("Starting server on ", addr, "...")
@@ -290,7 +289,6 @@ func startServer(port string) {
 
 const (
 	oneYear = 365 * 24 * 3600
-	nocache = -1
 )
 
 func serveAsset(path string, assetPath string, maxAgeSeconds int) {
@@ -300,9 +298,7 @@ func serveAsset(path string, assetPath string, maxAgeSeconds int) {
 			panic(err)
 		}
 
-		if maxAgeSeconds != nocache {
-			w.Header().Add(cacheControl, fmt.Sprintf("max-age=%d", maxAgeSeconds))
-		}
+		w.Header().Add(cacheControl, fmt.Sprintf("max-age=%d", maxAgeSeconds))
 
 		http.ServeContent(w, r, assetInfo.Name(), assetInfo.ModTime(),
 			bytes.NewReader(assets.MustAsset(assetPath)))
