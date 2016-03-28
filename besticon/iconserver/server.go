@@ -13,7 +13,6 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/NYTimes/gziphandler"
 	"github.com/mat/besticon/besticon"
@@ -122,8 +121,6 @@ const (
 	prettyParam = "pretty"
 	maxAge      = "max_age"
 )
-
-const defaultMaxAge = time.Duration(604800) * time.Second // 7 days
 
 func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 	url := r.FormValue(urlParam)
