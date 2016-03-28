@@ -58,18 +58,18 @@ func iconsHandler(w http.ResponseWriter, r *http.Request) {
 func iconHandler(w http.ResponseWriter, r *http.Request) {
 	url := r.FormValue("url")
 	if len(url) == 0 {
-		writeAPIError(w, 400, errors.New("need url parameter"), true)
+		writeAPIError(w, 400, errors.New("need url parameter"))
 		return
 	}
 
 	size := r.FormValue("size")
 	if size == "" {
-		writeAPIError(w, 400, errors.New("need size parameter"), true)
+		writeAPIError(w, 400, errors.New("need size parameter"))
 		return
 	}
 	minSize, err := strconv.Atoi(size)
 	if err != nil || minSize < 0 || minSize > 500 {
-		writeAPIError(w, 400, errors.New("bad size parameter"), true)
+		writeAPIError(w, 400, errors.New("bad size parameter"))
 		return
 	}
 
@@ -129,7 +129,7 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 	url := r.FormValue(urlParam)
 	if len(url) == 0 {
 		errMissingURL := errors.New("need url query parameter")
-		writeAPIError(w, 400, errMissingURL, true)
+		writeAPIError(w, 400, errMissingURL)
 		return
 	}
 
@@ -141,7 +141,7 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 
 	e, icons := finder.FetchIcons(url)
 	if e != nil {
-		writeAPIError(w, 404, e, true)
+		writeAPIError(w, 404, e)
 		return
 	}
 
@@ -157,7 +157,7 @@ func lettericonHandler(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-Type", "image/png")
 		lettericon.Render(charParam, col, size, w)
 	} else {
-		writeAPIError(w, 400, errors.New("wrong format for lettericons/ path, must look like lettericons/M-144-EFC25D.png"), true)
+		writeAPIError(w, 400, errors.New("wrong format for lettericons/ path, must look like lettericons/M-144-EFC25D.png"))
 	}
 }
 
@@ -169,18 +169,13 @@ func obsoleteAPIHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func writeAPIError(w http.ResponseWriter, httpStatus int, e error, pretty bool) {
+func writeAPIError(w http.ResponseWriter, httpStatus int, e error) {
 	data := struct {
 		Error string `json:"error"`
 	}{
 		e.Error(),
 	}
-
-	if pretty {
-		renderJSONResponsePretty(w, httpStatus, data)
-	} else {
-		renderJSONResponse(w, httpStatus, data)
-	}
+	renderJSONResponsePretty(w, httpStatus, data)
 }
 
 func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon, pretty bool) {
