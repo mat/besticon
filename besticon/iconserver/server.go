@@ -154,7 +154,7 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 func lettericonHandler(w http.ResponseWriter, r *http.Request) {
 	charParam, col, size := lettericon.ParseIconPath(r.URL.Path)
 	if charParam != "" {
-		w.Header().Add("Content-Type", "image/png")
+		w.Header().Add(contentType, imagePNG)
 		lettericon.Render(charParam, col, size, w)
 	} else {
 		writeAPIError(w, 400, errors.New("wrong format for lettericons/ path, must look like lettericons/M-144-EFC25D.png"))
@@ -205,6 +205,7 @@ func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon, pre
 const (
 	contentType     = "Content-Type"
 	applicationJSON = "application/json"
+	imagePNG        = "image/png"
 	cacheControl    = "Cache-Control"
 )
 
