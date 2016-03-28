@@ -193,7 +193,7 @@ func fetchIconsWithVCR(vcrFile string, url string) ([]Icon, error) {
 	defer f.Close()
 
 	setHTTPClient(c)
-	return FetchIcons(url)
+	return fetchIcons(url)
 }
 
 func getImageWidthForFile(filename string) int {

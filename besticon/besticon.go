@@ -64,7 +64,7 @@ func (f *IconFinder) FetchIcons(url string) (error, []Icon) {
 	if CacheEnabled() {
 		f.icons, err = resultFromCache(url)
 	} else {
-		f.icons, err = FetchIcons(url)
+		f.icons, err = fetchIcons(url)
 	}
 
 	return err, f.Icons()
@@ -126,9 +126,7 @@ func includesString(arr []string, str string) bool {
 	return false
 }
 
-// FetchIcons takes a siteURL and returns all icons for this site
-// or an error.
-func FetchIcons(siteURL string) ([]Icon, error) {
+func fetchIcons(siteURL string) ([]Icon, error) {
 	siteURL = strings.TrimSpace(siteURL)
 	if !strings.HasPrefix(siteURL, "http") {
 		siteURL = "http://" + siteURL
