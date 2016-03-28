@@ -37,6 +37,9 @@ import (
 
 var defaultFormats []string
 
+const MinIconSize = 10
+const MaxIconSize = 500
+
 // Icon holds icon information.
 type Icon struct {
 	URL       string `json:"url"`

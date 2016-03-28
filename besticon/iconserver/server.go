@@ -67,7 +67,7 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	minSize, err := strconv.Atoi(size)
-	if err != nil || minSize < 0 || minSize > 500 {
+	if err != nil || minSize < besticon.MinIconSize || minSize > besticon.MaxIconSize {
 		writeAPIError(w, 400, errors.New("bad size parameter"))
 		return
 	}
@@ -100,7 +100,7 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 
 func popularHandler(w http.ResponseWriter, r *http.Request) {
 	iconSize, err := strconv.Atoi(r.FormValue("iconsize"))
-	if iconSize > 500 || iconSize < 10 || err != nil {
+	if iconSize > besticon.MaxIconSize || iconSize < besticon.MinIconSize || err != nil {
 		iconSize = 120
 	}
 
