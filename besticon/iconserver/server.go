@@ -279,7 +279,6 @@ func startServer(port string) {
 	serveAsset("/favicon.ico", "besticon/iconserver/assets/favicon.ico", oneYear)
 	serveAsset("/apple-touch-icon.png", "besticon/iconserver/assets/apple-touch-icon.png", oneYear)
 	serveAsset("/robots.txt", "besticon/iconserver/assets/robots.txt", nocache)
-	serveAsset("/test-lettericons", "besticon/iconserver/assets/test-lettericons.html", nocache)
 
 	addr := "0.0.0.0:" + port
 	logger.Print("Starting server on ", addr, "...")
