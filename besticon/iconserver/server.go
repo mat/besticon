@@ -119,7 +119,6 @@ func popularHandler(w http.ResponseWriter, r *http.Request) {
 const (
 	urlParam    = "url"
 	prettyParam = "pretty"
-	maxAge      = "max_age"
 )
 
 func alliconsHandler(w http.ResponseWriter, r *http.Request) {
