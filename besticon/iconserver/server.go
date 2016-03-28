@@ -42,7 +42,7 @@ func iconsHandler(w http.ResponseWriter, r *http.Request) {
 		finder.FormatsAllowed = strings.Split(r.FormValue("formats"), ",")
 	}
 
-	e, icons := finder.FetchIcons(url)
+	icons, e := finder.FetchIcons(url)
 	switch {
 	case e != nil:
 		renderHTMLTemplate(w, 404, iconsHTML, pageInfo{URL: url, Error: e})
@@ -135,7 +135,7 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 		finder.FormatsAllowed = strings.Split(r.FormValue("formats"), ",")
 	}
 
-	e, icons := finder.FetchIcons(url)
+	icons, e := finder.FetchIcons(url)
 	if e != nil {
 		writeAPIError(w, 404, e)
 		return

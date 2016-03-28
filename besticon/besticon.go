@@ -58,7 +58,7 @@ type IconFinder struct {
 	icons          []Icon
 }
 
-func (f *IconFinder) FetchIcons(url string) (error, []Icon) {
+func (f *IconFinder) FetchIcons(url string) ([]Icon, error) {
 	var err error
 
 	if CacheEnabled() {
@@ -67,7 +67,7 @@ func (f *IconFinder) FetchIcons(url string) (error, []Icon) {
 		f.icons, err = fetchIcons(url)
 	}
 
-	return err, f.Icons()
+	return f.Icons(), err
 }
 
 func (f *IconFinder) IconWithMinSize(minSize int) *Icon {
