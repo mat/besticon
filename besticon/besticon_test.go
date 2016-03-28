@@ -147,12 +147,6 @@ func mustFindIconLinks(html []byte) []string {
 	return links
 }
 
-func TestFindBestIcon(t *testing.T) {
-	i, err := fetchBestIconWithVCR("github.com.vcr", "github.com")
-	assertEquals(t, nil, err)
-	assertEquals(t, &Icon{URL: "https://github.com/apple-touch-icon-144.png", Width: 144, Height: 144, Format: "png", Bytes: 796, Error: error(nil), Sha1sum: "2626d8f64d5d3a76bd535151dfe84b62d3f3ee63"}, i)
-}
-
 func TestMainColorForIconsWithBrokenImageData(t *testing.T) {
 	icn := Icon{Format: "png", ImageData: []byte("broken-image-data")}
 	colr := MainColorForIcons([]Icon{icn})
@@ -160,8 +154,8 @@ func TestMainColorForIconsWithBrokenImageData(t *testing.T) {
 }
 
 func TestFindBestIconNoIcons(t *testing.T) {
-	_, err := fetchBestIconWithVCR("example.com.vcr", "example.com")
-	assertEquals(t, errors.New("besticon: no icons found for site"), err)
+	icons, _ := fetchIconsWithVCR("example.com.vcr", "example.com")
+	assertEquals(t, 0, len(icons))
 }
 
 func TestLinkExtraction(t *testing.T) {
@@ -200,19 +194,6 @@ func fetchIconsWithVCR(vcrFile string, url string) ([]Icon, error) {
 
 	setHTTPClient(c)
 	return FetchIcons(url)
-}
-
-func fetchBestIconWithVCR(vcrFile string, url string) (*Icon, error) {
-	path := testdataDir + vcrFile
-	c, f, err := vcr.Client(path)
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-
-	setHTTPClient(c)
-	i, err := FetchBestIcon(url)
-	return i, err
 }
 
 func getImageWidthForFile(filename string) int {

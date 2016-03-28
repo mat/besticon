@@ -126,44 +126,6 @@ func includesString(arr []string, str string) bool {
 	return false
 }
 
-// FetchBestIcon takes a siteURL and returns the icon with
-// the largest dimensions for this site or an error.
-func FetchBestIcon(siteURL string) (*Icon, error) {
-	icons, e := FetchIcons(siteURL)
-	if e != nil {
-		return nil, e
-	}
-
-	if len(icons) < 1 {
-		return nil, errors.New("besticon: no icons found for site")
-	}
-
-	best := icons[0]
-	return &best, nil
-}
-
-func FetchOrGenerateIcon(siteURL string, size int) (*Icon, error) {
-	icons, err := FetchIcons(siteURL)
-	if err != nil {
-		return nil, err
-	}
-	if len(icons) < 1 {
-		return nil, errors.New("besticon: no icons found for site")
-	}
-
-	best := icons[0]
-	if best.Width >= size && best.Height > size {
-		return &best, nil
-	}
-
-	return &Icon{
-		Width:  size,
-		Height: size,
-		Format: "png",
-		URL:    fmt.Sprintf("/siteicon?url=%s&amp;size=%d", siteURL, size),
-	}, nil
-}
-
 // FetchIcons takes a siteURL and returns all icons for this site
 // or an error.
 func FetchIcons(siteURL string) ([]Icon, error) {
