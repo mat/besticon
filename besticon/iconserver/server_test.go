@@ -105,6 +105,36 @@ func TestGetAllIcons(t *testing.T) {
 	assertDoesNotExceed(t, len(w.Body.String()), 2000)
 }
 
+func TestGetPopular(t *testing.T) {
+	req, err := http.NewRequest("GET", "/popular", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	popularHandler(w, req)
+
+	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "text/html; charset=utf-8", w.Header().Get("Content-Type"))
+
+	assertStringContains(t, w.Body.String(), `Icon Examples`)
+	assertStringContains(t, w.Body.String(), `github.com`)
+}
+
+func TestGetLetterIcon(t *testing.T) {
+	req, err := http.NewRequest("GET", "/lettericons/M-144-EFC25D.png", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	lettericonHandler(w, req)
+
+	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "image/png", w.Header().Get("Content-Type"))
+	assertIntegerEquals(t, 2001, w.Body.Len())
+}
+
 func TestGetApiIconsWithMaxAge(t *testing.T) {
 	req, err := http.NewRequest("GET", "/allicons.json?url=apple.com&max_age=2h", nil)
 	if err != nil {
@@ -159,6 +189,12 @@ func assertStringContains(t *testing.T, haystack string, needle string) {
 func assertStringEquals(t *testing.T, expected string, actual string) {
 	if expected != actual {
 		fail(t, fmt.Sprintf("Expected '%s' to be '%s'", actual, expected))
+	}
+}
+
+func assertIntegerEquals(t *testing.T, expected int, actual int) {
+	if expected != actual {
+		fail(t, fmt.Sprintf("Expected %d to be %d", actual, expected))
 	}
 }
 

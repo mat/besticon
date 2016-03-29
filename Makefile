@@ -55,6 +55,9 @@ coverage_besticon:
 coverage_ico:
 	go test -coverprofile=coverage.out -covermode=count github.com/mat/besticon/ico && go tool cover -html=coverage.out && unlink coverage.out
 
+coverage_iconserver:
+	go test -coverprofile=coverage.out -covermode=count github.com/mat/besticon/besticon/iconserver && go tool cover -html=coverage.out && unlink coverage.out
+
 vendor_dependencies:
 	godep save -r ./...
 	# Need to go get in order to fill $GOPATH/pkg... to minimize compile times:
