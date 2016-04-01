@@ -154,7 +154,7 @@ func lettericonHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add(contentType, imagePNG)
-	w.Header().Add(cacheControl, fmt.Sprintf("public, max-age=%d", oneYear))
+	w.Header().Add(cacheControl, fmt.Sprintf("max-age=%d", oneYear))
 	lettericon.Render(charParam, col, size, w)
 }
 
@@ -291,7 +291,7 @@ func serveAsset(path string, assetPath string, maxAgeSeconds int) {
 			panic(err)
 		}
 
-		w.Header().Add(cacheControl, fmt.Sprintf("public, max-age=%d", maxAgeSeconds))
+		w.Header().Add(cacheControl, fmt.Sprintf("max-age=%d", maxAgeSeconds))
 
 		http.ServeContent(w, r, assetInfo.Name(), assetInfo.ModTime(),
 			bytes.NewReader(assets.MustAsset(assetPath)))

@@ -132,7 +132,7 @@ func TestGetLetterIcon(t *testing.T) {
 
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "image/png", w.Header().Get("Content-Type"))
-	assertStringEquals(t, "public, max-age=31536000", w.Header().Get("Cache-Control"))
+	assertStringEquals(t, "max-age=31536000", w.Header().Get("Cache-Control"))
 	assertIntegerEquals(t, 2001, w.Body.Len())
 }
 
