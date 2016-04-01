@@ -46,13 +46,11 @@ Parameter | Example         | Description | Default
 --------  | --------        | ---------   | ----
 url       | http://yelp.com |             | required
 formats   | png,ico         | Comma-separated list of accepted image formats: png, ico, gif | `png,ico,gif`
-pretty    | true            | Whether to return a pretty-printed JSON response, for debugging | `false`
 
 #### Examples
 
 * <https://icons.better-idea.org/allicons.json?url=github.com>
 * <https://icons.better-idea.org/allicons.json?url=github.com&formats=png>
-* <https://icons.better-idea.org/allicons.json?url=github.com&formats=png&pretty=true>
 
 
 ## Server Executable

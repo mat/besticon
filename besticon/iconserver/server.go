@@ -117,8 +117,7 @@ func popularHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 const (
-	urlParam    = "url"
-	prettyParam = "pretty"
+	urlParam = "url"
 )
 
 func alliconsHandler(w http.ResponseWriter, r *http.Request) {
@@ -141,10 +140,7 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	pretty, err := strconv.ParseBool(r.FormValue(prettyParam))
-	prettyPrint := (err == nil) && pretty
-
-	writeAPIIcons(w, url, icons, prettyPrint)
+	writeAPIIcons(w, url, icons)
 }
 
 func lettericonHandler(w http.ResponseWriter, r *http.Request) {
@@ -172,10 +168,10 @@ func writeAPIError(w http.ResponseWriter, httpStatus int, e error) {
 	}{
 		e.Error(),
 	}
-	renderJSONResponsePretty(w, httpStatus, data)
+	renderJSONResponse(w, httpStatus, data)
 }
 
-func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon, pretty bool) {
+func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon) {
 	// Don't return whole image data
 	newIcons := []besticon.Icon{}
 	for _, ico := range icons {
@@ -191,12 +187,7 @@ func writeAPIIcons(w http.ResponseWriter, url string, icons []besticon.Icon, pre
 		url,
 		newIcons,
 	}
-
-	if pretty {
-		renderJSONResponsePretty(w, 200, data)
-	} else {
-		renderJSONResponse(w, 200, data)
-	}
+	renderJSONResponse(w, 200, data)
 }
 
 const (
@@ -211,13 +202,6 @@ func renderJSONResponse(w http.ResponseWriter, httpStatus int, data interface{})
 	w.WriteHeader(httpStatus)
 	enc := json.NewEncoder(w)
 	enc.Encode(data)
-}
-
-func renderJSONResponsePretty(w http.ResponseWriter, httpStatus int, data interface{}) {
-	w.Header().Add(contentType, applicationJSON)
-	w.WriteHeader(httpStatus)
-	b, _ := json.MarshalIndent(data, "", "  ")
-	w.Write(b)
 }
 
 type pageInfo struct {
