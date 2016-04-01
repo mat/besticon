@@ -136,23 +136,6 @@ func TestGetLetterIcon(t *testing.T) {
 	assertIntegerEquals(t, 2001, w.Body.Len())
 }
 
-func TestGetApiIconsWithMaxAge(t *testing.T) {
-	req, err := http.NewRequest("GET", "/allicons.json?url=apple.com&max_age=2h", nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	w := httptest.NewRecorder()
-	alliconsHandler(w, req)
-
-	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
-	assertStringEquals(t, "application/json", w.Header().Get("Content-Type"))
-
-	assertStringContains(t, w.Body.String(), `"url":"http://www.apple.com/favicon.ico"`)
-	assertStringContains(t, w.Body.String(), `"width":32`)
-	assertStringContains(t, w.Body.String(), `"height":32`)
-}
-
 func TestGetObsoleteApiRedirect(t *testing.T) {
 	req, err := http.NewRequest("GET", "/api/icons?url=http%3A%2F%2Fapple.com&i_am_feeling_lucky=yes", nil)
 	if err != nil {
