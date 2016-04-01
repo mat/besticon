@@ -56,6 +56,7 @@ func TestGetIcon(t *testing.T) {
 	iconHandler(w, req)
 
 	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "max-age=86400", w.Header().Get("Cache-Control"))
 	assertStringEquals(t, "http://www.apple.com/apple-touch-icon.png", w.Header().Get("Location"))
 }
 
@@ -69,6 +70,7 @@ func TestGetIconWithFallBackURL(t *testing.T) {
 	iconHandler(w, req)
 
 	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "max-age=86400", w.Header().Get("Cache-Control"))
 	assertStringEquals(t, "http://example.com", w.Header().Get("Location"))
 }
 

@@ -82,20 +82,20 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 
 	icon := finder.IconWithMinSize(minSize)
 	if icon != nil {
-		http.Redirect(w, r, icon.URL, 302)
+		redirectWithCacheControl(w, r, icon.URL)
 		return
 	}
 
 	fallbackIconURL := r.FormValue("fallback_icon_url")
 	if fallbackIconURL != "" {
-		http.Redirect(w, r, fallbackIconURL, 302)
+		redirectWithCacheControl(w, r, fallbackIconURL)
 		return
 	}
 
 	iconColor := finder.MainColorForIcons()
 	letter := lettericon.MainLetterFromURL(url)
 	redirectPath := lettericon.IconPath(letter, size, iconColor)
-	http.Redirect(w, r, redirectPath, 302)
+	redirectWithCacheControl(w, r, redirectPath)
 }
 
 func popularHandler(w http.ResponseWriter, r *http.Request) {
@@ -282,7 +282,13 @@ func startServer(port string) {
 
 const (
 	oneYear = 365 * 24 * 3600
+	oneDay  = 24 * 3600
 )
+
+func redirectWithCacheControl(w http.ResponseWriter, r *http.Request, redirectURL string) {
+	w.Header().Add(cacheControl, fmt.Sprintf("max-age=%d", oneDay))
+	http.Redirect(w, r, redirectURL, 302)
+}
 
 func serveAsset(path string, assetPath string, maxAgeSeconds int) {
 	registerGzipHandler(path, func(w http.ResponseWriter, r *http.Request) {
