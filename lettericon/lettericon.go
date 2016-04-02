@@ -55,7 +55,7 @@ func Render(letter string, bgColor color.Color, width int, out io.Writer) error 
 	d.DrawString(letter)
 
 	b := bufio.NewWriter(out)
-	encoder := png.Encoder{CompressionLevel: png.DefaultCompression}
+	encoder := png.Encoder{CompressionLevel: png.BestCompression}
 	err := encoder.Encode(b, rgba)
 	if err != nil {
 		return err
