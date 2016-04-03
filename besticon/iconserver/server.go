@@ -18,6 +18,9 @@ import (
 	"github.com/mat/besticon/besticon"
 	"github.com/mat/besticon/besticon/iconserver/assets"
 	"github.com/mat/besticon/lettericon"
+
+	// Enable runtime profiling at /debug/pprof
+	_ "net/http/pprof"
 )
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
