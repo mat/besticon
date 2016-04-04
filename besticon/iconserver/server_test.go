@@ -37,6 +37,7 @@ func TestGetIcons(t *testing.T) {
 	iconsHandler(w, req)
 
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "max-age=86400", w.Header().Get("Cache-Control"))
 	assertStringEquals(t, "text/html; charset=utf-8", w.Header().Get("Content-Type"))
 
 	assertStringContains(t, w.Body.String(), "Icons on apple.com")

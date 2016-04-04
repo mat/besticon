@@ -53,6 +53,7 @@ func iconsHandler(w http.ResponseWriter, r *http.Request) {
 		errNoIcons := errors.New("this poor site has no icons at all :-(")
 		renderHTMLTemplate(w, 404, iconsHTML, pageInfo{URL: url, Error: errNoIcons})
 	default:
+		addCacheControl(w, oneDay)
 		renderHTMLTemplate(w, 200, iconsHTML, pageInfo{Icons: icons, URL: url})
 	}
 }
@@ -153,7 +154,7 @@ func lettericonHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add(contentType, imagePNG)
-	w.Header().Add(cacheControl, fmt.Sprintf("max-age=%d", oneYear))
+	addCacheControl(w, oneYear)
 	lettericon.Render(charParam, col, size, w)
 }
 
@@ -197,7 +198,6 @@ const (
 	contentType     = "Content-Type"
 	applicationJSON = "application/json"
 	imagePNG        = "image/png"
-	cacheControl    = "Cache-Control"
 )
 
 func renderJSONResponse(w http.ResponseWriter, httpStatus int, data interface{}) {
@@ -268,13 +268,18 @@ func startServer(port string) {
 }
 
 const (
-	oneYear = 365 * 24 * 3600
-	oneDay  = 24 * 3600
+	cacheControl = "Cache-Control"
+	oneYear      = 365 * 24 * 3600
+	oneDay       = 24 * 3600
 )
 
 func redirectWithCacheControl(w http.ResponseWriter, r *http.Request, redirectURL string) {
-	w.Header().Add(cacheControl, fmt.Sprintf("max-age=%d", oneDay))
+	addCacheControl(w, oneDay)
 	http.Redirect(w, r, redirectURL, 302)
+}
+
+func addCacheControl(w http.ResponseWriter, maxAge int) {
+	w.Header().Add(cacheControl, fmt.Sprintf("max-age=%d", maxAge))
 }
 
 func serveAsset(path string, assetPath string, maxAgeSeconds int) {
@@ -284,7 +289,7 @@ func serveAsset(path string, assetPath string, maxAgeSeconds int) {
 			panic(err)
 		}
 
-		w.Header().Add(cacheControl, fmt.Sprintf("max-age=%d", maxAgeSeconds))
+		addCacheControl(w, maxAgeSeconds)
 
 		http.ServeContent(w, r, assetInfo.Name(), assetInfo.ModTime(),
 			bytes.NewReader(assets.MustAsset(assetPath)))
