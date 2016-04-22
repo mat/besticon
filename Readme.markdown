@@ -65,7 +65,7 @@ Even more binaries are available from the excellent GoBuilder community site <ht
 
 ### Build your own
 
-If you have Go 1.5 installed on your system you can use `go get` to fetch the source code and build the server:
+If you have Go 1.6 installed on your system you can use `go get` to fetch the source code and build the server:
 
 	$ go get -u github.com/mat/besticon/...
 
