@@ -6,6 +6,7 @@ import (
 	"image/color"
 	"io/ioutil"
 	"reflect"
+	"runtime"
 	"testing"
 )
 
@@ -45,8 +46,6 @@ func TestRelativeLuminance(t *testing.T) {
 	assertFloatEquals(t, 0.07, relativeLuminance(blue))
 }
 
-const testdataDir = "testdata/"
-
 func assertCorrectImageData(t *testing.T, letter string, width int, hexColor string) {
 	imageData, err := renderBytes(letter, mustColorFromHex(hexColor), width)
 	if err != nil {
@@ -55,6 +54,7 @@ func assertCorrectImageData(t *testing.T, letter string, width int, hexColor str
 	}
 
 	// "A-144-123456.png"
+	testdataDir := fmt.Sprintf("testdata_%s/", runtime.Version())
 	file := fmt.Sprintf(testdataDir+"%s-%d-%s.png", letter, width, hexColor)
 	fileData, err := bytesFromFile(file)
 	if err != nil {
