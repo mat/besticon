@@ -32,6 +32,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"golang.org/x/net/html/charset"
+	"golang.org/x/net/idna"
 	"golang.org/x/net/publicsuffix"
 )
 
@@ -351,8 +352,17 @@ func fetchIconDetails(url string) Icon {
 	return i
 }
 
-func get(url string) (*http.Response, error) {
-	req, e := http.NewRequest("GET", url, nil)
+func get(urlstring string) (*http.Response, error) {
+	u, e := url.Parse(urlstring)
+	if e != nil {
+		return nil, e
+	}
+	u.Host, e = idna.ToASCII(u.Host)
+	if e != nil {
+		return nil, e
+	}
+
+	req, e := http.NewRequest("GET", u.String(), nil)
 	if e != nil {
 		return nil, e
 	}

@@ -125,6 +125,12 @@ func TestARDWithSortBySize(t *testing.T) {
 	assertEquals(t, expectedImages, actualImages)
 }
 
+func TestMortenmøllerWithIDNAHost(t *testing.T) {
+	actualImages, err := fetchIconsWithVCR("mortenmoller.vcr", "https://mortenmøller.dk")
+	assertEquals(t, nil, err)
+	assertEquals(t, 13, len(actualImages))
+}
+
 func TestParsingInexistentSite(t *testing.T) {
 	actualImages, err := fetchIconsWithVCR("not_existent.vcr", "http://wikipedia.org/does-not-exist")
 
