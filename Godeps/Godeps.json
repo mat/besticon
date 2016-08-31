@@ -1,7 +1,7 @@
 {
 	"ImportPath": "github.com/mat/besticon",
 	"GoVersion": "go1.7",
-	"GodepVersion": "v60",
+	"GodepVersion": "v74",
 	"Packages": [
 		"github.com/mat/besticon/..."
 	],
@@ -71,6 +71,10 @@
 		},
 		{
 			"ImportPath": "golang.org/x/net/html/charset",
+			"Rev": "66f0418ca41253f8d1a024eb9754e9441a8e79b9"
+		},
+		{
+			"ImportPath": "golang.org/x/net/idna",
 			"Rev": "66f0418ca41253f8d1a024eb9754e9441a8e79b9"
 		},
 		{
