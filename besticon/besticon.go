@@ -357,6 +357,8 @@ func get(urlstring string) (*http.Response, error) {
 	if e != nil {
 		return nil, e
 	}
+	// Maybe we can get rid of this conversion someday
+	// https://github.com/golang/go/issues/13835
 	u.Host, e = idna.ToASCII(u.Host)
 	if e != nil {
 		return nil, e
