@@ -504,3 +504,5 @@ func init() {
 	SetLogOutput(os.Stdout)
 	keepImageBytes = true
 }
+
+var BuildDate string // set via ldflags on Make
