@@ -38,6 +38,7 @@ fallback\_icon\_url   | *HTTP image URL*         | If provided, a redirect to th
 |<https://icons.better-idea.org/icon?url=yelp.com&size=64>|![Icon for yelp.com](https://icons.better-idea.org/icon?url=yelp.com&size=64)|
 |<https://icons.better-idea.org/icon?url=yelp.com>|size missing|
 |<https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=64>|![Icon for non-existent page](https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=64)|
+|<https://icons.better-idea.org/icon?url=фминобрнауки.рф&size=32>|![Icon with cyrillic letter ф](https://icons.better-idea.org/icon?url=фминобрнауки.рф&size=32)|
 
 
 ### GET /allicons.json
@@ -111,7 +112,7 @@ Package | Description | License
 <http://golang.org/x/image> | supplementary image libraries | [BSD style](https://github.com/golang/image/blob/master/LICENSE) |
 <http://golang.org/x/net> | | [BSD style](https://github.com/golang/net/blob/master/LICENSE)|
 <http://golang.org/x/text> | | [BSD style](https://github.com/golang/text/blob/master/LICENSE)|
-| [Open Sans font](https://www.google.com/fonts/specimen/Open+Sans) used for the generated icons | | [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html) |
+| [Noto Sans font](https://www.google.com/get/noto/) used for the generated icons | | [SIL Open Font License 1.1](http://scripts.sil.org/OFL) |
 | [The icon](http://sixrevisions.com/freebies/icons/free-icons-1000/) used on [icons.better-idea.org](https://icons.better-idea.org) | | [License](http://sixrevisions.com/freebies/icons/free-icons-1000/) |
 
 ## Contributors

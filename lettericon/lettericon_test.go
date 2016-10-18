@@ -18,6 +18,7 @@ func TestColorFromHex(t *testing.T) {
 func TestRender(t *testing.T) {
 	assertCorrectImageData(t, "A", 16, "123456")
 	assertCorrectImageData(t, "X", 32, "dfdfdf")
+	assertCorrectImageData(t, "ф", 32, "dfdfdf")
 }
 
 func TestPickForegroundColor(t *testing.T) {
@@ -116,6 +117,9 @@ func TestMainLetterFromURL(t *testing.T) {
 	assertEquals(t, "b", MainLetterFromURL("blogspot.com"))
 
 	assertEquals(t, "h", MainLetterFromURL("httpbin.org"))
+
+	assertEquals(t, `м`, MainLetterFromURL(`http://минобрнауки.рф/`))
+	assertEquals(t, `ф`, MainLetterFromURL(`http://фби.рф/`))
 }
 
 func TestIconPath(t *testing.T) {
@@ -139,6 +143,10 @@ func TestParseIconPath(t *testing.T) {
 
 	char, _, size = ParseIconPath("lettericons/C-120.png")
 	assertEquals(t, "C", char)
+	assertEquals(t, 120, size)
+
+	char, _, size = ParseIconPath("lettericons/%D1%84-120.png") //ф-120.png
+	assertEquals(t, `ф`, char)
 	assertEquals(t, 120, size)
 
 	char, col, size = ParseIconPath("lettericons/D-150-ababab.png")

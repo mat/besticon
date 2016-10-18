@@ -197,6 +197,8 @@ const maxIconSize = 1024
 
 // path is like: lettericons/M-144-EFC25D.png
 func ParseIconPath(fullpath string) (string, *color.RGBA, int) {
+	fullpath = percentDecode(fullpath)
+
 	_, filename := path.Split(fullpath)
 	filename = strings.TrimSuffix(filename, ".png")
 	params := strings.Split(filename, "-")
@@ -204,7 +206,7 @@ func ParseIconPath(fullpath string) (string, *color.RGBA, int) {
 		return "", nil, -1
 	}
 
-	charParam := string(params[0][0])
+	charParam := firstRune(params[0])
 	sizeParam := ""
 	if len(params) >= 2 {
 		sizeParam = params[1]
@@ -251,12 +253,31 @@ func MainLetterFromURL(URL string) string {
 	hostParts := strings.Split(host, ".")
 	domain := hostParts[len(hostParts)-1]
 	if len(domain) > 0 {
-		return string(domain[0])
+		return firstRune(domain)
 	} else if len(hostSuffix) > 0 {
 		return string(hostSuffix[0])
 	}
 
 	return ""
+}
+
+func firstRune(str string) string {
+	for _, runeValue := range str {
+		return fmt.Sprintf("%c", runeValue)
+	}
+	return ""
+}
+
+func percentDecode(p string) string {
+	if !strings.HasPrefix(p, "/") {
+		p = "/" + p
+	}
+	u, err := url.ParseRequestURI(p)
+
+	if err != nil {
+		return p
+	}
+	return u.Path
 }
 
 var fnt *truetype.Font
@@ -266,7 +287,7 @@ var lightDark *color.RGBA
 
 func init() {
 	var err error
-	fnt, err = truetype.Parse(fonts.OpenSansLightBytes())
+	fnt, err = truetype.Parse(fonts.NotoSansRegularBytes())
 	if err != nil {
 		log.Println(err)
 		return

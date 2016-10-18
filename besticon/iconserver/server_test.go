@@ -136,7 +136,7 @@ func TestGetLetterIcon(t *testing.T) {
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "image/png", w.Header().Get("Content-Type"))
 	assertStringEquals(t, "max-age=31536000", w.Header().Get("Cache-Control"))
-	assertIntegerInInterval(t, 1700, 1800, w.Body.Len())
+	assertIntegerInInterval(t, 1500, 1800, w.Body.Len())
 }
 
 func TestGetObsoleteApiRedirect(t *testing.T) {
