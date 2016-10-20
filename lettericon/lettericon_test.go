@@ -6,7 +6,6 @@ import (
 	"image/color"
 	"io/ioutil"
 	"reflect"
-	"runtime"
 	"testing"
 )
 
@@ -54,7 +53,7 @@ func assertCorrectImageData(t *testing.T, letter string, width int, hexColor str
 	}
 
 	// "A-144-123456.png"
-	testdataDir := fmt.Sprintf("testdata_%s/", runtime.Version())
+	testdataDir := fmt.Sprintf("testdata/")
 	file := fmt.Sprintf(testdataDir+"%s-%d-%s.png", letter, width, hexColor)
 	fileData, err := bytesFromFile(file)
 	if err != nil {
