@@ -38,7 +38,7 @@ func iconsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	finder := besticon.IconFinder{}
+	finder := newIconFinder()
 
 	formats := r.FormValue("formats")
 	if formats != "" {
@@ -76,7 +76,7 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	finder := besticon.IconFinder{}
+	finder := newIconFinder()
 	formats := r.FormValue("formats")
 	if formats != "" {
 		finder.FormatsAllowed = strings.Split(r.FormValue("formats"), ",")
@@ -142,7 +142,7 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	finder := besticon.IconFinder{}
+	finder := newIconFinder()
 	formats := r.FormValue("formats")
 	if formats != "" {
 		finder.FormatsAllowed = strings.Split(r.FormValue("formats"), ",")
@@ -350,6 +350,17 @@ func imgWidth(i *besticon.Icon) int {
 	return i.Width / 2.0
 }
 
+func newIconFinder() *besticon.IconFinder {
+	finder := besticon.IconFinder{}
+	if len(hostOnlyDomains) > 0 {
+		finder.HostOnlyDomains = hostOnlyDomains
+	}
+
+	return &finder
+}
+
+var hostOnlyDomains []string
+
 func init() {
 	cacheSize := os.Getenv("CACHE_SIZE_MB")
 	if cacheSize == "" {
@@ -358,6 +369,8 @@ func init() {
 		n, _ := strconv.Atoi(cacheSize)
 		besticon.SetCacheMaxSize(int64(n))
 	}
+
+	hostOnlyDomains = strings.Split(os.Getenv("HOST_ONLY_DOMAINS"), ",")
 
 	if besticon.CacheEnabled() {
 		expvar.Publish("cacheBytes", expvar.Func(func() interface{} { return besticon.GetCacheStats().Bytes }))

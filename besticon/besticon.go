@@ -54,9 +54,10 @@ type Icon struct {
 }
 
 type IconFinder struct {
-	FormatsAllowed []string
-	KeepImageBytes bool
-	icons          []Icon
+	FormatsAllowed  []string
+	HostOnlyDomains []string
+	KeepImageBytes  bool
+	icons           []Icon
 }
 
 func (f *IconFinder) FetchIcons(url string) ([]Icon, error) {
@@ -64,6 +65,8 @@ func (f *IconFinder) FetchIcons(url string) ([]Icon, error) {
 	if !strings.HasPrefix(url, "http:") && !strings.HasPrefix(url, "https:") {
 		url = "http://" + url
 	}
+
+	url = f.stripIfNecessary(url)
 
 	var err error
 
@@ -74,6 +77,26 @@ func (f *IconFinder) FetchIcons(url string) ([]Icon, error) {
 	}
 
 	return f.Icons(), err
+}
+
+// stripIfNecessary removes everything from URL but the Scheme and Host
+// part if URL.Host is found in HostOnlyDomains.
+// This can be used for very popular domains like youtube.com where throttling is
+// an issue.
+func (f *IconFinder) stripIfNecessary(URL string) string {
+	u, e := url.Parse(URL)
+	if e != nil {
+		return URL
+	}
+
+	for _, h := range f.HostOnlyDomains {
+		if u.Host == h {
+			domainOnlyURL := url.URL{Scheme: u.Scheme, Host: u.Host}
+			return domainOnlyURL.String()
+		}
+	}
+
+	return URL
 }
 
 func (f *IconFinder) IconWithMinSize(minSize int) *Icon {
