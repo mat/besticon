@@ -88,6 +88,35 @@ func TestGetIconWith404Page(t *testing.T) {
 	assertStringEquals(t, "/lettericons/H-32.png", w.Header().Get("Location"))
 }
 
+func TestGetColorizedLetterIcon(t *testing.T) {
+	req, err := http.NewRequest("GET", "/icons?size=32&url=httpbin.org/status/404&colorize_letters", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	iconHandler(w, req)
+
+	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
+	assertStringStartsWith(t, w.Header().Get("Location"), "/lettericons/H")
+	assertStringEndsWith(t, w.Header().Get("Location"), "#colorized")
+}
+
+func TestGetUncolorizedLetterIcon(t *testing.T) {
+	// Apple has a .png apple touch icon, so even if we request an icon bigger than apple.com provides, the color from the png should be used
+	req, err := http.NewRequest("GET", "/icons?size=160&url=apple.com&colorize_letters", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	iconHandler(w, req)
+
+	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
+	assertStringStartsWith(t, w.Header().Get("Location"), "/lettericons/A-160")
+	assertStringEndsWith(t, w.Header().Get("Location"), ".png")
+}
+
 func TestGetAllIcons(t *testing.T) {
 	req, err := http.NewRequest("GET", "/allicons.json?url=apple.com", nil)
 	if err != nil {
@@ -170,6 +199,18 @@ func TestGet404(t *testing.T) {
 func assertStringContains(t *testing.T, haystack string, needle string) {
 	if !strings.Contains(haystack, needle) {
 		fail(t, fmt.Sprintf("Expected '%s' to be contained in '%s'", needle, haystack))
+	}
+}
+
+func assertStringStartsWith(t *testing.T, haystack string, needle string) {
+	if !strings.HasPrefix(haystack, needle) {
+		fail(t, fmt.Sprintf("Expected '%s' to be a prefix of '%s'", needle, haystack))
+	}
+}
+
+func assertStringEndsWith(t *testing.T, haystack string, needle string) {
+	if !strings.HasSuffix(haystack, needle) {
+		fail(t, fmt.Sprintf("Expected '%s' to be a suffix of '%s'", needle, haystack))
 	}
 }
 

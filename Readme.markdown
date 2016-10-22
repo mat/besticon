@@ -28,6 +28,7 @@ url       | http://yelp.com |                                   | required
 size      | 120             | Desired **minimum** icon size | required
 formats   | png,ico         | Comma-separated list of accepted image formats: png, ico, gif | `png,ico,gif`
 fallback\_icon\_url   | *HTTP image URL*         | If provided, a redirect to this image will be returned in case no suitable icon could be found. This overrides the default fallback image behaviour.  |
+colorize\_letters | *flag* | If provided, letter icons will be colored arbitrarily, rather than be grey, when no color can be found for any icon.
 
 
 #### Examples
@@ -38,6 +39,7 @@ fallback\_icon\_url   | *HTTP image URL*         | If provided, a redirect to th
 |<https://icons.better-idea.org/icon?url=yelp.com&size=64>|![Icon for yelp.com](https://icons.better-idea.org/icon?url=yelp.com&size=64)|
 |<https://icons.better-idea.org/icon?url=yelp.com>|size missing|
 |<https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=64>|![Icon for non-existent page](https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=64)|
+|<https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=64&colorize_letters>|![Icon for non-existent page](https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=64&colorize_letters)|
 |<https://icons.better-idea.org/icon?url=фминобрнауки.рф&size=32>|![Icon with cyrillic letter ф](https://icons.better-idea.org/icon?url=фминобрнауки.рф&size=32)|
 
 
