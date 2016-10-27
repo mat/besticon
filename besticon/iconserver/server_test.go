@@ -88,6 +88,32 @@ func TestGetIconWith404Page(t *testing.T) {
 	assertStringEquals(t, "/lettericons/H-32.png", w.Header().Get("Location"))
 }
 
+func TestGet404IconWithFallbackColor(t *testing.T) {
+	req, err := http.NewRequest("GET", "/icons?size=32&url=httpbin.org/status/404&fallback_icon_color=123456", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	iconHandler(w, req)
+
+	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "/lettericons/H-32-123456.png", w.Header().Get("Location"))
+}
+
+func TestGet404IconWithInvalidFallbackColor(t *testing.T) {
+	req, err := http.NewRequest("GET", "/icons?size=32&url=httpbin.org/status/404&fallback_icon_color=zz", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	iconHandler(w, req)
+
+	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "/lettericons/H-32.png", w.Header().Get("Location"))
+}
+
 func TestGetAllIcons(t *testing.T) {
 	req, err := http.NewRequest("GET", "/allicons.json?url=apple.com", nil)
 	if err != nil {

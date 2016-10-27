@@ -98,6 +98,16 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 
 	iconColor := finder.MainColorForIcons()
 	letter := lettericon.MainLetterFromURL(url)
+
+	fallbackColorHex := r.FormValue("fallback_icon_color")
+	if iconColor == nil && fallbackColorHex != "" {
+		iconColor, err = lettericon.ColorFromHex(fallbackColorHex)
+		color, err := lettericon.ColorFromHex(fallbackColorHex)
+		if err == nil {
+			iconColor = color
+		}
+	}
+
 	redirectPath := lettericon.IconPath(letter, size, iconColor)
 	redirectWithCacheControl(w, r, redirectPath)
 }
