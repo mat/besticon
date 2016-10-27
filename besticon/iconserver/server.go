@@ -2,14 +2,11 @@ package main
 
 import (
 	"bytes"
-	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"expvar"
 	"fmt"
-	"hash/fnv"
 	"html/template"
-	"image/color"
 	"net/http"
 	"net/url"
 	"os"
@@ -102,30 +99,18 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 	iconColor := finder.MainColorForIcons()
 	letter := lettericon.MainLetterFromURL(url)
 
-	var redirectPath string
-
-	if iconColor == nil && r.URL.Query()["colorize_letters"] != nil {
-		redirectPath = lettericon.IconPath(letter, size, getColorBasedOnURLHash(url)) + "#colorized"
-	} else {
-		redirectPath = lettericon.IconPath(letter, size, iconColor)
+	fallbackColorHex := r.FormValue("fallback_icon_color")
+	if iconColor == nil && fallbackColorHex != "" {
+		iconColor, err = lettericon.ColorFromHex(fallbackColorHex)
+		color, err := lettericon.ColorFromHex(fallbackColorHex)
+		if err == nil {
+			iconColor = color
+		}
 	}
+
+	redirectPath := lettericon.IconPath(letter, size, iconColor)
 
 	redirectWithCacheControl(w, r, redirectPath)
-}
-
-func getColorBasedOnURLHash(url string) *color.RGBA {
-	hash := fnv.New32a()
-	hash.Write([]byte(url))
-	hashHex := hex.EncodeToString(hash.Sum(nil))
-	if len(hashHex) < 6 {
-		hashHex = "000000" + hashHex
-	}
-	endOfHashHex := hashHex[len(hashHex)-6 : len(hashHex)]
-	colorFromHex, err := lettericon.ColorFromHex(endOfHashHex)
-	if err != nil {
-		return nil
-	}
-	return colorFromHex
 }
 
 func popularHandler(w http.ResponseWriter, r *http.Request) {

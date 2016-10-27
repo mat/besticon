@@ -88,8 +88,8 @@ func TestGetIconWith404Page(t *testing.T) {
 	assertStringEquals(t, "/lettericons/H-32.png", w.Header().Get("Location"))
 }
 
-func TestGetColorizedLetterIcon(t *testing.T) {
-	req, err := http.NewRequest("GET", "/icons?size=32&url=httpbin.org/status/404&colorize_letters", nil)
+func TestGet404IconWithFallbackColor(t *testing.T) {
+	req, err := http.NewRequest("GET", "/icons?size=32&url=httpbin.org/status/404&fallback_icon_color=123456", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -98,13 +98,11 @@ func TestGetColorizedLetterIcon(t *testing.T) {
 	iconHandler(w, req)
 
 	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
-	assertStringStartsWith(t, w.Header().Get("Location"), "/lettericons/H")
-	assertStringEndsWith(t, w.Header().Get("Location"), "#colorized")
+	assertStringEquals(t, "/lettericons/H-32-123456.png", w.Header().Get("Location"))
 }
 
-func TestGetUncolorizedLetterIcon(t *testing.T) {
-	// Apple has a .png apple touch icon, so even if we request an icon bigger than apple.com provides, the color from the png should be used
-	req, err := http.NewRequest("GET", "/icons?size=160&url=apple.com&colorize_letters", nil)
+func TestGet404IconWithInvalidFallbackColor(t *testing.T) {
+	req, err := http.NewRequest("GET", "/icons?size=32&url=httpbin.org/status/404?fallback_icon_color=zz", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -113,8 +111,7 @@ func TestGetUncolorizedLetterIcon(t *testing.T) {
 	iconHandler(w, req)
 
 	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
-	assertStringStartsWith(t, w.Header().Get("Location"), "/lettericons/A-160")
-	assertStringEndsWith(t, w.Header().Get("Location"), ".png")
+	assertStringEquals(t, "/lettericons/H-32.png", w.Header().Get("Location"))
 }
 
 func TestGetAllIcons(t *testing.T) {
@@ -199,18 +196,6 @@ func TestGet404(t *testing.T) {
 func assertStringContains(t *testing.T, haystack string, needle string) {
 	if !strings.Contains(haystack, needle) {
 		fail(t, fmt.Sprintf("Expected '%s' to be contained in '%s'", needle, haystack))
-	}
-}
-
-func assertStringStartsWith(t *testing.T, haystack string, needle string) {
-	if !strings.HasPrefix(haystack, needle) {
-		fail(t, fmt.Sprintf("Expected '%s' to be a prefix of '%s'", needle, haystack))
-	}
-}
-
-func assertStringEndsWith(t *testing.T, haystack string, needle string) {
-	if !strings.HasSuffix(haystack, needle) {
-		fail(t, fmt.Sprintf("Expected '%s' to be a suffix of '%s'", needle, haystack))
 	}
 }
 
