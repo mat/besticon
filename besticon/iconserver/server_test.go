@@ -102,7 +102,7 @@ func TestGet404IconWithFallbackColor(t *testing.T) {
 }
 
 func TestGet404IconWithInvalidFallbackColor(t *testing.T) {
-	req, err := http.NewRequest("GET", "/icons?size=32&url=httpbin.org/status/404?fallback_icon_color=zz", nil)
+	req, err := http.NewRequest("GET", "/icons?size=32&url=httpbin.org/status/404&fallback_icon_color=zz", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
