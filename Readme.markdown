@@ -120,6 +120,7 @@ Package | Description | License
 ## Contributors
 
   * Erkie - https://github.com/erkie
+  * mmkal - https://github.com/mmkal
 
 ## License
 

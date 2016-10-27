@@ -109,7 +109,6 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	redirectPath := lettericon.IconPath(letter, size, iconColor)
-
 	redirectWithCacheControl(w, r, redirectPath)
 }
 
