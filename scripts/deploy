@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e # Stop on first error
+set -x # Print commands
+
+make clean
+make build_linux_amd64
+bzip2 --best bin/linux_amd64/iconserver
+scp -C bin/linux_amd64/iconserver.bz2 icons.better-idea.org:/tmp
+
+ssh icons.better-idea.org 'cd /tmp && bunzip2 iconserver.bz2 && mv iconserver /usr/sbin/ ; systemctl stop iconserver.service ; systemctl start iconserver.service ; systemctl status iconserver.service'
+
