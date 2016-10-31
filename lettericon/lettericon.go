@@ -193,7 +193,7 @@ func IconPath(letter string, size string, colr *color.RGBA) string {
 }
 
 const defaultIconSize = 144
-const maxIconSize = 1024
+const maxIconSize = 256
 
 // path is like: lettericons/M-144-EFC25D.png
 func ParseIconPath(fullpath string) (string, *color.RGBA, int) {
