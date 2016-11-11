@@ -65,13 +65,8 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	size := r.FormValue("size")
-	if size == "" {
-		writeAPIError(w, 400, errors.New("need size parameter"))
-		return
-	}
-	minSize, err := strconv.Atoi(size)
-	if err != nil || minSize < besticon.MinIconSize || minSize > besticon.MaxIconSize {
+	sizeRange, err := besticon.ParseSizeRange(r.FormValue("size"))
+	if err != nil {
 		writeAPIError(w, 400, errors.New("bad size parameter"))
 		return
 	}
@@ -84,7 +79,7 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 
 	finder.FetchIcons(url)
 
-	icon := finder.IconWithMinSize(minSize)
+	icon := finder.IconInSizeRange(*sizeRange)
 	if icon != nil {
 		redirectWithCacheControl(w, r, icon.URL)
 		return
@@ -108,7 +103,7 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	redirectPath := lettericon.IconPath(letter, size, iconColor)
+	redirectPath := lettericon.IconPath(letter, fmt.Sprintf("%d", sizeRange.Perfect), iconColor)
 	redirectWithCacheControl(w, r, redirectPath)
 }
 

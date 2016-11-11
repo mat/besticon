@@ -15,7 +15,7 @@ import (
 )
 
 func TestKicktipp(t *testing.T) {
-	actualImages, err, _ := fetchIconsWithVCR("kicktipp.vcr", "http://kicktipp.de")
+	actualImages, err, finder := fetchIconsWithVCR("kicktipp.vcr", "http://kicktipp.de")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "http://info.kicktipp.de/assets/img/jar_cb333387130/assets/img/logos/apple-touch-icon-57x57-precomposed.png", Width: 57, Height: 57, Format: "png", Bytes: 1535, Sha1sum: "79aae9e0df7d52ed50ac47c1dd4bd16e2ddf8b4a"},
@@ -24,12 +24,15 @@ func TestKicktipp(t *testing.T) {
 		{URL: "http://www.kicktipp.de/favicon.ico", Width: 32, Height: 32, Format: "gif", Bytes: 35275, Sha1sum: "09297d0ffe17149c3d4d4a3a3a8c7e8c51932d58"},
 		{URL: "http://info.kicktipp.de/assets/img/jar_cb1652512069/assets/img/logos/favicon.png", Width: 16, Height: 16, Format: "png", Bytes: 1820, Sha1sum: "04b49fac810828f6723cd763600af23f0edbde03"},
 	}
-
 	assertEquals(t, expectedImages, actualImages)
+
+	actualImage := finder.IconInSizeRange(SizeRange{20, 80, 500})
+	expectedImage := &Icon{URL: "http://info.kicktipp.de/assets/img/jar_cb333387130/assets/img/logos/apple-touch-icon-57x57-precomposed.png", Width: 57, Height: 57, Format: "png", Bytes: 1535, Sha1sum: "79aae9e0df7d52ed50ac47c1dd4bd16e2ddf8b4a"}
+	assertEquals(t, expectedImage, actualImage)
 }
 
 func TestDaringfireball(t *testing.T) {
-	actualImages, err, _ := fetchIconsWithVCR("daringfireball.net.vcr", "http://daringfireball.net")
+	actualImages, err, finder := fetchIconsWithVCR("daringfireball.net.vcr", "http://daringfireball.net")
 	assertEquals(t, nil, err)
 
 	expectedImages := []Icon{
@@ -39,6 +42,10 @@ func TestDaringfireball(t *testing.T) {
 	}
 
 	assertEquals(t, expectedImages, actualImages)
+
+	actualImage := finder.IconInSizeRange(SizeRange{20, 80, 500})
+	expectedImage := &Icon{URL: "http://daringfireball.net/graphics/apple-touch-icon.png", Width: 314, Height: 314, Format: "png", Bytes: 8642, Error: error(nil), Sha1sum: "f47cf7cf13ec1a74049d99d9f1565354b5b20317"}
+	assertEquals(t, expectedImage, actualImage)
 }
 
 func TestAwsAmazonChangingBaseURL(t *testing.T) {
@@ -93,13 +100,15 @@ func TestGithubWithIconHrefLinks(t *testing.T) {
 }
 
 func TestEat24WithBaseTag(t *testing.T) {
-	actualImages, err, _ := fetchIconsWithVCR("eat24.vcr", "http://eat24.com")
+	actualImages, err, finder := fetchIconsWithVCR("eat24.vcr", "http://eat24.com")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "http://eat24hours.com/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 1406, Sha1sum: "f8914a1135e718b11cc93b7a362655ca358c16fb"},
 	}
-
 	assertEquals(t, expectedImages, actualImages)
+
+	actualImage := finder.IconInSizeRange(SizeRange{20, 50, 500})
+	assertEquals(t, (*Icon)(nil), actualImage)
 }
 
 func TestAlibabaWithBaseTagWithoutScheme(t *testing.T) {
@@ -135,7 +144,7 @@ func TestMortenmøllerWithIDNAHost(t *testing.T) {
 func TestYoutubeWithDomainRewrite(t *testing.T) {
 	// This test can only work because with HostOnlyDomains accordingly
 	_, err, finder := fetchIconsWithVCR("youtube.vcr", "http://youtube.com/does-not-exist")
-	ico := finder.IconWithMinSize(96)
+	ico := finder.IconInSizeRange(SizeRange{0, 80, 200})
 	assertEquals(t, &Icon{URL: "https://s.ytimg.com/yts/img/favicon_96-vfldSA3ca.png", Width: 96, Height: 96, Format: "png", Bytes: 1510, Sha1sum: "7149bef987538d34e2ab6e069d08211d0a6e407d"}, ico)
 	assertEquals(t, nil, err)
 }
@@ -195,6 +204,53 @@ func TestImageSizeDetection(t *testing.T) {
 	assertEquals(t, 1, getImageWidthForFile("testdata/pixel.png"))
 	assertEquals(t, 1, getImageWidthForFile("testdata/pixel.gif"))
 	assertEquals(t, 48, getImageWidthForFile("testdata/favicon.ico"))
+}
+
+func TestParseSizeRange(t *testing.T) {
+	// This single num behaviour ensures backwards compatability for
+	// people who pant (at least) pixel perfect icons.
+	sizeRange, err := ParseSizeRange("120")
+	assertEquals(t, &SizeRange{120, 120, MaxIconSize}, sizeRange)
+
+	sizeRange, err = ParseSizeRange("0..120..256")
+	assertEquals(t, &SizeRange{0, 120, 256}, sizeRange)
+
+	sizeRange, err = ParseSizeRange("120..120..120")
+	assertEquals(t, &SizeRange{120, 120, 120}, sizeRange)
+
+	_, err = ParseSizeRange("")
+	assertEquals(t, errBadSize, err)
+
+	_, err = ParseSizeRange(" ")
+	assertEquals(t, errBadSize, err)
+
+	// Max < Perfect not allowed
+	_, err = ParseSizeRange("16..120..80")
+	assertEquals(t, errBadSize, err)
+
+	// Perfect < Min  not allowed
+	_, err = ParseSizeRange("120..16..80")
+	assertEquals(t, errBadSize, err)
+
+	// Min too small
+	_, err = ParseSizeRange("-1..2..3")
+	assertEquals(t, errBadSize, err)
+
+	// Max too big
+	_, err = ParseSizeRange("1..2..501")
+	assertEquals(t, errBadSize, err)
+}
+
+func TestParseSize(t *testing.T) {
+	size, ok := parseSize("120")
+	assertEquals(t, ok, true)
+	assertEquals(t, 120, size)
+
+	_, ok = parseSize("")
+	assertEquals(t, ok, false)
+
+	_, ok = parseSize("-10")
+	assertEquals(t, ok, false)
 }
 
 const testdataDir = "testdata/"

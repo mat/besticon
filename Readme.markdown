@@ -25,7 +25,7 @@ This endpoint always returns an icon image for the given site — it redirects t
 Parameter | Example         | Description    | Default
 --------  | --------        | --------       | ----
 url       | http://yelp.com |                                   | required
-size      | 120             | Desired **minimum** icon size | required
+size      | 32..50..100             | Desired size range (min..perfect..max) If no image of size perfect..max nor perfect..min can be found a fallback icon will be generated. | required
 formats   | png,ico         | Comma-separated list of accepted image formats: png, ico, gif | `png,ico,gif`
 fallback\_icon\_url   | *HTTP image URL*         | If provided, a redirect to this image will be returned in case no suitable icon could be found. This overrides the default fallback image behaviour.  |
 fallback\_icon\_color | ff0000 | If provided, letter icons will be colored with the hex value provided, rather than be grey, when no color can be found for any icon.

@@ -52,10 +52,10 @@
           {{ with .Error }} <div id="error"> {{ .}} </div> {{ end }}
 
           <h2 class="content-subhead">Favicon for {{ .Host }}</h2>
-          <img src="/icon?url={{ .URL }}&amp;size=120" width=60 alt=''>
+          <img src="/icon?url={{ .URL }}&amp;size=80..120..200" width=60 alt=''>
           <p>
           Icon link:
-          <a href="/icon?size=120&amp;url={{ .URL }}">https://<wbr>icons.better-idea.org<wbr>/icon?<wbr>url={{ .URL }}<wbr>&amp;size=120</a>
+          <a href="/icon?size=80..120..200&amp;url={{ .URL }}">https://<wbr>icons.better-idea.org<wbr>/icon?<wbr>url={{ .URL }}<wbr>&amp;size=80..120..200</a>
           </p>
 
           {{ if ((len .Icons) ne 0) }}

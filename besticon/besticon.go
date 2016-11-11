@@ -38,7 +38,7 @@ import (
 
 var defaultFormats []string
 
-const MinIconSize = 10
+const MinIconSize = 0
 const MaxIconSize = 500
 
 // Icon holds icon information.
@@ -99,14 +99,25 @@ func (f *IconFinder) stripIfNecessary(URL string) string {
 	return URL
 }
 
-func (f *IconFinder) IconWithMinSize(minSize int) *Icon {
-	sortIcons(f.icons, false)
+func (f *IconFinder) IconInSizeRange(r SizeRange) *Icon {
+	icons := f.Icons()
 
-	for _, ico := range f.icons {
-		if ico.Width >= minSize && ico.Height >= minSize {
+	// Try to return smallest in range perfect..max
+	sortIcons(icons, false)
+	for _, ico := range icons {
+		if (ico.Width >= r.Perfect && ico.Height >= r.Perfect) && (ico.Width <= r.Max && ico.Height <= r.Max) {
 			return &ico
 		}
 	}
+
+	// Try to return biggest in range perfect..min
+	sortIcons(icons, true)
+	for _, ico := range icons {
+		if ico.Width >= r.Min && ico.Height >= r.Min {
+			return &ico
+		}
+	}
+
 	return nil
 }
 
