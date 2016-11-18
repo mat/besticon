@@ -9,7 +9,6 @@ func init() {
 		"bbc.co.uk",
 		"bing.com",
 		"booking.com",
-		"craigslist.org",
 		"dropbox.com",
 		"espn.go.com",
 		"etsy.com",
@@ -34,6 +33,5 @@ func init() {
 		"wordpress.com",
 		"yahoo.com",
 		"yelp.com",
-		"youtube.com",
 	}
 }
