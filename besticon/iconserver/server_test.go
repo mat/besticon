@@ -125,6 +125,7 @@ func TestGetAllIcons(t *testing.T) {
 
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "application/json", w.Header().Get("Content-Type"))
+	assertStringEquals(t, "max-age=3600", w.Header().Get("Cache-Control"))
 
 	assertStringContains(t, w.Body.String(), `"url":"http://www.apple.com/favicon.ico"`)
 	assertStringContains(t, w.Body.String(), `"width":32`)

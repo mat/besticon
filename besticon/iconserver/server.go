@@ -154,6 +154,7 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	addCacheControl(w, oneHour)
 	writeAPIIcons(w, url, icons)
 }
 
@@ -279,8 +280,9 @@ func startServer(port string) {
 
 const (
 	cacheControl = "Cache-Control"
-	oneYear      = 365 * 24 * 3600
-	oneDay       = 24 * 3600
+	oneYear      = 365 * oneDay
+	oneDay       = 24 * oneHour
+	oneHour      = 3600
 )
 
 func redirectWithCacheControl(w http.ResponseWriter, r *http.Request, redirectURL string) {
