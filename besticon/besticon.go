@@ -77,7 +77,7 @@ func (f *IconFinder) FetchIcons(url string) ([]Icon, error) {
 }
 
 func (f *IconFinder) IconWithMinSize(minSize int) *Icon {
-	SortIcons(f.icons, false)
+	sortIcons(f.icons, false)
 
 	for _, ico := range f.icons {
 		if ico.Width >= minSize && ico.Height >= minSize {
@@ -145,7 +145,7 @@ func fetchIcons(siteURL string) ([]Icon, error) {
 
 	icons := fetchAllIcons(links)
 	icons = rejectBrokenIcons(icons)
-	SortIcons(icons, true)
+	sortIcons(icons, true)
 
 	return icons, nil
 }
