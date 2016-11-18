@@ -60,6 +60,11 @@ type IconFinder struct {
 }
 
 func (f *IconFinder) FetchIcons(url string) ([]Icon, error) {
+	url = strings.TrimSpace(url)
+	if !strings.HasPrefix(url, "http") {
+		url = "http://" + url
+	}
+
 	var err error
 
 	if CacheEnabled() {
@@ -128,11 +133,6 @@ func includesString(arr []string, str string) bool {
 }
 
 func fetchIcons(siteURL string) ([]Icon, error) {
-	siteURL = strings.TrimSpace(siteURL)
-	if !strings.HasPrefix(siteURL, "http") {
-		siteURL = "http://" + siteURL
-	}
-
 	html, url, e := fetchHTML(siteURL)
 	if e != nil {
 		return nil, e
