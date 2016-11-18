@@ -61,7 +61,7 @@ type IconFinder struct {
 
 func (f *IconFinder) FetchIcons(url string) ([]Icon, error) {
 	url = strings.TrimSpace(url)
-	if !strings.HasPrefix(url, "http") {
+	if !strings.HasPrefix(url, "http:") && !strings.HasPrefix(url, "https:") {
 		url = "http://" + url
 	}
 
