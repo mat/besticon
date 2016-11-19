@@ -35,12 +35,12 @@ fallback\_icon\_color | ff0000 | If provided, letter icons will be colored with 
 
 |Input URL | Icon |
 |----------|------|
-|<https://icons.better-idea.org/icon?url=yelp.com&size=32>|![Icon for yelp.com](https://icons.better-idea.org/icon?url=yelp.com&size=32)|
-|<https://icons.better-idea.org/icon?url=yelp.com&size=64>|![Icon for yelp.com](https://icons.better-idea.org/icon?url=yelp.com&size=64)|
+|<https://icons.better-idea.org/icon?url=yelp.com&size=32..50..120>|![Icon for yelp.com](https://icons.better-idea.org/icon?url=yelp.com&size=32..50..120)|
+|<https://icons.better-idea.org/icon?url=yelp.com&size=64..64..120>|![Icon for yelp.com](https://icons.better-idea.org/icon?url=yelp.com&size=64..64..120)|
 |<https://icons.better-idea.org/icon?url=yelp.com>|size missing|
-|<https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=64>|![Icon for non-existent page](https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=64)|
-|<https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=64&fallback_icon_color=ff0000>|![Icon for non-existent page](https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=64&fallback_icon_color=ff0000)|
-|<https://icons.better-idea.org/icon?url=фминобрнауки.рф&size=32>|![Icon with cyrillic letter ф](https://icons.better-idea.org/icon?url=фминобрнауки.рф&size=32)|
+|<https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=32..64..120>|![Icon for non-existent page](https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=32..64..120)|
+|<https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=32..64..120&fallback_icon_color=ff0000>|![Icon for non-existent page](https://icons.better-idea.org/icon?url=httpbin.org/status/404&size=32..64..120&fallback_icon_color=ff0000)|
+|<https://icons.better-idea.org/icon?url=фминобрнауки.рф&size=32..64..120>|![Icon with cyrillic letter ф](https://icons.better-idea.org/icon?url=фминобрнауки.рф&size=32..64..120)|
 
 
 ### GET /allicons.json
