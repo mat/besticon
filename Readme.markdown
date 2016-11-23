@@ -8,7 +8,7 @@ Source of <https://icons.better-idea.org>, a favicon service:
   * Single binary download for easy self-hosting
 
 [![Build Status](https://travis-ci.org/mat/besticon.svg?branch=master)](https://travis-ci.org/mat/besticon)
-[![Donate at PayPal](https://img.shields.io/badge/paypal-donate-orange.svg?style=flat)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WYQWFU47N9L6S "Donate once-off to this project using Paypal")
+[![Donate at PayPal](https://img.shields.io/badge/paypal-donate-orange.svg?style=flat)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6F9YBSSCM6KCW "Donate once-off to this project using Paypal")
 
 
 ## What's this?
@@ -158,4 +158,4 @@ SOFTWARE.
 
 If you find this useful and want to donate... you would make my day :-)
 
-[![Donate at PayPal](https://img.shields.io/badge/paypal-donate-orange.svg?style=flat)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WYQWFU47N9L6S "Donate once-off to this project using Paypal")
+[![Donate at PayPal](https://img.shields.io/badge/paypal-donate-orange.svg?style=flat)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6F9YBSSCM6KCW "Donate once-off to this project using Paypal")
