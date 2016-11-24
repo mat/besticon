@@ -5,7 +5,7 @@ Source of <https://icons.better-idea.org>, a favicon service:
   * Supports `favicon.ico` and `apple-touch-icon.png`
   * Simple URL API
   * Fallback icon generation
-  * Single binary download for easy self-hosting
+  * Single binary download for [easy self-hosting](#self-hosting)
 
 [![Build Status](https://travis-ci.org/mat/besticon.svg?branch=master)](https://travis-ci.org/mat/besticon)
 [![Donate at PayPal](https://img.shields.io/badge/paypal-donate-orange.svg?style=flat)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6F9YBSSCM6KCW "Donate once-off to this project using Paypal")
@@ -65,6 +65,10 @@ I tried hard to make this useful but please note there are some known limitation
 - Poor i18n support for letter icons ([#13](https://github.com/mat/besticon/issues/13))
 
 Feel free to file other bugs - and offer your help - at <https://github.com/mat/besticon/issues>.
+
+## Self Hosting
+
+It is recommended to use your own copy of this service if you plan to rely on it in your project. An easy way to host your own copy is to use Heroku, just go to [https://heroku.com/deploy](https://heroku.com/deploy?template=https://github.com/mat/besticon) to get started.
 
 ## Server Executable
 
