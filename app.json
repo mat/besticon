@@ -1,0 +1,6 @@
+{
+	"name": "favicon-service (besticon)",
+	"description": "A favicon service written in Go",
+	"repository": "https://github.com/mat/besticon",
+	"logo": "https://icons.better-idea.org/icon.svg"
+}
