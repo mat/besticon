@@ -1,6 +1,6 @@
 {
 	"ImportPath": "github.com/mat/besticon",
-	"GoVersion": "go1.7.3",
+	"GoVersion": "go1.7.4",
 	"GodepVersion": "v74",
 	"Packages": [
 		"github.com/mat/besticon/..."
