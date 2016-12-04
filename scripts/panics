@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+set -x
+
+ssh -C icons.better-idea.org 'journalctl -u iconserver.service' > /tmp/icons.better-idea.stdout.txt
+cat /tmp/icons.better-idea.stdout.txt | grep -B 4 -A 10 "http: panic serving"
