@@ -61,7 +61,6 @@ formats   | png,ico         | Comma-separated list of accepted image formats: pn
 
 I tried hard to make this useful but please note there are some known limitations:
 
-- Lots of grey images ([#12](https://github.com/mat/besticon/issues/12))
 - Poor i18n support for letter icons ([#13](https://github.com/mat/besticon/issues/13))
 
 Feel free to file other bugs - and offer your help - at <https://github.com/mat/besticon/issues>.
