@@ -22,13 +22,11 @@ import (
 	"image/color"
 
 	// Load supported image formats.
+	_ "github.com/mat/besticon/ico"
 	_ "image/gif"
 	_ "image/png"
 
 	"github.com/mat/besticon/colorfinder"
-
-	// ...even more image formats.
-	_ "github.com/mat/besticon/ico"
 
 	"github.com/PuerkitoBio/goquery"
 	"golang.org/x/net/html/charset"
@@ -314,12 +312,23 @@ func MainColorForIcons(icons []Icon) *color.RGBA {
 	}
 
 	var icon *Icon
+	// Prefer .png and .gif
 	for _, ico := range icons {
 		if ico.Format == "png" || ico.Format == "gif" {
 			icon = &ico
 			break
 		}
 	}
+	// Try .ico else
+	if icon == nil {
+		for _, ico := range icons {
+			if ico.Format == "ico" {
+				icon = &ico
+				break
+			}
+		}
+	}
+
 	if icon == nil {
 		return nil
 	}

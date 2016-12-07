@@ -1,4 +1,4 @@
-// Package ico register image.DecodeConfig support
+// Package ico registers image.Decode and DecodeConfig support
 // for the icon (container) format.
 package ico
 
@@ -6,15 +6,13 @@ import (
 	"bytes"
 	"encoding/binary"
 	"errors"
-	"fmt"
 	"image"
 	"io"
 	"io/ioutil"
-	"os"
 
-	//asdf
-	_ "image/gif"
-	_ "image/png"
+	"image/png"
+
+	"golang.org/x/image/bmp"
 )
 
 type icondir struct {
@@ -71,9 +69,9 @@ func ParseIco(r io.Reader) (*icondir, error) {
 
 	for i := uint16(0); i < dir.Count; i++ {
 		entry := icondirEntry{}
-		err := parseIcondirEntry(r, &entry)
-		if err != nil {
-			return nil, err
+		e := parseIcondirEntry(r, &entry)
+		if e != nil {
+			return nil, e
 		}
 		dir.Entries = append(dir.Entries, entry)
 	}
@@ -127,89 +125,137 @@ func DecodeConfig(r io.Reader) (image.Config, error) {
 
 	best := dir.FindBestIcon()
 	if best == nil {
-		return image.Config{}, errors.New("ico file does not contain any icons")
+		return image.Config{}, errInvalid
 	}
 	return image.Config{Width: best.width(), Height: best.height()}, nil
 }
 
-type header struct {
-	sigBM     [2]byte
-	fileSize  uint32
-	resverved [2]uint16
-	pixOffset uint32
-	// dibHeaderSize   uint32
-	// width           uint32
-	// height          uint32
-	// colorPlane      uint16
-	// bpp             uint16
-	// compression     uint32
-	// imageSize       uint32
-	// xPixelsPerMeter uint32
-	// yPixelsPerMeter uint32
-	// colorUse        uint32
-	// colorImportant  uint32
+// The bitmap header structure we read from an icondirEntry
+type bitmapHeaderRead struct {
+	Size            uint32
+	Width           uint32
+	Height          uint32
+	Planes          uint16
+	BitCount        uint16
+	Compression     uint32
+	ImageSize       uint32
+	XPixelsPerMeter uint32
+	YPixelsPerMeter uint32
+	ColorsUsed      uint32
+	ColorsImportant uint32
 }
 
-func decodeImage(r io.Reader) (image.Image, error) {
-	dir, err := ParseIco(r)
+// The bitmap header structure we need to generate for bmp.Decode()
+type bitmapHeaderWrite struct {
+	sigBM           [2]byte
+	fileSize        uint32
+	resverved       [2]uint16
+	pixOffset       uint32
+	Size            uint32
+	Width           uint32
+	Height          uint32
+	Planes          uint16
+	BitCount        uint16
+	Compression     uint32
+	ImageSize       uint32
+	XPixelsPerMeter uint32
+	YPixelsPerMeter uint32
+	ColorsUsed      uint32
+	ColorsImportant uint32
+}
+
+var errInvalid = errors.New("ico: invalid ICO image")
+
+// Decode returns the largest image contained in the icon
+// which might be a bmp or png
+func Decode(r io.Reader) (image.Image, error) {
+	icoBytes, err := ioutil.ReadAll(r)
 	if err != nil {
 		return nil, err
+	}
+
+	r = bytes.NewReader(icoBytes)
+	dir, err := ParseIco(r)
+	if err != nil {
+		return nil, errInvalid
 	}
 
 	best := dir.FindBestIcon()
 	if best == nil {
-		return nil, errors.New("ico file does not contain any icons")
+		return nil, errInvalid
 	}
 
-	startOffset := best.Offset
-	endOffset := startOffset + best.Size
-	fullIcoBytes, err := ioutil.ReadAll(r)
-	singleIcoBytes := fullIcoBytes[startOffset:(endOffset)]
+	return parseImage(best, icoBytes)
+}
 
-	h := &header{
-		sigBM:     [2]byte{'B', 'M'},
-		fileSize:  14 + best.Size,
-		pixOffset: 14,
-		// dibHeaderSize: 40,
-		// width:         uint32(best.Width),
-		// height:        uint32(best.Height),
-		// colorPlane:    1,
+func parseImage(entry *icondirEntry, icoBytes []byte) (image.Image, error) {
+	r := bytes.NewReader(icoBytes)
+	r.Seek(int64(entry.Offset), 0)
+
+	// Try PNG first then BMP
+	img, err := png.Decode(r)
+	if err != nil {
+		return parseBMP(entry, icoBytes)
 	}
+	return img, nil
+}
 
-	buf := new(bytes.Buffer)
-	if err = binary.Write(buf, binary.LittleEndian, h); err != nil {
-		return nil, err
-	}
-	buf.Write(singleIcoBytes)
-
-	// step = (3*d.X + 3) &^ 3
-	// h.imageSize = uint32(d.Y * step)
-	// h.fileSize += h.imageSize
-
-	fmt.Println("len(bytes)", buf.Len())
-
-	f, err := os.Create("/tmp/pic.bmp")
+func parseBMP(entry *icondirEntry, icoBytes []byte) (image.Image, error) {
+	bmpBytes, err := makeFullBMPBytes(entry, icoBytes)
 	if err != nil {
 		return nil, err
 	}
-	f.Write(buf.Bytes())
-	f.Sync()
-	defer f.Close()
+	return bmp.Decode(bmpBytes)
+}
 
-	// err = ioutil.WriteFile("/tmp/pic.bmp", buf.Bytes(), 0644)
-	// if err != nil {
-	// 	return nil, err
-	// }
+func makeFullBMPBytes(entry *icondirEntry, icoBytes []byte) (*bytes.Buffer, error) {
+	r := bytes.NewReader(icoBytes)
+	r.Seek(int64(entry.Offset), 0)
 
-	img, format, err := image.Decode(bytes.NewReader(buf.Bytes()))
-	fmt.Println("err:", err)
-	fmt.Println("format:", format)
+	var err error
+	h := bitmapHeaderRead{}
 
-	return img, err
+	err = binary.Read(r, binary.LittleEndian, &h)
+	if err != nil {
+		return nil, err
+	}
+
+	if h.Size != 40 || h.Planes != 1 {
+		return nil, errInvalid
+	}
+
+	var pixOffset uint32
+	if h.ColorsUsed == 0 && h.BitCount <= 8 {
+		pixOffset = 14 + 40 + 4*(1<<h.BitCount)
+	} else {
+		pixOffset = 14 + 40 + 4*h.ColorsUsed
+	}
+
+	writeHeader := &bitmapHeaderWrite{
+		sigBM:           [2]byte{'B', 'M'},
+		fileSize:        14 + 40 + uint32(len(icoBytes)), // correct? important?
+		pixOffset:       pixOffset,
+		Size:            40,
+		Width:           uint32(h.Width),
+		Height:          uint32(h.Height / 2),
+		Planes:          h.Planes,
+		BitCount:        h.BitCount,
+		Compression:     h.Compression,
+		ColorsUsed:      h.ColorsUsed,
+		ColorsImportant: h.ColorsImportant,
+	}
+
+	buf := new(bytes.Buffer)
+	if err = binary.Write(buf, binary.LittleEndian, writeHeader); err != nil {
+		return nil, err
+	}
+	io.CopyN(buf, r, int64(entry.Size))
+
+	return buf, nil
 }
 
 const icoHeader = "\x00\x00\x01\x00"
 
 func init() {
-	image.RegisterFormat("ico", icoHeader, decodeImage, DecodeConfig)
+	image.RegisterFormat("ico", icoHeader, Decode, DecodeConfig)
 }

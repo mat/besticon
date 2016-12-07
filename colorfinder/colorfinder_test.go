@@ -52,6 +52,26 @@ func TestFindColors07(t *testing.T) {
 	assertFindsRightColor(t, "icon07.png.gz", "e61a30")
 }
 
+func TestFindColors08(t *testing.T) {
+	// .ico with png
+	assertFindsRightColor(t, "icon08.ico.gz", "14e06e")
+}
+
+func TestFindColors09(t *testing.T) {
+	// .ico with 32-bit bmp
+	assertFindsRightColor(t, "icon09.ico.gz", "1c5182")
+}
+
+func TestFindColors10(t *testing.T) {
+	// .ico with 8-bit bmp, ColorsUsed=0
+	assertFindsRightColor(t, "icon10.ico.gz", "fe6d4c")
+}
+
+func TestFindColors11(t *testing.T) {
+	// .ico with 8-bit bmp, ColorsUsed=256
+	assertFindsRightColor(t, "icon11.ico.gz", "a30000")
+}
+
 func BenchmarkFindMainColor152x152(b *testing.B) {
 	file, _ := os.Open(testdataDir + "icon02.png.gz")
 	gzReader, _ := gzip.NewReader(file)

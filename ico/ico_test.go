@@ -11,6 +11,10 @@ import (
 
 func TestParseICO(t *testing.T) {
 	assertEquals(t, 3, GetNumberOfIconsInFile(t, "favicon.ico"))
+	assertDecodesImage(t, "github.ico")
+	assertDecodesImage(t, "besticon.ico")
+	assertDecodesImage(t, "addthis.ico")
+	assertDecodesImage(t, "wowhead.ico")
 }
 
 func TestParseICODetails(t *testing.T) {
@@ -50,6 +54,7 @@ func TestDecodeConfig(t *testing.T) {
 
 	imageConfig, _, err := image.DecodeConfig(f)
 
+	assertEquals(t, nil, err)
 	assertEquals(t,
 		image.Config{ColorModel: nil, Width: 48, Height: 48},
 		imageConfig)
@@ -82,9 +87,12 @@ func TestParse256WidthHeightIco(t *testing.T) {
 
 	imageConfig, _, err := image.DecodeConfig(f)
 
+	assertEquals(t, nil, err)
 	assertEquals(t,
 		image.Config{ColorModel: nil, Width: 256, Height: 256},
 		imageConfig)
+
+	assertDecodesImage(t, "codeplex.ico")
 }
 
 func GetNumberOfIconsInFile(t *testing.T, filename string) int {
@@ -116,6 +124,17 @@ func assertEquals(t *testing.T, expected, actual interface{}) {
 		fail(t, fmt.Sprintf("Not equal: %#v (expected)\n"+
 			"        != %#v (actual)", expected, actual))
 	}
+}
+
+func assertDecodesImage(t *testing.T, file string) {
+	f, err := os.Open(file)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer f.Close()
+
+	_, err = Decode(f)
+	assertEquals(t, nil, err)
 }
 
 func fail(t *testing.T, failureMessage string) {
