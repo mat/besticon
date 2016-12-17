@@ -19,9 +19,9 @@ func TestParseICO(t *testing.T) {
 
 func TestParseICODetails(t *testing.T) {
 	entries := []icondirEntry{
-		icondirEntry{Width: 0x30, Height: 0x30, PaletteCount: 0x10, Reserved: 0x0, ColorPlanes: 0x1, BitsPerPixel: 0x4, Size: 0x668, Offset: 0x36},
-		icondirEntry{Width: 0x20, Height: 0x20, PaletteCount: 0x10, Reserved: 0x0, ColorPlanes: 0x1, BitsPerPixel: 0x4, Size: 0x2e8, Offset: 0x69e},
-		icondirEntry{Width: 0x10, Height: 0x10, PaletteCount: 0x10, Reserved: 0x0, ColorPlanes: 0x1, BitsPerPixel: 0x4, Size: 0x128, Offset: 0x986},
+		{Width: 0x30, Height: 0x30, PaletteCount: 0x10, Reserved: 0x0, ColorPlanes: 0x1, BitsPerPixel: 0x4, Size: 0x668, Offset: 0x36},
+		{Width: 0x20, Height: 0x20, PaletteCount: 0x10, Reserved: 0x0, ColorPlanes: 0x1, BitsPerPixel: 0x4, Size: 0x2e8, Offset: 0x69e},
+		{Width: 0x10, Height: 0x10, PaletteCount: 0x10, Reserved: 0x0, ColorPlanes: 0x1, BitsPerPixel: 0x4, Size: 0x128, Offset: 0x986},
 	}
 	assertEquals(t, icondir{Reserved: 0, Type: 1, Count: 3, Entries: entries}, mustParseIcoFile(t, "favicon.ico"))
 }
