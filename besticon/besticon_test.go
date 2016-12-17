@@ -207,7 +207,7 @@ func TestImageSizeDetection(t *testing.T) {
 }
 
 func TestParseSizeRange(t *testing.T) {
-	// This single num behaviour ensures backwards compatability for
+	// This single num behaviour ensures backwards compatibility for
 	// people who pant (at least) pixel perfect icons.
 	sizeRange, err := ParseSizeRange("120")
 	assertEquals(t, &SizeRange{120, 120, MaxIconSize}, sizeRange)
