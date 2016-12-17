@@ -96,7 +96,6 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 
 	fallbackColorHex := r.FormValue("fallback_icon_color")
 	if iconColor == nil && fallbackColorHex != "" {
-		iconColor, err = lettericon.ColorFromHex(fallbackColorHex)
 		color, err := lettericon.ColorFromHex(fallbackColorHex)
 		if err == nil {
 			iconColor = color
