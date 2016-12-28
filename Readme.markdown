@@ -137,7 +137,7 @@ Package | Description | License
 
 MIT License (MIT)
 
-Copyright (c) 2015-2016 Matthias Lüdtke, Hamburg - <https://github.com/mat>
+Copyright (c) 2015-2017 Matthias Lüdtke, Hamburg - <https://github.com/mat>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
