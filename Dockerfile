@@ -1,7 +1,7 @@
-FROM ubuntu:trusty
+FROM alpine:3.5
 MAINTAINER Matthias Luedtke (matthiasluedtke)
 
-RUN apt-get install -y -q ca-certificates
+RUN apk add --no-cache ca-certificates
 # Fixes 'Get https://github.com/: x509: failed to
 # load system roots and no roots provided'
 
