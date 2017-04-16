@@ -42,8 +42,8 @@ func TestGetIcons(t *testing.T) {
 
 	assertStringContains(t, w.Body.String(), "Icons on apple.com")
 
-	assertStringContains(t, w.Body.String(), "<img src='http://www.apple.com/favicon.ico'")
-	assertStringContains(t, w.Body.String(), "<a href='http://www.apple.com/favicon.ico'>")
+	assertStringContains(t, w.Body.String(), "<img src='https://www.apple.com/favicon.ico'")
+	assertStringContains(t, w.Body.String(), "<a href='https://www.apple.com/favicon.ico'>")
 	assertStringContains(t, w.Body.String(), "<td class='dimensions'>32x32</td>")
 }
 
@@ -58,7 +58,7 @@ func TestGetIcon(t *testing.T) {
 
 	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "max-age=86400", w.Header().Get("Cache-Control"))
-	assertStringEquals(t, "http://www.apple.com/apple-touch-icon.png", w.Header().Get("Location"))
+	assertStringEquals(t, "https://www.apple.com/apple-touch-icon.png", w.Header().Get("Location"))
 }
 
 func TestGetIconWithFallBackURL(t *testing.T) {
@@ -127,7 +127,7 @@ func TestGetAllIcons(t *testing.T) {
 	assertStringEquals(t, "application/json", w.Header().Get("Content-Type"))
 	assertStringEquals(t, "max-age=3600", w.Header().Get("Cache-Control"))
 
-	assertStringContains(t, w.Body.String(), `"url":"http://www.apple.com/favicon.ico"`)
+	assertStringContains(t, w.Body.String(), `"url":"https://www.apple.com/favicon.ico"`)
 	assertStringContains(t, w.Body.String(), `"width":32`)
 	assertStringContains(t, w.Body.String(), `"height":32`)
 
