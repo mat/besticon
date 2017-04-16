@@ -122,6 +122,18 @@ func TestAlibabaWithBaseTagWithoutScheme(t *testing.T) {
 	assertEquals(t, expectedImages, actualImages)
 }
 
+func TestDnevnikWithCapitalizedIconTag(t *testing.T) {
+	actualImages, err, _ := fetchIconsWithVCR("dnevnik.vcr", "http://www.dnevnik.bg")
+	assertEquals(t, nil, err)
+	expectedImages := []Icon{
+		{URL: "http://www.dnevnik.bg/images/layout/apple-touch-icon.png", Width: 180, Height: 180, Format: "png", Bytes: 1597, Sha1sum: "16af14e168879ac52f594c67b4298f76d768a5eb"},
+		{URL: "http://www.dnevnik.bg/apple-touch-icon.png", Width: 129, Height: 129, Format: "png", Bytes: 2092, Sha1sum: "f96615ddf0d9e75e28b7420ed10bbdc1de6f6dab"},
+		{URL: "http://www.dnevnik.bg/favicon.ico", Width: 32, Height: 32, Format: "ico", Bytes: 6518, Sha1sum: "72b4cb7ca529a5d3f5ebf380e77108bd2c04bc04"},
+		{URL: "http://www.dnevnik.bg/images/layout/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 894, Sha1sum: "acf6cacab957c263851e8c13ea68ad8ecb5fcb94"},
+	}
+	assertEquals(t, expectedImages, actualImages)
+}
+
 func TestARDWithSortBySize(t *testing.T) {
 	actualImages, err, _ := fetchIconsWithVCR("ard.vcr", "http://ard.de")
 	assertEquals(t, nil, err)

@@ -22,9 +22,10 @@ import (
 	"image/color"
 
 	// Load supported image formats.
-	_ "github.com/mat/besticon/ico"
 	_ "image/gif"
 	_ "image/png"
+
+	_ "github.com/mat/besticon/ico"
 
 	"github.com/mat/besticon/colorfinder"
 
@@ -283,6 +284,12 @@ var csspaths = strings.Join([]string{
 	"link[rel='shortcut icon']",
 	"link[rel='apple-touch-icon']",
 	"link[rel='apple-touch-icon-precomposed']",
+
+	// Capitalized variants, TODO: refactor
+	"link[rel='ICON']",
+	"link[rel='SHORTCUT ICON']",
+	"link[rel='APPLE-TOUCH-ICON']",
+	"link[rel='APPLE-TOUCH-ICON-PRECOMPOSED']",
 }, ", ")
 
 var errParseHTML = errors.New("besticon: could not parse html")
