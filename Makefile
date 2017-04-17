@@ -108,10 +108,7 @@ build_docker_image: build_linux_amd64
 new_release: bump_version rewrite-version.go git_tag_version
 
 bump_version:
-	cat VERSION
-	head -n1 VERSION | awk -F. '{$$NF = $$NF + 1;} 1' | sed 's/ /./g' > NEW_VERSION
-	mv NEW_VERSION VERSION
-	cat VERSION
+	vi VERSION
 
 rewrite-version.go:
 	echo "package besticon\n\n// Version string, same as VERSION, generated my Make\nconst VersionString = \"`cat VERSION`\"" > besticon/version.go
