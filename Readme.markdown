@@ -69,6 +69,13 @@ Feel free to file other bugs - and offer your help - at <https://github.com/mat/
 
 It is recommended to use your own copy of this service if you plan to rely on it in your project. An easy way to host your own copy is to use Heroku, just go to [https://heroku.com/deploy](https://heroku.com/deploy?template=https://github.com/mat/besticon) to get started.
 
+## Docker
+
+A docker image is available at <https://hub.docker.com/r/matthiasluedtke/iconserver/>, generated from the [Dockerfile](https://github.com/mat/besticon/blob/master/Dockerfile) in this repo. I try to keep it updated for every release.
+
+Note that this docker image is not used to run <https://icons.better-idea.org> and therefore not well tested.
+
+
 ## Server Executable
 
 ### Download binaries
