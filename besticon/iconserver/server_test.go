@@ -166,6 +166,19 @@ func TestGetLetterIcon(t *testing.T) {
 	assertIntegerInInterval(t, 1500, 1800, w.Body.Len())
 }
 
+func TestGetBadLetterIconPath(t *testing.T) {
+	req, err := http.NewRequest("GET", "/lettericons/--120.png", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	lettericonHandler(w, req)
+
+	assertStringEquals(t, "400", fmt.Sprintf("%d", w.Code))
+	assertStringContains(t, w.Body.String(), `wrong format for lettericons/ path`)
+}
+
 func TestGetObsoleteApiRedirect(t *testing.T) {
 	req, err := http.NewRequest("GET", "/api/icons?url=http%3A%2F%2Fapple.com&i_am_feeling_lucky=yes", nil)
 	if err != nil {

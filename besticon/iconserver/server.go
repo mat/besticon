@@ -154,8 +154,9 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 
 func lettericonHandler(w http.ResponseWriter, r *http.Request) {
 	charParam, col, size := lettericon.ParseIconPath(r.URL.Path)
-	if charParam == "" {
+	if charParam == "" || col == nil || size <= 0 {
 		writeAPIError(w, 400, errors.New("wrong format for lettericons/ path, must look like lettericons/M-144-EFC25D.png"))
+		return
 	}
 
 	w.Header().Add(contentType, imagePNG)
