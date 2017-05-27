@@ -459,7 +459,7 @@ func getBodyBytes(r *http.Response) ([]byte, error) {
 
 func setDefaultHeaders(req *http.Request) {
 	req.Header.Set("Accept", "*/*")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A5297c Safari/602.1")
 }
 
 func mustInitCookieJar() *cookiejar.Jar {
