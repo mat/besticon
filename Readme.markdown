@@ -116,7 +116,7 @@ Variable         | Description            | Default Value
 --------         | -----------            | -------------
 `PORT`           | HTTP server port       | 8080
 `CACHE_SIZE_MB`  | Size for the [groupcache](http://github.com/golang/groupcache)|32
-`HOST_ONLY_DOMAINS`           | Comma-separated list of domains where requests for http://example.com/foobar will be rewritten to http://example.com |
+`HOST_ONLY_DOMAINS`           | Comma-separated list of domains where requests for http://example.com/foobar will be rewritten to http://example.com. [`HOST_ONLY_DOMAINS`](https://github.com/mat/besticon/blob/master/HOST_ONLY_DOMAINS) used by https://icons.better-idea.org. See [#27](https://github.com/mat/besticon/issues/27). |
 
 
 ## Libraries etc.
