@@ -109,10 +109,10 @@ func (f *IconFinder) IconInSizeRange(r SizeRange) *Icon {
 		}
 	}
 
-	// Try to return biggest in range perfect..min
+	// Try to return biggest in range min..max
 	sortIcons(icons, true)
 	for _, ico := range icons {
-		if ico.Width >= r.Min && ico.Height >= r.Min {
+		if (ico.Width >= r.Min && ico.Height >= r.Min) && (ico.Width <= r.Max && ico.Height <= r.Max) {
 			return &ico
 		}
 	}
