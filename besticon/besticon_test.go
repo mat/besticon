@@ -161,6 +161,16 @@ func TestYoutubeWithDomainRewrite(t *testing.T) {
 	assertEquals(t, nil, err)
 }
 
+func TestRandomOrg(t *testing.T) {
+	// https://github.com/mat/besticon/issues/28
+	_, err, finder := fetchIconsWithVCR("random.org.vcr", "https://random.org")
+	assertEquals(t, nil, err)
+
+	actualImage := finder.IconInSizeRange(SizeRange{16, 32, 64})
+	expectedImage := &Icon{URL: "https://www.random.org/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 2550, Error: error(nil), Sha1sum: "f8087e651b79c36d206f6f408d7fe74dcb11d351"}
+	assertEquals(t, expectedImage, actualImage)
+}
+
 func TestParsingInexistentSite(t *testing.T) {
 	actualImages, err, _ := fetchIconsWithVCR("not_existent.vcr", "http://wikipedia.org/does-not-exist")
 
