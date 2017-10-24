@@ -44,7 +44,7 @@ func TestGetIcons(t *testing.T) {
 
 	assertStringContains(t, w.Body.String(), "<img src='https://www.apple.com/favicon.ico'")
 	assertStringContains(t, w.Body.String(), "<a href='https://www.apple.com/favicon.ico'>")
-	assertStringContains(t, w.Body.String(), "<td class='dimensions'>32x32</td>")
+	assertStringContains(t, w.Body.String(), "<td class='dimensions'>64x64</td>")
 }
 
 func TestGetIcon(t *testing.T) {
@@ -128,8 +128,8 @@ func TestGetAllIcons(t *testing.T) {
 	assertStringEquals(t, "max-age=3600", w.Header().Get("Cache-Control"))
 
 	assertStringContains(t, w.Body.String(), `"url":"https://www.apple.com/favicon.ico"`)
-	assertStringContains(t, w.Body.String(), `"width":32`)
-	assertStringContains(t, w.Body.String(), `"height":32`)
+	assertStringContains(t, w.Body.String(), `"width":64`)
+	assertStringContains(t, w.Body.String(), `"height":64`)
 
 	// Make sure we don't return inlined image data
 	assertDoesNotExceed(t, len(w.Body.String()), 2000)
