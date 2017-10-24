@@ -139,6 +139,7 @@ Package | Description | License
 
   * Erkie - https://github.com/erkie
   * mmkal - https://github.com/mmkal
+  * kspearrin - https://github.com/kspearrin
 
 ## License
 
