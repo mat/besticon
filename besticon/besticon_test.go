@@ -6,6 +6,7 @@ import (
 	"image"
 	"image/color"
 	"io/ioutil"
+	"net/url"
 	"os"
 	"reflect"
 	"sort"
@@ -108,6 +109,20 @@ func TestEat24WithBaseTag(t *testing.T) {
 	assertEquals(t, expectedImages, actualImages)
 
 	actualImage := finder.IconInSizeRange(SizeRange{20, 50, 500})
+	assertEquals(t, (*Icon)(nil), actualImage)
+}
+
+
+func TestCar2goWithRelativeURL(t *testing.T) {
+	// ../../assets/icon.ico
+	actualImages, err, finder := fetchIconsWithVCR("car2go.vcr", "http://car2go.com")
+	assertEquals(t, nil, err)
+	expectedImages := []Icon{
+		{URL: "https://www.car2go.com/media/assets/patterns/static/img/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 1150, Sha1sum: "860e9ef188675f4f0b7036c2d22e6497ea732282"},
+	}
+	assertEquals(t, expectedImages, actualImages)
+
+	actualImage := finder.IconInSizeRange(SizeRange{80, 120, 200})
 	assertEquals(t, (*Icon)(nil), actualImage)
 }
 
@@ -273,6 +288,14 @@ func TestParseSize(t *testing.T) {
 
 	_, ok = parseSize("-10")
 	assertEquals(t, ok, false)
+}
+
+func TestAbsoluteURL(t *testing.T) {
+	baseURL, e := url.Parse("http://car2go.com")
+	check(e)
+	u, e := absoluteURL(baseURL, "/../../media/favicon.ico")
+	check(e)
+	assertEquals(t, "http://car2go.com/media/favicon.ico", u)
 }
 
 const testdataDir = "testdata/"

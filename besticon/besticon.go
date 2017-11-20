@@ -497,7 +497,7 @@ func absoluteURL(baseURL *url.URL, path string) (string, error) {
 	if url.Host == "" {
 		url.Host = baseURL.Host
 	}
-	return url.String(), nil
+	return baseURL.ResolveReference(url).String(), nil
 }
 
 func urlFromBase(baseURL *url.URL, path string) string {
