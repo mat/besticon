@@ -89,7 +89,7 @@ func (f *IconFinder) stripIfNecessary(URL string) string {
 	}
 
 	for _, h := range f.HostOnlyDomains {
-		if u.Host == h {
+		if h == u.Host || h == "*" {
 			domainOnlyURL := url.URL{Scheme: u.Scheme, Host: u.Host}
 			return domainOnlyURL.String()
 		}
