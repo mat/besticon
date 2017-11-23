@@ -1,7 +1,5 @@
 #!/bin/bash
-
-set -e
-set -x
+set -euxo pipefail
 
 ssh -C icons.better-idea.org 'journalctl -u iconserver.service' > /tmp/icons.better-idea.stdout.txt
 cat /tmp/icons.better-idea.stdout.txt | egrep 'url=[^& ]*' -o > /tmp/urls
