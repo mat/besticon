@@ -5,7 +5,7 @@ This is a favicon service:
   * Supports `favicon.ico` and `apple-touch-icon.png`
   * Simple URL API
   * Fallback icon generation
-  * Single binary download for [easy self-hosting](#self-hosting)
+  * Docker image & single binary download for [easy hosting](#hosting)
 
 Try it out at <https://besticon-demo.herokuapp.com> or find out how to [deploy your own version](#self-hosting).
 
@@ -67,9 +67,9 @@ I tried hard to make this useful but please note there are some known limitation
 
 Feel free to file other bugs - and offer your help - at <https://github.com/mat/besticon/issues>.
 
-## Self Hosting
+## Hosting
 
-It is recommended to use your own copy of this service if you plan to rely on it in your project. An easy way to host your own copy is to use Heroku, just go to [https://heroku.com/deploy](https://heroku.com/deploy?template=https://github.com/mat/besticon) to get started.
+An easy way to host this service is to use Heroku, just go to [https://heroku.com/deploy](https://heroku.com/deploy?template=https://github.com/mat/besticon) to get started.
 
 ## Docker
 
