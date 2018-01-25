@@ -84,8 +84,6 @@ Note that this docker image is not used to run <https://besticon-demo.herokuapp.
 
 Binaries for some operating systems can be downloaded from <https://github.com/mat/besticon/releases/latest>
 
-Even more binaries are available from the excellent GoBuilder community site <https://gobuilder.me/github.com/mat/besticon/besticon/iconserver>
-
 ### Build your own
 
 If you have Go 1.7 installed on your system you can use `go get` to fetch the source code and build the server:
