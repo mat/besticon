@@ -7,7 +7,7 @@ This is a favicon service:
   * Fallback icon generation
   * Docker image & single binary download for [easy hosting](#hosting)
 
-Try it out at <https://besticon-demo.herokuapp.com> or find out how to [deploy your own version](#self-hosting).
+Try out the demo at <https://besticon-demo.herokuapp.com> or find out how to [deploy your own version](#hosting) right now.
 
 [![Build Status](https://travis-ci.org/mat/besticon.svg?branch=master)](https://travis-ci.org/mat/besticon)
 [![Donate at PayPal](https://img.shields.io/badge/paypal-donate-orange.svg?style=flat)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6F9YBSSCM6KCW "Donate once-off to this project using Paypal")
