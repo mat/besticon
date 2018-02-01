@@ -3,7 +3,7 @@
 	"description": "A favicon service written in Go",
 	"repository": "https://github.com/mat/besticon",
 	"website": "https://github.com/mat/besticon",
-	"logo": "https://raw.githubusercontent.com/mat/besticon/master/besticon/iconserver/assets/icon.svg",
+	"logo": "https://besticon-demo.herokuapp.com/icon.svg",
 	"env": {
 		"CACHE_SIZE_MB": "64",
 		"HOST_ONLY_DOMAINS": "*",
