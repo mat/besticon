@@ -2,5 +2,11 @@
 	"name": "favicon-service (besticon)",
 	"description": "A favicon service written in Go",
 	"repository": "https://github.com/mat/besticon",
-	"logo": "https://icons.better-idea.org/icon.svg"
+	"website": "https://github.com/mat/besticon",
+	"logo": "https://icons.better-idea.org/icon.svg",
+	"env": {
+		"CACHE_SIZE_MB": "64",
+		"HOST_ONLY_DOMAINS": "*",
+		"POPULAR_SITES": "bing.com,github.com,instagram.com,reddit.com"
+	}
 }
