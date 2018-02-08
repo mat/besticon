@@ -13,6 +13,7 @@ import (
 	"image"
 	"image/draw"
 	"io"
+	"unicode/utf8"
 
 	"golang.org/x/image/math/fixed"
 )
@@ -64,13 +65,28 @@ type Face interface {
 	// positive kern means to move the glyphs further apart.
 	Kern(r0, r1 rune) fixed.Int26_6
 
-	// TODO: per-font Metrics.
+	// Metrics returns the metrics for this Face.
+	Metrics() Metrics
+
 	// TODO: ColoredGlyph for various emoji?
 	// TODO: Ligatures? Shaping?
 }
 
-// TODO: Drawer.Layout or Drawer.Measure methods to measure text without
-// drawing?
+// Metrics holds the metrics for a Face. A visual depiction is at
+// https://developer.apple.com/library/mac/documentation/TextFonts/Conceptual/CocoaTextArchitecture/Art/glyph_metrics_2x.png
+type Metrics struct {
+	// Height is the recommended amount of vertical space between two lines of
+	// text.
+	Height fixed.Int26_6
+
+	// Ascent is the distance from the top of a line to its baseline.
+	Ascent fixed.Int26_6
+
+	// Descent is the distance from the bottom of a line to its baseline. The
+	// value is typically positive, even though a descender goes below the
+	// baseline.
+	Descent fixed.Int26_6
+}
 
 // Drawer draws text on a destination image.
 //
@@ -97,19 +113,27 @@ type Drawer struct {
 // TODO: should DrawString return the last rune drawn, so the next DrawString
 // call can kern beforehand? Or should that be the responsibility of the caller
 // if they really want to do that, since they have to explicitly shift d.Dot
-// anyway?
+// anyway? What if ligatures span more than two runes? What if grapheme
+// clusters span multiple runes?
 //
-// In general, we'd have a DrawBytes([]byte) and DrawRuneReader(io.RuneReader)
-// and the last case can't assume that you can rewind the stream.
+// TODO: do we assume that the input is in any particular Unicode Normalization
+// Form?
+//
+// TODO: have DrawRunes(s []rune)? DrawRuneReader(io.RuneReader)?? If we take
+// io.RuneReader, we can't assume that we can rewind the stream.
 //
 // TODO: how does this work with line breaking: drawing text up until a
 // vertical line? Should DrawString return the number of runes drawn?
 
-// DrawString draws s at the dot and advances the dot's location.
-func (d *Drawer) DrawString(s string) {
-	var prevC rune
-	for i, c := range s {
-		if i != 0 {
+// DrawBytes draws s at the dot and advances the dot's location.
+//
+// It is equivalent to DrawString(string(s)) but may be more efficient.
+func (d *Drawer) DrawBytes(s []byte) {
+	prevC := rune(-1)
+	for len(s) > 0 {
+		c, size := utf8.DecodeRune(s)
+		s = s[size:]
+		if prevC >= 0 {
 			d.Dot.X += d.Face.Kern(prevC, c)
 		}
 		dr, mask, maskp, advance, ok := d.Face.Glyph(d.Dot, c)
@@ -125,14 +149,142 @@ func (d *Drawer) DrawString(s string) {
 	}
 }
 
+// DrawString draws s at the dot and advances the dot's location.
+func (d *Drawer) DrawString(s string) {
+	prevC := rune(-1)
+	for _, c := range s {
+		if prevC >= 0 {
+			d.Dot.X += d.Face.Kern(prevC, c)
+		}
+		dr, mask, maskp, advance, ok := d.Face.Glyph(d.Dot, c)
+		if !ok {
+			// TODO: is falling back on the U+FFFD glyph the responsibility of
+			// the Drawer or the Face?
+			// TODO: set prevC = '\ufffd'?
+			continue
+		}
+		draw.DrawMask(d.Dst, dr, d.Src, image.Point{}, mask, maskp, draw.Over)
+		d.Dot.X += advance
+		prevC = c
+	}
+}
+
+// BoundBytes returns the bounding box of s, drawn at the drawer dot, as well as
+// the advance.
+//
+// It is equivalent to BoundBytes(string(s)) but may be more efficient.
+func (d *Drawer) BoundBytes(s []byte) (bounds fixed.Rectangle26_6, advance fixed.Int26_6) {
+	bounds, advance = BoundBytes(d.Face, s)
+	bounds.Min = bounds.Min.Add(d.Dot)
+	bounds.Max = bounds.Max.Add(d.Dot)
+	return
+}
+
+// BoundString returns the bounding box of s, drawn at the drawer dot, as well
+// as the advance.
+func (d *Drawer) BoundString(s string) (bounds fixed.Rectangle26_6, advance fixed.Int26_6) {
+	bounds, advance = BoundString(d.Face, s)
+	bounds.Min = bounds.Min.Add(d.Dot)
+	bounds.Max = bounds.Max.Add(d.Dot)
+	return
+}
+
+// MeasureBytes returns how far dot would advance by drawing s.
+//
+// It is equivalent to MeasureString(string(s)) but may be more efficient.
+func (d *Drawer) MeasureBytes(s []byte) (advance fixed.Int26_6) {
+	return MeasureBytes(d.Face, s)
+}
+
 // MeasureString returns how far dot would advance by drawing s.
 func (d *Drawer) MeasureString(s string) (advance fixed.Int26_6) {
-	var prevC rune
-	for i, c := range s {
-		if i != 0 {
-			advance += d.Face.Kern(prevC, c)
+	return MeasureString(d.Face, s)
+}
+
+// BoundBytes returns the bounding box of s with f, drawn at a dot equal to the
+// origin, as well as the advance.
+//
+// It is equivalent to BoundString(string(s)) but may be more efficient.
+func BoundBytes(f Face, s []byte) (bounds fixed.Rectangle26_6, advance fixed.Int26_6) {
+	prevC := rune(-1)
+	for len(s) > 0 {
+		c, size := utf8.DecodeRune(s)
+		s = s[size:]
+		if prevC >= 0 {
+			advance += f.Kern(prevC, c)
 		}
-		a, ok := d.Face.GlyphAdvance(c)
+		b, a, ok := f.GlyphBounds(c)
+		if !ok {
+			// TODO: is falling back on the U+FFFD glyph the responsibility of
+			// the Drawer or the Face?
+			// TODO: set prevC = '\ufffd'?
+			continue
+		}
+		b.Min.X += advance
+		b.Max.X += advance
+		bounds = bounds.Union(b)
+		advance += a
+		prevC = c
+	}
+	return
+}
+
+// BoundString returns the bounding box of s with f, drawn at a dot equal to the
+// origin, as well as the advance.
+func BoundString(f Face, s string) (bounds fixed.Rectangle26_6, advance fixed.Int26_6) {
+	prevC := rune(-1)
+	for _, c := range s {
+		if prevC >= 0 {
+			advance += f.Kern(prevC, c)
+		}
+		b, a, ok := f.GlyphBounds(c)
+		if !ok {
+			// TODO: is falling back on the U+FFFD glyph the responsibility of
+			// the Drawer or the Face?
+			// TODO: set prevC = '\ufffd'?
+			continue
+		}
+		b.Min.X += advance
+		b.Max.X += advance
+		bounds = bounds.Union(b)
+		advance += a
+		prevC = c
+	}
+	return
+}
+
+// MeasureBytes returns how far dot would advance by drawing s with f.
+//
+// It is equivalent to MeasureString(string(s)) but may be more efficient.
+func MeasureBytes(f Face, s []byte) (advance fixed.Int26_6) {
+	prevC := rune(-1)
+	for len(s) > 0 {
+		c, size := utf8.DecodeRune(s)
+		s = s[size:]
+		if prevC >= 0 {
+			advance += f.Kern(prevC, c)
+		}
+		a, ok := f.GlyphAdvance(c)
+		if !ok {
+			// TODO: is falling back on the U+FFFD glyph the responsibility of
+			// the Drawer or the Face?
+			// TODO: set prevC = '\ufffd'?
+			continue
+		}
+		advance += a
+		prevC = c
+	}
+	return advance
+}
+
+// MeasureString returns how far dot would advance by drawing s with f.
+func MeasureString(f Face, s string) (advance fixed.Int26_6) {
+	prevC := rune(-1)
+	for _, c := range s {
+		if prevC >= 0 {
+			advance += f.Kern(prevC, c)
+		}
+		a, ok := f.GlyphAdvance(c)
 		if !ok {
 			// TODO: is falling back on the U+FFFD glyph the responsibility of
 			// the Drawer or the Face?
@@ -187,16 +339,21 @@ const (
 // Weight selects a normal, light or bold face.
 //
 // Not all fonts support weights.
+//
+// The named Weight constants (e.g. WeightBold) correspond to CSS' common
+// weight names (e.g. "Bold"), but the numerical values differ, so that in Go,
+// the zero value means to use a normal weight. For the CSS names and values,
+// see https://developer.mozilla.org/en/docs/Web/CSS/font-weight
 type Weight int
 
 const (
-	WeightThin       Weight = 100
-	WeightExtraLight Weight = 200
-	WeightLight      Weight = 300
-	WeightNormal     Weight = 400
-	WeightMedium     Weight = 500
-	WeightSemiBold   Weight = 600
-	WeightBold       Weight = 700
-	WeightExtraBold  Weight = 800
-	WeightBlack      Weight = 900
+	WeightThin       Weight = -3 // CSS font-weight value 100.
+	WeightExtraLight Weight = -2 // CSS font-weight value 200.
+	WeightLight      Weight = -1 // CSS font-weight value 300.
+	WeightNormal     Weight = +0 // CSS font-weight value 400.
+	WeightMedium     Weight = +1 // CSS font-weight value 500.
+	WeightSemiBold   Weight = +2 // CSS font-weight value 600.
+	WeightBold       Weight = +3 // CSS font-weight value 700.
+	WeightExtraBold  Weight = +4 // CSS font-weight value 800.
+	WeightBlack      Weight = +5 // CSS font-weight value 900.
 )

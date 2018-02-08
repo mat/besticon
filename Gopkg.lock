@@ -4,27 +4,32 @@
 [[projects]]
   name = "github.com/NYTimes/gziphandler"
   packages = ["."]
-  revision = "a88790d49798560db24af70fb6a10a66e2549a72"
+  revision = "d6f46609c7629af3a02d791a4666866eed3cbd3e"
+  version = "v1.0.0"
 
 [[projects]]
   name = "github.com/PuerkitoBio/goquery"
   packages = ["."]
-  revision = "b4440419d81240f8451a505b2f806c853bc2befc"
+  revision = "09540e565986583836b5fc792fe951ec5fd201dd"
+  version = "v1.3.0"
 
 [[projects]]
+  branch = "master"
   name = "github.com/andybalholm/cascadia"
   packages = ["."]
-  revision = "3ad29d1ad1c4f2023e355603324348cf1f4b2d48"
+  revision = "349dd0209470eabd9514242c688c403c0926d266"
 
 [[projects]]
+  branch = "master"
   name = "github.com/golang/freetype"
   packages = [
     "raster",
     "truetype"
   ]
-  revision = "f29eb116deb328d02ee5c573f02d442ca67d5532"
+  revision = "e2365dfdc4a05e4b8299a783240d4a7d5a65d4e4"
 
 [[projects]]
+  branch = "master"
   name = "github.com/golang/groupcache"
   packages = [
     ".",
@@ -33,23 +38,26 @@
     "lru",
     "singleflight"
   ]
-  revision = "4eab30f13db9d8b25c752e99d1583628ac2fa422"
+  revision = "66deaeb636dff1ac7d938ce666d090556056a4b0"
 
 [[projects]]
   name = "github.com/golang/protobuf"
   packages = ["proto"]
-  revision = "8d92cf5fc15a4382f8964b08e1f42a75c0591aa3"
+  revision = "925541529c1fa6821df4e44ce2723319eb2be768"
+  version = "v1.0.0"
 
 [[projects]]
+  branch = "master"
   name = "golang.org/x/image"
   packages = [
     "bmp",
     "font",
     "math/fixed"
   ]
-  revision = "2dc9880a10bbd310009571a348cc0d2e0b5bc4b2"
+  revision = "12117c17ca67ffa1ce22e9409f3b0b0a93ac08c7"
 
 [[projects]]
+  branch = "master"
   name = "golang.org/x/net"
   packages = [
     "html",
@@ -58,14 +66,17 @@
     "idna",
     "publicsuffix"
   ]
-  revision = "66f0418ca41253f8d1a024eb9754e9441a8e79b9"
+  revision = "f5dfe339be1d06f81b22525fe34671ee7d2c8904"
 
 [[projects]]
+  branch = "master"
   name = "golang.org/x/text"
   packages = [
-    "cldr",
+    "collate",
+    "collate/build",
     "encoding",
     "encoding/charmap",
+    "encoding/htmlindex",
     "encoding/internal",
     "encoding/internal/identifier",
     "encoding/japanese",
@@ -73,10 +84,22 @@
     "encoding/simplifiedchinese",
     "encoding/traditionalchinese",
     "encoding/unicode",
+    "internal/colltab",
     "internal/gen",
-    "transform"
+    "internal/tag",
+    "internal/triegen",
+    "internal/ucd",
+    "internal/utf8internal",
+    "language",
+    "runes",
+    "secure/bidirule",
+    "transform",
+    "unicode/bidi",
+    "unicode/cldr",
+    "unicode/norm",
+    "unicode/rangetable"
   ]
-  revision = "723492b65e225eafcba054e76ba18bb9c5ac1ea2"
+  revision = "4e4a3210bb54bb31f6ab2cdca2edcc0b50c420c1"
 
 [solve-meta]
   analyzer-name = "dep"

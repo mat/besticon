@@ -47,8 +47,8 @@ var RoundCapper Capper = CapperFunc(roundCapper)
 
 func roundCapper(p Adder, halfWidth fixed.Int26_6, pivot, n1 fixed.Point26_6) {
 	// The cubic Bézier approximation to a circle involves the magic number
-	// (√2 - 1) * 4/3, which is approximately 141/256.
-	const k = 141
+	// (√2 - 1) * 4/3, which is approximately 35/64.
+	const k = 35
 	e := pRot90CCW(n1)
 	side := pivot.Add(e)
 	start, end := pivot.Sub(n1), pivot.Add(n1)
@@ -111,8 +111,8 @@ func addArc(p Adder, pivot, n0, n1 fixed.Point26_6) {
 	// We approximate the arc by 0, 1, 2 or 3 45-degree quadratic segments plus
 	// a final quadratic segment from s to n1. Each 45-degree segment has
 	// control points {1, 0}, {1, tan(π/8)} and {1/√2, 1/√2} suitably scaled,
-	// rotated and translated. tan(π/8) is approximately 106/256.
-	const tpo8 = 106
+	// rotated and translated. tan(π/8) is approximately 27/64.
+	const tpo8 = 27
 	var s fixed.Point26_6
 	// We determine which octant the angle between n0 and n1 is in via three
 	// dot products. m0, m1 and m2 are n0 rotated clockwise by 45, 90 and 135

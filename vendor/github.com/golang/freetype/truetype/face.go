@@ -7,6 +7,7 @@ package truetype
 
 import (
 	"image"
+	"math"
 
 	"github.com/golang/freetype/raster"
 	"golang.org/x/image/font"
@@ -248,6 +249,17 @@ func (a *face) index(r rune) Index {
 
 // Close satisfies the font.Face interface.
 func (a *face) Close() error { return nil }
+
+// Metrics satisfies the font.Face interface.
+func (a *face) Metrics() font.Metrics {
+	scale := float64(a.scale)
+	fupe := float64(a.f.FUnitsPerEm())
+	return font.Metrics{
+		Height:  a.scale,
+		Ascent:  fixed.Int26_6(math.Ceil(scale * float64(+a.f.ascent) / fupe)),
+		Descent: fixed.Int26_6(math.Ceil(scale * float64(-a.f.descent) / fupe)),
+	}
+}
 
 // Kern satisfies the font.Face interface.
 func (a *face) Kern(r0, r1 rune) fixed.Int26_6 {

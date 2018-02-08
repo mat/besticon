@@ -197,7 +197,7 @@ func (m *MonochromePainter) Paint(ss []Span, done bool) {
 			if m.y == s.Y && m.x1 == s.X0 {
 				m.x1 = s.X1
 			} else {
-				ss[j] = Span{m.y, m.x0, m.x1, 1<<32 - 1}
+				ss[j] = Span{m.y, m.x0, m.x1, 1<<16 - 1}
 				j++
 				m.y, m.x0, m.x1 = s.Y, s.X0, s.X1
 			}
@@ -205,7 +205,7 @@ func (m *MonochromePainter) Paint(ss []Span, done bool) {
 	}
 	if done {
 		// Flush the accumulated Span.
-		finalSpan := Span{m.y, m.x0, m.x1, 1<<32 - 1}
+		finalSpan := Span{m.y, m.x0, m.x1, 1<<16 - 1}
 		if j < len(ss) {
 			ss[j] = finalSpan
 			j++
