@@ -21,12 +21,6 @@ test_bench:
 	go test github.com/mat/besticon/lettericon -bench .
 	go test github.com/mat/besticon/colorfinder -bench .
 
-update_godeps:
-	godep save ./...
-
-install_godeps:
-	grep ImportPath Godeps/Godeps.json | cut -d ":" -f 2 | tr -d '"' | tr -d "," | grep -v besticon | xargs -n 1 | xargs go get
-
 deploy:
 	git push heroku master
 	heroku config:set DEPLOYED_AT=`date +%s`
@@ -41,12 +35,11 @@ run_server:
 install_devtools:
 	go get golang.org/x/tools/cmd/...
 	go get github.com/golang/lint/golint
-	go get github.com/tools/godep
 	go get -u github.com/jteeuwen/go-bindata/...
 
 style:
-	find . -name "*.go" | grep -v Godeps/ | xargs go tool vet -all
-	find . -name "*.go" | grep -v Godeps/ | xargs golint
+	find . -name "*.go" | xargs go tool vet -all
+	find . -name "*.go" | xargs golint
 
 coverage_besticon:
 	go test -coverprofile=coverage.out -covermode=count github.com/mat/besticon/besticon && go tool cover -html=coverage.out && unlink coverage.out
@@ -56,11 +49,6 @@ coverage_ico:
 
 coverage_iconserver:
 	go test -coverprofile=coverage.out -covermode=count github.com/mat/besticon/besticon/iconserver && go tool cover -html=coverage.out && unlink coverage.out
-
-vendor_dependencies:
-	godep save -r ./...
-	# Need to go get in order to fill $GOPATH/pkg... to minimize compile times:
-	go get ./...
 
 test_websites:
 	go get ./...
