@@ -28,3 +28,8 @@
 [prune]
   go-tests = true
   unused-packages = true
+
+[metadata.heroku]
+  root-package = "github.com/mat/besticon"
+  go-version = "go1.9.4"
+  install = [ "./..." ]
