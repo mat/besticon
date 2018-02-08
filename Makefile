@@ -36,7 +36,7 @@ install:
 
 run_server:
 	go build -o bin/iconserver github.com/mat/besticon/besticon/iconserver
-	PORT=3000 DEPLOYED_AT=`date +%s` ./bin/iconserver
+	PORT=3000 DEPLOYED_AT=`date +%s` HOST_ONLY_DOMAINS=* POPULAR_SITES=bing.com,github.com,instagram.com,reddit.com ./bin/iconserver
 
 install_devtools:
 	go get golang.org/x/tools/cmd/...
