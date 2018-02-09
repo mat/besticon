@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM alpine:3.7
 MAINTAINER Matthias Luedtke (matthiasluedtke)
 
 RUN apk add --no-cache ca-certificates
@@ -9,5 +9,9 @@ ADD bin/linux_amd64/iconserver /var/www/iconserver
 
 EXPOSE 8080
 ENV PORT=8080
+
+ENV HOST_ONLY_DOMAINS=*
+ENV POPULAR_SITES=bing.com,github.com,instagram.com,reddit.com
+
 WORKDIR /var/www
 CMD ["./iconserver"]
