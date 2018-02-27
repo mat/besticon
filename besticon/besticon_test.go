@@ -112,7 +112,6 @@ func TestEat24WithBaseTag(t *testing.T) {
 	assertEquals(t, (*Icon)(nil), actualImage)
 }
 
-
 func TestCar2goWithRelativeURL(t *testing.T) {
 	// ../../assets/icon.ico
 	actualImages, err, finder := fetchIconsWithVCR("car2go.vcr", "http://car2go.com")
