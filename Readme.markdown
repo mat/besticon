@@ -1,3 +1,7 @@
+# Fork of besticon favicon-service for use in Mynewsdesk services
+
+This is a fork of <http://github.com/mat/besticon>. The purpose of this fork is to have a stable repository, that we we can use for deploying the favicon services to heroku.
+
 # favicon-service (besticon)
 
 This is a favicon service:
