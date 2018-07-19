@@ -69,7 +69,7 @@ Feel free to file other bugs - and offer your help - at <https://github.com/mat/
 
 ## Hosting
 
-An easy way to host this service is to use Heroku, just go to [https://heroku.com/deploy](https://heroku.com/deploy?template=https://github.com/mat/besticon) to get started.
+An easy way to host this service is to use Heroku, just go to <https://heroku.com/deploy> to get started.
 
 ## Docker
 
