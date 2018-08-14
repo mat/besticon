@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.8
 LABEL maintainer="Matthias Luedtke (matthiasluedtke)"
 
 RUN apk add --no-cache ca-certificates
