@@ -3,4 +3,5 @@ go:
   - 1.9.x
   - "1.10.x"
   - "1.11"
+  - "1.11.1"
 script: make test_all
