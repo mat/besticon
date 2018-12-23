@@ -459,7 +459,7 @@ func getBodyBytes(r *http.Response) ([]byte, error) {
 
 func setDefaultHeaders(req *http.Request) {
 	req.Header.Set("Accept", "*/*")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A5297c Safari/602.1")
+	req.Header.Set("User-Agent", getenvOrFallback("HTTP_USER_AGENT", "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A5297c Safari/602.1"))
 }
 
 func mustInitCookieJar() *cookiejar.Jar {
@@ -553,6 +553,14 @@ func SetLogOutput(w io.Writer) {
 func init() {
 	SetLogOutput(os.Stdout)
 	keepImageBytes = true
+}
+
+func getenvOrFallback(key string, fallbackValue string) string {
+	value := os.Getenv(key)
+	if len(strings.TrimSpace(value)) != 0 {
+		return value
+	}
+	return fallbackValue
 }
 
 var BuildDate string // set via ldflags on Make

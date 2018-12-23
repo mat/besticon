@@ -277,6 +277,16 @@ func TestParseSizeRange(t *testing.T) {
 	assertEquals(t, errBadSize, err)
 }
 
+func TestGetenvOrFallback(t *testing.T) {
+	os.Setenv("MY_ENV", "some-value")
+	assertEquals(t, "some-value", getenvOrFallback("MY_ENV", "fallback-should-NOT-be-used"))
+
+	os.Setenv("MY_ENV", "")
+	assertEquals(t, "fallback-should-be-used", getenvOrFallback("MY_ENV", "fallback-should-be-used"))
+
+	assertEquals(t, "fallback-should-be-used", getenvOrFallback("key-does-not-exist", "fallback-should-be-used"))
+}
+
 func TestParseSize(t *testing.T) {
 	size, ok := parseSize("120")
 	assertEquals(t, ok, true)

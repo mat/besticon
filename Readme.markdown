@@ -112,13 +112,12 @@ Now when you open <http://localhost:8080/icons?url=instagram.com> you should see
 
 There is not a lot to configure but these environment variables exist
 
-Variable         | Description            | Default Value
---------         | -----------            | -------------
-`PORT`           | HTTP server port       | 8080
-`CACHE_SIZE_MB`  | Size for the [groupcache](http://github.com/golang/groupcache)|32
-`POPULAR_SITES`  | Comma-separated list of domains used on /popular page |
-`HOST_ONLY_DOMAINS`           | Comma-separated list of domains where requests for http://example.com/foobar will be rewritten to http://example.com. [`HOST_ONLY_DOMAINS`](https://github.com/mat/besticon/blob/master/HOST_ONLY_DOMAINS) used by https://besticon-demo.herokuapp.com. See [#27](https://github.com/mat/besticon/issues/27). |
-
+| Variable          | Description                                                    | Default Value              |
+|-------------------|----------------------------------------------------------------|----------------------------|
+| `PORT`            | HTTP server port                                               | 8080                       |
+| `CACHE_SIZE_MB`   | Size for the [groupcache](http://github.com/golang/groupcache) | 32                         |
+| `HTTP_USER_AGENT` | User-Agent for HTTP requests                                   | *iPhone user agent string* |
+| `POPULAR_SITES`   | Comma-separated list of domains used on /popular page          |                            |
 
 ## Libraries etc.
 
