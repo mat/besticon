@@ -2,73 +2,90 @@
 
 
 [[projects]]
+  digest = "1:0803645e1f57fb5271a6edc7570b9ea59bac2e5de67957075a43f3d74c8dbd97"
   name = "github.com/NYTimes/gziphandler"
   packages = ["."]
+  pruneopts = "UT"
   revision = "2600fb119af974220d3916a5916d6e31176aac1b"
   version = "v1.0.1"
 
 [[projects]]
+  digest = "1:573fa46f8d413d4bc3f7cc5e86b2c43cb21559f4fb0a19d9874d228e28fdc07c"
   name = "github.com/PuerkitoBio/goquery"
   packages = ["."]
-  revision = "09540e565986583836b5fc792fe951ec5fd201dd"
-  version = "v1.3.0"
+  pruneopts = "UT"
+  revision = "2d2796f41742ece03e8086188fa4db16a3a0b458"
+  version = "v1.5.0"
 
 [[projects]]
+  digest = "1:66b3310cf22cdc96c35ef84ede4f7b9b370971c4025f394c89a2638729653b11"
   name = "github.com/andybalholm/cascadia"
   packages = ["."]
+  pruneopts = "UT"
   revision = "901648c87902174f774fac311d7f176f8647bdaa"
   version = "v1.0.0"
 
 [[projects]]
   branch = "master"
+  digest = "1:62c57507df491b657e9ae2645f30958d9964c8eeb380600469eedc951ebb3a0e"
   name = "github.com/golang/freetype"
   packages = [
     "raster",
-    "truetype"
+    "truetype",
   ]
+  pruneopts = "UT"
   revision = "e2365dfdc4a05e4b8299a783240d4a7d5a65d4e4"
 
 [[projects]]
   branch = "master"
+  digest = "1:1b1bf1a9dde59ab53e0b0c7e4955169683177a1177e4a0cfa73849f407823c4e"
   name = "github.com/golang/groupcache"
   packages = [
     ".",
     "consistenthash",
     "groupcachepb",
     "lru",
-    "singleflight"
+    "singleflight",
   ]
-  revision = "66deaeb636dff1ac7d938ce666d090556056a4b0"
+  pruneopts = "UT"
+  revision = "c65c006176ff7ff98bb916961c7abbc6b0afc0aa"
 
 [[projects]]
+  digest = "1:97df918963298c287643883209a2c3f642e6593379f97ab400c2a2e219ab647d"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
-  revision = "925541529c1fa6821df4e44ce2723319eb2be768"
-  version = "v1.0.0"
+  pruneopts = "UT"
+  revision = "aa810b61a9c79d51363740d207bb46cf8e620ed5"
+  version = "v1.2.0"
 
 [[projects]]
   branch = "master"
+  digest = "1:79cea5219771213f0e1eb6c1ba09cf9ea5b68b37e14b96a90f26421c9a41470b"
   name = "golang.org/x/image"
   packages = [
     "bmp",
     "font",
-    "math/fixed"
+    "math/fixed",
   ]
-  revision = "12117c17ca67ffa1ce22e9409f3b0b0a93ac08c7"
+  pruneopts = "UT"
+  revision = "cd38e8056d9b27bb2f265effa37fb0ea6b8a7f0f"
 
 [[projects]]
   branch = "master"
+  digest = "1:3d6c20b6e507bfdc8c5fafdaf797e6573e66fd9efcd5b48798b93ad2c3176ef3"
   name = "golang.org/x/net"
   packages = [
     "html",
     "html/atom",
     "html/charset",
     "idna",
-    "publicsuffix"
+    "publicsuffix",
   ]
-  revision = "d25186b37f34ebdbbea8f488ef055638dfab272d"
+  pruneopts = "UT"
+  revision = "927f97764cc334a6575f4b7a1584a147864d5723"
 
 [[projects]]
+  digest = "1:436b24586f8fee329e0dd65fd67c817681420cda1d7f934345c13fe78c212a73"
   name = "golang.org/x/text"
   packages = [
     "collate",
@@ -96,14 +113,26 @@
     "unicode/bidi",
     "unicode/cldr",
     "unicode/norm",
-    "unicode/rangetable"
+    "unicode/rangetable",
   ]
+  pruneopts = "UT"
   revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
   version = "v0.3.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6fe643c625075478f18fe7a46a1a800e4316bab3d848cc1ffe5726944b7d68a4"
+  input-imports = [
+    "github.com/NYTimes/gziphandler",
+    "github.com/PuerkitoBio/goquery",
+    "github.com/golang/freetype/truetype",
+    "github.com/golang/groupcache",
+    "golang.org/x/image/bmp",
+    "golang.org/x/image/font",
+    "golang.org/x/image/math/fixed",
+    "golang.org/x/net/html/charset",
+    "golang.org/x/net/idna",
+    "golang.org/x/net/publicsuffix",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
