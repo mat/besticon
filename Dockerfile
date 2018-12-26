@@ -13,6 +13,7 @@ ENV PORT=8080
 
 ENV HOST_ONLY_DOMAINS=*
 ENV POPULAR_SITES=bing.com,github.com,instagram.com,reddit.com
+ENV HTTP_CLIENT_TIMEOUT=5s
 
 WORKDIR /var/www
 CMD ["./iconserver"]

@@ -531,7 +531,11 @@ var client *http.Client
 var keepImageBytes bool
 
 func init() {
-	setHTTPClient(&http.Client{Timeout: 20 * time.Second})
+	duration, e := time.ParseDuration(getenvOrFallback("HTTP_CLIENT_TIMEOUT", "5s"))
+	if e != nil {
+		panic(e)
+	}
+	setHTTPClient(&http.Client{Timeout: duration})
 
 	// Needs to be kept in sync with those image/... imports
 	defaultFormats = []string{"png", "gif", "ico"}
