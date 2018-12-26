@@ -16,7 +16,7 @@ import (
 )
 
 func TestKicktipp(t *testing.T) {
-	actualImages, err, finder := fetchIconsWithVCR("kicktipp.vcr", "http://kicktipp.de")
+	actualImages, finder, err := fetchIconsWithVCR("kicktipp.vcr", "http://kicktipp.de")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "http://info.kicktipp.de/assets/img/jar_cb333387130/assets/img/logos/apple-touch-icon-57x57-precomposed.png", Width: 57, Height: 57, Format: "png", Bytes: 1535, Sha1sum: "79aae9e0df7d52ed50ac47c1dd4bd16e2ddf8b4a"},
@@ -33,7 +33,7 @@ func TestKicktipp(t *testing.T) {
 }
 
 func TestDaringfireball(t *testing.T) {
-	actualImages, err, finder := fetchIconsWithVCR("daringfireball.net.vcr", "http://daringfireball.net")
+	actualImages, finder, err := fetchIconsWithVCR("daringfireball.net.vcr", "http://daringfireball.net")
 	assertEquals(t, nil, err)
 
 	expectedImages := []Icon{
@@ -50,7 +50,7 @@ func TestDaringfireball(t *testing.T) {
 }
 
 func TestAwsAmazonChangingBaseURL(t *testing.T) {
-	actualImages, err, _ := fetchIconsWithVCR("aws.amazon.vcr", "http://aws.amazon.com")
+	actualImages, _, err := fetchIconsWithVCR("aws.amazon.vcr", "http://aws.amazon.com")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "http://a0.awsstatic.com/main/images/site/touch-icon-ipad-144-precomposed.png", Width: 144, Height: 144, Format: "png", Bytes: 3944, Sha1sum: "225817df40ff11d083c282d08b49a5ed50fd0f2d"},
@@ -63,7 +63,7 @@ func TestAwsAmazonChangingBaseURL(t *testing.T) {
 }
 
 func TestNetflixWitCookieRedirects(t *testing.T) {
-	actualImages, err, _ := fetchIconsWithVCR("netflix.vcr", "http://netflix.com")
+	actualImages, _, err := fetchIconsWithVCR("netflix.vcr", "http://netflix.com")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.png", Width: 64, Height: 64, Format: "png", Bytes: 1755, Sha1sum: "867e51e9b4a474c19da52d6454076c007a9d01f2"},
@@ -75,7 +75,7 @@ func TestNetflixWitCookieRedirects(t *testing.T) {
 }
 
 func TestAolWithOnePixelGifs(t *testing.T) {
-	actualImages, err, _ := fetchIconsWithVCR("aol.vcr", "http://aol.com")
+	actualImages, _, err := fetchIconsWithVCR("aol.vcr", "http://aol.com")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "http://www.aol.com/favicon.ico", Width: 32, Height: 32, Format: "ico", Bytes: 7886, Error: error(nil), Sha1sum: "c474f8307362367be553b884878e221f25fcb80b"},
@@ -86,7 +86,7 @@ func TestAolWithOnePixelGifs(t *testing.T) {
 }
 
 func TestGithubWithIconHrefLinks(t *testing.T) {
-	actualImages, err, _ := fetchIconsWithVCR("github.vcr", "http://github.com")
+	actualImages, _, err := fetchIconsWithVCR("github.vcr", "http://github.com")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "https://github.com/apple-touch-icon-144.png", Width: 144, Height: 144, Format: "png", Bytes: 796, Sha1sum: "2626d8f64d5d3a76bd535151dfe84b62d3f3ee63"},
@@ -101,7 +101,7 @@ func TestGithubWithIconHrefLinks(t *testing.T) {
 }
 
 func TestEat24WithBaseTag(t *testing.T) {
-	actualImages, err, finder := fetchIconsWithVCR("eat24.vcr", "http://eat24.com")
+	actualImages, finder, err := fetchIconsWithVCR("eat24.vcr", "http://eat24.com")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "http://eat24hours.com/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 1406, Sha1sum: "f8914a1135e718b11cc93b7a362655ca358c16fb"},
@@ -114,7 +114,7 @@ func TestEat24WithBaseTag(t *testing.T) {
 
 func TestCar2goWithRelativeURL(t *testing.T) {
 	// ../../assets/icon.ico
-	actualImages, err, finder := fetchIconsWithVCR("car2go.vcr", "http://car2go.com")
+	actualImages, finder, err := fetchIconsWithVCR("car2go.vcr", "http://car2go.com")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "https://www.car2go.com/media/assets/patterns/static/img/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 1150, Sha1sum: "860e9ef188675f4f0b7036c2d22e6497ea732282"},
@@ -126,7 +126,7 @@ func TestCar2goWithRelativeURL(t *testing.T) {
 }
 
 func TestAlibabaWithBaseTagWithoutScheme(t *testing.T) {
-	actualImages, err, _ := fetchIconsWithVCR("alibaba.vcr", "http://alibaba.com")
+	actualImages, _, err := fetchIconsWithVCR("alibaba.vcr", "http://alibaba.com")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "http://is.alicdn.com/simg/single/icon/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 1406, Sha1sum: "4ffbef9b6044c62cd6c8b1ee0913ba93e6e80072"},
@@ -137,7 +137,7 @@ func TestAlibabaWithBaseTagWithoutScheme(t *testing.T) {
 }
 
 func TestDnevnikWithCapitalizedIconTag(t *testing.T) {
-	actualImages, err, _ := fetchIconsWithVCR("dnevnik.vcr", "http://www.dnevnik.bg")
+	actualImages, _, err := fetchIconsWithVCR("dnevnik.vcr", "http://www.dnevnik.bg")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "http://www.dnevnik.bg/images/layout/apple-touch-icon.png", Width: 180, Height: 180, Format: "png", Bytes: 1597, Sha1sum: "16af14e168879ac52f594c67b4298f76d768a5eb"},
@@ -149,7 +149,7 @@ func TestDnevnikWithCapitalizedIconTag(t *testing.T) {
 }
 
 func TestARDWithSortBySize(t *testing.T) {
-	actualImages, err, _ := fetchIconsWithVCR("ard.vcr", "http://ard.de")
+	actualImages, _, err := fetchIconsWithVCR("ard.vcr", "http://ard.de")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "http://www.ard.de/ARD-144.png", Width: 144, Height: 144, Format: "png", Bytes: 29228, Sha1sum: "a6be15435a80e9de7978d203a3f2723940ab6bda"},
@@ -162,14 +162,14 @@ func TestARDWithSortBySize(t *testing.T) {
 }
 
 func TestMortenmøllerWithIDNAHost(t *testing.T) {
-	actualImages, err, _ := fetchIconsWithVCR("mortenmoller.vcr", "https://mortenmøller.dk")
+	actualImages, _, err := fetchIconsWithVCR("mortenmoller.vcr", "https://mortenmøller.dk")
 	assertEquals(t, nil, err)
 	assertEquals(t, 13, len(actualImages))
 }
 
 func TestYoutubeWithDomainRewrite(t *testing.T) {
 	// This test can only work because with HostOnlyDomains accordingly
-	_, err, finder := fetchIconsWithVCR("youtube.vcr", "http://youtube.com/does-not-exist")
+	_, finder, err := fetchIconsWithVCR("youtube.vcr", "http://youtube.com/does-not-exist")
 	ico := finder.IconInSizeRange(SizeRange{0, 80, 200})
 	assertEquals(t, &Icon{URL: "https://s.ytimg.com/yts/img/favicon_96-vfldSA3ca.png", Width: 96, Height: 96, Format: "png", Bytes: 1510, Sha1sum: "7149bef987538d34e2ab6e069d08211d0a6e407d"}, ico)
 	assertEquals(t, nil, err)
@@ -177,7 +177,7 @@ func TestYoutubeWithDomainRewrite(t *testing.T) {
 
 func TestRandomOrg(t *testing.T) {
 	// https://github.com/mat/besticon/issues/28
-	_, err, finder := fetchIconsWithVCR("random.org.vcr", "https://random.org")
+	_, finder, err := fetchIconsWithVCR("random.org.vcr", "https://random.org")
 	assertEquals(t, nil, err)
 
 	actualImage := finder.IconInSizeRange(SizeRange{16, 32, 64})
@@ -186,14 +186,14 @@ func TestRandomOrg(t *testing.T) {
 }
 
 func TestParsingInexistentSite(t *testing.T) {
-	actualImages, err, _ := fetchIconsWithVCR("not_existent.vcr", "http://wikipedia.org/does-not-exist")
+	actualImages, _, err := fetchIconsWithVCR("not_existent.vcr", "http://wikipedia.org/does-not-exist")
 
 	assertEquals(t, errors.New("besticon: not found"), err)
 	assertEquals(t, 0, len(actualImages))
 }
 
 func TestParsingEmptyResponse(t *testing.T) {
-	actualImages, err, _ := fetchIconsWithVCR("empty_body.vcr", "http://foobar.com")
+	actualImages, _, err := fetchIconsWithVCR("empty_body.vcr", "http://foobar.com")
 
 	assertEquals(t, 0, len(actualImages))
 	assertEquals(t, errors.New("besticon: empty response"), err)
@@ -312,11 +312,11 @@ func TestAbsoluteURL(t *testing.T) {
 
 const testdataDir = "testdata/"
 
-func fetchIconsWithVCR(vcrFile string, url string) ([]Icon, error, *IconFinder) {
+func fetchIconsWithVCR(vcrFile string, url string) ([]Icon, *IconFinder, error) {
 	path := testdataDir + vcrFile
 	c, f, err := vcr.Client(path)
 	if err != nil {
-		return nil, err, nil
+		return nil, nil, err
 	}
 	defer f.Close()
 
@@ -324,7 +324,7 @@ func fetchIconsWithVCR(vcrFile string, url string) ([]Icon, error, *IconFinder) 
 	finder := IconFinder{}
 	finder.HostOnlyDomains = []string{"youtube.com"}
 	icons, e := finder.FetchIcons(url)
-	return icons, e, &finder
+	return icons, &finder, e
 }
 
 func getImageWidthForFile(filename string) int {
