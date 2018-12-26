@@ -87,7 +87,7 @@ Binaries for some operating systems can be downloaded from <https://github.com/m
 
 ### Build your own
 
-If you have Go 1.9 installed on your system you can use `go get` to fetch the source code and build the server:
+If you have Go 1.11 installed on your system you can use `go get` to fetch the source code and build the server:
 
 	$ go get -u github.com/mat/besticon/...
 
