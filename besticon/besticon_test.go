@@ -246,12 +246,15 @@ func TestParseSizeRange(t *testing.T) {
 	// This single num behaviour ensures backwards compatibility for
 	// people who pant (at least) pixel perfect icons.
 	sizeRange, err := ParseSizeRange("120")
+	check(err)
 	assertEquals(t, &SizeRange{120, 120, MaxIconSize}, sizeRange)
 
 	sizeRange, err = ParseSizeRange("0..120..256")
+	check(err)
 	assertEquals(t, &SizeRange{0, 120, 256}, sizeRange)
 
 	sizeRange, err = ParseSizeRange("120..120..120")
+	check(err)
 	assertEquals(t, &SizeRange{120, 120, 120}, sizeRange)
 
 	_, err = ParseSizeRange("")
