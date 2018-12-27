@@ -164,14 +164,6 @@ func lettericonHandler(w http.ResponseWriter, r *http.Request) {
 	lettericon.Render(charParam, col, size, w)
 }
 
-func obsoleteAPIHandler(w http.ResponseWriter, r *http.Request) {
-	if r.FormValue("i_am_feeling_lucky") == "yes" {
-		http.Redirect(w, r, fmt.Sprintf("/icon?size=120&%s", r.URL.RawQuery), 302)
-	} else {
-		http.Redirect(w, r, fmt.Sprintf("/allicons.json?%s", r.URL.RawQuery), 302)
-	}
-}
-
 func writeAPIError(w http.ResponseWriter, httpStatus int, e error) {
 	data := struct {
 		Error string `json:"error"`
@@ -255,7 +247,6 @@ func startServer(port string) {
 	registerGzipHandler("/popular", popularHandler)
 	registerGzipHandler("/allicons.json", alliconsHandler)
 	registerHandler("/lettericons/", lettericonHandler)
-	registerHandler("/api/icons", obsoleteAPIHandler)
 
 	serveAsset("/pure-0.5.0-min.css", "besticon/iconserver/assets/pure-0.5.0-min.css", oneYear)
 	serveAsset("/grids-responsive-0.5.0-min.css", "besticon/iconserver/assets/grids-responsive-0.5.0-min.css", oneYear)
