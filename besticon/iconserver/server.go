@@ -13,6 +13,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/NYTimes/gziphandler"
 	"github.com/mat/besticon/besticon"
@@ -53,7 +54,7 @@ func iconsHandler(w http.ResponseWriter, r *http.Request) {
 		errNoIcons := errors.New("this poor site has no icons at all :-(")
 		renderHTMLTemplate(w, 404, iconsHTML, pageInfo{URL: url, Error: errNoIcons})
 	default:
-		addCacheControl(w, oneDay)
+		addCacheControl(w, cacheDurationSeconds)
 		renderHTMLTemplate(w, 200, iconsHTML, pageInfo{Icons: icons, URL: url})
 	}
 }
@@ -148,7 +149,7 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	addCacheControl(w, oneHour)
+	addCacheControl(w, cacheDurationSeconds)
 	writeAPIIcons(w, url, icons)
 }
 
@@ -266,13 +267,11 @@ func startServer(port string) {
 
 const (
 	cacheControl = "Cache-Control"
-	oneYear      = 365 * oneDay
-	oneDay       = 24 * oneHour
-	oneHour      = 3600
+	oneYear      = 365 * 24 * 3600
 )
 
 func redirectWithCacheControl(w http.ResponseWriter, r *http.Request, redirectURL string) {
-	addCacheControl(w, oneDay)
+	addCacheControl(w, cacheDurationSeconds)
 	http.Redirect(w, r, redirectURL, 302)
 }
 
@@ -346,6 +345,7 @@ func newIconFinder() *besticon.IconFinder {
 }
 
 var hostOnlyDomains []string
+var cacheDurationSeconds int
 
 func init() {
 	cacheSize := os.Getenv("CACHE_SIZE_MB")
@@ -356,6 +356,12 @@ func init() {
 		besticon.SetCacheMaxSize(int64(n))
 	}
 
+	duration, e := time.ParseDuration(getenvOrFallback("HTTP_MAX_AGE_DURATION", "720h"))
+	if e != nil {
+		panic(e)
+	}
+	cacheDurationSeconds = (int)(duration.Seconds())
+
 	hostOnlyDomains = strings.Split(os.Getenv("HOST_ONLY_DOMAINS"), ",")
 
 	if besticon.CacheEnabled() {
@@ -365,4 +371,12 @@ func init() {
 		expvar.Publish("cacheHits", expvar.Func(func() interface{} { return besticon.GetCacheStats().Hits }))
 		expvar.Publish("cacheEvictions", expvar.Func(func() interface{} { return besticon.GetCacheStats().Evictions }))
 	}
+}
+
+func getenvOrFallback(key string, fallbackValue string) string {
+	value := os.Getenv(key)
+	if len(strings.TrimSpace(value)) != 0 {
+		return value
+	}
+	return fallbackValue
 }

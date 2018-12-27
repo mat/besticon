@@ -113,13 +113,14 @@ Now when you open <http://localhost:8080/icons?url=instagram.com> you should see
 
 There is not a lot to configure but these environment variables exist
 
-| Variable              | Description                                                    | Default Value              |
-|-----------------------|----------------------------------------------------------------|----------------------------|
-| `PORT`                | HTTP server port                                               | 8080                       |
-| `CACHE_SIZE_MB`       | Size for the [groupcache](http://github.com/golang/groupcache) | 32                         |
-| `HTTP_USER_AGENT`     | User-Agent for HTTP requests                                   | *iPhone user agent string* |
-| `HTTP_CLIENT_TIMEOUT` | Timeout used for HTTP requests. Support units like ms, s, m.   | 5s                         |
-| `POPULAR_SITES`       | Comma-separated list of domains used on /popular page          |                            |                            |
+| Variable | Description | Default Value |
+|-------------------------|--------------------------------------------------------------------------------------------|----------------------------|
+| `PORT` | HTTP server port | 8080 |
+| `CACHE_SIZE_MB` | Size for the [groupcache](http://github.com/golang/groupcache) | 32 |
+| `HTTP_USER_AGENT` | User-Agent for HTTP requests | *iPhone user agent string* |
+| `HTTP_CLIENT_TIMEOUT` | Timeout used for HTTP requests. Supports units like ms, s, m. | 5s |
+| `HTTP_MAX_AGE_DURATION` | Cache duration for all dynamically generated HTTP responses. Supports units like ms, s, m. | 720h *(30 days)* |
+| `POPULAR_SITES` | Comma-separated list of domains used on /popular page |  |
 
 ## Libraries etc.
 
