@@ -8,6 +8,7 @@
 		"CACHE_SIZE_MB": "64",
 		"HOST_ONLY_DOMAINS": "*",
 		"HTTP_CLIENT_TIMEOUT": "5s",
+		"HTTP_MAX_AGE_DURATION": "720h",
 		"POPULAR_SITES": "bing.com,github.com,instagram.com,reddit.com"
 	}
 }
