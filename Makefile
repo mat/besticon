@@ -32,15 +32,6 @@ run_server:
 	go build -o bin/iconserver github.com/mat/besticon/besticon/iconserver
 	PORT=3000 DEPLOYED_AT=`date +%s` HOST_ONLY_DOMAINS=* POPULAR_SITES=bing.com,github.com,instagram.com,reddit.com ./bin/iconserver
 
-install_devtools:
-	go get golang.org/x/tools/cmd/...
-	go get github.com/golang/lint/golint
-	go get -u github.com/jteeuwen/go-bindata/...
-
-style:
-	find . -name "*.go" | xargs go tool vet -all
-	find . -name "*.go" | xargs golint
-
 coverage_besticon:
 	go test -coverprofile=coverage.out -covermode=count github.com/mat/besticon/besticon && go tool cover -html=coverage.out && unlink coverage.out
 
