@@ -20,6 +20,8 @@ import (
 	"github.com/mat/besticon/besticon/iconserver/assets"
 	"github.com/mat/besticon/lettericon"
 
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+
 	// Enable runtime profiling at /debug/pprof
 	_ "net/http/pprof"
 )
@@ -256,6 +258,8 @@ func startServer(port string) {
 	serveAsset("/icon.svg", "besticon/iconserver/assets/icon.svg", oneYear)
 	serveAsset("/favicon.ico", "besticon/iconserver/assets/favicon.ico", oneYear)
 	serveAsset("/apple-touch-icon.png", "besticon/iconserver/assets/apple-touch-icon.png", oneYear)
+
+	http.Handle("/metrics", promhttp.Handler())
 
 	addr := "0.0.0.0:" + port
 	logger.Print("Starting server on ", addr, "...")
