@@ -78,6 +78,9 @@ A docker image is available at <https://hub.docker.com/r/matthiasluedtke/iconser
 
 Note that this docker image is not used to run <https://besticon-demo.herokuapp.com> and therefore not well tested.
 
+## Monitoring
+
+[Prometheus](https://prometheus.io) metrics are exposed under [/metrics](https://besticon-demo.herokuapp.com/metrics).
 
 ## Server Executable
 
