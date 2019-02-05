@@ -188,6 +188,7 @@
     "github.com/PuerkitoBio/goquery",
     "github.com/golang/freetype/truetype",
     "github.com/golang/groupcache",
+    "github.com/prometheus/client_golang/prometheus",
     "github.com/prometheus/client_golang/prometheus/promhttp",
     "golang.org/x/image/bmp",
     "golang.org/x/image/font",

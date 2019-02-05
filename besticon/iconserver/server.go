@@ -298,11 +298,11 @@ func serveAsset(path string, assetPath string, maxAgeSeconds int) {
 }
 
 func registerHandler(path string, f http.HandlerFunc) {
-	http.Handle(path, newExpvarHandler(path, f))
+	http.Handle(path, newPrometheusHandler(path, newExpvarHandler(path, f)))
 }
 
 func registerGzipHandler(path string, f http.HandlerFunc) {
-	http.Handle(path, gziphandler.GzipHandler(newExpvarHandler(path, f)))
+	http.Handle(path, newPrometheusHandler(path, gziphandler.GzipHandler(newExpvarHandler(path, f))))
 }
 
 func main() {
