@@ -23,7 +23,7 @@ func init() {
 			Help:    "A histogram of latencies for requests.",
 			Buckets: []float64{.25, .5, 1, 2.5, 5, 10},
 		},
-		[]string{"path", "method"},
+		[]string{"code", "method", "path"},
 	)
 	prometheus.MustRegister(duration)
 }
