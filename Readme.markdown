@@ -80,7 +80,7 @@ Note that this docker image is not used to run <https://besticon-demo.herokuapp.
 
 ## Monitoring
 
-[Prometheus](https://prometheus.io) metrics are exposed under [/metrics](https://besticon-demo.herokuapp.com/metrics).
+[Prometheus](https://prometheus.io) metrics are exposed under [/metrics](https://besticon-demo.herokuapp.com/metrics). A Grafana dashboard config based on these metrics can be found in [grafana-dashboard.json](https://github.com/mat/besticon/blob/master/grafana-dashboard.json).
 
 ## Server Executable
 
