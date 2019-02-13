@@ -89,7 +89,7 @@
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "{{method}}",
+          "legendFormat": "{{method}} ({{code}})",
           "refId": "A"
         }
       ],
@@ -178,28 +178,28 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(request_duration_seconds_sum{path=\"/icon\",method=\"get\"}[5m])/rate(request_duration_seconds_count{path=\"/icon\",method=\"get\"}[5m])",
+          "expr": "rate(request_duration_seconds_sum{path=\"/icon\",method=\"get\",code=\"302\"}[5m])/rate(request_duration_seconds_count{path=\"/icon\",method=\"get\"}[5m])",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "average",
+          "legendFormat": "average ({{code}})",
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(0.5, rate(request_duration_seconds_bucket{path=\"/icon\",method=\"get\"}[5m]))",
+          "expr": "histogram_quantile(0.5, rate(request_duration_seconds_bucket{path=\"/icon\",method=\"get\",code=\"302\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "median",
+          "legendFormat": "median ({{code}})",
           "refId": "B"
         },
         {
-          "expr": "histogram_quantile(0.9, rate(request_duration_seconds_bucket{path=\"/icon\",method=\"get\"}[5m]))",
+          "expr": "histogram_quantile(0.9, rate(request_duration_seconds_bucket{path=\"/icon\",method=\"get\",code=\"302\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "90th percentile",
+          "legendFormat": "90th percentile ({{code}})",
           "refId": "C"
         }
       ],
@@ -286,5 +286,5 @@
   "timezone": "",
   "title": "besticon",
   "uid": "iJKKRIXik",
-  "version": 11
+  "version": 12
 }
