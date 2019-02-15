@@ -2,14 +2,6 @@
 
 
 [[projects]]
-  digest = "1:0803645e1f57fb5271a6edc7570b9ea59bac2e5de67957075a43f3d74c8dbd97"
-  name = "github.com/NYTimes/gziphandler"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "2600fb119af974220d3916a5916d6e31176aac1b"
-  version = "v1.0.1"
-
-[[projects]]
   digest = "1:573fa46f8d413d4bc3f7cc5e86b2c43cb21559f4fb0a19d9874d228e28fdc07c"
   name = "github.com/PuerkitoBio/goquery"
   packages = ["."]
@@ -184,7 +176,6 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/NYTimes/gziphandler",
     "github.com/PuerkitoBio/goquery",
     "github.com/golang/freetype/truetype",
     "github.com/golang/groupcache",

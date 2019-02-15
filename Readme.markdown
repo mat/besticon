@@ -129,7 +129,6 @@ There is not a lot to configure but these environment variables exist
 
 Package | Description | License
 ------  | ----------  | ------
-<http://github.com/NYTimes/gziphandler> | net/http gzip compression | [Apache License, Version 2.0](https://github.com/NYTimes/gziphandler/blob/master/LICENSE.md) |
 <http://github.com/PuerkitoBio/goquery> |  |[BSD style](https://github.com/PuerkitoBio/goquery/blob/master/LICENSE) |
 <http://github.com/andybalholm/cascadia> | CSS selectors| [License](https://github.com/andybalholm/cascadia/blob/master/LICENSE) |
 <http://github.com/golang/groupcache> | | [Apache License 2.0](https://github.com/golang/groupcache/blob/master/LICENSE)

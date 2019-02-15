@@ -15,7 +15,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/NYTimes/gziphandler"
 	"github.com/mat/besticon/besticon"
 	"github.com/mat/besticon/besticon/iconserver/assets"
 	"github.com/mat/besticon/lettericon"
@@ -244,11 +243,11 @@ func renderHTMLTemplate(w http.ResponseWriter, httpStatus int, templ *template.T
 }
 
 func startServer(port string) {
-	registerGzipHandler("/", indexHandler)
-	registerGzipHandler("/icons", iconsHandler)
+	registerHandler("/", indexHandler)
+	registerHandler("/icons", iconsHandler)
 	registerHandler("/icon", iconHandler)
-	registerGzipHandler("/popular", popularHandler)
-	registerGzipHandler("/allicons.json", alliconsHandler)
+	registerHandler("/popular", popularHandler)
+	registerHandler("/allicons.json", alliconsHandler)
 	registerHandler("/lettericons/", lettericonHandler)
 
 	serveAsset("/pure-0.5.0-min.css", "besticon/iconserver/assets/pure-0.5.0-min.css", oneYear)
@@ -284,7 +283,7 @@ func addCacheControl(w http.ResponseWriter, maxAge int) {
 }
 
 func serveAsset(path string, assetPath string, maxAgeSeconds int) {
-	registerGzipHandler(path, func(w http.ResponseWriter, r *http.Request) {
+	registerHandler(path, func(w http.ResponseWriter, r *http.Request) {
 		assetInfo, err := assets.AssetInfo(assetPath)
 		if err != nil {
 			panic(err)
@@ -299,10 +298,6 @@ func serveAsset(path string, assetPath string, maxAgeSeconds int) {
 
 func registerHandler(path string, f http.HandlerFunc) {
 	http.Handle(path, newPrometheusHandler(path, newExpvarHandler(path, f)))
-}
-
-func registerGzipHandler(path string, f http.HandlerFunc) {
-	http.Handle(path, newPrometheusHandler(path, gziphandler.GzipHandler(newExpvarHandler(path, f))))
 }
 
 func main() {
