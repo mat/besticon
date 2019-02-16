@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"expvar"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -297,7 +296,7 @@ func serveAsset(path string, assetPath string, maxAgeSeconds int) {
 }
 
 func registerHandler(path string, f http.HandlerFunc) {
-	http.Handle(path, newPrometheusHandler(path, newExpvarHandler(path, f)))
+	http.Handle(path, newPrometheusHandler(path, f))
 }
 
 func main() {
@@ -362,14 +361,6 @@ func init() {
 	cacheDurationSeconds = (int)(duration.Seconds())
 
 	hostOnlyDomains = strings.Split(os.Getenv("HOST_ONLY_DOMAINS"), ",")
-
-	if besticon.CacheEnabled() {
-		expvar.Publish("cacheBytes", expvar.Func(func() interface{} { return besticon.GetCacheStats().Bytes }))
-		expvar.Publish("cacheItems", expvar.Func(func() interface{} { return besticon.GetCacheStats().Items }))
-		expvar.Publish("cacheGets", expvar.Func(func() interface{} { return besticon.GetCacheStats().Gets }))
-		expvar.Publish("cacheHits", expvar.Func(func() interface{} { return besticon.GetCacheStats().Hits }))
-		expvar.Publish("cacheEvictions", expvar.Func(func() interface{} { return besticon.GetCacheStats().Evictions }))
-	}
 }
 
 func getenvOrFallback(key string, fallbackValue string) string {
