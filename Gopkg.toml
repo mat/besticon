@@ -31,5 +31,5 @@
 
 [metadata.heroku]
   root-package = "github.com/mat/besticon"
-  go-version = "go1.11"
+  go-version = "go1.12"
   install = [ "./..." ]
