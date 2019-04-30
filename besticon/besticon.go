@@ -186,7 +186,7 @@ func fetchIcons(siteURL string) ([]Icon, error) {
 const maxResponseBodySize = 10485760 // 10MB
 
 func fetchHTML(url string) ([]byte, *url.URL, error) {
-	r, e := get(url)
+	r, e := Get(url)
 	if e != nil {
 		return nil, nil, e
 	}
@@ -195,7 +195,7 @@ func fetchHTML(url string) ([]byte, *url.URL, error) {
 		return nil, nil, errors.New("besticon: not found")
 	}
 
-	b, e := getBodyBytes(r)
+	b, e := GetBodyBytes(r)
 	if e != nil {
 		return nil, nil, e
 	}
@@ -372,13 +372,13 @@ func fetchAllIcons(urls []string) []Icon {
 func fetchIconDetails(url string) Icon {
 	i := Icon{URL: url}
 
-	response, e := get(url)
+	response, e := Get(url)
 	if e != nil {
 		i.Error = e
 		return i
 	}
 
-	b, e := getBodyBytes(response)
+	b, e := GetBodyBytes(response)
 	if e != nil {
 		i.Error = e
 		return i
@@ -402,7 +402,7 @@ func fetchIconDetails(url string) Icon {
 	return i
 }
 
-func get(urlstring string) (*http.Response, error) {
+func Get(urlstring string) (*http.Response, error) {
 	u, e := url.Parse(urlstring)
 	if e != nil {
 		return nil, e
@@ -446,7 +446,7 @@ func get(urlstring string) (*http.Response, error) {
 	return resp, err
 }
 
-func getBodyBytes(r *http.Response) ([]byte, error) {
+func GetBodyBytes(r *http.Response) ([]byte, error) {
 	limitReader := io.LimitReader(r.Body, maxResponseBodySize)
 	b, e := ioutil.ReadAll(limitReader)
 	r.Body.Close()
