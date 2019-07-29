@@ -147,7 +147,7 @@ func discardUnwantedFormats(icons []Icon, wantedFormats []string) []Icon {
 type iconPredicate func(Icon) bool
 
 func filterIcons(icons []Icon, pred iconPredicate) []Icon {
-	result := []Icon{}
+	var result []Icon
 	for _, ico := range icons {
 		if pred(ico) {
 			result = append(result, ico)
@@ -166,12 +166,12 @@ func includesString(arr []string, str string) bool {
 }
 
 func fetchIcons(siteURL string) ([]Icon, error) {
-	html, url, e := fetchHTML(siteURL)
+	html, urlAfterRedirect, e := fetchHTML(siteURL)
 	if e != nil {
 		return nil, e
 	}
 
-	links, e := findIconLinks(url, html)
+	links, e := findIconLinks(urlAfterRedirect, html)
 	if e != nil {
 		return nil, e
 	}
@@ -241,15 +241,15 @@ func findIconLinks(siteURL *url.URL, html []byte) ([]string, error) {
 
 	// Add icons found in page
 	urls := extractIconTags(doc)
-	for _, url := range urls {
-		url, e := absoluteURL(baseURL, url)
+	for _, u := range urls {
+		absoluteURL, e := absoluteURL(baseURL, u)
 		if e == nil {
-			links[url] = empty{}
+			links[absoluteURL] = empty{}
 		}
 	}
 
 	// Turn unique keys into array
-	result := []string{}
+	var result []string
 	for u := range links {
 		result = append(result, u)
 	}
@@ -303,7 +303,7 @@ func extractBaseTag(doc *goquery.Document) string {
 }
 
 func extractIconTags(doc *goquery.Document) []string {
-	hits := []string{}
+	var hits []string
 	doc.Find(csspaths).Each(func(i int, s *goquery.Selection) {
 		href, ok := s.Attr("href")
 		if ok && href != "" {
@@ -346,12 +346,12 @@ func MainColorForIcons(icons []Icon) *color.RGBA {
 	}
 
 	cf := colorfinder.ColorFinder{}
-	color, err := cf.FindMainColor(*img)
+	mainColor, err := cf.FindMainColor(*img)
 	if err != nil {
 		return nil
 	}
 
-	return &color
+	return &mainColor
 }
 
 func fetchAllIcons(urls []string) []Icon {
@@ -361,7 +361,7 @@ func fetchAllIcons(urls []string) []Icon {
 		go func(u string) { ch <- fetchIconDetails(u) }(u)
 	}
 
-	icons := []Icon{}
+	var icons []Icon
 	for range urls {
 		icon := <-ch
 		icons = append(icons, icon)
@@ -484,34 +484,34 @@ func checkRedirect(req *http.Request, via []*http.Request) error {
 }
 
 func absoluteURL(baseURL *url.URL, path string) (string, error) {
-	url, e := url.Parse(path)
+	u, e := url.Parse(path)
 	if e != nil {
 		return "", e
 	}
 
-	url.Scheme = baseURL.Scheme
-	if url.Scheme == "" {
-		url.Scheme = "http"
+	u.Scheme = baseURL.Scheme
+	if u.Scheme == "" {
+		u.Scheme = "http"
 	}
 
-	if url.Host == "" {
-		url.Host = baseURL.Host
+	if u.Host == "" {
+		u.Host = baseURL.Host
 	}
-	return baseURL.ResolveReference(url).String(), nil
+	return baseURL.ResolveReference(u).String(), nil
 }
 
 func urlFromBase(baseURL *url.URL, path string) string {
-	url := *baseURL
-	url.Path = path
-	if url.Scheme == "" {
-		url.Scheme = "http"
+	u := *baseURL
+	u.Path = path
+	if u.Scheme == "" {
+		u.Scheme = "http"
 	}
 
-	return url.String()
+	return u.String()
 }
 
 func rejectBrokenIcons(icons []Icon) []Icon {
-	result := []Icon{}
+	var result []Icon
 	for _, img := range icons {
 		if img.Error == nil && (img.Width > 1 && img.Height > 1) {
 			result = append(result, img)
