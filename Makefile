@@ -84,6 +84,9 @@ github_package: clean build_all_platforms
 build_docker_image: build_linux_amd64
 	docker build -t matthiasluedtke/iconserver:latest -t matthiasluedtke/iconserver:`cat VERSION` .
 
+docker_run:
+	docker run -p 3000:8080 --env-file docker_run.env matthiasluedtke/iconserver:latest
+
 push_docker_image:
 	docker push matthiasluedtke/iconserver:latest
 	docker push matthiasluedtke/iconserver:`cat VERSION`
