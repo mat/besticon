@@ -81,14 +81,19 @@ github_package: clean build_all_platforms
 	file iconserver*.zip
 	ls -alht iconserver*.zip
 
-build_docker_image: build_linux_amd64
+## Docker ##
+docker_build_image:
 	docker build -t matthiasluedtke/iconserver:latest -t matthiasluedtke/iconserver:`cat VERSION` .
 
 docker_run:
 	docker run -p 3000:8080 --env-file docker_run.env matthiasluedtke/iconserver:latest
 
-push_docker_image:
+docker_push_images_all: docker_push_image_latest docker_push_image_version
+
+docker_push_image_latest:
 	docker push matthiasluedtke/iconserver:latest
+
+docker_push_image_version:
 	docker push matthiasluedtke/iconserver:`cat VERSION`
 
 new_release: bump_version rewrite-version.go git_tag_version
