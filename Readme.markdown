@@ -70,7 +70,10 @@ Feel free to file other bugs - and offer your help - at <https://github.com/mat/
 
 ## Hosting
 
-An easy way to host this service is to use Heroku, just go to <https://heroku.com/deploy> to get started.
+Simple options to host this service are, for example:
+
+- Heroku: <https://heroku.com/deploy>
+- Google Cloud Run: <https://deploy.cloud.run>
 
 ## Docker
 
