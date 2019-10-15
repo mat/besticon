@@ -1,14 +1,24 @@
 {
-	"name": "favicon-service (besticon)",
+	"name": "besticon-favicon-service",
 	"description": "A favicon service written in Go",
 	"repository": "https://github.com/mat/besticon",
 	"website": "https://github.com/mat/besticon",
 	"logo": "https://besticon-demo.herokuapp.com/icon.svg",
 	"env": {
-		"CACHE_SIZE_MB": "64",
-		"HOST_ONLY_DOMAINS": "*",
-		"HTTP_CLIENT_TIMEOUT": "5s",
-		"HTTP_MAX_AGE_DURATION": "720h",
-		"POPULAR_SITES": "bing.com,github.com,instagram.com,reddit.com"
+		"CACHE_SIZE_MB": {
+			"value": "64"
+		},
+		"HOST_ONLY_DOMAINS": {
+			"value": "*"
+		},
+		"HTTP_CLIENT_TIMEOUT": {
+			"value": "5s"
+		},
+		"HTTP_MAX_AGE_DURATION": {
+			"value": "720h"
+		},
+		"POPULAR_SITES": {
+			"value": "github.com"
+		}
 	}
 }
