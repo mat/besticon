@@ -11,7 +11,7 @@ Try out the demo at <https://besticon-demo.herokuapp.com> or find out how to [de
 
 [![Build Status](https://travis-ci.org/mat/besticon.svg?branch=master)](https://travis-ci.org/mat/besticon)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mat/besticon)](https://goreportcard.com/report/github.com/mat/besticon)
-[![Donate at PayPal](https://img.shields.io/badge/paypal-donate-orange.svg?style=flat)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6F9YBSSCM6KCW "Donate once-off to this project using Paypal")
+[![Donate at PayPal](https://img.shields.io/badge/paypal-donate-orange.svg?style=flat)](https://paypal.me/matthiasluedtke "Donate once-off to this project using Paypal")
 
 
 ## What's this?
@@ -177,4 +177,4 @@ SOFTWARE.
 
 If you find this useful and want to donate... you would make my day :-)
 
-[![Donate at PayPal](https://img.shields.io/badge/paypal-donate-orange.svg?style=flat)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6F9YBSSCM6KCW "Donate once-off to this project using Paypal")
+[![Donate at PayPal](https://img.shields.io/badge/paypal-donate-orange.svg?style=flat)](https://paypal.me/matthiasluedtke "Donate once-off to this project using Paypal")
