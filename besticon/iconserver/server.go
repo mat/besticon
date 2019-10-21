@@ -274,7 +274,7 @@ const (
 )
 
 func proxyWithCacheControl(w http.ResponseWriter, r *http.Request, redirectURL string) {
-	if (os.Getenv("DOWNLOAD_MODE") == "proxy") {
+	if (os.Getenv("SERVER_MODE") == "download") {
 		response, e := besticon.Get(redirectURL)
 		if e != nil {
 			redirectWithCacheControl(w, r, redirectURL)
