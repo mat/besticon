@@ -127,7 +127,7 @@ There is not a lot to configure but these environment variables exist
 | `HTTP_CLIENT_TIMEOUT` | Timeout used for HTTP requests. Supports units like ms, s, m. | 5s |
 | `HTTP_MAX_AGE_DURATION` | Cache duration for all dynamically generated HTTP responses. Supports units like ms, s, m. | 720h *(30 days)* |
 | `POPULAR_SITES` | Comma-separated list of domains used on /popular page |  |
-| `SERVER_MODE` | Set to `download` to proxy downloads through Besticon or `redirect` to let browser to download instead. | `redirect` |
+| `SERVER_MODE` | Set to `download` to proxy downloads through besticon or `redirect` to let browser to download instead. (example at  [#40](https://github.com/mat/besticon/pull/40#issuecomment-528325450)) | `redirect` |
 ## Libraries etc.
 
 Package | Description | License
