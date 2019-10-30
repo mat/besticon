@@ -270,7 +270,6 @@ func startServer(port string) {
 const (
 	cacheControl = "Cache-Control"
 	oneYear      = 365 * 24 * 3600
-	maxResponseBodySize = 10485760 // 10MB
 )
 
 func proxyWithCacheControl(w http.ResponseWriter, r *http.Request, redirectURL string) {
