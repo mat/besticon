@@ -82,13 +82,13 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 
 	icon := finder.IconInSizeRange(*sizeRange)
 	if icon != nil {
-		redirectWithCacheControl(w, r, icon.URL)
+		proxyWithCacheControl(w, r, icon.URL)
 		return
 	}
 
 	fallbackIconURL := r.FormValue("fallback_icon_url")
 	if fallbackIconURL != "" {
-		redirectWithCacheControl(w, r, fallbackIconURL)
+		proxyWithCacheControl(w, r, fallbackIconURL)
 		return
 	}
 
@@ -270,7 +270,28 @@ func startServer(port string) {
 const (
 	cacheControl = "Cache-Control"
 	oneYear      = 365 * 24 * 3600
+	maxResponseBodySize = 10485760 // 10MB
 )
+
+func proxyWithCacheControl(w http.ResponseWriter, r *http.Request, redirectURL string) {
+	if (os.Getenv("SERVER_MODE") == "download") {
+		response, e := besticon.Get(redirectURL)
+		if e != nil {
+			redirectWithCacheControl(w, r, redirectURL)
+			return
+		}
+
+		b, e := besticon.GetBodyBytes(response)
+		if e != nil {
+			redirectWithCacheControl(w, r, redirectURL)
+			return
+		}
+		addCacheControl(w, cacheDurationSeconds)
+		w.Write([]byte(b))
+	} else {
+		redirectWithCacheControl(w, r, redirectURL)
+	}
+}
 
 func redirectWithCacheControl(w http.ResponseWriter, r *http.Request, redirectURL string) {
 	addCacheControl(w, cacheDurationSeconds)
