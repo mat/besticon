@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strings"
 	"testing"
 
@@ -59,6 +60,27 @@ func TestGetIcon(t *testing.T) {
 	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "max-age=2592000", w.Header().Get("Cache-Control"))
 	assertStringEquals(t, "https://www.apple.com/apple-touch-icon.png", w.Header().Get("Location"))
+}
+
+func TestGetIconWithDownloadMode(t *testing.T) {
+	os.Setenv("SERVER_MODE", "download")
+	req, err := http.NewRequest("GET", "/icon?url=apple.com&size=120", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	iconHandler(w, req)
+
+	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "max-age=2592000", w.Header().Get("Cache-Control"))
+	assertStringEquals(t, "image/png", w.Header().Get("Content-Type"))
+	assertStringEquals(t, "", w.Header().Get("Location"))
+
+	// Make sure we return some data
+	assertIntegerInInterval(t, 2000, 10000, len(w.Body.String()))
+
+	os.Setenv("SERVER_MODE", "")
 }
 
 func TestGetIconWithFallBackURL(t *testing.T) {
