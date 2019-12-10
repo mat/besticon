@@ -17,6 +17,9 @@
 		"HTTP_MAX_AGE_DURATION": {
 			"value": "720h"
 		},
+		"SERVER_MODE": {
+			"value": "redirect"
+		},
 		"POPULAR_SITES": {
 			"value": "github.com"
 		}
