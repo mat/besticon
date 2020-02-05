@@ -110,6 +110,10 @@ To start the server on default port 8080 just do
 To use a different port use
 
 	$ PORT=80 iconserver
+	
+To listen on a different address (say localhost) use
+
+	$ ADDRESS=127.0.0.1 iconserver
 
 Now when you open <http://localhost:8080/icons?url=instagram.com> you should see something like
 ![Screenshot of The Favicon Finder](https://github.com/mat/besticon/raw/master/the-icon-finder.png)
