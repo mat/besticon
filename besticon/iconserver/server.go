@@ -241,7 +241,7 @@ func renderHTMLTemplate(w http.ResponseWriter, httpStatus int, templ *template.T
 	}
 }
 
-func startServer(port string) {
+func startServer(port string, address string) {
 	registerHandler("/", indexHandler)
 	registerHandler("/icons", iconsHandler)
 	registerHandler("/icon", iconHandler)
@@ -259,7 +259,7 @@ func startServer(port string) {
 
 	http.Handle("/metrics", promhttp.Handler())
 
-	addr := "0.0.0.0:" + port
+	addr := address + ":" + port
 	logger.Print("Starting server on ", addr, "...")
 	e := http.ListenAndServe(addr, newLoggingMux())
 	if e != nil {
@@ -325,7 +325,11 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
-	startServer(port)
+	address := os.Getenv("ADDRESS")
+	if address == "" {
+		address = "0.0.0.0"
+	}
+	startServer(port, address)
 }
 
 func init() {
