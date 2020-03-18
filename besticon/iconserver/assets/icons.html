@@ -58,7 +58,7 @@
           <a href="/icon?size=80..120..200&amp;url={{ .URL }}">https://<wbr>besticon-demo.herokuapp.com<wbr>/icon?<wbr>url={{ .URL }}<wbr>&amp;size=80..120..200</a>
           </p>
 
-          {{ if ((len .Icons) ne 0) }}
+          {{ if (gt (len .Icons) 0)}}
           <h2 class="content-subhead">More Icons on {{ .Host }}</h2>
 
           <table class="pure-table pure-table-horizontal">
