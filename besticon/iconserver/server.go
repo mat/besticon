@@ -20,6 +20,8 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
+	"github.com/rs/cors"
+
 	// Enable runtime profiling at /debug/pprof
 	_ "net/http/pprof"
 )
@@ -261,7 +263,7 @@ func startServer(port string, address string) {
 
 	addr := address + ":" + port
 	logger.Print("Starting server on ", addr, "...")
-	e := http.ListenAndServe(addr, newLoggingMux())
+	e := http.ListenAndServe(addr, cors.Default().Handler(newLoggingMux()))
 	if e != nil {
 		logger.Fatalf("cannot start server: %s\n", e)
 	}
