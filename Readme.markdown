@@ -146,6 +146,7 @@ Package | Description | License
 <http://golang.org/x/text> | | [BSD style](https://github.com/golang/text/blob/master/LICENSE)|
 | [Noto Sans font](https://www.google.com/get/noto/) used for the generated icons | | [SIL Open Font License 1.1](http://scripts.sil.org/OFL) |
 | [The icon](http://sixrevisions.com/freebies/icons/free-icons-1000/) | | [License](http://sixrevisions.com/freebies/icons/free-icons-1000/) |
+<https://github.com/rs/cors> | CORS Support | [MIT License](https://github.com/rs/cors/blob/master/LICENSE)
 
 ## Contributors
 
