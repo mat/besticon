@@ -110,6 +110,14 @@
   version = "v0.0.3"
 
 [[projects]]
+  digest = "1:c5dfe46811af7e2eff7c11fc84b6c841520338613c056f659f262d5a4fb42fa8"
+  name = "github.com/rs/cors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "db0fe48135e83b5812a5a31be0eea66984b1b521"
+  version = "v1.7.0"
+
+[[projects]]
   branch = "master"
   digest = "1:79cea5219771213f0e1eb6c1ba09cf9ea5b68b37e14b96a90f26421c9a41470b"
   name = "golang.org/x/image"

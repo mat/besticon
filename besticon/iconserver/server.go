@@ -19,6 +19,7 @@ import (
 	"github.com/mat/besticon/lettericon"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/rs/cors"
 
 	// Enable runtime profiling at /debug/pprof
 	_ "net/http/pprof"
@@ -261,10 +262,31 @@ func startServer(port string, address string) {
 
 	addr := address + ":" + port
 	logger.Print("Starting server on ", addr, "...")
-	e := http.ListenAndServe(addr, newLoggingMux())
+	e := http.ListenAndServe(addr, httpHandler())
 	if e != nil {
 		logger.Fatalf("cannot start server: %s\n", e)
 	}
+}
+
+func httpHandler() http.Handler {
+	corsEnabled := getTrueFromEnv("CORS_ENABLED")
+	if corsEnabled {
+		logger.Print("Enabling CORS middleware")
+		return corsHandler(newLoggingMux())
+	} else {
+		return newLoggingMux()
+	}
+}
+
+func corsHandler(mux http.HandlerFunc) http.Handler {
+	corsOpts := cors.Options{
+		AllowedOrigins:   stringSliceFromEnv("CORS_ALLOWED_ORIGINS"),
+		AllowedMethods:   stringSliceFromEnv("CORS_ALLOWED_METHODS"),
+		AllowedHeaders:   stringSliceFromEnv("CORS_ALLOWED_HEADERS"),
+		AllowCredentials: getTrueFromEnv("CORS_ALLOW_CREDENTIALS"),
+		Debug:            getTrueFromEnv("CORS_DEBUG"),
+	}
+	return cors.New(corsOpts).Handler(mux)
 }
 
 const (
@@ -388,6 +410,18 @@ func init() {
 	cacheDurationSeconds = (int)(duration.Seconds())
 
 	hostOnlyDomains = strings.Split(os.Getenv("HOST_ONLY_DOMAINS"), ",")
+}
+
+func getTrueFromEnv(s string) bool {
+	return getenvOrFallback(s, "") == "true"
+}
+
+func stringSliceFromEnv(key string) []string {
+	value := os.Getenv(key)
+	if value == "" {
+		return nil
+	}
+	return strings.Split(value, ",")
 }
 
 func getenvOrFallback(key string, fallbackValue string) string {

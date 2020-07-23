@@ -16,6 +16,30 @@
 		"HOST_ONLY_DOMAINS": {
 			"value": "*"
 		},
+		"CORS_ENABLED": {
+			"value": "false",
+			"description": "Enables the cors middleware, defaults to false"
+		},
+		"CORS_ALLOWED_HEADERS": {
+			"value": " ",
+			"description": "Comma-separated, passed to middleware"
+		},
+		"CORS_ALLOWED_METHODS": {
+			"value": " ",
+			"description": "Comma-separated, passed to middleware"
+		},
+		"CORS_ALLOWED_ORIGINS": {
+			"value": " ",
+			"description": "Comma-separated, passed to middleware"
+		},
+		"CORS_ALLOW_CREDENTIALS": {
+			"value": " ",
+			"description": "Boolean, passed to middleware"
+		},
+		"CORS_DEBUG": {
+			"value": " ",
+			"description": "Boolean, passed to middleware"
+		},
 		"HTTP_CLIENT_TIMEOUT": {
 			"value": "5s",
 			"description": "Timeout used for HTTP requests. Supports units like ms, s, m, defaults to 5s"

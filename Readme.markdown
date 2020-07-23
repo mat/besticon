@@ -114,6 +114,10 @@ To use a different port use
 To listen on a different address (say localhost) use
 
 	$ ADDRESS=127.0.0.1 iconserver
+	
+To enable CORS headers you need to set `CORS_ENABLED=true`. Optionally, you can set [additional environment variables](https://github.com/mat/besticon#configuration) which will be passed as options to the [rs/cors middleware](https://github.com/rs/cors#parameters).  
+
+	$ CORS_ENABLED=true iconserver
 
 Now when you open <http://localhost:8080/icons?url=instagram.com> you should see something like
 ![Screenshot of The Favicon Finder](https://github.com/mat/besticon/raw/master/the-icon-finder.png)
@@ -121,12 +125,18 @@ Now when you open <http://localhost:8080/icons?url=instagram.com> you should see
 
 ## Configuration
 
-There is not a lot to configure but these environment variables exist
+There is not a lot to configure, but these environment variables exist
 
 | Variable | Description | Default Value |
 |-------------------------|--------------------------------------------------------------------------------------------|----------------------------|
 | `ADDRESS` | HTTP server listen address | 0.0.0.0 |
 | `CACHE_SIZE_MB` | Size for the [groupcache](http://github.com/golang/groupcache), set to 0 to disable | 32 |
+| `CORS_ENABLED` | Enables the [rs/cors](https://github.com/rs/cors) middleware | false |
+| `CORS_ALLOWED_HEADERS` | Comma-separated, passed to middleware | |
+| `CORS_ALLOWED_METHODS` | Comma-separated, passed to middleware | |
+| `CORS_ALLOWED_ORIGINS` | Comma-separated, passed to middleware | |
+| `CORS_ALLOW_CREDENTIALS` | Boolean, passed to middleware | |
+| `CORS_DEBUG` | Boolean, passed to middleware | |
 | `HOST_ONLY_DOMAINS` |  | * |
 | `HTTP_CLIENT_TIMEOUT` | Timeout used for HTTP requests. Supports units like ms, s, m. | 5s |
 | `HTTP_MAX_AGE_DURATION` | Cache duration for all dynamically generated HTTP responses. Supports units like ms, s, m. | 720h *(30 days)* |
@@ -145,7 +155,8 @@ Package | Description | License
 <http://github.com/golang/freetype> | | [FreeType License](https://github.com/golang/freetype/blob/master/LICENSE)
 <http://golang.org/x/image> | supplementary image libraries | [BSD style](https://github.com/golang/image/blob/master/LICENSE) |
 <http://golang.org/x/net> | | [BSD style](https://github.com/golang/net/blob/master/LICENSE)|
-<http://golang.org/x/text> | | [BSD style](https://github.com/golang/text/blob/master/LICENSE)|
+    <http://golang.org/x/text> | | [BSD style](https://github.com/golang/text/blob/master/LICENSE)|
+<https://github.com/rs/cors> | CORS Support | [MIT License](https://github.com/rs/cors/blob/master/LICENSE)
 | [Noto Sans font](https://www.google.com/get/noto/) used for the generated icons | | [SIL Open Font License 1.1](http://scripts.sil.org/OFL) |
 | [The icon](http://sixrevisions.com/freebies/icons/free-icons-1000/) | | [License](http://sixrevisions.com/freebies/icons/free-icons-1000/) |
 
