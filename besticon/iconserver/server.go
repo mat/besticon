@@ -82,13 +82,13 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 
 	icon := finder.IconInSizeRange(*sizeRange)
 	if icon != nil {
-		proxyWithCacheControl(w, r, icon.URL)
+		returnIcon(w, r, icon.URL)
 		return
 	}
 
 	fallbackIconURL := r.FormValue("fallback_icon_url")
 	if fallbackIconURL != "" {
-		proxyWithCacheControl(w, r, fallbackIconURL)
+		returnIcon(w, r, fallbackIconURL)
 		return
 	}
 
@@ -272,24 +272,27 @@ const (
 	oneYear      = 365 * 24 * 3600
 )
 
-func proxyWithCacheControl(w http.ResponseWriter, r *http.Request, redirectURL string) {
+func returnIcon(w http.ResponseWriter, r *http.Request, iconURL string) {
 	if os.Getenv("SERVER_MODE") == "download" {
-		response, e := besticon.Get(redirectURL)
-		if e != nil {
-			redirectWithCacheControl(w, r, redirectURL)
-			return
-		}
-
-		b, e := besticon.GetBodyBytes(response)
-		if e != nil {
-			redirectWithCacheControl(w, r, redirectURL)
-			return
-		}
-		addCacheControl(w, cacheDurationSeconds)
-		w.Write([]byte(b))
+		downloadAndReturn(w, r, iconURL)
 	} else {
-		redirectWithCacheControl(w, r, redirectURL)
+		redirectWithCacheControl(w, r, iconURL)
 	}
+}
+
+func downloadAndReturn(w http.ResponseWriter, r *http.Request, iconURL string) {
+	response, e := besticon.Get(iconURL)
+	if e != nil {
+		redirectWithCacheControl(w, r, iconURL)
+	}
+
+	b, e := besticon.GetBodyBytes(response)
+	if e != nil {
+		redirectWithCacheControl(w, r, iconURL)
+	}
+
+	addCacheControl(w, cacheDurationSeconds)
+	w.Write(b)
 }
 
 func redirectWithCacheControl(w http.ResponseWriter, r *http.Request, redirectURL string) {
