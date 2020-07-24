@@ -29,7 +29,7 @@
 			"description": "User-Agent used for HTTP requests, defaults to iPhone user agent string"
 		},
 		"POPULAR_SITES": {
-			"value": "github.com",
+			"value": "bing.com,github.com,instagram.com,reddit.com",
 			"description": "Comma-separated list of domains used on /popular page"
 		},
 		"PORT": {
