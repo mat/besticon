@@ -193,6 +193,7 @@ func IconPath(letter string, size string, colr *color.RGBA) string {
 }
 
 const defaultIconSize = 144
+// TODO: Sync with besticon.MaxIconSize ?
 const maxIconSize = 256
 
 // path is like: lettericons/M-144-EFC25D.png

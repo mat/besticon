@@ -38,6 +38,7 @@ import (
 var defaultFormats []string
 
 const MinIconSize = 0
+// TODO: Turn into env var: https://github.com/rendomnet/besticon/commit/c85867cc80c00c898053ce8daf40d51a93b9d39f#diff-37b57e3fdbe4246771791e86deb4d69dL41
 const MaxIconSize = 500
 
 // Icon holds icon information.
