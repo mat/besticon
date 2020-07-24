@@ -125,12 +125,14 @@ There is not a lot to configure but these environment variables exist
 
 | Variable | Description | Default Value |
 |-------------------------|--------------------------------------------------------------------------------------------|----------------------------|
-| `PORT` | HTTP server port | 8080 |
-| `CACHE_SIZE_MB` | Size for the [groupcache](http://github.com/golang/groupcache) | 32 |
-| `HTTP_USER_AGENT` | User-Agent for HTTP requests | *iPhone user agent string* |
+| `ADDRESS` | HTTP server listen address | 0.0.0.0 |
+| `CACHE_SIZE_MB` | Size for the [groupcache](http://github.com/golang/groupcache), set to 0 to disable | 32 |
+| `HOST_ONLY_DOMAINS` |  | * |
 | `HTTP_CLIENT_TIMEOUT` | Timeout used for HTTP requests. Supports units like ms, s, m. | 5s |
 | `HTTP_MAX_AGE_DURATION` | Cache duration for all dynamically generated HTTP responses. Supports units like ms, s, m. | 720h *(30 days)* |
-| `POPULAR_SITES` | Comma-separated list of domains used on /popular page |  |
+| `HTTP_USER_AGENT` | User-Agent used for HTTP requests | *iPhone user agent string* |
+| `POPULAR_SITES` | Comma-separated list of domains used on /popular page | some random web sites |
+| `PORT` | HTTP server port | 8080 |
 | `SERVER_MODE` | Set to `download` to proxy downloads through besticon or `redirect` to let browser to download instead. (example at  [#40](https://github.com/mat/besticon/pull/40#issuecomment-528325450)) | `redirect` |
 ## Libraries etc.
 

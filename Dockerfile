@@ -23,10 +23,14 @@ RUN apk add --no-cache ca-certificates
 # Copy the binary to the production image from the builder stage.
 COPY --from=builder /go/src/github.com/mat/besticon/bin/linux_amd64/iconserver /iconserver
 
+ENV ADDRESS=''
+ENV CACHE_SIZE_MB=32
 ENV HOST_ONLY_DOMAINS=*
-ENV POPULAR_SITES=bing.com,github.com,instagram.com,reddit.com
 ENV HTTP_CLIENT_TIMEOUT=5s
 ENV HTTP_MAX_AGE_DURATION=720h
+ENV HTTP_USER_AGENT=''
+ENV POPULAR_SITES=bing.com,github.com,instagram.com,reddit.com
+ENV PORT=8080
 ENV SERVER_MODE=redirect
 
 # Run the web service on container startup.

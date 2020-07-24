@@ -5,23 +5,49 @@
 	"website": "https://github.com/mat/besticon",
 	"logo": "https://besticon-demo.herokuapp.com/icon.svg",
 	"env": {
+		"ADDRESS": {
+			"value": "",
+			"required": false,
+			"description": "HTTP server listen address, defaults to 0.0.0.0"
+		},
 		"CACHE_SIZE_MB": {
-			"value": "64"
+			"value": "32",
+			"required": false,
+			"description": "Size for the http://github.com/golang/groupcache, set to 0 to disable, defaults to 32"
 		},
 		"HOST_ONLY_DOMAINS": {
-			"value": "*"
+			"value": "*",
+			"required": false
 		},
 		"HTTP_CLIENT_TIMEOUT": {
-			"value": "5s"
+			"value": "5s",
+			"required": false,
+			"description": "Timeout used for HTTP requests. Supports units like ms, s, m, defaults to 5s"
 		},
 		"HTTP_MAX_AGE_DURATION": {
-			"value": "720h"
+			"value": "720h",
+			"required": false,
+			"description": "Cache duration for all dynamically generated HTTP responses. Supports units like ms, s, m"
 		},
-		"SERVER_MODE": {
-			"value": "redirect"
+		"HTTP_USER_AGENT": {
+			"value": "",
+			"required": false,
+			"description": "User-Agent used for HTTP requests, defaults to iPhone user agent string"
 		},
 		"POPULAR_SITES": {
-			"value": "github.com"
+			"value": "github.com",
+			"required": false,
+			"description": "Comma-separated list of domains used on /popular page"
+		},
+		"PORT": {
+			"value": "",
+			"required": false,
+			"description": "HTTP server port, defaults to 8080"
+		},
+		"SERVER_MODE": {
+			"value": "redirect",
+			"required": false,
+			"description": "Set to `download` to proxy downloads through besticon or `redirect` to let browser to download instead, defaults to redirect"
 		}
 	}
 }
