@@ -17,8 +17,7 @@ RUN make build_linux_amd64
 
 # Use a Docker multi-stage build to create a lean production image.
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
-FROM alpine:3.10
-RUN apk add --no-cache ca-certificates
+FROM alpine:3.12
 
 # Copy the binary to the production image from the builder stage.
 COPY --from=builder /go/src/github.com/mat/besticon/bin/linux_amd64/iconserver /iconserver
