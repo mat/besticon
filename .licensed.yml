@@ -1,0 +1,3 @@
+sources:
+#  go: true
+  dep: true

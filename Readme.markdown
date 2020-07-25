@@ -146,17 +146,10 @@ There is not a lot to configure, but these environment variables exist
 | `SERVER_MODE` | Set to `download` to proxy downloads through besticon or `redirect` to let browser to download instead. (example at  [#40](https://github.com/mat/besticon/pull/40#issuecomment-528325450)) | `redirect` |
 ## Libraries etc.
 
+See [NOTICES](https://github.com/mat/besticon/blob/master/NOTICES) and additionally     
+
 Package | Description | License
 ------  | ----------  | ------
-<http://github.com/PuerkitoBio/goquery> |  |[BSD style](https://github.com/PuerkitoBio/goquery/blob/master/LICENSE) |
-<http://github.com/andybalholm/cascadia> | CSS selectors| [License](https://github.com/andybalholm/cascadia/blob/master/LICENSE) |
-<http://github.com/golang/groupcache> | | [Apache License 2.0](https://github.com/golang/groupcache/blob/master/LICENSE)
-<http://github.com/golang/protobuf> | | [License](https://github.com/golang/protobuf/blob/master/LICENSE)
-<http://github.com/golang/freetype> | | [FreeType License](https://github.com/golang/freetype/blob/master/LICENSE)
-<http://golang.org/x/image> | supplementary image libraries | [BSD style](https://github.com/golang/image/blob/master/LICENSE) |
-<http://golang.org/x/net> | | [BSD style](https://github.com/golang/net/blob/master/LICENSE)|
-<http://golang.org/x/text> | | [BSD style](https://github.com/golang/text/blob/master/LICENSE)|
-<https://github.com/rs/cors> | CORS Support | [MIT License](https://github.com/rs/cors/blob/master/LICENSE)
 | [Noto Sans font](https://www.google.com/get/noto/) used for the generated icons | | [SIL Open Font License 1.1](http://scripts.sil.org/OFL) |
 | [The icon](http://sixrevisions.com/freebies/icons/free-icons-1000/) | | [License](http://sixrevisions.com/freebies/icons/free-icons-1000/) |
 

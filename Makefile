@@ -96,6 +96,8 @@ docker_push_image_latest:
 docker_push_image_version:
 	docker push matthiasluedtke/iconserver:`cat VERSION`
 
+
+## New GitHub Release ##
 new_release: bump_version rewrite-version.go git_tag_version
 
 bump_version:
@@ -107,3 +109,8 @@ rewrite-version.go:
 git_tag_version:
 	git commit VERSION besticon/version.go -m "Release `cat VERSION`"
 	git tag `cat VERSION`
+
+update_notices_file:
+	licensed cache
+	licensed notice
+	cp .licenses/NOTICE NOTICES
