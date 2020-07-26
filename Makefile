@@ -114,3 +114,4 @@ update_notices_file:
 	licensed cache
 	licensed notice
 	cp .licenses/NOTICE NOTICES
+	cat notices-more/* >> NOTICES

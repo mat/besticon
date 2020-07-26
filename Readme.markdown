@@ -144,14 +144,6 @@ There is not a lot to configure, but these environment variables exist
 | `POPULAR_SITES` | Comma-separated list of domains used on /popular page | some random web sites |
 | `PORT` | HTTP server port | 8080 |
 | `SERVER_MODE` | Set to `download` to proxy downloads through besticon or `redirect` to let browser to download instead. (example at  [#40](https://github.com/mat/besticon/pull/40#issuecomment-528325450)) | `redirect` |
-## Libraries etc.
-
-See [NOTICES](https://github.com/mat/besticon/blob/master/NOTICES) and additionally     
-
-Package | Description | License
-------  | ----------  | ------
-| [Noto Sans font](https://www.google.com/get/noto/) used for the generated icons | | [SIL Open Font License 1.1](http://scripts.sil.org/OFL) |
-| [The icon](http://sixrevisions.com/freebies/icons/free-icons-1000/) | | [License](http://sixrevisions.com/freebies/icons/free-icons-1000/) |
 
 ## Contributors
 
