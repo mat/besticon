@@ -74,13 +74,6 @@ build_windows_amd64:
 build_all_platforms: build_darwin_amd64 build_linux_amd64 build_windows_amd64
 	find bin/ -type file | xargs file
 
-github_package: clean build_all_platforms
-	zip -o -j iconserver_darwin-amd64 bin/darwin_amd64/* Readme.markdown LICENSE
-	zip -o -j iconserver_linux_amd64 bin/linux_amd64/* Readme.markdown LICENSE
-	zip -o -j iconserver_windows_amd64 bin/windows_amd64/* Readme.markdown LICENSE
-	file iconserver*.zip
-	ls -alht iconserver*.zip
-
 ## Docker ##
 docker_build_image:
 	docker build -t matthiasluedtke/iconserver:latest -t matthiasluedtke/iconserver:`cat VERSION` .
@@ -98,7 +91,14 @@ docker_push_image_version:
 
 
 ## New GitHub Release ##
-new_release: bump_version rewrite-version.go git_tag_version
+github_package: clean build_all_platforms
+	zip -o -j iconserver_darwin-amd64 bin/darwin_amd64/* Readme.markdown LICENSE NOTICES
+	zip -o -j iconserver_linux_amd64 bin/linux_amd64/* Readme.markdown LICENSE NOTICES
+	zip -o -j iconserver_windows_amd64 bin/windows_amd64/* Readme.markdown LICENSE NOTICES
+	file iconserver*.zip
+	ls -alht iconserver*.zip
+
+new_release: update_notices_file bump_version rewrite-version.go git_tag_version
 
 bump_version:
 	vi VERSION
@@ -115,3 +115,4 @@ update_notices_file:
 	licensed notice
 	cp .licenses/NOTICE NOTICES
 	cat notices-more/* >> NOTICES
+	git commit NOTICES -m "Update NOTICES" || echo "No change to NOTICES to commit"
