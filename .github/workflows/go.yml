@@ -1,4 +1,4 @@
-name: Go
+name: Build + Test
 
 on:
   push:
@@ -24,5 +24,8 @@ jobs:
     - name: Build
       run: go get github.com/mat/besticon/...
 
-    - name: Test
-      run: make test
+    - run: make test
+
+    - run: make test_bench
+      
+    - run: make test_race
