@@ -151,6 +151,7 @@ There is not a lot to configure, but these environment variables exist
   * mmkal - https://github.com/mmkal
   * kspearrin - https://github.com/kspearrin
   * karl-ravn - https://github.com/karl-ravn
+  * korbenclario - https://github.com/korbenclario
 
 ## License
 
