@@ -1,7 +1,3 @@
 bin/
 tags
 .licenses/
-.idea/
-!.idea/codeStyles
-.DS_Store
-/.env
