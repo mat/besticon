@@ -1,3 +1,4 @@
 sources:
-#  go: true
-  dep: true
+  go: true
+
+source_path: besticon/iconserver

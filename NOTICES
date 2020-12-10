@@ -1,7 +1,7 @@
 THIRD PARTY NOTICES
 
 *****
-github.com/PuerkitoBio/goquery@2d2796f41742ece03e8086188fa4db16a3a0b458
+github.com/PuerkitoBio/goquery@v1.5.0
 
 Copyright (c) 2012-2016, Martin Angers & Contributors
 All rights reserved.
@@ -37,7 +37,7 @@ The [BSD 3-Clause license][bsd], the same as the [Go language][golic]. Cascadia'
 [goq]: https://github.com/andrewstuart/goq
 
 *****
-github.com/andybalholm/cascadia@901648c87902174f774fac311d7f176f8647bdaa
+github.com/andybalholm/cascadia@v1.0.0
 
 Copyright (c) 2011 Andy Balholm. All rights reserved.
 
@@ -65,7 +65,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 *****
-github.com/beorn7/perks/quantile@4b2b341e8d7715fae06375aa633dbb6e91b3fb46
+github.com/beorn7/perks/quantile@v1.0.0
 
 Copyright (C) 2013 Blake Mizerany
 
@@ -89,7 +89,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 *****
-github.com/golang/freetype/raster@e2365dfdc4a05e4b8299a783240d4a7d5a65d4e4
+github.com/golang/freetype/raster@v0.0.0-20170609003504-e2365dfdc4a0
 
 Use of the Freetype-Go software is subject to your choice of exactly one of
 the following two licenses:
@@ -105,7 +105,7 @@ The Luxi fonts in the testdata directory are licensed separately. See the
 testdata/COPYING file for details.
 
 *****
-github.com/golang/freetype/truetype@e2365dfdc4a05e4b8299a783240d4a7d5a65d4e4
+github.com/golang/freetype/truetype@v0.0.0-20170609003504-e2365dfdc4a0
 
 Use of the Freetype-Go software is subject to your choice of exactly one of
 the following two licenses:
@@ -121,7 +121,7 @@ The Luxi fonts in the testdata directory are licensed separately. See the
 testdata/COPYING file for details.
 
 *****
-github.com/golang/groupcache@869f871628b6baa9cfbc11732cdf6546b17c1298
+github.com/golang/groupcache@v0.0.0-20190702054246-869f871628b6
 
 Apache License
 Version 2.0, January 2004
@@ -316,7 +316,7 @@ third-party archives.
    limitations under the License.
 
 *****
-github.com/golang/groupcache/consistenthash@869f871628b6baa9cfbc11732cdf6546b17c1298
+github.com/golang/groupcache/consistenthash@v0.0.0-20190702054246-869f871628b6
 
 Apache License
 Version 2.0, January 2004
@@ -511,7 +511,7 @@ third-party archives.
    limitations under the License.
 
 *****
-github.com/golang/groupcache/groupcachepb@869f871628b6baa9cfbc11732cdf6546b17c1298
+github.com/golang/groupcache/groupcachepb@v0.0.0-20190702054246-869f871628b6
 
 Apache License
 Version 2.0, January 2004
@@ -706,7 +706,7 @@ third-party archives.
    limitations under the License.
 
 *****
-github.com/golang/groupcache/lru@869f871628b6baa9cfbc11732cdf6546b17c1298
+github.com/golang/groupcache/lru@v0.0.0-20190702054246-869f871628b6
 
 Apache License
 Version 2.0, January 2004
@@ -901,7 +901,7 @@ third-party archives.
    limitations under the License.
 
 *****
-github.com/golang/groupcache/singleflight@869f871628b6baa9cfbc11732cdf6546b17c1298
+github.com/golang/groupcache/singleflight@v0.0.0-20190702054246-869f871628b6
 
 Apache License
 Version 2.0, January 2004
@@ -1096,7 +1096,7 @@ third-party archives.
    limitations under the License.
 
 *****
-github.com/golang/protobuf/proto@6c65a5562fc06764971b7c5d05c76c75e84bdbf7
+github.com/golang/protobuf/proto@v1.3.2
 
 Copyright 2010 The Go Authors.  All rights reserved.
 
@@ -1127,7 +1127,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 *****
-github.com/matttproud/golang_protobuf_extensions/pbutil@c12348ce28de40eed0136aa2b644d0ee0650e56c
+github.com/matttproud/golang_protobuf_extensions/pbutil@v1.0.1
 
 Apache License
                            Version 2.0, January 2004
@@ -1332,7 +1332,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/prometheus/client_golang/prometheus@4ab88e80c249ed361d3299e2930427d9ac43ef8d
+github.com/prometheus/client_golang/prometheus@v1.0.0
 
 Apache License
                            Version 2.0, January 2004
@@ -1537,7 +1537,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/prometheus/client_golang/prometheus/internal@4ab88e80c249ed361d3299e2930427d9ac43ef8d
+github.com/prometheus/client_golang/prometheus/internal@v1.0.0
 
 Apache License
                            Version 2.0, January 2004
@@ -1742,7 +1742,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/prometheus/client_golang/prometheus/promhttp@4ab88e80c249ed361d3299e2930427d9ac43ef8d
+github.com/prometheus/client_golang/prometheus/promhttp@v1.0.0
 
 Apache License
                            Version 2.0, January 2004
@@ -1947,7 +1947,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/prometheus/client_model/go@fd36f4220a901265f90734c3183c5f0c91daa0b8
+github.com/prometheus/client_model/go@v0.0.0-20190129233127-fd36f4220a90
 
 Apache License
                            Version 2.0, January 2004
@@ -2152,7 +2152,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/prometheus/common/expfmt@31bed53e4047fd6c510e43a941f90cb31be0972a
+github.com/prometheus/common/expfmt@v0.6.0
 
 Apache License
                            Version 2.0, January 2004
@@ -2357,7 +2357,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg@31bed53e4047fd6c510e43a941f90cb31be0972a
+github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg@v0.6.0
 
 Apache License
                            Version 2.0, January 2004
@@ -2562,7 +2562,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/prometheus/common/model@31bed53e4047fd6c510e43a941f90cb31be0972a
+github.com/prometheus/common/model@v0.6.0
 
 Apache License
                            Version 2.0, January 2004
@@ -2767,7 +2767,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/prometheus/procfs@3f98efb27840a48a7a2898ec80be07674d19f9c8
+github.com/prometheus/procfs@v0.0.3
 
 Apache License
                            Version 2.0, January 2004
@@ -2982,7 +2982,7 @@ This product includes software developed at
 SoundCloud Ltd. (http://soundcloud.com/).
 
 *****
-github.com/prometheus/procfs/internal/fs@3f98efb27840a48a7a2898ec80be07674d19f9c8
+github.com/prometheus/procfs/internal/fs@v0.0.3
 
 Apache License
                            Version 2.0, January 2004
@@ -3187,7 +3187,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/rs/cors@db0fe48135e83b5812a5a31be0eea66984b1b521
+github.com/rs/cors@v1.7.0
 
 Copyright (c) 2014 Olivier Poitrey <rs@dailymotion.com>
 
@@ -3210,7 +3210,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 *****
-golang.org/x/image/bmp@d6a02ce849c95fa57d9927fab7b6d9071876dfe0
+golang.org/x/image/bmp@v0.0.0-20190703141733-d6a02ce849c9
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3266,7 +3266,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/image/font@d6a02ce849c95fa57d9927fab7b6d9071876dfe0
+golang.org/x/image/font@v0.0.0-20190703141733-d6a02ce849c9
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3322,7 +3322,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/image/math/fixed@d6a02ce849c95fa57d9927fab7b6d9071876dfe0
+golang.org/x/image/math/fixed@v0.0.0-20190703141733-d6a02ce849c9
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3378,7 +3378,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/net/html@ca1201d0de80cfde86cb01aea620983605dfe99b
+golang.org/x/net/html@v0.0.0-20190724013045-ca1201d0de80
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3434,7 +3434,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/net/html/atom@ca1201d0de80cfde86cb01aea620983605dfe99b
+golang.org/x/net/html/atom@v0.0.0-20190724013045-ca1201d0de80
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3490,7 +3490,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/net/html/charset@ca1201d0de80cfde86cb01aea620983605dfe99b
+golang.org/x/net/html/charset@v0.0.0-20190724013045-ca1201d0de80
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3546,7 +3546,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/net/publicsuffix@ca1201d0de80cfde86cb01aea620983605dfe99b
+golang.org/x/net/publicsuffix@v0.0.0-20190724013045-ca1201d0de80
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3602,7 +3602,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/sys/windows@fc99dfbffb4e5ed5758a37e31dd861afe285406b
+golang.org/x/text/encoding@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3658,7 +3658,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/collate@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/encoding/charmap@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3714,7 +3714,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/collate/build@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/encoding/htmlindex@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3770,7 +3770,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/encoding/internal@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3826,7 +3826,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/charmap@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/encoding/internal/identifier@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3882,7 +3882,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/htmlindex@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/encoding/japanese@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3938,7 +3938,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/internal@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/encoding/korean@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3994,7 +3994,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/internal/identifier@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/encoding/simplifiedchinese@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4050,7 +4050,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/japanese@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/encoding/traditionalchinese@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4106,7 +4106,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/korean@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/encoding/unicode@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4162,7 +4162,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/simplifiedchinese@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/internal/language@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4218,7 +4218,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/traditionalchinese@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/internal/language/compact@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4274,7 +4274,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/unicode@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/internal/tag@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4330,7 +4330,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/internal/colltab@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/internal/utf8internal@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4386,7 +4386,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/internal/gen@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/language@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4442,511 +4442,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/internal/language@342b2e1fbaa52c93f31447ad2c6abc048c63e475
-
-Copyright (c) 2009 The Go Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-   * Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above
-copyright notice, this list of conditions and the following disclaimer
-in the documentation and/or other materials provided with the
-distribution.
-   * Neither the name of Google Inc. nor the names of its
-contributors may be used to endorse or promote products derived from
-this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
------
-
-Additional IP Rights Grant (Patents)
-
-"This implementation" means the copyrightable works distributed by
-Google as part of the Go project.
-
-Google hereby grants to You a perpetual, worldwide, non-exclusive,
-no-charge, royalty-free, irrevocable (except as stated in this section)
-patent license to make, have made, use, offer to sell, sell, import,
-transfer and otherwise run, modify and propagate the contents of this
-implementation of Go, where such license applies only to those patent
-claims, both currently owned or controlled by Google and acquired in
-the future, licensable by Google that are necessarily infringed by this
-implementation of Go.  This grant does not include claims that would be
-infringed only as a consequence of further modification of this
-implementation.  If you or your agent or exclusive licensee institute or
-order or agree to the institution of patent litigation against any
-entity (including a cross-claim or counterclaim in a lawsuit) alleging
-that this implementation of Go or any code incorporated within this
-implementation of Go constitutes direct or contributory patent
-infringement, or inducement of patent infringement, then any patent
-rights granted to you under this License for this implementation of Go
-shall terminate as of the date such litigation is filed.
-
-*****
-golang.org/x/text/internal/language/compact@342b2e1fbaa52c93f31447ad2c6abc048c63e475
-
-Copyright (c) 2009 The Go Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-   * Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above
-copyright notice, this list of conditions and the following disclaimer
-in the documentation and/or other materials provided with the
-distribution.
-   * Neither the name of Google Inc. nor the names of its
-contributors may be used to endorse or promote products derived from
-this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
------
-
-Additional IP Rights Grant (Patents)
-
-"This implementation" means the copyrightable works distributed by
-Google as part of the Go project.
-
-Google hereby grants to You a perpetual, worldwide, non-exclusive,
-no-charge, royalty-free, irrevocable (except as stated in this section)
-patent license to make, have made, use, offer to sell, sell, import,
-transfer and otherwise run, modify and propagate the contents of this
-implementation of Go, where such license applies only to those patent
-claims, both currently owned or controlled by Google and acquired in
-the future, licensable by Google that are necessarily infringed by this
-implementation of Go.  This grant does not include claims that would be
-infringed only as a consequence of further modification of this
-implementation.  If you or your agent or exclusive licensee institute or
-order or agree to the institution of patent litigation against any
-entity (including a cross-claim or counterclaim in a lawsuit) alleging
-that this implementation of Go or any code incorporated within this
-implementation of Go constitutes direct or contributory patent
-infringement, or inducement of patent infringement, then any patent
-rights granted to you under this License for this implementation of Go
-shall terminate as of the date such litigation is filed.
-
-*****
-golang.org/x/text/internal/tag@342b2e1fbaa52c93f31447ad2c6abc048c63e475
-
-Copyright (c) 2009 The Go Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-   * Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above
-copyright notice, this list of conditions and the following disclaimer
-in the documentation and/or other materials provided with the
-distribution.
-   * Neither the name of Google Inc. nor the names of its
-contributors may be used to endorse or promote products derived from
-this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
------
-
-Additional IP Rights Grant (Patents)
-
-"This implementation" means the copyrightable works distributed by
-Google as part of the Go project.
-
-Google hereby grants to You a perpetual, worldwide, non-exclusive,
-no-charge, royalty-free, irrevocable (except as stated in this section)
-patent license to make, have made, use, offer to sell, sell, import,
-transfer and otherwise run, modify and propagate the contents of this
-implementation of Go, where such license applies only to those patent
-claims, both currently owned or controlled by Google and acquired in
-the future, licensable by Google that are necessarily infringed by this
-implementation of Go.  This grant does not include claims that would be
-infringed only as a consequence of further modification of this
-implementation.  If you or your agent or exclusive licensee institute or
-order or agree to the institution of patent litigation against any
-entity (including a cross-claim or counterclaim in a lawsuit) alleging
-that this implementation of Go or any code incorporated within this
-implementation of Go constitutes direct or contributory patent
-infringement, or inducement of patent infringement, then any patent
-rights granted to you under this License for this implementation of Go
-shall terminate as of the date such litigation is filed.
-
-*****
-golang.org/x/text/internal/triegen@342b2e1fbaa52c93f31447ad2c6abc048c63e475
-
-Copyright (c) 2009 The Go Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-   * Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above
-copyright notice, this list of conditions and the following disclaimer
-in the documentation and/or other materials provided with the
-distribution.
-   * Neither the name of Google Inc. nor the names of its
-contributors may be used to endorse or promote products derived from
-this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
------
-
-Additional IP Rights Grant (Patents)
-
-"This implementation" means the copyrightable works distributed by
-Google as part of the Go project.
-
-Google hereby grants to You a perpetual, worldwide, non-exclusive,
-no-charge, royalty-free, irrevocable (except as stated in this section)
-patent license to make, have made, use, offer to sell, sell, import,
-transfer and otherwise run, modify and propagate the contents of this
-implementation of Go, where such license applies only to those patent
-claims, both currently owned or controlled by Google and acquired in
-the future, licensable by Google that are necessarily infringed by this
-implementation of Go.  This grant does not include claims that would be
-infringed only as a consequence of further modification of this
-implementation.  If you or your agent or exclusive licensee institute or
-order or agree to the institution of patent litigation against any
-entity (including a cross-claim or counterclaim in a lawsuit) alleging
-that this implementation of Go or any code incorporated within this
-implementation of Go constitutes direct or contributory patent
-infringement, or inducement of patent infringement, then any patent
-rights granted to you under this License for this implementation of Go
-shall terminate as of the date such litigation is filed.
-
-*****
-golang.org/x/text/internal/ucd@342b2e1fbaa52c93f31447ad2c6abc048c63e475
-
-Copyright (c) 2009 The Go Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-   * Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above
-copyright notice, this list of conditions and the following disclaimer
-in the documentation and/or other materials provided with the
-distribution.
-   * Neither the name of Google Inc. nor the names of its
-contributors may be used to endorse or promote products derived from
-this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
------
-
-Additional IP Rights Grant (Patents)
-
-"This implementation" means the copyrightable works distributed by
-Google as part of the Go project.
-
-Google hereby grants to You a perpetual, worldwide, non-exclusive,
-no-charge, royalty-free, irrevocable (except as stated in this section)
-patent license to make, have made, use, offer to sell, sell, import,
-transfer and otherwise run, modify and propagate the contents of this
-implementation of Go, where such license applies only to those patent
-claims, both currently owned or controlled by Google and acquired in
-the future, licensable by Google that are necessarily infringed by this
-implementation of Go.  This grant does not include claims that would be
-infringed only as a consequence of further modification of this
-implementation.  If you or your agent or exclusive licensee institute or
-order or agree to the institution of patent litigation against any
-entity (including a cross-claim or counterclaim in a lawsuit) alleging
-that this implementation of Go or any code incorporated within this
-implementation of Go constitutes direct or contributory patent
-infringement, or inducement of patent infringement, then any patent
-rights granted to you under this License for this implementation of Go
-shall terminate as of the date such litigation is filed.
-
-*****
-golang.org/x/text/internal/utf8internal@342b2e1fbaa52c93f31447ad2c6abc048c63e475
-
-Copyright (c) 2009 The Go Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-   * Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above
-copyright notice, this list of conditions and the following disclaimer
-in the documentation and/or other materials provided with the
-distribution.
-   * Neither the name of Google Inc. nor the names of its
-contributors may be used to endorse or promote products derived from
-this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
------
-
-Additional IP Rights Grant (Patents)
-
-"This implementation" means the copyrightable works distributed by
-Google as part of the Go project.
-
-Google hereby grants to You a perpetual, worldwide, non-exclusive,
-no-charge, royalty-free, irrevocable (except as stated in this section)
-patent license to make, have made, use, offer to sell, sell, import,
-transfer and otherwise run, modify and propagate the contents of this
-implementation of Go, where such license applies only to those patent
-claims, both currently owned or controlled by Google and acquired in
-the future, licensable by Google that are necessarily infringed by this
-implementation of Go.  This grant does not include claims that would be
-infringed only as a consequence of further modification of this
-implementation.  If you or your agent or exclusive licensee institute or
-order or agree to the institution of patent litigation against any
-entity (including a cross-claim or counterclaim in a lawsuit) alleging
-that this implementation of Go or any code incorporated within this
-implementation of Go constitutes direct or contributory patent
-infringement, or inducement of patent infringement, then any patent
-rights granted to you under this License for this implementation of Go
-shall terminate as of the date such litigation is filed.
-
-*****
-golang.org/x/text/language@342b2e1fbaa52c93f31447ad2c6abc048c63e475
-
-Copyright (c) 2009 The Go Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-   * Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above
-copyright notice, this list of conditions and the following disclaimer
-in the documentation and/or other materials provided with the
-distribution.
-   * Neither the name of Google Inc. nor the names of its
-contributors may be used to endorse or promote products derived from
-this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
------
-
-Additional IP Rights Grant (Patents)
-
-"This implementation" means the copyrightable works distributed by
-Google as part of the Go project.
-
-Google hereby grants to You a perpetual, worldwide, non-exclusive,
-no-charge, royalty-free, irrevocable (except as stated in this section)
-patent license to make, have made, use, offer to sell, sell, import,
-transfer and otherwise run, modify and propagate the contents of this
-implementation of Go, where such license applies only to those patent
-claims, both currently owned or controlled by Google and acquired in
-the future, licensable by Google that are necessarily infringed by this
-implementation of Go.  This grant does not include claims that would be
-infringed only as a consequence of further modification of this
-implementation.  If you or your agent or exclusive licensee institute or
-order or agree to the institution of patent litigation against any
-entity (including a cross-claim or counterclaim in a lawsuit) alleging
-that this implementation of Go or any code incorporated within this
-implementation of Go constitutes direct or contributory patent
-infringement, or inducement of patent infringement, then any patent
-rights granted to you under this License for this implementation of Go
-shall terminate as of the date such litigation is filed.
-
-*****
-golang.org/x/text/runes@342b2e1fbaa52c93f31447ad2c6abc048c63e475
-
-Copyright (c) 2009 The Go Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-   * Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above
-copyright notice, this list of conditions and the following disclaimer
-in the documentation and/or other materials provided with the
-distribution.
-   * Neither the name of Google Inc. nor the names of its
-contributors may be used to endorse or promote products derived from
-this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
------
-
-Additional IP Rights Grant (Patents)
-
-"This implementation" means the copyrightable works distributed by
-Google as part of the Go project.
-
-Google hereby grants to You a perpetual, worldwide, non-exclusive,
-no-charge, royalty-free, irrevocable (except as stated in this section)
-patent license to make, have made, use, offer to sell, sell, import,
-transfer and otherwise run, modify and propagate the contents of this
-implementation of Go, where such license applies only to those patent
-claims, both currently owned or controlled by Google and acquired in
-the future, licensable by Google that are necessarily infringed by this
-implementation of Go.  This grant does not include claims that would be
-infringed only as a consequence of further modification of this
-implementation.  If you or your agent or exclusive licensee institute or
-order or agree to the institution of patent litigation against any
-entity (including a cross-claim or counterclaim in a lawsuit) alleging
-that this implementation of Go or any code incorporated within this
-implementation of Go constitutes direct or contributory patent
-infringement, or inducement of patent infringement, then any patent
-rights granted to you under this License for this implementation of Go
-shall terminate as of the date such litigation is filed.
-
-*****
-golang.org/x/text/unicode/cldr@342b2e1fbaa52c93f31447ad2c6abc048c63e475
-
-Copyright (c) 2009 The Go Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-   * Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above
-copyright notice, this list of conditions and the following disclaimer
-in the documentation and/or other materials provided with the
-distribution.
-   * Neither the name of Google Inc. nor the names of its
-contributors may be used to endorse or promote products derived from
-this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
------
-
-Additional IP Rights Grant (Patents)
-
-"This implementation" means the copyrightable works distributed by
-Google as part of the Go project.
-
-Google hereby grants to You a perpetual, worldwide, non-exclusive,
-no-charge, royalty-free, irrevocable (except as stated in this section)
-patent license to make, have made, use, offer to sell, sell, import,
-transfer and otherwise run, modify and propagate the contents of this
-implementation of Go, where such license applies only to those patent
-claims, both currently owned or controlled by Google and acquired in
-the future, licensable by Google that are necessarily infringed by this
-implementation of Go.  This grant does not include claims that would be
-infringed only as a consequence of further modification of this
-implementation.  If you or your agent or exclusive licensee institute or
-order or agree to the institution of patent litigation against any
-entity (including a cross-claim or counterclaim in a lawsuit) alleging
-that this implementation of Go or any code incorporated within this
-implementation of Go constitutes direct or contributory patent
-infringement, or inducement of patent infringement, then any patent
-rights granted to you under this License for this implementation of Go
-shall terminate as of the date such litigation is filed.
-
-*****
-golang.org/x/text/unicode/rangetable@342b2e1fbaa52c93f31447ad2c6abc048c63e475
+golang.org/x/text/runes@v0.3.2
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
