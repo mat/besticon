@@ -86,20 +86,6 @@ func docFromHTML(html []byte) (*goquery.Document, error) {
 	return doc, nil
 }
 
-// List of css selectors for icons
-var csspaths = strings.Join([]string{
-	"link[rel='icon']",
-	"link[rel='shortcut icon']",
-	"link[rel='apple-touch-icon']",
-	"link[rel='apple-touch-icon-precomposed']",
-
-	// Capitalized variants, TODO: refactor
-	"link[rel='ICON']",
-	"link[rel='SHORTCUT ICON']",
-	"link[rel='APPLE-TOUCH-ICON']",
-	"link[rel='APPLE-TOUCH-ICON-PRECOMPOSED']",
-}, ", ")
-
 var errParseHTML = errors.New("besticon: could not parse html")
 
 // Find <head><base href="xxx">
@@ -116,7 +102,7 @@ var (
 	iconTypesRe = regexp.MustCompile(fmt.Sprintf(`\b(%s)\b`, strings.Join(iconTypes, "|")))
 )
 
-// Find icons from doc using csspaths
+// Find icons from doc using goquery
 func extractIconTags(doc *goquery.Document) []string {
 	var hits []string
 	doc.Find("link[href][rel]").Each(func(i int, s *goquery.Selection) {
