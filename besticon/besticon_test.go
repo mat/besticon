@@ -9,7 +9,6 @@ import (
 	"net/url"
 	"os"
 	"reflect"
-	"sort"
 	"testing"
 
 	"github.com/mat/besticon/vcr"
@@ -199,14 +198,6 @@ func TestParsingEmptyResponse(t *testing.T) {
 	assertEquals(t, errors.New("besticon: empty response"), err)
 }
 
-func mustFindIconLinks(html []byte) []string {
-	doc, e := docFromHTML(html)
-	check(e)
-	links := extractIconTags(doc)
-	sort.Strings(links)
-	return links
-}
-
 func TestMainColorForIconsWithBrokenImageData(t *testing.T) {
 	icn := Icon{Format: "png", ImageData: []byte("broken-image-data")}
 	colr := MainColorForIcons([]Icon{icn})
@@ -216,24 +207,6 @@ func TestMainColorForIconsWithBrokenImageData(t *testing.T) {
 func TestFindBestIconNoIcons(t *testing.T) {
 	icons, _, _ := fetchIconsWithVCR("example.com.vcr", "http://example.com")
 	assertEquals(t, 0, len(icons))
-}
-
-func TestLinkExtraction(t *testing.T) {
-	links := mustFindIconLinks(mustReadFile("testdata/daringfireball.html"))
-	assertEquals(t, []string{
-		"/graphics/apple-touch-icon.png",
-		"/graphics/favicon.ico?v=005",
-	}, links)
-
-	links = mustFindIconLinks(mustReadFile("testdata/newyorker.html"))
-	assertEquals(t, []string{
-		"/wp-content/assets/dist/img/icon/apple-touch-icon-114x114-precomposed.png",
-		"/wp-content/assets/dist/img/icon/apple-touch-icon-144x144-precomposed.png",
-		"/wp-content/assets/dist/img/icon/apple-touch-icon-57x57-precomposed.png",
-		"/wp-content/assets/dist/img/icon/apple-touch-icon-precomposed.png",
-		"/wp-content/assets/dist/img/icon/apple-touch-icon.png",
-		"/wp-content/assets/dist/img/icon/favicon.ico",
-	}, links)
 }
 
 func TestImageSizeDetection(t *testing.T) {
