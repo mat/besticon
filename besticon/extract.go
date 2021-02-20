@@ -1,5 +1,3 @@
-// Package besticon includes functions
-// finding icons for a given web site.
 package besticon
 
 import (
