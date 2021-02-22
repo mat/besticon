@@ -99,7 +99,7 @@ func extractBaseTag(doc *goquery.Document) string {
 
 var (
 	iconTypes   = []string{favIcon, appleTouchIcon, appleTouchIconPrecomposed}
-	iconTypesRe = regexp.MustCompile(fmt.Sprintf(`\b(%s)\b`, strings.Join(iconTypes, "|")))
+	iconTypesRe = regexp.MustCompile(fmt.Sprintf(`\b(%s)\b`, strings.Join(regexpQuoteMetaArray(iconTypes), "|")))
 )
 
 // Find icons from doc using goquery
@@ -139,4 +139,13 @@ func extractIconTag(s *goquery.Selection) string {
 	}
 
 	return href
+}
+
+// regexp.QuoteMeta an array of strings
+func regexpQuoteMetaArray(a []string) []string {
+	quoted := make([]string, len(a))
+	for i, s := range a {
+		quoted[i] = regexp.QuoteMeta(s)
+	}
+	return quoted
 }
