@@ -23,6 +23,7 @@ import (
 
 	// Load supported image formats.
 	_ "image/gif"
+	_ "image/jpeg"
 	_ "image/png"
 
 	_ "github.com/mat/besticon/ico"
@@ -38,6 +39,7 @@ import (
 var defaultFormats []string
 
 const MinIconSize = 0
+
 // TODO: Turn into env var: https://github.com/rendomnet/besticon/commit/c85867cc80c00c898053ce8daf40d51a93b9d39f#diff-37b57e3fdbe4246771791e86deb4d69dL41
 const MaxIconSize = 500
 
@@ -320,9 +322,9 @@ func MainColorForIcons(icons []Icon) *color.RGBA {
 	}
 
 	var icon *Icon
-	// Prefer .png and .gif
+	// Prefer gif, jpg, png
 	for _, ico := range icons {
-		if ico.Format == "png" || ico.Format == "gif" {
+		if ico.Format == "gif" || ico.Format == "jpg" || ico.Format == "png" {
 			icon = &ico
 			break
 		}
@@ -389,6 +391,11 @@ func fetchIconDetails(url string) Icon {
 	if e != nil {
 		i.Error = fmt.Errorf("besticon: unknown image format: %s", e)
 		return i
+	}
+
+	// jpeg => jpg
+	if format == "jpeg" {
+		format = "jpg"
 	}
 
 	i.Width = cfg.Width
@@ -539,7 +546,7 @@ func init() {
 	setHTTPClient(&http.Client{Timeout: duration})
 
 	// Needs to be kept in sync with those image/... imports
-	defaultFormats = []string{"png", "gif", "ico"}
+	defaultFormats = []string{"gif", "ico", "jpg", "png"}
 }
 
 func setHTTPClient(c *http.Client) {

@@ -20,8 +20,9 @@ func TestSimplePixel(t *testing.T) {
 }
 
 func TestImageFormats(t *testing.T) {
-	assertFindsRightColor(t, "white1x1.png", "ffffff")
 	assertFindsRightColor(t, "white1x1.gif", "ffffff")
+	assertFindsRightColor(t, "white1x1.jpg", "ffffff")
+	assertFindsRightColor(t, "white1x1.png", "ffffff")
 }
 
 func TestFindColors01(t *testing.T) {
