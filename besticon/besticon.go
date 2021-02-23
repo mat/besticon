@@ -15,7 +15,6 @@ import (
 	"net/http/cookiejar"
 	"net/url"
 	"os"
-	"sort"
 	"strings"
 	"time"
 
@@ -29,7 +28,6 @@ import (
 
 	"github.com/mat/besticon/colorfinder"
 
-	"github.com/PuerkitoBio/goquery"
 	"golang.org/x/net/html/charset"
 	"golang.org/x/net/idna"
 	"golang.org/x/net/publicsuffix"
@@ -216,102 +214,6 @@ func fetchHTML(url string) ([]byte, *url.URL, error) {
 	}
 
 	return utf8bytes, r.Request.URL, nil
-}
-
-var iconPaths = []string{
-	"/favicon.ico",
-	"/apple-touch-icon.png",
-	"/apple-touch-icon-precomposed.png",
-}
-
-type empty struct{}
-
-func findIconLinks(siteURL *url.URL, html []byte) ([]string, error) {
-	doc, e := docFromHTML(html)
-	if e != nil {
-		return nil, e
-	}
-
-	baseURL := determineBaseURL(siteURL, doc)
-	links := make(map[string]empty)
-
-	// Add common, hard coded icon paths
-	for _, path := range iconPaths {
-		links[urlFromBase(baseURL, path)] = empty{}
-	}
-
-	// Add icons found in page
-	urls := extractIconTags(doc)
-	for _, u := range urls {
-		absoluteURL, e := absoluteURL(baseURL, u)
-		if e == nil {
-			links[absoluteURL] = empty{}
-		}
-	}
-
-	// Turn unique keys into array
-	var result []string
-	for u := range links {
-		result = append(result, u)
-	}
-	sort.Strings(result)
-
-	return result, nil
-}
-
-func determineBaseURL(siteURL *url.URL, doc *goquery.Document) *url.URL {
-	baseTagHref := extractBaseTag(doc)
-	if baseTagHref != "" {
-		baseTagURL, e := url.Parse(baseTagHref)
-		if e != nil {
-			return siteURL
-		}
-		return baseTagURL
-	}
-
-	return siteURL
-}
-
-func docFromHTML(html []byte) (*goquery.Document, error) {
-	doc, e := goquery.NewDocumentFromReader(bytes.NewReader(html))
-	if e != nil || doc == nil {
-		return nil, errParseHTML
-	}
-	return doc, nil
-}
-
-var csspaths = strings.Join([]string{
-	"link[rel='icon']",
-	"link[rel='shortcut icon']",
-	"link[rel='apple-touch-icon']",
-	"link[rel='apple-touch-icon-precomposed']",
-
-	// Capitalized variants, TODO: refactor
-	"link[rel='ICON']",
-	"link[rel='SHORTCUT ICON']",
-	"link[rel='APPLE-TOUCH-ICON']",
-	"link[rel='APPLE-TOUCH-ICON-PRECOMPOSED']",
-}, ", ")
-
-var errParseHTML = errors.New("besticon: could not parse html")
-
-func extractBaseTag(doc *goquery.Document) string {
-	href := ""
-	doc.Find("head base[href]").First().Each(func(i int, s *goquery.Selection) {
-		href, _ = s.Attr("href")
-	})
-	return href
-}
-
-func extractIconTags(doc *goquery.Document) []string {
-	var hits []string
-	doc.Find(csspaths).Each(func(i int, s *goquery.Selection) {
-		href, ok := s.Attr("href")
-		if ok && href != "" {
-			hits = append(hits, href)
-		}
-	})
-	return hits
 }
 
 func MainColorForIcons(icons []Icon) *color.RGBA {
