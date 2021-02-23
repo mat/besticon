@@ -184,6 +184,19 @@ func TestRandomOrg(t *testing.T) {
 	assertEquals(t, expectedImage, actualImage)
 }
 
+func TestArchiveOrgWithJpg(t *testing.T) {
+	actualImages, _, err := fetchIconsWithVCR("archive.org.vcr", "https://archive.org")
+	assertEquals(t, nil, err)
+
+	expectedImages := []Icon{
+		{URL: "https://archive.org/apple-touch-icon-precomposed.png", Width: 180, Height: 180, Format: "png", Bytes: 5495, Sha1sum: "7b583a9eee7c4f705f2a93ddc50e6927bde4b634"},
+		{URL: "https://archive.org/apple-touch-icon.png", Width: 180, Height: 180, Format: "png", Bytes: 7494, Sha1sum: "093d651bf04e480e5c25167e780455c879c02447"},
+		{URL: "https://archive.org/images/glogo.jpg", Width: 40, Height: 40, Format: "jpg", Bytes: 3213, Sha1sum: "279fe766b791ae83a10765a8790a0928448a4e35"},
+		{URL: "https://archive.org/favicon.ico", Width: 32, Height: 32, Format: "ico", Bytes: 4286, Sha1sum: "b18786d77997511ab0f6e5c9d3c5b9e1bff164be"},
+	}
+	assertEquals(t, expectedImages, actualImages)
+}
+
 func TestParsingInexistentSite(t *testing.T) {
 	actualImages, _, err := fetchIconsWithVCR("not_existent.vcr", "http://wikipedia.org/does-not-exist")
 
@@ -210,8 +223,9 @@ func TestFindBestIconNoIcons(t *testing.T) {
 }
 
 func TestImageSizeDetection(t *testing.T) {
-	assertEquals(t, 1, getImageWidthForFile("testdata/pixel.png"))
 	assertEquals(t, 1, getImageWidthForFile("testdata/pixel.gif"))
+	assertEquals(t, 1, getImageWidthForFile("testdata/pixel.jpg"))
+	assertEquals(t, 1, getImageWidthForFile("testdata/pixel.png"))
 	assertEquals(t, 48, getImageWidthForFile("testdata/favicon.ico"))
 }
 
