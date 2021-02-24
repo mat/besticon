@@ -289,20 +289,29 @@ func fetchIconDetails(url string) Icon {
 		return i
 	}
 
-	cfg, format, e := image.DecodeConfig(bytes.NewReader(b))
-	if e != nil {
-		i.Error = fmt.Errorf("besticon: unknown image format: %s", e)
-		return i
+	if isSVG(b) {
+		// Special handling for svg, which golang can't decode with
+		// image.DecodeConfig. Fill in a reasonable Width/Height.
+		i.Format = "svg"
+		i.Width = 100
+		i.Height = 100
+	} else {
+		cfg, format, e := image.DecodeConfig(bytes.NewReader(b))
+		if e != nil {
+			i.Error = fmt.Errorf("besticon: unknown image format: %s", e)
+			return i
+		}
+
+		// jpeg => jpg
+		if format == "jpeg" {
+			format = "jpg"
+		}
+
+		i.Width = cfg.Width
+		i.Height = cfg.Height
+		i.Format = format
 	}
 
-	// jpeg => jpg
-	if format == "jpeg" {
-		format = "jpg"
-	}
-
-	i.Width = cfg.Width
-	i.Height = cfg.Height
-	i.Format = format
 	i.Bytes = len(b)
 	i.Sha1sum = sha1Sum(b)
 	if keepImageBytes {
@@ -310,6 +319,32 @@ func fetchIconDetails(url string) Icon {
 	}
 
 	return i
+}
+
+// A simple detector for SVG. We can't use image.RegisterFormat, since
+// RegisterFormat is limited to a simple magic number check. It's easy to
+// confuse the first few bytes of HTML with SVG.
+func isSVG(body []byte) bool {
+	// is it long enough?
+	if len(body) < 10 {
+		return false
+	}
+
+	// does it start with something reasonable?
+	switch {
+	case bytes.Equal(body[0:2], []byte("<!")):
+	case bytes.Equal(body[0:2], []byte("<?")):
+	case bytes.Equal(body[0:4], []byte("<svg")):
+	default:
+		return false
+	}
+
+	// is there an <svg in the first 250 bytes?
+	if off := bytes.Index(body, []byte("<svg")); off == -1 || off > 250 {
+		return false
+	}
+
+	return true
 }
 
 func Get(urlstring string) (*http.Response, error) {
@@ -447,8 +482,8 @@ func init() {
 	}
 	setHTTPClient(&http.Client{Timeout: duration})
 
-	// Needs to be kept in sync with those image/... imports
-	defaultFormats = []string{"gif", "ico", "jpg", "png"}
+	// Needs to be kept in sync with those image/... imports (except for svg)
+	defaultFormats = []string{"gif", "ico", "jpg", "png", "svg"}
 }
 
 func setHTTPClient(c *http.Client) {

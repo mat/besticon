@@ -3,7 +3,6 @@ package besticon
 import (
 	"bytes"
 	"errors"
-	"fmt"
 	"net/url"
 	"regexp"
 	"sort"
@@ -99,7 +98,7 @@ func extractBaseTag(doc *goquery.Document) string {
 
 var (
 	iconTypes   = []string{favIcon, appleTouchIcon, appleTouchIconPrecomposed}
-	iconTypesRe = regexp.MustCompile(fmt.Sprintf(`\b(%s)\b`, strings.Join(regexpQuoteMetaArray(iconTypes), "|")))
+	iconTypesRe = regexp.MustCompile(`\A(` + strings.Join(regexpQuoteMetaArray(iconTypes), "|") + `)\z`)
 )
 
 // Find icons from doc using goquery
