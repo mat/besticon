@@ -19,6 +19,7 @@ func TestLinkExtraction(t *testing.T) {
 		"<link rel='nope'>",
 		"<link rel='icon'>",
 		"<link rel='icon' href=''>",
+		"<link rel='mask-icon' href='a.png'>",
 		"<link rel='xxiconxx' href='a.png'>",
 	}
 	for _, html := range invalid {
