@@ -321,9 +321,9 @@ func fetchIconDetails(url string) Icon {
 	return i
 }
 
-// A simple detector for SVG. We can't use image.RegisterFormat, since
-// RegisterFormat is limited to a simple magic number check. It's easy to
-// confuse the first few bytes of HTML with SVG.
+// SVG detector. We can't use image.RegisterFormat, since RegisterFormat is
+// limited to a simple magic number check. It's easy to confuse the first few
+// bytes of HTML with SVG.
 func isSVG(body []byte) bool {
 	// is it long enough?
 	if len(body) < 10 {
