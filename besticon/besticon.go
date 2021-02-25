@@ -102,7 +102,14 @@ func (f *IconFinder) stripIfNecessary(URL string) string {
 func (f *IconFinder) IconInSizeRange(r SizeRange) *Icon {
 	icons := f.Icons()
 
-	// Try to return smallest in range perfect..max
+	// 1. SVG always wins
+	for _, ico := range icons {
+		if ico.Format == "svg" {
+			return &ico
+		}
+	}
+
+	// 2. Try to return smallest in range perfect..max
 	sortIcons(icons, false)
 	for _, ico := range icons {
 		if (ico.Width >= r.Perfect && ico.Height >= r.Perfect) && (ico.Width <= r.Max && ico.Height <= r.Max) {
@@ -110,7 +117,7 @@ func (f *IconFinder) IconInSizeRange(r SizeRange) *Icon {
 		}
 	}
 
-	// Try to return biggest in range perfect..min
+	// 3. Try to return biggest in range perfect..min
 	sortIcons(icons, true)
 	for _, ico := range icons {
 		if (ico.Width >= r.Min && ico.Height >= r.Min) && (ico.Width <= r.Perfect && ico.Height <= r.Perfect) {
@@ -291,10 +298,11 @@ func fetchIconDetails(url string) Icon {
 
 	if isSVG(b) {
 		// Special handling for svg, which golang can't decode with
-		// image.DecodeConfig. Fill in a reasonable Width/Height.
+		// image.DecodeConfig. Fill in an absurdly large width/height so SVG always
+		// wins size contests.
 		i.Format = "svg"
-		i.Width = 100
-		i.Height = 100
+		i.Width = 9999
+		i.Height = 9999
 	} else {
 		cfg, format, e := image.DecodeConfig(bytes.NewReader(b))
 		if e != nil {
