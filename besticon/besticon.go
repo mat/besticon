@@ -490,8 +490,19 @@ func init() {
 	}
 	setHTTPClient(&http.Client{Timeout: duration})
 
-	// Needs to be kept in sync with those image/... imports (except for svg)
-	defaultFormats = []string{"gif", "ico", "jpg", "png", "svg"}
+	// Needs to be kept in sync with image/... imports (except for svg)
+	allFormats := []string{"gif", "ico", "jpg", "png", "svg"}
+	defaultFormats = getenvOrFallbackArray("FORMATS", allFormats)
+
+	// sanity check
+	if len(defaultFormats) == 0 {
+		panic("FORMATS was empty")
+	}
+	for _, i := range defaultFormats {
+		if !includesString(allFormats, i) {
+			panic(fmt.Sprintf("FORMATS has invalid format '%s'", i))
+		}
+	}
 }
 
 func setHTTPClient(c *http.Client) {
@@ -513,9 +524,17 @@ func init() {
 }
 
 func getenvOrFallback(key string, fallbackValue string) string {
-	value := os.Getenv(key)
-	if len(strings.TrimSpace(value)) != 0 {
+	value := strings.TrimSpace(os.Getenv(key))
+	if len(value) != 0 {
 		return value
+	}
+	return fallbackValue
+}
+
+func getenvOrFallbackArray(key string, fallbackValue []string) []string {
+	value := strings.TrimSpace(os.Getenv(key))
+	if len(value) != 0 {
+		return strings.Split(value, ",")
 	}
 	return fallbackValue
 }
