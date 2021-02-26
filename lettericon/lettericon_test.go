@@ -15,10 +15,22 @@ func TestColorFromHex(t *testing.T) {
 	assertColor(t, "#dfdfdf", &color.RGBA{223, 223, 223, 0xff})
 }
 
-func TestRender(t *testing.T) {
-	assertCorrectImageData(t, "A", 16, "123456")
-	assertCorrectImageData(t, "X", 32, "dfdfdf")
-	assertCorrectImageData(t, "ф", 32, "dfdfdf")
+func TestColorToHex(t *testing.T) {
+	assertEquals(t, ColorToHex(color.RGBA{0, 0, 0, 0xff}), "#000000")
+	assertEquals(t, ColorToHex(color.RGBA{255, 255, 255, 0xff}), "#ffffff")
+	assertEquals(t, ColorToHex(color.RGBA{223, 223, 223, 0xff}), "#dfdfdf")
+}
+
+func TestRenderPNG(t *testing.T) {
+	assertCorrectPNGData(t, "A", 16, "123456")
+	assertCorrectPNGData(t, "X", 32, "dfdfdf")
+	assertCorrectPNGData(t, "ф", 32, "dfdfdf")
+}
+
+func TestRenderSVG(t *testing.T) {
+	assertCorrectSVGData(t, "A", "123456")
+	assertCorrectSVGData(t, "X", "dfdfdf")
+	assertCorrectSVGData(t, "ф", "dfdfdf")
 }
 
 func TestPickForegroundColor(t *testing.T) {
@@ -46,8 +58,8 @@ func TestRelativeLuminance(t *testing.T) {
 	assertFloatEquals(t, 0.07, relativeLuminance(blue))
 }
 
-func assertCorrectImageData(t *testing.T, letter string, width int, hexColor string) {
-	imageData, err := renderBytes(letter, mustColorFromHex(hexColor), width)
+func assertCorrectPNGData(t *testing.T, letter string, width int, hexColor string) {
+	imageData, err := renderPNGBytes(letter, mustColorFromHex(hexColor), width)
 	if err != nil {
 		fail(t, fmt.Sprintf("could not generate icon: %s", err))
 		return
@@ -56,6 +68,27 @@ func assertCorrectImageData(t *testing.T, letter string, width int, hexColor str
 	// "A-144-123456.png"
 	testdataDir := fmt.Sprintf("testdata/")
 	file := fmt.Sprintf(testdataDir+"%s-%d-%s.png", letter, width, hexColor)
+	fileData, err := bytesFromFile(file)
+	if err != nil {
+		fail(t, fmt.Sprintf("could not load icon file: %s", err))
+		return
+	}
+
+	assertEquals(t, len(fileData), len(imageData))
+	assertEquals(t, fileData, imageData)
+}
+
+func assertCorrectSVGData(t *testing.T, letter string, hexColor string) {
+	var b bytes.Buffer
+	err := RenderSVG(letter, mustColorFromHex("#123456"), &b)
+	if err != nil {
+		fail(t, fmt.Sprintf("could not generate svg icon: %s", err))
+	}
+	imageData := b.Bytes()
+
+	// "A-144-123456.png"
+	testdataDir := fmt.Sprintf("testdata/")
+	file := fmt.Sprintf(testdataDir+"%s-%s.svg", letter, hexColor)
 	fileData, err := bytesFromFile(file)
 	if err != nil {
 		fail(t, fmt.Sprintf("could not load icon file: %s", err))
@@ -88,10 +121,10 @@ func bytesFromFile(file string) ([]byte, error) {
 	return dat, nil
 }
 
-func renderBytes(letter string, bgColor color.Color, width int) ([]byte, error) {
+func renderPNGBytes(letter string, bgColor color.Color, width int) ([]byte, error) {
 	var b bytes.Buffer
 
-	err := Render(letter, bgColor, width, &b)
+	err := RenderPNG(letter, bgColor, width, &b)
 	if err != nil {
 		return nil, err
 	}
@@ -99,11 +132,11 @@ func renderBytes(letter string, bgColor color.Color, width int) ([]byte, error) 
 }
 
 func BenchmarkRender(b *testing.B) {
-	Render("X", DefaultBackgroundColor, 144, ioutil.Discard) // warmup
+	RenderPNG("X", DefaultBackgroundColor, 144, ioutil.Discard) // warmup
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		Render("X", DefaultBackgroundColor, 144, ioutil.Discard)
+		RenderPNG("X", DefaultBackgroundColor, 144, ioutil.Discard)
 	}
 }
 
