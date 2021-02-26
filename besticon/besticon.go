@@ -347,8 +347,8 @@ func isSVG(body []byte) bool {
 		return false
 	}
 
-	// is there an <svg in the first 250 bytes?
-	if off := bytes.Index(body, []byte("<svg")); off == -1 || off > 250 {
+	// is there an <svg in the first 300 bytes?
+	if off := bytes.Index(body, []byte("<svg")); off == -1 || off > 300 {
 		return false
 	}
 
@@ -490,19 +490,11 @@ func init() {
 	}
 	setHTTPClient(&http.Client{Timeout: duration})
 
-	// Needs to be kept in sync with image/... imports (except for svg)
-	allFormats := []string{"gif", "ico", "jpg", "png", "svg"}
-	defaultFormats = getenvOrFallbackArray("FORMATS", allFormats)
+	// see
+	// https://github.com/mat/besticon/pull/52/commits/208e9dcbdbdeb7ef7491bb42f1bc449e87e084a2
+	// when we are ready to add support for the FORMATS env variable
 
-	// sanity check
-	if len(defaultFormats) == 0 {
-		panic("FORMATS was empty")
-	}
-	for _, i := range defaultFormats {
-		if !includesString(allFormats, i) {
-			panic(fmt.Sprintf("FORMATS has invalid format '%s'", i))
-		}
-	}
+	defaultFormats = []string{"gif", "ico", "jpg", "png"}
 }
 
 func setHTTPClient(c *http.Client) {
