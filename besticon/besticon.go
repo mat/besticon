@@ -102,7 +102,14 @@ func (f *IconFinder) stripIfNecessary(URL string) string {
 func (f *IconFinder) IconInSizeRange(r SizeRange) *Icon {
 	icons := f.Icons()
 
-	// Try to return smallest in range perfect..max
+	// 1. SVG always wins
+	for _, ico := range icons {
+		if ico.Format == "svg" {
+			return &ico
+		}
+	}
+
+	// 2. Try to return smallest in range perfect..max
 	sortIcons(icons, false)
 	for _, ico := range icons {
 		if (ico.Width >= r.Perfect && ico.Height >= r.Perfect) && (ico.Width <= r.Max && ico.Height <= r.Max) {
@@ -110,7 +117,7 @@ func (f *IconFinder) IconInSizeRange(r SizeRange) *Icon {
 		}
 	}
 
-	// Try to return biggest in range perfect..min
+	// 3. Try to return biggest in range perfect..min
 	sortIcons(icons, true)
 	for _, ico := range icons {
 		if (ico.Width >= r.Min && ico.Height >= r.Min) && (ico.Width <= r.Perfect && ico.Height <= r.Perfect) {
@@ -289,20 +296,30 @@ func fetchIconDetails(url string) Icon {
 		return i
 	}
 
-	cfg, format, e := image.DecodeConfig(bytes.NewReader(b))
-	if e != nil {
-		i.Error = fmt.Errorf("besticon: unknown image format: %s", e)
-		return i
+	if isSVG(b) {
+		// Special handling for svg, which golang can't decode with
+		// image.DecodeConfig. Fill in an absurdly large width/height so SVG always
+		// wins size contests.
+		i.Format = "svg"
+		i.Width = 9999
+		i.Height = 9999
+	} else {
+		cfg, format, e := image.DecodeConfig(bytes.NewReader(b))
+		if e != nil {
+			i.Error = fmt.Errorf("besticon: unknown image format: %s", e)
+			return i
+		}
+
+		// jpeg => jpg
+		if format == "jpeg" {
+			format = "jpg"
+		}
+
+		i.Width = cfg.Width
+		i.Height = cfg.Height
+		i.Format = format
 	}
 
-	// jpeg => jpg
-	if format == "jpeg" {
-		format = "jpg"
-	}
-
-	i.Width = cfg.Width
-	i.Height = cfg.Height
-	i.Format = format
 	i.Bytes = len(b)
 	i.Sha1sum = sha1Sum(b)
 	if keepImageBytes {
@@ -310,6 +327,32 @@ func fetchIconDetails(url string) Icon {
 	}
 
 	return i
+}
+
+// SVG detector. We can't use image.RegisterFormat, since RegisterFormat is
+// limited to a simple magic number check. It's easy to confuse the first few
+// bytes of HTML with SVG.
+func isSVG(body []byte) bool {
+	// is it long enough?
+	if len(body) < 10 {
+		return false
+	}
+
+	// does it start with something reasonable?
+	switch {
+	case bytes.Equal(body[0:2], []byte("<!")):
+	case bytes.Equal(body[0:2], []byte("<?")):
+	case bytes.Equal(body[0:4], []byte("<svg")):
+	default:
+		return false
+	}
+
+	// is there an <svg in the first 300 bytes?
+	if off := bytes.Index(body, []byte("<svg")); off == -1 || off > 300 {
+		return false
+	}
+
+	return true
 }
 
 func Get(urlstring string) (*http.Response, error) {
@@ -447,7 +490,10 @@ func init() {
 	}
 	setHTTPClient(&http.Client{Timeout: duration})
 
-	// Needs to be kept in sync with those image/... imports
+	// see
+	// https://github.com/mat/besticon/pull/52/commits/208e9dcbdbdeb7ef7491bb42f1bc449e87e084a2
+	// when we are ready to add support for the FORMATS env variable
+
 	defaultFormats = []string{"gif", "ico", "jpg", "png"}
 }
 
@@ -470,9 +516,17 @@ func init() {
 }
 
 func getenvOrFallback(key string, fallbackValue string) string {
-	value := os.Getenv(key)
-	if len(strings.TrimSpace(value)) != 0 {
+	value := strings.TrimSpace(os.Getenv(key))
+	if len(value) != 0 {
 		return value
+	}
+	return fallbackValue
+}
+
+func getenvOrFallbackArray(key string, fallbackValue []string) []string {
+	value := strings.TrimSpace(os.Getenv(key))
+	if len(value) != 0 {
+		return strings.Split(value, ",")
 	}
 	return fallbackValue
 }

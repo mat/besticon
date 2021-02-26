@@ -88,6 +88,8 @@ func TestGithubWithIconHrefLinks(t *testing.T) {
 	actualImages, _, err := fetchIconsWithVCR("github.vcr", "http://github.com")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
+		// later - for svg
+		// {URL: "https://assets-cdn.github.com/pinned-octocat.svg", Width: 9999, Height: 9999, Format: "svg", Bytes: 1009, Sha1sum: "5dec89dc9dbcebff4a2aeddb9426c7a8e237ca16"},
 		{URL: "https://github.com/apple-touch-icon-144.png", Width: 144, Height: 144, Format: "png", Bytes: 796, Sha1sum: "2626d8f64d5d3a76bd535151dfe84b62d3f3ee63"},
 		{URL: "https://github.com/apple-touch-icon.png", Width: 120, Height: 120, Format: "png", Bytes: 676, Sha1sum: "8eb0b1d3f0797c0fe94368f4ad9a2c9513541cd2"},
 		{URL: "https://github.com/apple-touch-icon-114.png", Width: 114, Height: 114, Format: "png", Bytes: 648, Sha1sum: "644982478322a731a6bd8fe7fad9afad8f4a3c4b"},
@@ -103,11 +105,13 @@ func TestEat24WithBaseTag(t *testing.T) {
 	actualImages, finder, err := fetchIconsWithVCR("eat24.vcr", "http://eat24.com")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
+		// later - for svg
+		// {URL: "http://eat24hours.com/static/v4/images/favicon.svg", Width: 9999, Height: 9999, Format: "svg", Bytes: 1498, Sha1sum: "db580998de6dd01e4433865b5f77bd6491bbc7bc"},
 		{URL: "http://eat24hours.com/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 1406, Sha1sum: "f8914a1135e718b11cc93b7a362655ca358c16fb"},
 	}
 	assertEquals(t, expectedImages, actualImages)
 
-	actualImage := finder.IconInSizeRange(SizeRange{20, 50, 500})
+	actualImage := finder.IconInSizeRange(SizeRange{120, 150, 500})
 	assertEquals(t, (*Icon)(nil), actualImage)
 }
 
@@ -295,6 +299,27 @@ func TestAbsoluteURL(t *testing.T) {
 	u, e := absoluteURL(baseURL, "/../../media/favicon.ico")
 	check(e)
 	assertEquals(t, "http://car2go.com/media/favicon.ico", u)
+}
+
+func TestIsSVG(t *testing.T) {
+	invalid := [][]byte{
+		[]byte(""),
+		[]byte("<html></html>"),
+		mustReadFile("testdata/favicon.ico"),
+	}
+	for _, data := range invalid {
+		assertEquals(t, isSVG(data), false)
+	}
+
+	valid := [][]byte{
+		[]byte("<svg></svg>"),
+		[]byte("<!-- comment --><svg></svg>"),
+		[]byte("<?xml?><!DOCTYPE svg><svg></svg>"),
+		mustReadFile("testdata/svg.svg"),
+	}
+	for _, data := range valid {
+		assertEquals(t, isSVG(data), true)
+	}
 }
 
 const testdataDir = "testdata/"

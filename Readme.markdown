@@ -23,13 +23,13 @@ Websites used to have a `favicon.ico`, or not. With the introduction of the `app
 
 This endpoint always returns an icon image for the given site — it redirects to an official icon if possible or creates and returns a fallback image if needed.
 
-| Parameter           | Example          | Description                                                                                                                                          | Default           |
-| ------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
-| url                 | http://yelp.com  |                                                                                                                                                      | required          |
-| size                | 32..50..100      | Desired size range (min..perfect..max) If no image of size perfect..max nor perfect..min can be found a fallback icon will be generated.             | required          |
-| formats             | png,ico          | Comma-separated list of accepted image formats: png, ico, gif, jpg                                                                                   | `png,ico,gif,jpg` |
-| fallback_icon_url   | _HTTP image URL_ | If provided, a redirect to this image will be returned in case no suitable icon could be found. This overrides the default fallback image behaviour. |                   |
-| fallback_icon_color | ff0000           | If provided, letter icons will be colored with the hex value provided, rather than be grey, when no color can be found for any icon.                 |                   |
+| Parameter           | Example          | Description                                                                                                                                          | Default               |
+| ------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| url                 | http://yelp.com  |                                                                                                                                                      | required              |
+| size                | 32..50..100      | Desired size range (min..perfect..max) If no image of size perfect..max nor perfect..min can be found a fallback icon will be generated.             | required              |
+| formats             | png,ico          | Comma-separated list of accepted image formats: png, ico, gif, jpg                                                                                   | `gif,ico,jpg,png,svg` |
+| fallback_icon_url   | _HTTP image URL_ | If provided, a redirect to this image will be returned in case no suitable icon could be found. This overrides the default fallback image behaviour. |                       |
+| fallback_icon_color | ff0000           | If provided, letter icons will be colored with the hex value provided, rather than be grey, when no color can be found for any icon.                 |                       |
 
 #### Examples
 
