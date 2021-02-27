@@ -183,16 +183,27 @@ func ColorFromHex(hex string) (*color.RGBA, error) {
 }
 
 func IconPath(letter string, size string, colr *color.RGBA, format string) string {
+	var parts []string
+
+	// letter
 	if letter == "" {
 		letter = " "
 	} else {
 		letter = strings.ToUpper(letter)
 	}
+	parts = append(parts, letter)
 
-	if colr != nil {
-		return fmt.Sprintf("/lettericons/%s-%s-%s.%s", letter, size, colorfinder.ColorToHex(*colr), format)
+	// size (maybe)
+	if format == "png" {
+		parts = append(parts, size)
 	}
-	return fmt.Sprintf("/lettericons/%s-%s.%s", letter, size, format)
+
+	// colr (maybe)
+	if colr != nil {
+		parts = append(parts, colorfinder.ColorToHex(*colr))
+	}
+
+	return fmt.Sprintf("/lettericons/%s.%s", strings.Join(parts, "-"), format)
 }
 
 const defaultIconSize = 144

@@ -157,7 +157,7 @@ func TestMainLetterFromURL(t *testing.T) {
 
 func TestIconPath(t *testing.T) {
 	assertEquals(t, "/lettericons/A-120-000000.png", IconPath("a", "120", &color.RGBA{0, 0, 0, 0}, "png"))
-	assertEquals(t, "/lettericons/Z-100-640ac8.svg", IconPath("z", "100", &color.RGBA{100, 10, 200, 0}, "svg"))
+	assertEquals(t, "/lettericons/Z-640ac8.svg", IconPath("z", "100", &color.RGBA{100, 10, 200, 0}, "svg"))
 }
 
 func TestParseIconPath(t *testing.T) {
