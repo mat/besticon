@@ -146,7 +146,7 @@ func TestGetIconWithSVG(t *testing.T) {
 	iconHandler(w, req)
 
 	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
-	assertStringEquals(t, "/lettericons/H-32.svg", w.Header().Get("Location"))
+	assertStringEquals(t, "/lettericons/H.svg", w.Header().Get("Location"))
 }
 
 func TestGetAllIcons(t *testing.T) {
