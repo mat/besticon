@@ -131,7 +131,7 @@ func renderPNGBytes(letter string, bgColor color.Color, width int) ([]byte, erro
 	return b.Bytes(), nil
 }
 
-func BenchmarkRender(b *testing.B) {
+func BenchmarkRenderPNG(b *testing.B) {
 	RenderPNG("X", DefaultBackgroundColor, 144, ioutil.Discard) // warmup
 	b.ResetTimer()
 
@@ -156,46 +156,50 @@ func TestMainLetterFromURL(t *testing.T) {
 }
 
 func TestIconPath(t *testing.T) {
-	assertEquals(t, "/lettericons/A-120-000000.png", IconPath("a", "120", &color.RGBA{0, 0, 0, 0}))
-	assertEquals(t, "/lettericons/Z-100-640ac8.png", IconPath("z", "100", &color.RGBA{100, 10, 200, 0}))
+	assertEquals(t, "/lettericons/A-120-000000.png", IconPath("a", "120", &color.RGBA{0, 0, 0, 0}, "png"))
+	assertEquals(t, "/lettericons/Z-100-640ac8.svg", IconPath("z", "100", &color.RGBA{100, 10, 200, 0}, "svg"))
 }
 
 func TestParseIconPath(t *testing.T) {
 	var char string
 	var col *color.RGBA
 	var size int
+	var format string
 
-	char, _, _ = ParseIconPath("lettericons/")
+	char, _, _, _ = ParseIconPath("lettericons/")
 	assertEquals(t, "", char)
 
-	char, _, _ = ParseIconPath("lettericons/A")
-	assertEquals(t, "A", char)
-
-	char, _, _ = ParseIconPath("lettericons/B.png")
+	char, _, _, _ = ParseIconPath("lettericons/B.png")
 	assertEquals(t, "B", char)
 
-	char, _, size = ParseIconPath("lettericons/C-120.png")
+	char, _, size, _ = ParseIconPath("lettericons/C-120.png")
 	assertEquals(t, "C", char)
 	assertEquals(t, 120, size)
 
-	char, _, size = ParseIconPath("lettericons/%D1%84-120.png") //ф-120.png
+	char, _, size, _ = ParseIconPath("lettericons/%D1%84-120.png") //ф-120.png
 	assertEquals(t, `ф`, char)
 	assertEquals(t, 120, size)
 
-	char, col, size = ParseIconPath("lettericons/D-150-ababab.png")
+	char, col, size, _ = ParseIconPath("lettericons/D-150-ababab.png")
 	assertEquals(t, "D", char)
 	assertEquals(t, 150, size)
 	assertEquals(t, &color.RGBA{171, 171, 171, 0xff}, col)
 
-	char, col, size = ParseIconPath("lettericons/D-256-ababab.png")
+	char, col, size, _ = ParseIconPath("lettericons/D-256-ababab.png")
 	assertEquals(t, "D", char)
 	assertEquals(t, 256, size)
 	assertEquals(t, &color.RGBA{171, 171, 171, 0xff}, col)
 
-	char, col, size = ParseIconPath("lettericons/D-1024-ababab.png")
+	char, col, size, _ = ParseIconPath("lettericons/D-1024-ababab.png")
 	assertEquals(t, "D", char)
 	assertEquals(t, 256, size)
 	assertEquals(t, &color.RGBA{171, 171, 171, 0xff}, col)
+
+	// test format
+	_, _, _, format = ParseIconPath("lettericons/B.png")
+	assertEquals(t, "png", format)
+	_, _, _, format = ParseIconPath("lettericons/B.svg")
+	assertEquals(t, "svg", format)
 }
 
 func assertColor(t *testing.T, hexColor string, expectedColor color.Color) {

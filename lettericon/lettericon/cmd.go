@@ -31,7 +31,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = lettericon.Render(*letter, col, *width, f)
+	err = lettericon.RenderPNG(*letter, col, *width, f)
 	if err != nil {
 		os.Exit(1)
 	}

@@ -15,6 +15,7 @@ import (
 	"math"
 	"net/url"
 	"path"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -181,7 +182,7 @@ func ColorFromHex(hex string) (*color.RGBA, error) {
 	return &col, nil
 }
 
-func IconPath(letter string, size string, colr *color.RGBA) string {
+func IconPath(letter string, size string, colr *color.RGBA, format string) string {
 	if letter == "" {
 		letter = " "
 	} else {
@@ -189,9 +190,9 @@ func IconPath(letter string, size string, colr *color.RGBA) string {
 	}
 
 	if colr != nil {
-		return fmt.Sprintf("/lettericons/%s-%s-%s.png", letter, size, colorfinder.ColorToHex(*colr))
+		return fmt.Sprintf("/lettericons/%s-%s-%s.%s", letter, size, colorfinder.ColorToHex(*colr), format)
 	}
-	return fmt.Sprintf("/lettericons/%s-%s.png", letter, size)
+	return fmt.Sprintf("/lettericons/%s-%s.%s", letter, size, format)
 }
 
 const defaultIconSize = 144
@@ -200,14 +201,22 @@ const defaultIconSize = 144
 const maxIconSize = 256
 
 // path is like: lettericons/M-144-EFC25D.png
-func ParseIconPath(fullpath string) (string, *color.RGBA, int) {
+func ParseIconPath(fullpath string) (string, *color.RGBA, int, string) {
 	fullpath = percentDecode(fullpath)
 
 	_, filename := path.Split(fullpath)
-	filename = strings.TrimSuffix(filename, ".png")
+
+	// what is the format?
+	format := filepath.Ext(filename)
+	if !(format == ".png" || format == ".svg") {
+		return "", nil, -1, ""
+	}
+	filename = strings.TrimSuffix(filename, format)
+	format = format[1:] // remove period
+
 	params := strings.Split(filename, "-")
 	if len(params) < 1 || len(params[0]) < 1 {
-		return "", nil, -1
+		return "", nil, -1, ""
 	}
 
 	charParam := firstRune(params[0])
@@ -233,7 +242,7 @@ func ParseIconPath(fullpath string) (string, *color.RGBA, int) {
 		col = DefaultBackgroundColor
 	}
 
-	return charParam, col, size
+	return charParam, col, size, format
 }
 
 func MainLetterFromURL(URL string) string {
