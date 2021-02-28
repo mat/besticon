@@ -136,6 +136,19 @@ func TestGet404IconWithInvalidFallbackColor(t *testing.T) {
 	assertStringEquals(t, "/lettericons/H-32.png", w.Header().Get("Location"))
 }
 
+func TestGetIconWithSVG(t *testing.T) {
+	req, err := http.NewRequest("GET", "/icons?size=32&url=httpbin.org/status/404&formats=svg", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	iconHandler(w, req)
+
+	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "/lettericons/H.svg", w.Header().Get("Location"))
+}
+
 func TestGetAllIcons(t *testing.T) {
 	req, err := http.NewRequest("GET", "/allicons.json?url=apple.com", nil)
 	if err != nil {
@@ -173,7 +186,7 @@ func TestGetPopular(t *testing.T) {
 	assertStringContains(t, w.Body.String(), `github.com`)
 }
 
-func TestGetLetterIcon(t *testing.T) {
+func TestGetLetterIconPNG(t *testing.T) {
 	req, err := http.NewRequest("GET", "/lettericons/M-144-EFC25D.png", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -186,6 +199,21 @@ func TestGetLetterIcon(t *testing.T) {
 	assertStringEquals(t, "image/png", w.Header().Get("Content-Type"))
 	assertStringEquals(t, "max-age=31536000", w.Header().Get("Cache-Control"))
 	assertIntegerInInterval(t, 1500, 1800, w.Body.Len())
+}
+
+func TestGetLetterIconSVG(t *testing.T) {
+	req, err := http.NewRequest("GET", "/lettericons/M-EFC25D.svg", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	lettericonHandler(w, req)
+
+	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "image/svg+xml", w.Header().Get("Content-Type"))
+	assertStringEquals(t, "max-age=31536000", w.Header().Get("Cache-Control"))
+	assertStringContains(t, w.Body.String(), `<svg`)
 }
 
 func TestGetBadLetterIconPath(t *testing.T) {

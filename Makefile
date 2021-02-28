@@ -7,6 +7,7 @@ test_all: build test test_bench
 test:
 	go test -v github.com/mat/besticon/ico
 	go test -v github.com/mat/besticon/besticon
+	go test -v github.com/mat/besticon/besticon/iconserver
 	go test -v github.com/mat/besticon/lettericon
 	go test -v github.com/mat/besticon/colorfinder
 

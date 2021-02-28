@@ -2,6 +2,8 @@ package lettericon
 
 import (
 	"bufio"
+	"bytes"
+	"encoding/xml"
 	"errors"
 	"fmt"
 	"image"
@@ -13,6 +15,7 @@ import (
 	"math"
 	"net/url"
 	"path"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -30,7 +33,7 @@ const dpi = 72
 const fontSizeFactor = 0.6180340     // (by taste)
 const yOffsetFactor = 102.0 / 1024.0 // (by trial and error) :-)
 
-func Render(letter string, bgColor color.Color, width int, out io.Writer) error {
+func RenderPNG(letter string, bgColor color.Color, width int, out io.Writer) error {
 	fg := pickForegroundColor(bgColor)
 
 	rgba := image.NewRGBA(image.Rect(0, 0, width, width))
@@ -179,58 +182,94 @@ func ColorFromHex(hex string) (*color.RGBA, error) {
 	return &col, nil
 }
 
-func IconPath(letter string, size string, colr *color.RGBA) string {
+func IconPath(letter string, size string, colr *color.RGBA, format string) string {
+	var parts []string
+
+	// letter
 	if letter == "" {
 		letter = " "
 	} else {
 		letter = strings.ToUpper(letter)
 	}
+	parts = append(parts, letter)
 
-	if colr != nil {
-		return fmt.Sprintf("/lettericons/%s-%s-%s.png", letter, size, colorfinder.ColorToHex(*colr))
+	// size (maybe)
+	if format == "png" {
+		parts = append(parts, size)
 	}
-	return fmt.Sprintf("/lettericons/%s-%s.png", letter, size)
+
+	// colr (maybe)
+	if colr != nil {
+		parts = append(parts, colorfinder.ColorToHex(*colr))
+	}
+
+	return fmt.Sprintf("/lettericons/%s.%s", strings.Join(parts, "-"), format)
 }
 
 const defaultIconSize = 144
+
 // TODO: Sync with besticon.MaxIconSize ?
 const maxIconSize = 256
 
 // path is like: lettericons/M-144-EFC25D.png
-func ParseIconPath(fullpath string) (string, *color.RGBA, int) {
+func ParseIconPath(fullpath string) (string, *color.RGBA, int, string) {
 	fullpath = percentDecode(fullpath)
 
 	_, filename := path.Split(fullpath)
-	filename = strings.TrimSuffix(filename, ".png")
+
+	// format
+	format := filepath.Ext(filename)
+	if !(format == ".png" || format == ".svg") {
+		return "", nil, -1, ""
+	}
+	filename = strings.TrimSuffix(filename, format)
+	format = format[1:] // remove period
+
+	// now we parse each of the params, delimited by "-"
 	params := strings.Split(filename, "-")
-	if len(params) < 1 || len(params[0]) < 1 {
-		return "", nil, -1
+	if len(params) == 0 {
+		return "", nil, -1, ""
+	}
+	for _, s := range params {
+		if len(s) == 0 {
+			return "", nil, -1, ""
+		}
 	}
 
-	charParam := firstRune(params[0])
-	sizeParam := ""
-	if len(params) >= 2 {
-		sizeParam = params[1]
-	}
-	colorParam := ""
-	if len(params) >= 3 {
-		colorParam = params[2]
-	}
+	var letter string
+	var size int
+	var col *color.RGBA
 
-	size, err := strconv.Atoi(sizeParam)
-	if err != nil || size < 0 {
+	// letter
+	letter, params = firstRune(params[0]), params[1:]
+
+	// size (only png)
+	if format == "png" && len(params) > 0 {
+		size, _ = strconv.Atoi(params[0])
+		params = params[1:]
+	}
+	if size < 1 {
 		size = defaultIconSize
 	}
 	if size > maxIconSize {
 		size = maxIconSize
 	}
 
-	col, _ := ColorFromHex(colorParam)
+	// color
+	if len(params) > 0 {
+		col, _ = ColorFromHex(params[0])
+		params = params[1:]
+	}
 	if col == nil {
 		col = DefaultBackgroundColor
 	}
 
-	return charParam, col, size
+	// extra stuff at the end? error
+	if len(params) > 0 {
+		return "", nil, -1, ""
+	}
+
+	return letter, col, size, format
 }
 
 func MainLetterFromURL(URL string) string {
@@ -279,6 +318,45 @@ func percentDecode(p string) string {
 		return p
 	}
 	return u.Path
+}
+
+const svgTemplate = `
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="100" height="100" fill="$BG_COLOR"/>
+  <text x="50%" y="50%" dy="0.10em" font-family="Helvetica Neue, Helvetica, sans-serif" font-size="75" dominant-baseline="middle" text-anchor="middle" fill="$FG_COLOR">$LETTER</text>
+</svg>
+`
+
+// RenderSVG writes an SVG lettericon for this letter and color
+func RenderSVG(letter string, bgColor color.Color, out io.Writer) error {
+	// xml escape letter
+	var buf bytes.Buffer
+	err := xml.EscapeText(&buf, []byte(letter))
+	if err != nil {
+		return err
+	}
+
+	// vars
+	vars := map[string]string{
+		"$BG_COLOR": ColorToHex(bgColor),
+		"$FG_COLOR": ColorToHex(pickForegroundColor(bgColor)),
+		"$LETTER":   buf.String(),
+	}
+
+	// render SVG by replacing vars in template
+	svg := strings.TrimSpace(svgTemplate) + "\n"
+	for k, v := range vars {
+		svg = strings.ReplaceAll(svg, k, v)
+	}
+
+	_, err = io.WriteString(out, svg)
+	return err
+}
+
+// ColorToHex returns the #rrggbb hex string for a color
+func ColorToHex(c color.Color) string {
+	r, g, b, _ := c.RGBA()
+	return fmt.Sprintf("#%02x%02x%02x", r&0xff, g&0xff, b&0xff)
 }
 
 var fnt *truetype.Font

@@ -104,7 +104,12 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	redirectPath := lettericon.IconPath(letter, fmt.Sprintf("%d", sizeRange.Perfect), iconColor)
+	// We support both PNG and SVG fallback. Only return SVG if requested.
+	format := "png"
+	if includesString(finder.FormatsAllowed, "svg") {
+		format = "svg"
+	}
+	redirectPath := lettericon.IconPath(letter, fmt.Sprintf("%d", sizeRange.Perfect), iconColor, format)
 	redirectWithCacheControl(w, r, redirectPath)
 }
 
@@ -155,15 +160,20 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func lettericonHandler(w http.ResponseWriter, r *http.Request) {
-	charParam, col, size := lettericon.ParseIconPath(r.URL.Path)
-	if charParam == "" || col == nil || size <= 0 {
-		writeAPIError(w, 400, errors.New("wrong format for lettericons/ path, must look like lettericons/M-144-EFC25D.png"))
+	charParam, col, size, format := lettericon.ParseIconPath(r.URL.Path)
+	if charParam == "" || col == nil || size <= 0 || format == "" {
+		writeAPIError(w, 400, errors.New("wrong format for lettericons/ path, must look like lettericons/M-144-EFC25D.png or M-EFC25D.svg"))
 		return
 	}
 
-	w.Header().Add(contentType, imagePNG)
+	if format == "svg" {
+		w.Header().Add(contentType, imageSVG)
+		lettericon.RenderSVG(charParam, col, w)
+	} else {
+		w.Header().Add(contentType, imagePNG)
+		lettericon.RenderPNG(charParam, col, size, w)
+	}
 	addCacheControl(w, oneYear)
-	lettericon.Render(charParam, col, size, w)
 }
 
 func writeAPIError(w http.ResponseWriter, httpStatus int, e error) {
@@ -198,6 +208,7 @@ const (
 	contentType     = "Content-Type"
 	applicationJSON = "application/json"
 	imagePNG        = "image/png"
+	imageSVG        = "image/svg+xml"
 )
 
 func renderJSONResponse(w http.ResponseWriter, httpStatus int, data interface{}) {
@@ -430,4 +441,13 @@ func getenvOrFallback(key string, fallbackValue string) string {
 		return value
 	}
 	return fallbackValue
+}
+
+func includesString(arr []string, str string) bool {
+	for _, e := range arr {
+		if e == str {
+			return true
+		}
+	}
+	return false
 }
