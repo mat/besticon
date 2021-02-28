@@ -162,7 +162,7 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 func lettericonHandler(w http.ResponseWriter, r *http.Request) {
 	charParam, col, size, format := lettericon.ParseIconPath(r.URL.Path)
 	if charParam == "" || col == nil || size <= 0 || format == "" {
-		writeAPIError(w, 400, errors.New("wrong format for lettericons/ path, must look like lettericons/M-144-EFC25D.png"))
+		writeAPIError(w, 400, errors.New("wrong format for lettericons/ path, must look like lettericons/M-144-EFC25D.png or M-EFC25D.svg"))
 		return
 	}
 

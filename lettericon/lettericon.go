@@ -217,7 +217,7 @@ func ParseIconPath(fullpath string) (string, *color.RGBA, int, string) {
 
 	_, filename := path.Split(fullpath)
 
-	// what is the format?
+	// format
 	format := filepath.Ext(filename)
 	if !(format == ".png" || format == ".svg") {
 		return "", nil, -1, ""
@@ -225,35 +225,51 @@ func ParseIconPath(fullpath string) (string, *color.RGBA, int, string) {
 	filename = strings.TrimSuffix(filename, format)
 	format = format[1:] // remove period
 
+	// now we parse each of the params, delimited by "-"
 	params := strings.Split(filename, "-")
-	if len(params) < 1 || len(params[0]) < 1 {
+	if len(params) == 0 {
 		return "", nil, -1, ""
 	}
-
-	charParam := firstRune(params[0])
-	sizeParam := ""
-	if len(params) >= 2 {
-		sizeParam = params[1]
-	}
-	colorParam := ""
-	if len(params) >= 3 {
-		colorParam = params[2]
+	for _, s := range params {
+		if len(s) == 0 {
+			return "", nil, -1, ""
+		}
 	}
 
-	size, err := strconv.Atoi(sizeParam)
-	if err != nil || size < 0 {
+	var letter string
+	var size int
+	var col *color.RGBA
+
+	// letter
+	letter, params = firstRune(params[0]), params[1:]
+
+	// size (only png)
+	if format == "png" && len(params) > 0 {
+		size, _ = strconv.Atoi(params[0])
+		params = params[1:]
+	}
+	if size < 1 {
 		size = defaultIconSize
 	}
 	if size > maxIconSize {
 		size = maxIconSize
 	}
 
-	col, _ := ColorFromHex(colorParam)
+	// color
+	if len(params) > 0 {
+		col, _ = ColorFromHex(params[0])
+		params = params[1:]
+	}
 	if col == nil {
 		col = DefaultBackgroundColor
 	}
 
-	return charParam, col, size, format
+	// extra stuff at the end? error
+	if len(params) > 0 {
+		return "", nil, -1, ""
+	}
+
+	return letter, col, size, format
 }
 
 func MainLetterFromURL(URL string) string {

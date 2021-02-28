@@ -202,7 +202,7 @@ func TestGetLetterIconPNG(t *testing.T) {
 }
 
 func TestGetLetterIconSVG(t *testing.T) {
-	req, err := http.NewRequest("GET", "/lettericons/M-144-EFC25D.svg", nil)
+	req, err := http.NewRequest("GET", "/lettericons/M-EFC25D.svg", nil)
 	if err != nil {
 		t.Fatal(err)
 	}

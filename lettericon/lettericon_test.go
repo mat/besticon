@@ -169,8 +169,9 @@ func TestParseIconPath(t *testing.T) {
 	char, _, _, _ = ParseIconPath("lettericons/")
 	assertEquals(t, "", char)
 
-	char, _, _, _ = ParseIconPath("lettericons/B.png")
+	char, _, _, format = ParseIconPath("lettericons/B.png")
 	assertEquals(t, "B", char)
+	assertEquals(t, "png", format)
 
 	char, _, size, _ = ParseIconPath("lettericons/C-120.png")
 	assertEquals(t, "C", char)
@@ -195,11 +196,34 @@ func TestParseIconPath(t *testing.T) {
 	assertEquals(t, 256, size)
 	assertEquals(t, &color.RGBA{171, 171, 171, 0xff}, col)
 
-	// test format
-	_, _, _, format = ParseIconPath("lettericons/B.png")
-	assertEquals(t, "png", format)
-	_, _, _, format = ParseIconPath("lettericons/B.svg")
+	// svg
+	char, _, _, format = ParseIconPath("lettericons/B.svg")
+	assertEquals(t, "B", char)
 	assertEquals(t, "svg", format)
+
+	// svg with color
+	char, col, _, format = ParseIconPath("lettericons/D-ababab.svg")
+	assertEquals(t, "D", char)
+	assertEquals(t, &color.RGBA{171, 171, 171, 0xff}, col)
+	assertEquals(t, "svg", format)
+}
+
+func TestBadIconPaths(t *testing.T) {
+	invalid := []string{
+		"",
+		"A",
+		"---",
+		"-A-",
+		"A--",
+		"A--.svg",
+		"A-11-ababab.svg",       // size not allowed
+		"A-11-ababab-bogus.png", // extra param
+	}
+
+	for _, s := range invalid {
+		char, _, _, _ := ParseIconPath(fmt.Sprintf("lettericons/%s", s))
+		assertEquals(t, "", char)
+	}
 }
 
 func assertColor(t *testing.T, hexColor string, expectedColor color.Color) {
@@ -211,6 +235,7 @@ func assertColor(t *testing.T, hexColor string, expectedColor color.Color) {
 
 	assertEquals(t, expectedColor, actualColor)
 }
+
 func assertEquals(t *testing.T, expected, actual interface{}) {
 	if !reflect.DeepEqual(expected, actual) {
 		fail(t, fmt.Sprintf("Not equal: %v (expected)\n"+
