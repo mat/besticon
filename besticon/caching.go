@@ -1,6 +1,7 @@
 package besticon
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -10,6 +11,8 @@ import (
 )
 
 var iconCache *groupcache.Group
+
+const contextKeySiteURL = "siteURL"
 
 type result struct {
 	Icons []Icon
@@ -21,11 +24,9 @@ func resultFromCache(siteURL string) ([]Icon, error) {
 		return fetchIcons(siteURL)
 	}
 
-	// Let results expire after a day
-	now := time.Now()
-	key := fmt.Sprintf("%d-%02d-%02d-%s", now.Year(), now.Month(), now.Day(), siteURL)
+	c := context.WithValue(context.Background(), contextKeySiteURL, siteURL)
 	var data []byte
-	err := iconCache.Get(siteURL, key, groupcache.AllocatingByteSliceSink(&data))
+	err := iconCache.Get(c, cacheKey(siteURL), groupcache.AllocatingByteSliceSink(&data))
 	if err != nil {
 		logger.Println("ERR:", err)
 		return fetchIcons(siteURL)
@@ -43,8 +44,14 @@ func resultFromCache(siteURL string) ([]Icon, error) {
 	return res.Icons, nil
 }
 
-func generatorFunc(ctx groupcache.Context, key string, sink groupcache.Sink) error {
-	siteURL := ctx.(string)
+func cacheKey(siteURL string) string {
+	// Let results expire after a day
+	now := time.Now()
+	return fmt.Sprintf("%d-%02d-%02d-%s", now.Year(), now.Month(), now.Day(), siteURL)
+}
+
+	func generatorFunc(ctx context.Context, key string, sink groupcache.Sink) error {
+	siteURL := ctx.Value(contextKeySiteURL).(string)
 	icons, err := fetchIcons(siteURL)
 	if err != nil {
 		// Don't cache errors
