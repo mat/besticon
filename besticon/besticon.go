@@ -174,14 +174,22 @@ func includesString(arr []string, str string) bool {
 }
 
 func fetchIcons(siteURL string) ([]Icon, error) {
-	html, urlAfterRedirect, e := fetchHTML(siteURL)
-	if e != nil {
-		return nil, e
-	}
+	var links []string
 
-	links, e := findIconLinks(urlAfterRedirect, html)
-	if e != nil {
-		return nil, e
+	html, urlAfterRedirect, e := fetchHTML(siteURL)
+	if e == nil {
+		// Search HTML for icons
+		links, e = findIconLinks(urlAfterRedirect, html)
+		if e != nil {
+			return nil, e
+		}
+	} else {
+		// Unable to fetch the response or got a bad HTTP status code. Try default
+		// icon paths. https://github.com/mat/besticon/discussions/47
+		links, e = defaultIconURLs(siteURL)
+		if e != nil {
+			return nil, e
+		}
 	}
 
 	icons := fetchAllIcons(links)
@@ -264,6 +272,25 @@ func MainColorForIcons(icons []Icon) *color.RGBA {
 	}
 
 	return &mainColor
+}
+
+// Construct default icon URLs. A fallback if we can't fetch the HTML.
+func defaultIconURLs(siteURL string) ([]string, error) {
+	baseURL, e := url.Parse(siteURL)
+	if e != nil {
+		return nil, e
+	}
+
+	var links []string
+	for _, path := range iconPaths {
+		absoluteURL, e := absoluteURL(baseURL, path)
+		if e != nil {
+			return nil, e
+		}
+		links = append(links, absoluteURL)
+	}
+
+	return links, nil
 }
 
 func fetchAllIcons(urls []string) []Icon {

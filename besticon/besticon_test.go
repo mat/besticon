@@ -1,7 +1,6 @@
 package besticon
 
 import (
-	"errors"
 	"fmt"
 	"image"
 	"image/color"
@@ -201,18 +200,14 @@ func TestArchiveOrgWithJpg(t *testing.T) {
 	assertEquals(t, expectedImages, actualImages)
 }
 
-func TestParsingInexistentSite(t *testing.T) {
-	actualImages, _, err := fetchIconsWithVCR("not_existent.vcr", "http://wikipedia.org/does-not-exist")
+func TestGoogleapisWithBadHttpResponse(t *testing.T) {
+	actualImages, _, err := fetchIconsWithVCR("storage.googleapis.com.vcr", "https://storage.googleapis.com")
+	assertEquals(t, nil, err)
 
-	assertEquals(t, errors.New("besticon: not found"), err)
-	assertEquals(t, 0, len(actualImages))
-}
-
-func TestParsingEmptyResponse(t *testing.T) {
-	actualImages, _, err := fetchIconsWithVCR("empty_body.vcr", "http://foobar.com")
-
-	assertEquals(t, 0, len(actualImages))
-	assertEquals(t, errors.New("besticon: empty response"), err)
+	expectedImages := []Icon{
+		{URL: "https://storage.googleapis.com/favicon.ico", Width: 32, Height: 32, Format: "png", Bytes: 850, Sha1sum: "6c6ea952ec11c2026e828f0118bb9a58e35ccfbf"},
+	}
+	assertEquals(t, expectedImages, actualImages)
 }
 
 func TestMainColorForIconsWithBrokenImageData(t *testing.T) {
