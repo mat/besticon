@@ -14,16 +14,8 @@ import (
 )
 
 func TestKicktipp(t *testing.T) {
-	actualImages, finder, err := fetchIconsWithVCR("kicktipp.vcr", "http://kicktipp.de")
+	_, finder, err := fetchIconsWithVCR2("http://kicktipp.de")
 	assertEquals(t, nil, err)
-	expectedImages := []Icon{
-		{URL: "http://info.kicktipp.de/assets/img/jar_cb333387130/assets/img/logos/apple-touch-icon-57x57-precomposed.png", Width: 57, Height: 57, Format: "png", Bytes: 1535, Sha1sum: "79aae9e0df7d52ed50ac47c1dd4bd16e2ddf8b4a"},
-		{URL: "http://www.kicktipp.de/apple-touch-icon-precomposed.png", Width: 57, Height: 57, Format: "png", Bytes: 1622, Sha1sum: "fd4306aefd9ed2b4983697ca56301d8810a03987"},
-		{URL: "http://www.kicktipp.de/apple-touch-icon.png", Width: 57, Height: 57, Format: "png", Bytes: 1622, Sha1sum: "fd4306aefd9ed2b4983697ca56301d8810a03987"},
-		{URL: "http://www.kicktipp.de/favicon.ico", Width: 32, Height: 32, Format: "gif", Bytes: 35275, Sha1sum: "09297d0ffe17149c3d4d4a3a3a8c7e8c51932d58"},
-		{URL: "http://info.kicktipp.de/assets/img/jar_cb1652512069/assets/img/logos/favicon.png", Width: 16, Height: 16, Format: "png", Bytes: 1820, Sha1sum: "04b49fac810828f6723cd763600af23f0edbde03"},
-	}
-	assertEquals(t, expectedImages, actualImages)
 
 	actualImage := finder.IconInSizeRange(SizeRange{20, 80, 500})
 	expectedImage := &Icon{URL: "http://info.kicktipp.de/assets/img/jar_cb333387130/assets/img/logos/apple-touch-icon-57x57-precomposed.png", Width: 57, Height: 57, Format: "png", Bytes: 1535, Sha1sum: "79aae9e0df7d52ed50ac47c1dd4bd16e2ddf8b4a"}
@@ -31,77 +23,16 @@ func TestKicktipp(t *testing.T) {
 }
 
 func TestDaringfireball(t *testing.T) {
-	actualImages, finder, err := fetchIconsWithVCR("daringfireball.net.vcr", "http://daringfireball.net")
+	_, finder, err := fetchIconsWithVCR2("http://daringfireball.net")
 	assertEquals(t, nil, err)
-
-	expectedImages := []Icon{
-		{URL: "http://daringfireball.net/graphics/apple-touch-icon.png", Width: 314, Height: 314, Format: "png", Bytes: 8642, Error: error(nil), Sha1sum: "f47cf7cf13ec1a74049d99d9f1565354b5b20317"},
-		{URL: "http://daringfireball.net/favicon.ico", Width: 32, Height: 32, Format: "ico", Bytes: 6518, Error: error(nil), Sha1sum: "c066c70aa1dd2b4347d3095592aac28b55e85d04"},
-		{URL: "http://daringfireball.net/graphics/favicon.ico?v=005", Width: 32, Height: 32, Format: "ico", Bytes: 6518, Error: error(nil), Sha1sum: "c066c70aa1dd2b4347d3095592aac28b55e85d04"},
-	}
-
-	assertEquals(t, expectedImages, actualImages)
 
 	actualImage := finder.IconInSizeRange(SizeRange{20, 80, 500})
 	expectedImage := &Icon{URL: "http://daringfireball.net/graphics/apple-touch-icon.png", Width: 314, Height: 314, Format: "png", Bytes: 8642, Error: error(nil), Sha1sum: "f47cf7cf13ec1a74049d99d9f1565354b5b20317"}
 	assertEquals(t, expectedImage, actualImage)
 }
 
-func TestAwsAmazonChangingBaseURL(t *testing.T) {
-	actualImages, _, err := fetchIconsWithVCR("aws.amazon.vcr", "http://aws.amazon.com")
-	assertEquals(t, nil, err)
-	expectedImages := []Icon{
-		{URL: "http://a0.awsstatic.com/main/images/site/touch-icon-ipad-144-precomposed.png", Width: 144, Height: 144, Format: "png", Bytes: 3944, Sha1sum: "225817df40ff11d083c282d08b49a5ed50fd0f2d"},
-		{URL: "http://a0.awsstatic.com/main/images/site/touch-icon-iphone-114-precomposed.png", Width: 114, Height: 114, Format: "png", Bytes: 3081, Sha1sum: "58aabb2a99fcb283710fd200c9feed69c015a29e"},
-		{URL: "http://a0.awsstatic.com/main/images/site/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 1150, Sha1sum: "a64f3616e3671b835f8b208b7339518d8b386a08"},
-		{URL: "http://aws.amazon.com/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 1150, Sha1sum: "a64f3616e3671b835f8b208b7339518d8b386a08"},
-	}
-
-	assertEquals(t, expectedImages, actualImages)
-}
-
-func TestNetflixWitCookieRedirects(t *testing.T) {
-	actualImages, _, err := fetchIconsWithVCR("netflix.vcr", "http://netflix.com")
-	assertEquals(t, nil, err)
-	expectedImages := []Icon{
-		{URL: "https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.png", Width: 64, Height: 64, Format: "png", Bytes: 1755, Sha1sum: "867e51e9b4a474c19da52d6454076c007a9d01f2"},
-		{URL: "https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.ico", Width: 64, Height: 64, Format: "ico", Bytes: 16958, Sha1sum: "931e18dfc6e7d950dc2f2bbdfe31e1ea720acf7c"},
-		{URL: "https://www.netflix.com/favicon.ico", Width: 64, Height: 64, Format: "ico", Bytes: 16958, Sha1sum: "931e18dfc6e7d950dc2f2bbdfe31e1ea720acf7c"},
-	}
-
-	assertEquals(t, expectedImages, actualImages)
-}
-
-func TestAolWithOnePixelGifs(t *testing.T) {
-	actualImages, _, err := fetchIconsWithVCR("aol.vcr", "http://aol.com")
-	assertEquals(t, nil, err)
-	expectedImages := []Icon{
-		{URL: "http://www.aol.com/favicon.ico", Width: 32, Height: 32, Format: "ico", Bytes: 7886, Error: error(nil), Sha1sum: "c474f8307362367be553b884878e221f25fcb80b"},
-		{URL: "http://www.aol.com/favicon.ico?v=2", Width: 32, Height: 32, Format: "ico", Bytes: 7886, Error: error(nil), Sha1sum: "c474f8307362367be553b884878e221f25fcb80b"},
-	}
-
-	assertEquals(t, expectedImages, actualImages)
-}
-
-func TestGithubWithIconHrefLinks(t *testing.T) {
-	actualImages, _, err := fetchIconsWithVCR("github.vcr", "http://github.com")
-	assertEquals(t, nil, err)
-	expectedImages := []Icon{
-		// later - for svg
-		// {URL: "https://assets-cdn.github.com/pinned-octocat.svg", Width: 9999, Height: 9999, Format: "svg", Bytes: 1009, Sha1sum: "5dec89dc9dbcebff4a2aeddb9426c7a8e237ca16"},
-		{URL: "https://github.com/apple-touch-icon-144.png", Width: 144, Height: 144, Format: "png", Bytes: 796, Sha1sum: "2626d8f64d5d3a76bd535151dfe84b62d3f3ee63"},
-		{URL: "https://github.com/apple-touch-icon.png", Width: 120, Height: 120, Format: "png", Bytes: 676, Sha1sum: "8eb0b1d3f0797c0fe94368f4ad9a2c9513541cd2"},
-		{URL: "https://github.com/apple-touch-icon-114.png", Width: 114, Height: 114, Format: "png", Bytes: 648, Sha1sum: "644982478322a731a6bd8fe7fad9afad8f4a3c4b"},
-		{URL: "https://github.com/apple-touch-icon-precomposed.png", Width: 57, Height: 57, Format: "png", Bytes: 705, Sha1sum: "f97e9954be83f93ce2a1a85c2d8f93e2235c887f"},
-		{URL: "https://assets-cdn.github.com/favicon.ico", Width: 32, Height: 32, Format: "ico", Bytes: 6518, Sha1sum: "4eda7c0f3a36181f483dd0a14efe9f58c8b29814"},
-		{URL: "https://github.com/favicon.ico", Width: 32, Height: 32, Format: "ico", Bytes: 6518, Sha1sum: "4eda7c0f3a36181f483dd0a14efe9f58c8b29814"},
-	}
-
-	assertEquals(t, expectedImages, actualImages)
-}
-
 func TestEat24WithBaseTag(t *testing.T) {
-	actualImages, finder, err := fetchIconsWithVCR("eat24.vcr", "http://eat24.com")
+	actualImages, finder, err := fetchIconsWithVCR2("http://eat24.com")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		// later - for svg
@@ -116,7 +47,7 @@ func TestEat24WithBaseTag(t *testing.T) {
 
 func TestCar2goWithRelativeURL(t *testing.T) {
 	// ../../assets/icon.ico
-	actualImages, finder, err := fetchIconsWithVCR("car2go.vcr", "http://car2go.com")
+	actualImages, finder, err := fetchIconsWithVCR2("http://car2go.com")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "https://www.car2go.com/media/assets/patterns/static/img/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 1150, Sha1sum: "860e9ef188675f4f0b7036c2d22e6497ea732282"},
@@ -128,7 +59,7 @@ func TestCar2goWithRelativeURL(t *testing.T) {
 }
 
 func TestAlibabaWithBaseTagWithoutScheme(t *testing.T) {
-	actualImages, _, err := fetchIconsWithVCR("alibaba.vcr", "http://alibaba.com")
+	actualImages, _, err := fetchIconsWithVCR2("http://alibaba.com")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "http://is.alicdn.com/simg/single/icon/favicon.ico", Width: 16, Height: 16, Format: "ico", Bytes: 1406, Sha1sum: "4ffbef9b6044c62cd6c8b1ee0913ba93e6e80072"},
@@ -139,7 +70,7 @@ func TestAlibabaWithBaseTagWithoutScheme(t *testing.T) {
 }
 
 func TestDnevnikWithCapitalizedIconTag(t *testing.T) {
-	actualImages, _, err := fetchIconsWithVCR("dnevnik.vcr", "http://www.dnevnik.bg")
+	actualImages, _, err := fetchIconsWithVCR2("http://www.dnevnik.bg")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "http://www.dnevnik.bg/images/layout/apple-touch-icon.png", Width: 180, Height: 180, Format: "png", Bytes: 1597, Sha1sum: "16af14e168879ac52f594c67b4298f76d768a5eb"},
@@ -151,7 +82,7 @@ func TestDnevnikWithCapitalizedIconTag(t *testing.T) {
 }
 
 func TestARDWithSortBySize(t *testing.T) {
-	actualImages, _, err := fetchIconsWithVCR("ard.vcr", "http://ard.de")
+	actualImages, _, err := fetchIconsWithVCR2("http://ard.de")
 	assertEquals(t, nil, err)
 	expectedImages := []Icon{
 		{URL: "http://www.ard.de/ARD-144.png", Width: 144, Height: 144, Format: "png", Bytes: 29228, Sha1sum: "a6be15435a80e9de7978d203a3f2723940ab6bda"},
@@ -164,14 +95,14 @@ func TestARDWithSortBySize(t *testing.T) {
 }
 
 func TestMortenmøllerWithIDNAHost(t *testing.T) {
-	actualImages, _, err := fetchIconsWithVCR("mortenmoller.vcr", "https://mortenmøller.dk")
+	actualImages, _, err := fetchIconsWithVCR2("https://mortenmøller.dk")
 	assertEquals(t, nil, err)
 	assertEquals(t, 13, len(actualImages))
 }
 
 func TestYoutubeWithDomainRewrite(t *testing.T) {
 	// This test can only work because with HostOnlyDomains accordingly
-	_, finder, err := fetchIconsWithVCR("youtube.vcr", "http://youtube.com/does-not-exist")
+	_, finder, err := fetchIconsWithVCR2("http://youtube.com/does-not-exist")
 	ico := finder.IconInSizeRange(SizeRange{0, 80, 200})
 	assertEquals(t, &Icon{URL: "https://s.ytimg.com/yts/img/favicon_96-vfldSA3ca.png", Width: 96, Height: 96, Format: "png", Bytes: 1510, Sha1sum: "7149bef987538d34e2ab6e069d08211d0a6e407d"}, ico)
 	assertEquals(t, nil, err)
@@ -179,7 +110,7 @@ func TestYoutubeWithDomainRewrite(t *testing.T) {
 
 func TestRandomOrg(t *testing.T) {
 	// https://github.com/mat/besticon/issues/28
-	_, finder, err := fetchIconsWithVCR("random.org.vcr", "https://random.org")
+	_, finder, err := fetchIconsWithVCR2("https://random.org")
 	assertEquals(t, nil, err)
 
 	actualImage := finder.IconInSizeRange(SizeRange{16, 32, 64})
@@ -188,7 +119,7 @@ func TestRandomOrg(t *testing.T) {
 }
 
 func TestArchiveOrgWithJpg(t *testing.T) {
-	actualImages, _, err := fetchIconsWithVCR("archive.org.vcr", "https://archive.org")
+	actualImages, _, err := fetchIconsWithVCR2("https://archive.org")
 	assertEquals(t, nil, err)
 
 	expectedImages := []Icon{
@@ -201,7 +132,7 @@ func TestArchiveOrgWithJpg(t *testing.T) {
 }
 
 func TestGoogleapisWithBadHttpResponse(t *testing.T) {
-	actualImages, _, err := fetchIconsWithVCR("storage.googleapis.com.vcr", "https://storage.googleapis.com")
+	actualImages, _, err := fetchIconsWithVCR2("https://storage.googleapis.com")
 	assertEquals(t, nil, err)
 
 	expectedImages := []Icon{
@@ -217,7 +148,7 @@ func TestMainColorForIconsWithBrokenImageData(t *testing.T) {
 }
 
 func TestFindBestIconNoIcons(t *testing.T) {
-	icons, _, _ := fetchIconsWithVCR("example.com.vcr", "http://example.com")
+	icons, _, _ := fetchIconsWithVCR2("http://example.com")
 	assertEquals(t, 0, len(icons))
 }
 
@@ -332,6 +263,25 @@ func fetchIconsWithVCR(vcrFile string, url string) ([]Icon, *IconFinder, error) 
 	finder.HostOnlyDomains = []string{"youtube.com"}
 	icons, e := finder.FetchIcons(url)
 	return icons, &finder, e
+}
+
+func fetchIconsWithVCR2(s string) ([]Icon, *IconFinder, error) {
+	URL, _ := url.Parse(s)
+	path := fmt.Sprintf("%s%s.vcr", testdataDir, URL.Host)
+
+	// build client
+	client, f, err := vcr.Client(path)
+	if err != nil {
+		return nil, nil, err
+	}
+	defer f.Close()
+	setHTTPClient(client)
+
+	// fetch
+	finder := IconFinder{}
+	finder.HostOnlyDomains = []string{"youtube.com"}
+	icons, err := finder.FetchIcons(s)
+	return icons, &finder, err
 }
 
 func getImageWidthForFile(filename string) int {
