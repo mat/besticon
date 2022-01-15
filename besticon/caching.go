@@ -10,8 +10,6 @@ import (
 	"github.com/golang/groupcache"
 )
 
-var iconCache *groupcache.Group
-
 const contextKeySiteURL = "siteURL"
 
 type result struct {
@@ -19,17 +17,17 @@ type result struct {
 	Error string
 }
 
-func resultFromCache(siteURL string) ([]Icon, error) {
-	if iconCache == nil {
-		return fetchIcons(siteURL)
+func (b *Besticon) resultFromCache(siteURL string) ([]Icon, error) {
+	if b.iconCache == nil {
+		return b.fetchIcons(siteURL)
 	}
 
 	c := context.WithValue(context.Background(), contextKeySiteURL, siteURL)
 	var data []byte
-	err := iconCache.Get(c, cacheKey(siteURL), groupcache.AllocatingByteSliceSink(&data))
+	err := b.iconCache.Get(c, cacheKey(siteURL), groupcache.AllocatingByteSliceSink(&data))
 	if err != nil {
-		logger.Println("ERR:", err)
-		return fetchIcons(siteURL)
+		b.logger.LogError(fmt.Errorf("failed to get icon from cache: %w", err))
+		return b.fetchIcons(siteURL)
 	}
 
 	res := &result{}
@@ -50,9 +48,9 @@ func cacheKey(siteURL string) string {
 	return fmt.Sprintf("%d-%02d-%02d-%s", now.Year(), now.Month(), now.Day(), siteURL)
 }
 
-	func generatorFunc(ctx context.Context, key string, sink groupcache.Sink) error {
+func (b *Besticon) generatorFunc(ctx context.Context, key string, sink groupcache.Sink) error {
 	siteURL := ctx.Value(contextKeySiteURL).(string)
-	icons, err := fetchIcons(siteURL)
+	icons, err := b.fetchIcons(siteURL)
 	if err != nil {
 		// Don't cache errors
 		return err
@@ -71,20 +69,25 @@ func cacheKey(siteURL string) string {
 	return nil
 }
 
-func CacheEnabled() bool {
-	return iconCache != nil
+type cacheOption struct {
+	size int64
 }
 
-// SetCacheMaxSize enables icon caching if sizeInMB > 0.
-func SetCacheMaxSize(sizeInMB int64) {
-	if sizeInMB > 0 {
-		iconCache = groupcache.NewGroup("icons", sizeInMB<<20, groupcache.GetterFunc(generatorFunc))
-	} else {
-		iconCache = nil
+func (c *cacheOption) applyOption(b *Besticon) {
+	b.iconCache = groupcache.NewGroup("icons", c.size<<20, groupcache.GetterFunc(b.generatorFunc))
+}
+
+func WithCache(sizeInMB int64) Option {
+	return &cacheOption{
+		size: sizeInMB,
 	}
 }
 
+func (b *Besticon) CacheEnabled() bool {
+	return b.iconCache != nil
+}
+
 // GetCacheStats returns cache statistics.
-func GetCacheStats() groupcache.CacheStats {
-	return iconCache.CacheStats(groupcache.MainCache)
+func (b *Besticon) GetCacheStats() groupcache.CacheStats {
+	return b.iconCache.CacheStats(groupcache.MainCache)
 }

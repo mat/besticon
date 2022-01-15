@@ -16,19 +16,19 @@ type SizeRange struct {
 var errBadSize = errors.New("besticon: bad size")
 
 // ParseSizeRange parses a string like 60..100..200 into a SizeRange
-func ParseSizeRange(s string) (*SizeRange, error) {
+func ParseSizeRange(s string, maxIconSize int) (*SizeRange, error) {
 	parts := strings.SplitN(s, "..", 3)
 	switch len(parts) {
 	case 1:
-		size, ok := parseSize(parts[0])
+		size, ok := parseSize(parts[0], maxIconSize)
 		if !ok {
 			return nil, errBadSize
 		}
-		return &SizeRange{size, size, MaxIconSize}, nil
+		return &SizeRange{size, size, maxIconSize}, nil
 	case 3:
-		n1, ok1 := parseSize(parts[0])
-		n2, ok2 := parseSize(parts[1])
-		n3, ok3 := parseSize(parts[2])
+		n1, ok1 := parseSize(parts[0], maxIconSize)
+		n2, ok2 := parseSize(parts[1], maxIconSize)
+		n3, ok3 := parseSize(parts[2], maxIconSize)
 		if !ok1 || !ok2 || !ok3 {
 			return nil, errBadSize
 		}
@@ -41,10 +41,10 @@ func ParseSizeRange(s string) (*SizeRange, error) {
 	return nil, errBadSize
 }
 
-func parseSize(s string) (int, bool) {
-	minSize, err := strconv.Atoi(s)
-	if err != nil || minSize < MinIconSize || minSize > MaxIconSize {
+func parseSize(s string, maxIconSize int) (int, bool) {
+	size, err := strconv.Atoi(s)
+	if err != nil || size < 0 || size > maxIconSize {
 		return -1, false
 	}
-	return minSize, true
+	return size, true
 }

@@ -9,6 +9,7 @@ import (
 	"os"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/mat/besticon/besticon"
 )
@@ -20,7 +21,8 @@ func TestGetIndex(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	indexHandler(w, req)
+	s := newTestServer()
+	s.indexHandler(w, req)
 
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "text/html; charset=utf-8", w.Header().Get("Content-Type"))
@@ -35,7 +37,8 @@ func TestGetIcons(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	iconsHandler(w, req)
+	s := newTestServer()
+	s.iconsHandler(w, req)
 
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "max-age=2592000", w.Header().Get("Cache-Control"))
@@ -55,7 +58,8 @@ func TestGetIcon(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	iconHandler(w, req)
+	s := newTestServer()
+	s.iconHandler(w, req)
 
 	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "max-age=2592000", w.Header().Get("Cache-Control"))
@@ -70,7 +74,8 @@ func TestGetIconWithDownloadMode(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	iconHandler(w, req)
+	s := newTestServer()
+	s.iconHandler(w, req)
 
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "max-age=2592000", w.Header().Get("Cache-Control"))
@@ -90,7 +95,8 @@ func TestGetIconWithFallBackURL(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	iconHandler(w, req)
+	s := newTestServer()
+	s.iconHandler(w, req)
 
 	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "max-age=2592000", w.Header().Get("Cache-Control"))
@@ -104,7 +110,8 @@ func TestGetIconWith404Page(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	iconHandler(w, req)
+	s := newTestServer()
+	s.iconHandler(w, req)
 
 	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "/lettericons/H-32.png", w.Header().Get("Location"))
@@ -117,7 +124,8 @@ func TestGet404IconWithFallbackColor(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	iconHandler(w, req)
+	s := newTestServer()
+	s.iconHandler(w, req)
 
 	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "/lettericons/H-32-123456.png", w.Header().Get("Location"))
@@ -130,7 +138,8 @@ func TestGet404IconWithInvalidFallbackColor(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	iconHandler(w, req)
+	s := newTestServer()
+	s.iconHandler(w, req)
 
 	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "/lettericons/H-32.png", w.Header().Get("Location"))
@@ -143,7 +152,8 @@ func TestGetIconWithSVG(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	iconHandler(w, req)
+	s := newTestServer()
+	s.iconHandler(w, req)
 
 	assertStringEquals(t, "302", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "/lettericons/H.svg", w.Header().Get("Location"))
@@ -156,7 +166,8 @@ func TestGetAllIcons(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	alliconsHandler(w, req)
+	s := newTestServer()
+	s.alliconsHandler(w, req)
 
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "application/json", w.Header().Get("Content-Type"))
@@ -177,7 +188,8 @@ func TestGetPopular(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	popularHandler(w, req)
+	s := newTestServer()
+	s.popularHandler(w, req)
 
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "text/html; charset=utf-8", w.Header().Get("Content-Type"))
@@ -193,7 +205,8 @@ func TestGetLetterIconPNG(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	lettericonHandler(w, req)
+	s := newTestServer()
+	s.lettericonHandler(w, req)
 
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "image/png", w.Header().Get("Content-Type"))
@@ -208,7 +221,8 @@ func TestGetLetterIconSVG(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	lettericonHandler(w, req)
+	s := newTestServer()
+	s.lettericonHandler(w, req)
 
 	assertStringEquals(t, "200", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "image/svg+xml", w.Header().Get("Content-Type"))
@@ -223,7 +237,8 @@ func TestGetBadLetterIconPath(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	lettericonHandler(w, req)
+	s := newTestServer()
+	s.lettericonHandler(w, req)
 
 	assertStringEquals(t, "400", fmt.Sprintf("%d", w.Code))
 	assertStringContains(t, w.Body.String(), `wrong format for lettericons/ path`)
@@ -236,7 +251,8 @@ func TestGet404(t *testing.T) {
 	}
 
 	w := httptest.NewRecorder()
-	indexHandler(w, req)
+	s := newTestServer()
+	s.indexHandler(w, req)
 
 	assertStringEquals(t, "404", fmt.Sprintf("%d", w.Code))
 	assertStringEquals(t, "text/html; charset=utf-8", w.Header().Get("Content-Type"))
@@ -280,6 +296,10 @@ func fail(t *testing.T, failureMessage string) {
 		failureMessage)
 }
 
-func init() {
-	besticon.SetLogOutput(ioutil.Discard)
+func newTestServer() *server {
+	return &server{
+		maxIconSize:   500,
+		cacheDuration: 720 * time.Hour,
+		besticon:      besticon.New(besticon.WithLogger(besticon.NewDefaultLogger(ioutil.Discard))),
+	}
 }
