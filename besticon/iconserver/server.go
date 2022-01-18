@@ -269,7 +269,15 @@ func startServer(port string, address string) {
 	serveAsset("/favicon.ico", "favicon.ico", oneYear)
 	serveAsset("/apple-touch-icon.png", "apple-touch-icon.png", oneYear)
 
-	http.Handle("/metrics", promhttp.Handler())
+	metricsPath := getenvOrFallback("METRICS_PATH", "/metrics")
+
+	if metricsPath != "disable" {
+		if !strings.HasPrefix(metricsPath, "/") {
+			logger.Fatalf("METRICS_PATH must start with a slash")
+		}
+
+		http.Handle(metricsPath, promhttp.Handler())
+	}
 
 	addr := address + ":" + port
 	logger.Print("Starting server on ", addr, "...")
