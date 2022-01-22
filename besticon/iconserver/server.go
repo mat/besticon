@@ -8,8 +8,6 @@ import (
 	"html/template"
 	"io"
 	"net/http"
-	// Enable runtime profiling at /debug/pprof
-	_ "net/http/pprof"
 	"net/url"
 	"os"
 	"runtime"
