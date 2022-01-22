@@ -49,9 +49,6 @@ test_websites:
 minify_css:
 	curl -X POST -s --data-urlencode 'input@besticon/iconserver/assets/main.css' http://cssminifier.com/raw > besticon/iconserver/assets/main-min.css
 
-update_assets:
-	go-bindata -pkg assets -ignore assets.go -o besticon/iconserver/assets/assets.go besticon/iconserver/assets/
-
 gotags:
 	gotags -tag-relative=true -R=true -sort=true -f="tags" -fields=+l .
 

@@ -2,12 +2,11 @@
 # https://cloud.google.com/run/docs/quickstarts/build-and-deploy#containerizing
 
 # Use the offical Golang image to create a build artifact.
-# This is based on Debian and sets the GOPATH to /go.
 # https://hub.docker.com/_/golang
-FROM golang:1.16 as builder
+FROM golang:1.17 as builder
 
 # Copy local code to the container image.
-WORKDIR /go/src/github.com/mat/besticon
+WORKDIR /app
 COPY . .
 
 # Build the command inside the container.
@@ -17,10 +16,10 @@ RUN make build_linux_amd64
 
 # Use a Docker multi-stage build to create a lean production image.
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
-FROM alpine:3.14
+FROM alpine:3.15
 
 # Copy the binary to the production image from the builder stage.
-COPY --from=builder /go/src/github.com/mat/besticon/bin/linux_amd64/iconserver /iconserver
+COPY --from=builder /app/bin/linux_amd64/iconserver /iconserver
 
 ENV ADDRESS=''
 ENV CACHE_SIZE_MB=32
