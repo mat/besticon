@@ -254,20 +254,25 @@ func renderHTMLTemplate(w http.ResponseWriter, httpStatus int, templ *template.T
 }
 
 func startServer(port string, address string) {
-	registerHandler("/", indexHandler)
-	registerHandler("/icons", iconsHandler)
 	registerHandler("/icon", iconHandler)
-	registerHandler("/popular", popularHandler)
 	registerHandler("/allicons.json", alliconsHandler)
 	registerHandler("/lettericons/", lettericonHandler)
 
-	serveAsset("/pure-0.5.0-min.css", "pure-0.5.0-min.css", oneYear)
-	serveAsset("/grids-responsive-0.5.0-min.css", "grids-responsive-0.5.0-min.css", oneYear)
-	serveAsset("/main-min.css", "main-min.css", oneYear)
+	disableBrowsePages := getTrueFromEnv("DISABLE_BROWSE_PAGES")
 
-	serveAsset("/icon.svg", "icon.svg", oneYear)
-	serveAsset("/favicon.ico", "favicon.ico", oneYear)
-	serveAsset("/apple-touch-icon.png", "apple-touch-icon.png", oneYear)
+	if !disableBrowsePages {
+		registerHandler("/", indexHandler)
+		registerHandler("/icons", iconsHandler)
+		registerHandler("/popular", popularHandler)
+
+		serveAsset("/pure-0.5.0-min.css", "pure-0.5.0-min.css", oneYear)
+		serveAsset("/grids-responsive-0.5.0-min.css", "grids-responsive-0.5.0-min.css", oneYear)
+		serveAsset("/main-min.css", "main-min.css", oneYear)
+
+		serveAsset("/icon.svg", "icon.svg", oneYear)
+		serveAsset("/favicon.ico", "favicon.ico", oneYear)
+		serveAsset("/apple-touch-icon.png", "apple-touch-icon.png", oneYear)
+	}
 
 	metricsPath := getenvOrFallback("METRICS_PATH", "/metrics")
 
