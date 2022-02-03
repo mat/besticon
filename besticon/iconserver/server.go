@@ -8,8 +8,6 @@ import (
 	"html/template"
 	"io"
 	"net/http"
-	// Enable runtime profiling at /debug/pprof
-	_ "net/http/pprof"
 	"net/url"
 	"os"
 	"runtime"
@@ -296,20 +294,25 @@ func startServer(port string, address string) {
 		besticon: besticon.New(opts...),
 	}
 
-	registerHandler("/", s.indexHandler)
-	registerHandler("/icons", s.iconsHandler)
 	registerHandler("/icon", s.iconHandler)
-	registerHandler("/popular", s.popularHandler)
 	registerHandler("/allicons.json", s.alliconsHandler)
 	registerHandler("/lettericons/", s.lettericonHandler)
 
-	serveAsset("/pure-0.5.0-min.css", "pure-0.5.0-min.css", oneYear)
-	serveAsset("/grids-responsive-0.5.0-min.css", "grids-responsive-0.5.0-min.css", oneYear)
-	serveAsset("/main-min.css", "main-min.css", oneYear)
+	disableBrowsePages := getTrueFromEnv("DISABLE_BROWSE_PAGES")
 
-	serveAsset("/icon.svg", "icon.svg", oneYear)
-	serveAsset("/favicon.ico", "favicon.ico", oneYear)
-	serveAsset("/apple-touch-icon.png", "apple-touch-icon.png", oneYear)
+	if !disableBrowsePages {
+		registerHandler("/", s.indexHandler)
+		registerHandler("/icons", s.iconsHandler)
+		registerHandler("/popular", s.popularHandler)
+
+		serveAsset("/pure-0.5.0-min.css", "pure-0.5.0-min.css", oneYear)
+		serveAsset("/grids-responsive-0.5.0-min.css", "grids-responsive-0.5.0-min.css", oneYear)
+		serveAsset("/main-min.css", "main-min.css", oneYear)
+
+		serveAsset("/icon.svg", "icon.svg", oneYear)
+		serveAsset("/favicon.ico", "favicon.ico", oneYear)
+		serveAsset("/apple-touch-icon.png", "apple-touch-icon.png", oneYear)
+	}
 
 	metricsPath := getenvOrFallback("METRICS_PATH", "/metrics")
 
