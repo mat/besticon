@@ -220,60 +220,61 @@ func TestImageSizeDetection(t *testing.T) {
 func TestParseSizeRange(t *testing.T) {
 	// This single num behaviour ensures backwards compatibility for
 	// people who pant (at least) pixel perfect icons.
-	sizeRange, err := ParseSizeRange("120")
+	sizeRange, err := ParseSizeRange("120", 500)
 	check(err)
-	assertEquals(t, &SizeRange{120, 120, MaxIconSize}, sizeRange)
+	assertEquals(t, &SizeRange{120, 120, 500}, sizeRange)
 
-	sizeRange, err = ParseSizeRange("0..120..256")
+	sizeRange, err = ParseSizeRange("120", 512)
+	check(err)
+	assertEquals(t, &SizeRange{120, 120, 512}, sizeRange)
+
+	sizeRange, err = ParseSizeRange("0..120..256", 500)
 	check(err)
 	assertEquals(t, &SizeRange{0, 120, 256}, sizeRange)
 
-	sizeRange, err = ParseSizeRange("120..120..120")
+	sizeRange, err = ParseSizeRange("120..120..120", 500)
 	check(err)
 	assertEquals(t, &SizeRange{120, 120, 120}, sizeRange)
 
-	_, err = ParseSizeRange("")
+	sizeRange, err = ParseSizeRange("120..120..1000", 1024)
+	check(err)
+	assertEquals(t, &SizeRange{120, 120, 1000}, sizeRange)
+
+	_, err = ParseSizeRange("", 500)
 	assertEquals(t, errBadSize, err)
 
-	_, err = ParseSizeRange(" ")
+	_, err = ParseSizeRange(" ", 500)
 	assertEquals(t, errBadSize, err)
 
 	// Max < Perfect not allowed
-	_, err = ParseSizeRange("16..120..80")
+	_, err = ParseSizeRange("16..120..80", 500)
 	assertEquals(t, errBadSize, err)
 
 	// Perfect < Min  not allowed
-	_, err = ParseSizeRange("120..16..80")
+	_, err = ParseSizeRange("120..16..80", 500)
 	assertEquals(t, errBadSize, err)
 
 	// Min too small
-	_, err = ParseSizeRange("-1..2..3")
+	_, err = ParseSizeRange("-1..2..3", 500)
 	assertEquals(t, errBadSize, err)
 
 	// Max too big
-	_, err = ParseSizeRange("1..2..501")
+	_, err = ParseSizeRange("1..2..501", 500)
 	assertEquals(t, errBadSize, err)
 }
 
-func TestGetenvOrFallback(t *testing.T) {
-	os.Setenv("MY_ENV", "some-value")
-	assertEquals(t, "some-value", getenvOrFallback("MY_ENV", "fallback-should-NOT-be-used"))
-
-	os.Setenv("MY_ENV", "")
-	assertEquals(t, "fallback-should-be-used", getenvOrFallback("MY_ENV", "fallback-should-be-used"))
-
-	assertEquals(t, "fallback-should-be-used", getenvOrFallback("key-does-not-exist", "fallback-should-be-used"))
-}
-
 func TestParseSize(t *testing.T) {
-	size, ok := parseSize("120")
+	size, ok := parseSize("120", 500)
 	assertEquals(t, ok, true)
 	assertEquals(t, 120, size)
 
-	_, ok = parseSize("")
+	_, ok = parseSize("", 500)
 	assertEquals(t, ok, false)
 
-	_, ok = parseSize("-10")
+	_, ok = parseSize("-10", 500)
+	assertEquals(t, ok, false)
+
+	_, ok = parseSize("510", 500)
 	assertEquals(t, ok, false)
 }
 
@@ -322,13 +323,16 @@ func fetchIconsWithVCR(s string) ([]Icon, *IconFinder, error) {
 		return nil, nil, err
 	}
 	defer f.Close()
-	setHTTPClient(client)
+
+	client.Jar = mustInitCookieJar()
+
+	b := New(WithHTTPClient(client), WithDiscardImageBytes(true))
 
 	// fetch
-	finder := IconFinder{}
+	finder := b.NewIconFinder()
 	finder.HostOnlyDomains = []string{"youtube.com"}
 	icons, err := finder.FetchIcons(s)
-	return icons, &finder, err
+	return icons, finder, err
 }
 
 func getImageWidthForFile(filename string) int {
@@ -364,8 +368,4 @@ func fail(t *testing.T, failureMessage string) {
 	t.Errorf("\t%s\n"+
 		"\r\t",
 		failureMessage)
-}
-
-func init() {
-	keepImageBytes = false
 }

@@ -23,7 +23,15 @@ import (
 	"github.com/rs/cors"
 )
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
+type server struct {
+	maxIconSize     int
+	cacheDuration   time.Duration
+	hostOnlyDomains []string
+
+	besticon *besticon.Besticon
+}
+
+func (s *server) indexHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "" || r.URL.Path == "/" {
 		renderHTMLTemplate(w, 200, indexHTML, nil)
 	} else {
@@ -31,14 +39,14 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func iconsHandler(w http.ResponseWriter, r *http.Request) {
+func (s *server) iconsHandler(w http.ResponseWriter, r *http.Request) {
 	url := r.FormValue(urlParam)
 	if len(url) == 0 {
 		http.Redirect(w, r, "/", 302)
 		return
 	}
 
-	finder := newIconFinder()
+	finder := s.newIconFinder()
 
 	formats := r.FormValue("formats")
 	if formats != "" {
@@ -53,25 +61,25 @@ func iconsHandler(w http.ResponseWriter, r *http.Request) {
 		errNoIcons := errors.New("this poor site has no icons at all :-(")
 		renderHTMLTemplate(w, 404, iconsHTML, pageInfo{URL: url, Error: errNoIcons})
 	default:
-		addCacheControl(w, cacheDurationSeconds)
+		addCacheControl(w, s.cacheDuration)
 		renderHTMLTemplate(w, 200, iconsHTML, pageInfo{Icons: icons, URL: url})
 	}
 }
 
-func iconHandler(w http.ResponseWriter, r *http.Request) {
+func (s *server) iconHandler(w http.ResponseWriter, r *http.Request) {
 	url := r.FormValue("url")
 	if len(url) == 0 {
 		writeAPIError(w, 400, errors.New("need url parameter"))
 		return
 	}
 
-	sizeRange, err := besticon.ParseSizeRange(r.FormValue("size"))
+	sizeRange, err := besticon.ParseSizeRange(r.FormValue("size"), s.maxIconSize)
 	if err != nil {
 		writeAPIError(w, 400, errors.New("bad size parameter"))
 		return
 	}
 
-	finder := newIconFinder()
+	finder := s.newIconFinder()
 	formats := r.FormValue("formats")
 	if formats != "" {
 		finder.FormatsAllowed = strings.Split(r.FormValue("formats"), ",")
@@ -81,13 +89,13 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 
 	icon := finder.IconInSizeRange(*sizeRange)
 	if icon != nil {
-		returnIcon(w, r, icon.URL)
+		s.returnIcon(w, r, icon.URL)
 		return
 	}
 
 	fallbackIconURL := r.FormValue("fallback_icon_url")
 	if fallbackIconURL != "" {
-		returnIcon(w, r, fallbackIconURL)
+		s.returnIcon(w, r, fallbackIconURL)
 		return
 	}
 
@@ -108,12 +116,12 @@ func iconHandler(w http.ResponseWriter, r *http.Request) {
 		format = "svg"
 	}
 	redirectPath := lettericon.IconPath(letter, fmt.Sprintf("%d", sizeRange.Perfect), iconColor, format)
-	redirectWithCacheControl(w, r, redirectPath)
+	s.redirectWithCacheControl(w, r, redirectPath)
 }
 
-func popularHandler(w http.ResponseWriter, r *http.Request) {
+func (s *server) popularHandler(w http.ResponseWriter, r *http.Request) {
 	iconSize, err := strconv.Atoi(r.FormValue("iconsize"))
-	if iconSize > besticon.MaxIconSize || iconSize < besticon.MinIconSize || err != nil {
+	if iconSize > s.maxIconSize || iconSize < 0 || err != nil {
 		iconSize = 120
 	}
 
@@ -122,7 +130,7 @@ func popularHandler(w http.ResponseWriter, r *http.Request) {
 		IconSize    int
 		DisplaySize int
 	}{
-		besticon.PopularSites,
+		strings.Split(os.Getenv("POPULAR_SITES"), ","),
 		iconSize,
 		iconSize / 2,
 	}
@@ -133,7 +141,7 @@ const (
 	urlParam = "url"
 )
 
-func alliconsHandler(w http.ResponseWriter, r *http.Request) {
+func (s *server) alliconsHandler(w http.ResponseWriter, r *http.Request) {
 	url := r.FormValue(urlParam)
 	if len(url) == 0 {
 		errMissingURL := errors.New("need url query parameter")
@@ -141,7 +149,7 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	finder := newIconFinder()
+	finder := s.newIconFinder()
 	formats := r.FormValue("formats")
 	if formats != "" {
 		finder.FormatsAllowed = strings.Split(r.FormValue("formats"), ",")
@@ -153,16 +161,18 @@ func alliconsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	addCacheControl(w, cacheDurationSeconds)
+	addCacheControl(w, s.cacheDuration)
 	writeAPIIcons(w, url, icons)
 }
 
-func lettericonHandler(w http.ResponseWriter, r *http.Request) {
+func (s *server) lettericonHandler(w http.ResponseWriter, r *http.Request) {
 	charParam, col, size, format := lettericon.ParseIconPath(r.URL.Path)
 	if charParam == "" || col == nil || size <= 0 || format == "" {
 		writeAPIError(w, 400, errors.New("wrong format for lettericons/ path, must look like lettericons/M-144-EFC25D.png or M-EFC25D.svg"))
 		return
 	}
+
+	addCacheControl(w, oneYear)
 
 	if format == "svg" {
 		w.Header().Add(contentType, imageSVG)
@@ -171,7 +181,6 @@ func lettericonHandler(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add(contentType, imagePNG)
 		lettericon.RenderPNG(charParam, col, size, w)
 	}
-	addCacheControl(w, oneYear)
 }
 
 func writeAPIError(w http.ResponseWriter, httpStatus int, e error) {
@@ -252,16 +261,49 @@ func renderHTMLTemplate(w http.ResponseWriter, httpStatus int, templ *template.T
 }
 
 func startServer(port string, address string) {
-	registerHandler("/icon", iconHandler)
-	registerHandler("/allicons.json", alliconsHandler)
-	registerHandler("/lettericons/", lettericonHandler)
+	var opts []besticon.Option
+
+	cacheSize := os.Getenv("CACHE_SIZE_MB")
+	if cacheSize == "" {
+		opts = append(opts, besticon.WithCache(32))
+	} else {
+		n, _ := strconv.Atoi(cacheSize)
+		opts = append(opts, besticon.WithCache(int64(n)))
+	}
+
+	cacheDuration, err := time.ParseDuration(getenvOrFallback("HTTP_MAX_AGE_DURATION", "720h"))
+	if err != nil {
+		panic(err)
+	}
+
+	maxIconSize, err := strconv.Atoi(getenvOrFallback("MAX_ICON_SIZE", "500"))
+	if err != nil {
+		panic(err)
+	}
+
+	httpClient := besticon.NewDefaultHTTPClient()
+	httpClient.Transport = besticon.NewDefaultHTTPTransport(getenvOrFallback("HTTP_USER_AGENT", "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A5297c Safari/602.1"))
+
+	opts = append(opts, besticon.WithHTTPClient(httpClient))
+
+	s := &server{
+		maxIconSize:     maxIconSize,
+		cacheDuration:   cacheDuration,
+		hostOnlyDomains: strings.Split(os.Getenv("HOST_ONLY_DOMAINS"), ","),
+
+		besticon: besticon.New(opts...),
+	}
+
+	registerHandler("/icon", s.iconHandler)
+	registerHandler("/allicons.json", s.alliconsHandler)
+	registerHandler("/lettericons/", s.lettericonHandler)
 
 	disableBrowsePages := getTrueFromEnv("DISABLE_BROWSE_PAGES")
 
 	if !disableBrowsePages {
-		registerHandler("/", indexHandler)
-		registerHandler("/icons", iconsHandler)
-		registerHandler("/popular", popularHandler)
+		registerHandler("/", s.indexHandler)
+		registerHandler("/icons", s.iconsHandler)
+		registerHandler("/popular", s.popularHandler)
 
 		serveAsset("/pure-0.5.0-min.css", "pure-0.5.0-min.css", oneYear)
 		serveAsset("/grids-responsive-0.5.0-min.css", "grids-responsive-0.5.0-min.css", oneYear)
@@ -284,9 +326,9 @@ func startServer(port string, address string) {
 
 	addr := address + ":" + port
 	logger.Print("Starting server on ", addr, "...")
-	e := http.ListenAndServe(addr, httpHandler())
-	if e != nil {
-		logger.Fatalf("cannot start server: %s\n", e)
+	err = http.ListenAndServe(addr, httpHandler())
+	if err != nil {
+		logger.Fatalf("cannot start server: %s\n", err)
 	}
 }
 
@@ -313,42 +355,44 @@ func corsHandler(mux http.HandlerFunc) http.Handler {
 
 const (
 	cacheControl = "Cache-Control"
-	oneYear      = 365 * 24 * 3600
+	oneYear      = 365 * 24 * time.Hour
 )
 
-func returnIcon(w http.ResponseWriter, r *http.Request, iconURL string) {
+func (s *server) returnIcon(w http.ResponseWriter, r *http.Request, iconURL string) {
 	if os.Getenv("SERVER_MODE") == "download" {
-		downloadAndReturn(w, r, iconURL)
+		s.downloadAndReturn(w, r, iconURL)
 	} else {
-		redirectWithCacheControl(w, r, iconURL)
+		s.redirectWithCacheControl(w, r, iconURL)
 	}
 }
 
-func downloadAndReturn(w http.ResponseWriter, r *http.Request, iconURL string) {
-	response, e := besticon.Get(iconURL)
-	if e != nil {
-		redirectWithCacheControl(w, r, iconURL)
+func (s *server) downloadAndReturn(w http.ResponseWriter, r *http.Request, iconURL string) {
+	response, err := s.besticon.Get(iconURL)
+	if err != nil {
+		s.redirectWithCacheControl(w, r, iconURL)
+		return
 	}
 
-	b, e := besticon.GetBodyBytes(response)
-	if e != nil {
-		redirectWithCacheControl(w, r, iconURL)
+	b, err := s.besticon.GetBodyBytes(response)
+	if err != nil {
+		s.redirectWithCacheControl(w, r, iconURL)
+		return
 	}
 
-	addCacheControl(w, cacheDurationSeconds)
+	addCacheControl(w, s.cacheDuration)
 	w.Write(b)
 }
 
-func redirectWithCacheControl(w http.ResponseWriter, r *http.Request, redirectURL string) {
-	addCacheControl(w, cacheDurationSeconds)
+func (s *server) redirectWithCacheControl(w http.ResponseWriter, r *http.Request, redirectURL string) {
+	addCacheControl(w, s.cacheDuration)
 	http.Redirect(w, r, redirectURL, 302)
 }
 
-func addCacheControl(w http.ResponseWriter, maxAge int) {
-	w.Header().Add(cacheControl, fmt.Sprintf("max-age=%d", maxAge))
+func addCacheControl(w http.ResponseWriter, maxAge time.Duration) {
+	w.Header().Add(cacheControl, fmt.Sprintf("max-age=%d", int(maxAge.Seconds())))
 }
 
-func serveAsset(path string, assetPath string, maxAgeSeconds int) {
+func serveAsset(path string, assetPath string, maxAge time.Duration) {
 	registerHandler(path, func(w http.ResponseWriter, r *http.Request) {
 		f, err := assets.Assets.Open(assetPath)
 		if err != nil {
@@ -366,7 +410,7 @@ func serveAsset(path string, assetPath string, maxAgeSeconds int) {
 			panic(err)
 		}
 
-		addCacheControl(w, maxAgeSeconds)
+		addCacheControl(w, maxAge)
 
 		http.ServeContent(w, r, stat.Name(), stat.ModTime(), bytes.NewReader(data))
 	})
@@ -417,34 +461,13 @@ func imgWidth(i *besticon.Icon) int {
 	return i.Width / 2.0
 }
 
-func newIconFinder() *besticon.IconFinder {
-	finder := besticon.IconFinder{}
-	if len(hostOnlyDomains) > 0 {
-		finder.HostOnlyDomains = hostOnlyDomains
+func (s *server) newIconFinder() *besticon.IconFinder {
+	finder := s.besticon.NewIconFinder()
+	if len(s.hostOnlyDomains) > 0 {
+		finder.HostOnlyDomains = s.hostOnlyDomains
 	}
 
-	return &finder
-}
-
-var hostOnlyDomains []string
-var cacheDurationSeconds int
-
-func init() {
-	cacheSize := os.Getenv("CACHE_SIZE_MB")
-	if cacheSize == "" {
-		besticon.SetCacheMaxSize(32)
-	} else {
-		n, _ := strconv.Atoi(cacheSize)
-		besticon.SetCacheMaxSize(int64(n))
-	}
-
-	duration, e := time.ParseDuration(getenvOrFallback("HTTP_MAX_AGE_DURATION", "720h"))
-	if e != nil {
-		panic(e)
-	}
-	cacheDurationSeconds = (int)(duration.Seconds())
-
-	hostOnlyDomains = strings.Split(os.Getenv("HOST_ONLY_DOMAINS"), ",")
+	return finder
 }
 
 func getTrueFromEnv(s string) bool {

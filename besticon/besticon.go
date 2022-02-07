@@ -7,18 +7,14 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
+	"github.com/golang/groupcache"
 	"image"
-	"io"
+	"image/color"
 	"io/ioutil"
-	"log"
 	"net/http"
-	"net/http/cookiejar"
 	"net/url"
 	"os"
 	"strings"
-	"time"
-
-	"image/color"
 
 	// Load supported image formats.
 	_ "image/gif"
@@ -30,16 +26,45 @@ import (
 	"github.com/mat/besticon/colorfinder"
 
 	"golang.org/x/net/html/charset"
-	"golang.org/x/net/idna"
-	"golang.org/x/net/publicsuffix"
 )
 
-var defaultFormats []string
+// Besticon is the main interface to the besticon package.
+type Besticon struct {
+	httpClient *http.Client
+	iconCache  *groupcache.Group
+	logger     Logger
 
-const MinIconSize = 0
+	defaultFormats      []string
+	discardImageBytes   bool
+	maxResponseBodySize int64
+}
 
-// TODO: Turn into env var: https://github.com/rendomnet/besticon/commit/c85867cc80c00c898053ce8daf40d51a93b9d39f#diff-37b57e3fdbe4246771791e86deb4d69dL41
-const MaxIconSize = 500
+// New returns a new Besticon instance.
+func New(opts ...Option) *Besticon {
+	b := &Besticon{}
+
+	for _, opt := range opts {
+		opt.applyOption(b)
+	}
+
+	if len(b.defaultFormats) == 0 {
+		b.defaultFormats = []string{"gif", "ico", "jpg", "png"}
+	}
+
+	if b.maxResponseBodySize == 0 {
+		b.maxResponseBodySize = 10485760 // 10MB
+	}
+
+	if b.httpClient == nil {
+		b.httpClient = NewDefaultHTTPClient()
+	}
+
+	if b.logger == nil {
+		b.logger = NewDefaultLogger(os.Stdout)
+	}
+
+	return b
+}
 
 // Icon holds icon information.
 type Icon struct {
@@ -54,10 +79,17 @@ type Icon struct {
 }
 
 type IconFinder struct {
+	b *Besticon
+
 	FormatsAllowed  []string
 	HostOnlyDomains []string
-	KeepImageBytes  bool
 	icons           []Icon
+}
+
+func (b *Besticon) NewIconFinder() *IconFinder {
+	return &IconFinder{
+		b: b,
+	}
 }
 
 func (f *IconFinder) FetchIcons(url string) ([]Icon, error) {
@@ -70,10 +102,10 @@ func (f *IconFinder) FetchIcons(url string) ([]Icon, error) {
 
 	var err error
 
-	if CacheEnabled() {
-		f.icons, err = resultFromCache(url)
+	if f.b.CacheEnabled() {
+		f.icons, err = f.b.resultFromCache(url)
 	} else {
-		f.icons, err = fetchIcons(url)
+		f.icons, err = f.b.fetchIcons(url)
 	}
 
 	return f.Icons(), err
@@ -133,7 +165,7 @@ func (f *IconFinder) MainColorForIcons() *color.RGBA {
 }
 
 func (f *IconFinder) Icons() []Icon {
-	return discardUnwantedFormats(f.icons, f.FormatsAllowed)
+	return f.b.discardUnwantedFormats(f.icons, f.FormatsAllowed)
 }
 
 func (ico *Icon) Image() (*image.Image, error) {
@@ -141,8 +173,8 @@ func (ico *Icon) Image() (*image.Image, error) {
 	return &img, err
 }
 
-func discardUnwantedFormats(icons []Icon, wantedFormats []string) []Icon {
-	formats := defaultFormats
+func (b *Besticon) discardUnwantedFormats(icons []Icon, wantedFormats []string) []Icon {
+	formats := b.defaultFormats
 	if len(wantedFormats) > 0 {
 		formats = wantedFormats
 	}
@@ -173,10 +205,10 @@ func includesString(arr []string, str string) bool {
 	return false
 }
 
-func fetchIcons(siteURL string) ([]Icon, error) {
+func (b *Besticon) fetchIcons(siteURL string) ([]Icon, error) {
 	var links []string
 
-	html, urlAfterRedirect, e := fetchHTML(siteURL)
+	html, urlAfterRedirect, e := b.fetchHTML(siteURL)
 	if e == nil {
 		// Search HTML for icons
 		links, e = findIconLinks(urlAfterRedirect, html)
@@ -192,17 +224,15 @@ func fetchIcons(siteURL string) ([]Icon, error) {
 		}
 	}
 
-	icons := fetchAllIcons(links)
+	icons := b.fetchAllIcons(links)
 	icons = rejectBrokenIcons(icons)
 	sortIcons(icons, true)
 
 	return icons, nil
 }
 
-const maxResponseBodySize = 10485760 // 10MB
-
-func fetchHTML(url string) ([]byte, *url.URL, error) {
-	r, e := Get(url)
+func (b *Besticon) fetchHTML(url string) ([]byte, *url.URL, error) {
+	r, e := b.Get(url)
 	if e != nil {
 		return nil, nil, e
 	}
@@ -211,15 +241,15 @@ func fetchHTML(url string) ([]byte, *url.URL, error) {
 		return nil, nil, errors.New("besticon: not found")
 	}
 
-	b, e := GetBodyBytes(r)
+	body, e := b.GetBodyBytes(r)
 	if e != nil {
 		return nil, nil, e
 	}
-	if len(b) == 0 {
+	if len(body) == 0 {
 		return nil, nil, errors.New("besticon: empty response")
 	}
 
-	reader := bytes.NewReader(b)
+	reader := bytes.NewReader(body)
 	contentType := r.Header.Get("Content-Type")
 	utf8reader, e := charset.NewReader(reader, contentType)
 	if e != nil {
@@ -293,11 +323,11 @@ func defaultIconURLs(siteURL string) ([]string, error) {
 	return links, nil
 }
 
-func fetchAllIcons(urls []string) []Icon {
+func (b *Besticon) fetchAllIcons(urls []string) []Icon {
 	ch := make(chan Icon)
 
 	for _, u := range urls {
-		go func(u string) { ch <- fetchIconDetails(u) }(u)
+		go func(u string) { ch <- b.fetchIconDetails(u) }(u)
 	}
 
 	var icons []Icon
@@ -308,22 +338,22 @@ func fetchAllIcons(urls []string) []Icon {
 	return icons
 }
 
-func fetchIconDetails(url string) Icon {
+func (b *Besticon) fetchIconDetails(url string) Icon {
 	i := Icon{URL: url}
 
-	response, e := Get(url)
+	response, e := b.Get(url)
 	if e != nil {
 		i.Error = e
 		return i
 	}
 
-	b, e := GetBodyBytes(response)
+	body, e := b.GetBodyBytes(response)
 	if e != nil {
 		i.Error = e
 		return i
 	}
 
-	if isSVG(b) {
+	if isSVG(body) {
 		// Special handling for svg, which golang can't decode with
 		// image.DecodeConfig. Fill in an absurdly large width/height so SVG always
 		// wins size contests.
@@ -331,7 +361,7 @@ func fetchIconDetails(url string) Icon {
 		i.Width = 9999
 		i.Height = 9999
 	} else {
-		cfg, format, e := image.DecodeConfig(bytes.NewReader(b))
+		cfg, format, e := image.DecodeConfig(bytes.NewReader(body))
 		if e != nil {
 			i.Error = fmt.Errorf("besticon: unknown image format: %s", e)
 			return i
@@ -347,10 +377,10 @@ func fetchIconDetails(url string) Icon {
 		i.Format = format
 	}
 
-	i.Bytes = len(b)
-	i.Sha1sum = sha1Sum(b)
-	if keepImageBytes {
-		i.ImageData = b
+	i.Bytes = len(body)
+	i.Sha1sum = sha1Sum(body)
+	if !b.discardImageBytes {
+		i.ImageData = body
 	}
 
 	return i
@@ -380,87 +410,6 @@ func isSVG(body []byte) bool {
 	}
 
 	return true
-}
-
-func Get(urlstring string) (*http.Response, error) {
-	u, e := url.Parse(urlstring)
-	if e != nil {
-		return nil, e
-	}
-	// Maybe we can get rid of this conversion someday
-	// https://github.com/golang/go/issues/13835
-	u.Host, e = idna.ToASCII(u.Host)
-	if e != nil {
-		return nil, e
-	}
-
-	req, e := http.NewRequest("GET", u.String(), nil)
-	if e != nil {
-		return nil, e
-	}
-
-	setDefaultHeaders(req)
-
-	start := time.Now()
-	resp, err := client.Do(req)
-	end := time.Now()
-	duration := end.Sub(start)
-
-	if err != nil {
-		logger.Printf("Error: %s %s %s %.2fms",
-			req.Method,
-			req.URL,
-			err,
-			float64(duration)/float64(time.Millisecond),
-		)
-	} else {
-		logger.Printf("%s %s %d %.2fms %d",
-			req.Method,
-			req.URL,
-			resp.StatusCode,
-			float64(duration)/float64(time.Millisecond),
-			resp.ContentLength,
-		)
-	}
-
-	return resp, err
-}
-
-func GetBodyBytes(r *http.Response) ([]byte, error) {
-	limitReader := io.LimitReader(r.Body, maxResponseBodySize)
-	b, e := ioutil.ReadAll(limitReader)
-	r.Body.Close()
-
-	if len(b) >= maxResponseBodySize {
-		return nil, errors.New("body too large")
-	}
-	return b, e
-}
-
-func setDefaultHeaders(req *http.Request) {
-	req.Header.Set("Accept", "*/*")
-	req.Header.Set("User-Agent", getenvOrFallback("HTTP_USER_AGENT", "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A5297c Safari/602.1"))
-}
-
-func mustInitCookieJar() *cookiejar.Jar {
-	options := cookiejar.Options{
-		PublicSuffixList: publicsuffix.List,
-	}
-	jar, e := cookiejar.New(&options)
-	if e != nil {
-		panic(e)
-	}
-
-	return jar
-}
-
-func checkRedirect(req *http.Request, via []*http.Request) error {
-	setDefaultHeaders(req)
-
-	if len(via) >= 10 {
-		return errors.New("stopped after 10 redirects")
-	}
-	return nil
 }
 
 func absoluteURL(baseURL *url.URL, path string) (string, error) {
@@ -505,57 +454,6 @@ func sha1Sum(b []byte) string {
 	hash.Write(b)
 	bs := hash.Sum(nil)
 	return fmt.Sprintf("%x", bs)
-}
-
-var client *http.Client
-var keepImageBytes bool
-
-func init() {
-	duration, e := time.ParseDuration(getenvOrFallback("HTTP_CLIENT_TIMEOUT", "5s"))
-	if e != nil {
-		panic(e)
-	}
-	setHTTPClient(&http.Client{Timeout: duration})
-
-	// see
-	// https://github.com/mat/besticon/pull/52/commits/208e9dcbdbdeb7ef7491bb42f1bc449e87e084a2
-	// when we are ready to add support for the FORMATS env variable
-
-	defaultFormats = []string{"gif", "ico", "jpg", "png"}
-}
-
-func setHTTPClient(c *http.Client) {
-	c.Jar = mustInitCookieJar()
-	c.CheckRedirect = checkRedirect
-	client = c
-}
-
-var logger *log.Logger
-
-// SetLogOutput sets the output for the package's logger.
-func SetLogOutput(w io.Writer) {
-	logger = log.New(w, "http:  ", log.LstdFlags|log.Lmicroseconds)
-}
-
-func init() {
-	SetLogOutput(os.Stdout)
-	keepImageBytes = true
-}
-
-func getenvOrFallback(key string, fallbackValue string) string {
-	value := strings.TrimSpace(os.Getenv(key))
-	if len(value) != 0 {
-		return value
-	}
-	return fallbackValue
-}
-
-func getenvOrFallbackArray(key string, fallbackValue []string) []string {
-	value := strings.TrimSpace(os.Getenv(key))
-	if len(value) != 0 {
-		return strings.Split(value, ",")
-	}
-	return fallbackValue
 }
 
 var BuildDate string // set via ldflags on Make
