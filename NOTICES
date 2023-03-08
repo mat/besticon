@@ -1484,7 +1484,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/prometheus/client_golang/prometheus@v1.9.0
+github.com/prometheus/client_golang/prometheus@v1.11.1
 
 Apache License
                            Version 2.0, January 2004
@@ -1689,7 +1689,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/prometheus/client_golang/prometheus/internal@v1.9.0
+github.com/prometheus/client_golang/prometheus/internal@v1.11.1
 
 Apache License
                            Version 2.0, January 2004
@@ -1894,7 +1894,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/prometheus/client_golang/prometheus/promhttp@v1.9.0
+github.com/prometheus/client_golang/prometheus/promhttp@v1.11.1
 
 Apache License
                            Version 2.0, January 2004
@@ -2304,7 +2304,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/prometheus/common/expfmt@v0.18.0
+github.com/prometheus/common/expfmt@v0.26.0
 
 Apache License
                            Version 2.0, January 2004
@@ -2509,7 +2509,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg@v0.18.0
+github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg@v0.26.0
 
 Apache License
                            Version 2.0, January 2004
@@ -2714,7 +2714,7 @@ Apache License
    limitations under the License.
 
 *****
-github.com/prometheus/common/model@v0.18.0
+github.com/prometheus/common/model@v0.26.0
 
 Apache License
                            Version 2.0, January 2004
@@ -3567,7 +3567,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 *****
-golang.org/x/image/bmp@v0.0.0-20210220032944-ac19c3e999fb
+golang.org/x/image/bmp@v0.5.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3623,7 +3623,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/image/font@v0.0.0-20210220032944-ac19c3e999fb
+golang.org/x/image/font@v0.5.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3679,7 +3679,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/image/math/fixed@v0.0.0-20210220032944-ac19c3e999fb
+golang.org/x/image/math/fixed@v0.5.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3735,7 +3735,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/net/html@v0.0.0-20210226172049-e18ecbb05110
+golang.org/x/net/html@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3791,7 +3791,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/net/html/atom@v0.0.0-20210226172049-e18ecbb05110
+golang.org/x/net/html/atom@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3847,7 +3847,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/net/html/charset@v0.0.0-20210226172049-e18ecbb05110
+golang.org/x/net/html/charset@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3903,7 +3903,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/net/publicsuffix@v0.0.0-20210226172049-e18ecbb05110
+golang.org/x/net/publicsuffix@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3959,7 +3959,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/sys/internal/unsafeheader@v0.0.0-20210301091718-77cc2087c03b
+golang.org/x/sys/unix@v0.5.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4015,7 +4015,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/sys/unix@v0.0.0-20210301091718-77cc2087c03b
+golang.org/x/text/encoding@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4071,7 +4071,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding@v0.3.5
+golang.org/x/text/encoding/charmap@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4127,7 +4127,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/charmap@v0.3.5
+golang.org/x/text/encoding/htmlindex@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4183,7 +4183,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/htmlindex@v0.3.5
+golang.org/x/text/encoding/internal@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4239,7 +4239,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/internal@v0.3.5
+golang.org/x/text/encoding/internal/identifier@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4295,7 +4295,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/internal/identifier@v0.3.5
+golang.org/x/text/encoding/japanese@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4351,7 +4351,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/japanese@v0.3.5
+golang.org/x/text/encoding/korean@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4407,7 +4407,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/korean@v0.3.5
+golang.org/x/text/encoding/simplifiedchinese@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4463,7 +4463,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/simplifiedchinese@v0.3.5
+golang.org/x/text/encoding/traditionalchinese@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4519,7 +4519,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/traditionalchinese@v0.3.5
+golang.org/x/text/encoding/unicode@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4575,7 +4575,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/unicode@v0.3.5
+golang.org/x/text/internal/language@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4631,7 +4631,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/internal/language@v0.3.5
+golang.org/x/text/internal/language/compact@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4687,7 +4687,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/internal/language/compact@v0.3.5
+golang.org/x/text/internal/tag@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4743,7 +4743,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/internal/tag@v0.3.5
+golang.org/x/text/internal/utf8internal@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4799,7 +4799,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/internal/utf8internal@v0.3.5
+golang.org/x/text/language@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4855,7 +4855,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/language@v0.3.5
+golang.org/x/text/runes@v0.7.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4911,63 +4911,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/runes@v0.3.5
-
-Copyright (c) 2009 The Go Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-   * Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above
-copyright notice, this list of conditions and the following disclaimer
-in the documentation and/or other materials provided with the
-distribution.
-   * Neither the name of Google Inc. nor the names of its
-contributors may be used to endorse or promote products derived from
-this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
------
-
-Additional IP Rights Grant (Patents)
-
-"This implementation" means the copyrightable works distributed by
-Google as part of the Go project.
-
-Google hereby grants to You a perpetual, worldwide, non-exclusive,
-no-charge, royalty-free, irrevocable (except as stated in this section)
-patent license to make, have made, use, offer to sell, sell, import,
-transfer and otherwise run, modify and propagate the contents of this
-implementation of Go, where such license applies only to those patent
-claims, both currently owned or controlled by Google and acquired in
-the future, licensable by Google that are necessarily infringed by this
-implementation of Go.  This grant does not include claims that would be
-infringed only as a consequence of further modification of this
-implementation.  If you or your agent or exclusive licensee institute or
-order or agree to the institution of patent litigation against any
-entity (including a cross-claim or counterclaim in a lawsuit) alleging
-that this implementation of Go or any code incorporated within this
-implementation of Go constitutes direct or contributory patent
-infringement, or inducement of patent infringement, then any patent
-rights granted to you under this License for this implementation of Go
-shall terminate as of the date such litigation is filed.
-
-*****
-google.golang.org/protobuf/encoding/prototext@v1.25.0
+google.golang.org/protobuf/encoding/prototext@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5023,7 +4967,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/encoding/protowire@v1.25.0
+google.golang.org/protobuf/encoding/protowire@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5079,7 +5023,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/descfmt@v1.25.0
+google.golang.org/protobuf/internal/descfmt@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5135,7 +5079,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/descopts@v1.25.0
+google.golang.org/protobuf/internal/descopts@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5191,7 +5135,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/detrand@v1.25.0
+google.golang.org/protobuf/internal/detrand@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5247,7 +5191,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/encoding/defval@v1.25.0
+google.golang.org/protobuf/internal/encoding/defval@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5303,7 +5247,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/encoding/messageset@v1.25.0
+google.golang.org/protobuf/internal/encoding/messageset@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5359,7 +5303,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/encoding/tag@v1.25.0
+google.golang.org/protobuf/internal/encoding/tag@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5415,7 +5359,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/encoding/text@v1.25.0
+google.golang.org/protobuf/internal/encoding/text@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5471,7 +5415,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/errors@v1.25.0
+google.golang.org/protobuf/internal/errors@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5527,7 +5471,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/fieldsort@v1.25.0
+google.golang.org/protobuf/internal/filedesc@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5583,7 +5527,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/filedesc@v1.25.0
+google.golang.org/protobuf/internal/filetype@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5639,7 +5583,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/filetype@v1.25.0
+google.golang.org/protobuf/internal/flags@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5695,7 +5639,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/flags@v1.25.0
+google.golang.org/protobuf/internal/genid@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5751,7 +5695,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/genid@v1.25.0
+google.golang.org/protobuf/internal/impl@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5807,7 +5751,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/impl@v1.25.0
+google.golang.org/protobuf/internal/order@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5863,7 +5807,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/mapsort@v1.25.0
+google.golang.org/protobuf/internal/pragma@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5919,7 +5863,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/pragma@v1.25.0
+google.golang.org/protobuf/internal/set@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -5975,7 +5919,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/set@v1.25.0
+google.golang.org/protobuf/internal/strs@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -6031,7 +5975,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/strs@v1.25.0
+google.golang.org/protobuf/internal/version@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -6087,7 +6031,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/internal/version@v1.25.0
+google.golang.org/protobuf/proto@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -6143,7 +6087,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/proto@v1.25.0
+google.golang.org/protobuf/reflect/protoreflect@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -6199,7 +6143,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/reflect/protoreflect@v1.25.0
+google.golang.org/protobuf/reflect/protoregistry@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -6255,7 +6199,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/reflect/protoregistry@v1.25.0
+google.golang.org/protobuf/runtime/protoiface@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -6311,7 +6255,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/runtime/protoiface@v1.25.0
+google.golang.org/protobuf/runtime/protoimpl@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -6367,7 +6311,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/runtime/protoimpl@v1.25.0
+google.golang.org/protobuf/types/known/anypb@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -6423,7 +6367,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/types/known/anypb@v1.25.0
+google.golang.org/protobuf/types/known/durationpb@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
@@ -6479,63 +6423,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-google.golang.org/protobuf/types/known/durationpb@v1.25.0
-
-Copyright (c) 2018 The Go Authors. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-
-   * Redistributions of source code must retain the above copyright
-notice, this list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above
-copyright notice, this list of conditions and the following disclaimer
-in the documentation and/or other materials provided with the
-distribution.
-   * Neither the name of Google Inc. nor the names of its
-contributors may be used to endorse or promote products derived from
-this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
------
-
-Additional IP Rights Grant (Patents)
-
-"This implementation" means the copyrightable works distributed by
-Google as part of the Go project.
-
-Google hereby grants to You a perpetual, worldwide, non-exclusive,
-no-charge, royalty-free, irrevocable (except as stated in this section)
-patent license to make, have made, use, offer to sell, sell, import,
-transfer and otherwise run, modify and propagate the contents of this
-implementation of Go, where such license applies only to those patent
-claims, both currently owned or controlled by Google and acquired in
-the future, licensable by Google that are necessarily infringed by this
-implementation of Go.  This grant does not include claims that would be
-infringed only as a consequence of further modification of this
-implementation.  If you or your agent or exclusive licensee institute or
-order or agree to the institution of patent litigation against any
-entity (including a cross-claim or counterclaim in a lawsuit) alleging
-that this implementation of Go or any code incorporated within this
-implementation of Go constitutes direct or contributory patent
-infringement, or inducement of patent infringement, then any patent
-rights granted to you under this License for this implementation of Go
-shall terminate as of the date such litigation is filed.
-
-*****
-google.golang.org/protobuf/types/known/timestamppb@v1.25.0
+google.golang.org/protobuf/types/known/timestamppb@v1.26.0-rc.1
 
 Copyright (c) 2018 The Go Authors. All rights reserved.
 
