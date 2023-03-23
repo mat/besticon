@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+
+k update
+k deploy $DEPLOYMENT_TARGET

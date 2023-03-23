@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+DEPLOYMENT_TARGET=$(buildkite-agent meta-data get deployment-target)
+
+echo "
+steps:
+  - label: 🚀 Deploying to $DEPLOYMENT_TARGET
+    trigger: $BUILDKITE_PIPELINE_SLUG-deploy
+    async: true
+    build:
+      commit: $BUILDKITE_COMMIT
+      branch: $BUILDKITE_BRANCH
+      env:
+        DEPLOYMENT_TARGET: $DEPLOYMENT_TARGET
+" | buildkite-agent pipeline upload

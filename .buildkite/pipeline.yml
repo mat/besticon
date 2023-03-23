@@ -1,0 +1,27 @@
+steps:
+  - command: .buildkite/build-and-push-docker-image
+    key: docker_image
+    label: ":docker: Build and push docker image"
+
+  - wait
+
+  - label: 🚀 Deploy master branch to production
+    trigger: $BUILDKITE_PIPELINE_SLUG-deploy
+    async: true
+    branches: master
+    build:
+      commit: $BUILDKITE_COMMIT
+      branch: $BUILDKITE_BRANCH
+      env:
+        DEPLOYMENT_TARGET: besticon
+
+  - block: 🚀 Deploy this build...
+    fields:
+      - select: Select a server
+        key: deployment-target
+        default: besticon
+        options:
+          - value: besticon
+            label: besticon
+
+  - command: .buildkite/trigger-deploy

@@ -1,0 +1,5 @@
+steps:
+  - label: 🚀 Deploying to ${DEPLOYMENT_TARGET?}
+    command: .buildkite/deploy
+    concurrency: 1
+    concurrency_group: ${BUILDKITE_PIPELINE_SLUG?}_${DEPLOYMENT_TARGET}

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+echo "+++ Building and pushing application image"
+
+docker buildx build . \
+  --platform linux/amd64 \
+  -t europe-north1-docker.pkg.dev/kubernetes-367912/mynewsdesk/besticon:sha-$BUILDKITE_COMMIT \
+  --cache-from type=registry,ref=europe-north1-docker.pkg.dev/kubernetes-367912/mynewsdesk/besticon \
+  --cache-to type=registry,ref=europe-north1-docker.pkg.dev/kubernetes-367912/mynewsdesk/besticon \
+  --progress plain \
+  --push
