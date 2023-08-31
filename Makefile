@@ -90,8 +90,13 @@ docker_push_image_latest:
 docker_push_image_version:
 	docker push matthiasluedtke/iconserver:`cat VERSION`
 
+docker_release: docker_build_image docker_push_images_all
 
 ## New GitHub Release ##
+github_new_release: new_release_tag github_package
+	gh release create $(cat VERSION)
+	gh release upload $(cat VERSION) iconserver_*.zip
+
 github_package: clean build_all_platforms
 	zip -o -j iconserver_darwin-amd64 bin/darwin_amd64/* Readme.markdown LICENSE NOTICES
 	zip -o -j iconserver_linux_amd64 bin/linux_amd64/* Readme.markdown LICENSE NOTICES
@@ -100,7 +105,7 @@ github_package: clean build_all_platforms
 	file iconserver*.zip
 	ls -alht iconserver*.zip
 
-new_release: update_notices_file bump_version rewrite-version.go git_tag_version
+new_release_tag: update_notices_file bump_version rewrite-version.go git_tag_version
 
 bump_version:
 	vi VERSION
