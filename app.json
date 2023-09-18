@@ -56,10 +56,6 @@
 			"value": "bing.com,github.com,instagram.com,reddit.com",
 			"description": "Comma-separated list of domains used on /popular page"
 		},
-		"PORT": {
-			"value": "8080",
-			"description": "HTTP server port, defaults to 8080"
-		},
 		"SERVER_MODE": {
 			"value": "redirect",
 			"description": "Set to `download` to proxy downloads through besticon or `redirect` to let browser to download instead, defaults to redirect"
