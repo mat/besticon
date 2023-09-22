@@ -2,14 +2,16 @@ package besticon
 
 import (
 	"errors"
-	"golang.org/x/net/idna"
-	"golang.org/x/net/publicsuffix"
 	"io"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"net/http/cookiejar"
 	"net/url"
 	"time"
+
+	"golang.org/x/net/idna"
+	"golang.org/x/net/publicsuffix"
 )
 
 var _ http.RoundTripper = (*httpTransport)(nil)
@@ -53,6 +55,10 @@ func (b *Besticon) Get(urlstring string) (*http.Response, error) {
 		return nil, e
 	}
 
+	if isPrivateIP(u.Host) {
+		return nil, errors.New("private ip address disallowed")
+	}
+
 	req, e := http.NewRequest("GET", u.String(), nil)
 	if e != nil {
 		return nil, e
@@ -66,6 +72,14 @@ func (b *Besticon) Get(urlstring string) (*http.Response, error) {
 	b.logger.LogResponse(req, resp, duration, err)
 
 	return resp, err
+}
+
+func isPrivateIP(host string) bool {
+	ip := net.ParseIP(host)
+	if ip == nil {
+		return false
+	}
+	return ip.IsPrivate()
 }
 
 func (b *Besticon) GetBodyBytes(r *http.Response) ([]byte, error) {
