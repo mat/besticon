@@ -55,7 +55,12 @@ func (b *Besticon) Get(urlstring string) (*http.Response, error) {
 		return nil, e
 	}
 
-	if isPrivateIP(u.Host) {
+	ipAddr, e := net.ResolveIPAddr("ip", u.Host)
+	if e != nil {
+		return nil, e
+	}
+
+	if isPrivateIP(ipAddr) {
 		return nil, errors.New("private ip address disallowed")
 	}
 
@@ -74,12 +79,12 @@ func (b *Besticon) Get(urlstring string) (*http.Response, error) {
 	return resp, err
 }
 
-func isPrivateIP(host string) bool {
-	ip := net.ParseIP(host)
-	if ip == nil {
+func isPrivateIP(ipAddr *net.IPAddr) bool {
+	if ipAddr == nil {
 		return false
 	}
-	return ip.IsPrivate()
+
+	return ipAddr.IP.IsLoopback()
 }
 
 func (b *Besticon) GetBodyBytes(r *http.Response) ([]byte, error) {
