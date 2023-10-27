@@ -116,6 +116,8 @@ rewrite-version.go:
 git_tag_version:
 	git commit VERSION besticon/version.go -m "Release `cat VERSION`"
 	git tag `cat VERSION`
+	git push --tags
+	git push
 
 update_notices_file:
 	licensed cache
