@@ -84,7 +84,7 @@ func isPrivateIP(ipAddr *net.IPAddr) bool {
 		return false
 	}
 
-	return ipAddr.IP.IsLoopback()
+	return ipAddr.IP.IsLoopback() || ipAddr.IP.IsPrivate()
 }
 
 func (b *Besticon) GetBodyBytes(r *http.Response) ([]byte, error) {
