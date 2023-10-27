@@ -3735,7 +3735,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/net/html@v0.7.0
+golang.org/x/net/html@v0.17.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3791,7 +3791,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/net/html/atom@v0.7.0
+golang.org/x/net/html/atom@v0.17.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3847,7 +3847,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/net/html/charset@v0.7.0
+golang.org/x/net/html/charset@v0.17.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3903,7 +3903,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/net/publicsuffix@v0.7.0
+golang.org/x/net/publicsuffix@v0.17.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -3959,7 +3959,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/sys/unix@v0.5.0
+golang.org/x/sys/unix@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4015,7 +4015,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding@v0.7.0
+golang.org/x/text/encoding@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4071,7 +4071,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/charmap@v0.7.0
+golang.org/x/text/encoding/charmap@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4127,7 +4127,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/htmlindex@v0.7.0
+golang.org/x/text/encoding/htmlindex@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4183,7 +4183,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/internal@v0.7.0
+golang.org/x/text/encoding/internal@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4239,7 +4239,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/internal/identifier@v0.7.0
+golang.org/x/text/encoding/internal/identifier@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4295,7 +4295,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/japanese@v0.7.0
+golang.org/x/text/encoding/japanese@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4351,7 +4351,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/korean@v0.7.0
+golang.org/x/text/encoding/korean@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4407,7 +4407,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/simplifiedchinese@v0.7.0
+golang.org/x/text/encoding/simplifiedchinese@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4463,7 +4463,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/traditionalchinese@v0.7.0
+golang.org/x/text/encoding/traditionalchinese@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4519,7 +4519,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/encoding/unicode@v0.7.0
+golang.org/x/text/encoding/unicode@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4575,7 +4575,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/internal/language@v0.7.0
+golang.org/x/text/internal/language@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4631,7 +4631,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/internal/language/compact@v0.7.0
+golang.org/x/text/internal/language/compact@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4687,7 +4687,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/internal/tag@v0.7.0
+golang.org/x/text/internal/tag@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4743,7 +4743,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/internal/utf8internal@v0.7.0
+golang.org/x/text/internal/utf8internal@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4799,7 +4799,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/language@v0.7.0
+golang.org/x/text/language@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -4855,7 +4855,7 @@ rights granted to you under this License for this implementation of Go
 shall terminate as of the date such litigation is filed.
 
 *****
-golang.org/x/text/runes@v0.7.0
+golang.org/x/text/runes@v0.13.0
 
 Copyright (c) 2009 The Go Authors. All rights reserved.
 
