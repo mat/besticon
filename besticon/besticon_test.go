@@ -112,11 +112,11 @@ func TestFetchIcons(t *testing.T) {
 
 		// kicktipp.de
 		{"http://kicktipp.de", []testFetchIcon{
-			{"http://info.kicktipp.de/assets/img/jar_cb333387130/assets/img/logos/apple-touch-icon-57x57-precomposed.png", 57, "png"},
-			{"http://www.kicktipp.de/apple-touch-icon-precomposed.png", 57, "png"},
-			{"http://www.kicktipp.de/apple-touch-icon.png", 57, "png"},
-			{"http://www.kicktipp.de/favicon.ico", 32, "gif"},
-			{"http://info.kicktipp.de/assets/img/jar_cb1652512069/assets/img/logos/favicon.png", 16, "png"},
+			{"https://www.kicktipp.de/assets/apple-touch-icon.0879fba1.png", 180, "png"},
+			{"https://www.kicktipp.de/assets/favicon.5368f953.ico", 48, "ico"},
+			{"https://www.kicktipp.de/favicon.ico", 48, "ico"},
+			{"https://www.kicktipp.de/assets/favicon-32x32.cfcd6069.png", 32, "png"},
+			{"https://www.kicktipp.de/assets/favicon-16x16.932c575d.png", 16, "png"},
 		}},
 
 		// netflix - has cookie redirects
@@ -166,7 +166,7 @@ func TestIconInSizeRange(t *testing.T) {
 		{"http://car2go.com", SizeRange{80, 120, 200}, ""},
 		{"http://daringfireball.net", SizeRange{20, 80, 500}, "http://daringfireball.net/graphics/apple-touch-icon.png"},
 		{"http://eat24.com", SizeRange{120, 150, 500}, ""},
-		{"http://kicktipp.de", SizeRange{20, 80, 500}, "http://info.kicktipp.de/assets/img/jar_cb333387130/assets/img/logos/apple-touch-icon-57x57-precomposed.png"},
+		{"http://kicktipp.de", SizeRange{20, 80, 500}, "https://www.kicktipp.de/assets/apple-touch-icon.0879fba1.png"},
 
 		// https://github.com/mat/besticon/issues/28
 		{"https://random.org", SizeRange{16, 32, 64}, "https://www.random.org/favicon.ico"},
