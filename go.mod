@@ -10,7 +10,7 @@ require (
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e
 	github.com/prometheus/client_golang v1.11.1
 	github.com/rs/cors v1.7.0
-	golang.org/x/image v0.5.0
+	golang.org/x/image v0.10.0
 	golang.org/x/net v0.17.0
 )
 
