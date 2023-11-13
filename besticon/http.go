@@ -54,15 +54,15 @@ func (b *Besticon) Get(urlstring string) (*http.Response, error) {
 	if e != nil {
 		return nil, e
 	}
-
-	ipAddr, e := net.ResolveIPAddr("ip", u.Hostname())
-	if e != nil {
-		return nil, e
-	}
-
-	if isPrivateIP(ipAddr) {
-		return nil, errors.New("private ip address disallowed")
-	}
+	//
+	//ipAddr, e := net.ResolveIPAddr("ip", u.Hostname())
+	//if e != nil {
+	//	return nil, e
+	//}
+	//
+	//if isPrivateIP(ipAddr) {
+	//	return nil, errors.New("private ip address disallowed")
+	//}
 
 	req, e := http.NewRequest("GET", u.String(), nil)
 	if e != nil {
