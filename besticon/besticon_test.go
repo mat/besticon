@@ -315,7 +315,7 @@ const testdataDir = "testdata/"
 
 func fetchIconsWithVCR(s string) ([]Icon, *IconFinder, error) {
 	URL, _ := url.Parse(s)
-	path := fmt.Sprintf("%s%s.vcr", testdataDir, URL.Host)
+	path := fmt.Sprintf("%s%s.vcr", testdataDir, URL.Hostname())
 
 	// build client
 	client, f, err := vcr.Client(path)
