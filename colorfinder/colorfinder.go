@@ -21,7 +21,7 @@ import (
 	_ "image/jpeg"
 	_ "image/png"
 
-	_ "github.com/mat/besticon/ico"
+	_ "github.com/mat/besticon/v3/ico"
 )
 
 func main() {

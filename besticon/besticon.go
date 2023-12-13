@@ -7,7 +7,6 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
-	"github.com/golang/groupcache"
 	"image"
 	"image/color"
 	"io/ioutil"
@@ -16,14 +15,16 @@ import (
 	"os"
 	"strings"
 
+	"github.com/golang/groupcache"
+
 	// Load supported image formats.
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
 
-	_ "github.com/mat/besticon/ico"
+	_ "github.com/mat/besticon/v3/ico"
 
-	"github.com/mat/besticon/colorfinder"
+	"github.com/mat/besticon/v3/colorfinder"
 
 	"golang.org/x/net/html/charset"
 )

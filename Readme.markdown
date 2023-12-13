@@ -91,11 +91,11 @@ Binaries for some operating systems can be downloaded from <https://github.com/m
 
 If you have Go installed on your system you can use `go get` to fetch the source code and build the server:
 
-    $ go get -u github.com/mat/besticon/...
+    $ go get -u github.com/mat/besticon/v3
 
 If you want to build executables for a different target operating system you can add the `GOOS` and `GOARCH` environment variables:
 
-    $ GOOS=linux GOARCH=amd64 go get -u github.com/mat/besticon/...
+    $ GOOS=linux GOARCH=amd64 go get -u github.com/mat/besticon/v3
 
 ### Running
 
