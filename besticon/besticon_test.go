@@ -10,7 +10,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/mat/besticon/vcr"
+	"github.com/mat/besticon/v3/vcr"
 )
 
 //
