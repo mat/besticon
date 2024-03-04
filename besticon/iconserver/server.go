@@ -15,9 +15,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mat/besticon/besticon"
-	"github.com/mat/besticon/besticon/iconserver/assets"
-	"github.com/mat/besticon/lettericon"
+	"github.com/mat/besticon/v3/besticon"
+	"github.com/mat/besticon/v3/besticon/iconserver/assets"
+	"github.com/mat/besticon/v3/lettericon"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rs/cors"
