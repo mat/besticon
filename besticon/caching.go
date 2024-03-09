@@ -10,7 +10,9 @@ import (
 	"github.com/golang/groupcache"
 )
 
-const contextKeySiteURL = "siteURL"
+type SiteURLKey string
+
+const contextKeySiteURL SiteURLKey = "siteURL"
 
 type result struct {
 	Icons []Icon
