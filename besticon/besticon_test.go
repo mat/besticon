@@ -130,6 +130,13 @@ func TestFetchIcons(t *testing.T) {
 		{"https://storage.googleapis.com", []testFetchIcon{
 			{"https://storage.googleapis.com/favicon.ico", 32, "png"},
 		}},
+
+		// xing.com:443 - https with port
+		{"https://xing.com:443", []testFetchIcon{
+			{"https://www.xing.com/assets/frontend_minified/img/shared/xing_icon_apple.png", 129, "png"},
+			{"https://www.xing.com/assets/frontend_minified/img/shared/xing_r1.ico", 16, "ico"},
+			{"https://www.xing.com/favicon.ico", 16, "ico"},
+		}},
 	}
 
 	for _, test := range tests {

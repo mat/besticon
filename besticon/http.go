@@ -55,7 +55,7 @@ func (b *Besticon) Get(urlstring string) (*http.Response, error) {
 		return nil, e
 	}
 
-	ipAddr, e := net.ResolveIPAddr("ip", u.Host)
+	ipAddr, e := net.ResolveIPAddr("ip", u.Hostname())
 	if e != nil {
 		return nil, e
 	}
