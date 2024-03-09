@@ -1,8 +1,8 @@
 module github.com/mat/besticon/v3
 
-// +heroku goVersion go1.22
+// +heroku goVersion go1.22.1
 
-go 1.22
+go 1.22.1
 
 require (
 	github.com/PuerkitoBio/goquery v1.9.1
