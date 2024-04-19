@@ -11,7 +11,7 @@ require (
 	github.com/prometheus/client_golang v1.19.0
 	github.com/rs/cors v1.10.1
 	golang.org/x/image v0.15.0
-	golang.org/x/net v0.21.0
+	golang.org/x/net v0.23.0
 )
 
 require (
