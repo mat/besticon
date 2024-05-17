@@ -137,6 +137,14 @@ func TestFetchIcons(t *testing.T) {
 			{"https://www.xing.com/assets/frontend_minified/img/shared/xing_r1.ico", 16, "ico"},
 			{"https://www.xing.com/favicon.ico", 16, "ico"},
 		}},
+
+		// https://printables.com - <base href="/" - https://github.com/mat/besticon/pull/99
+		{"https://printables.com", []testFetchIcon{
+			{"https://www.printables.com/assets/favicons/apple-touch-icon.png", 180, "png"},
+			{"https://www.printables.com/favicon.ico", 48, "ico"},
+			{"https://www.printables.com/assets/favicons/favicon-32x32.png", 32, "png"},
+			{"https://www.printables.com/assets/favicons/favicon-16x16.png", 16, "png"},
+		}},
 	}
 
 	for _, test := range tests {
