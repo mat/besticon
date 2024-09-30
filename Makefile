@@ -1,7 +1,7 @@
 build:
 	go build ./...
 test_all: build test test_bench
-	go test -v github.com/mat/besticon/besticon/iconserver
+	go test -v github.com/mat/besticon/v3/besticon/iconserver
 
 test:
 	go test -v github.com/mat/besticon/v3/ico
