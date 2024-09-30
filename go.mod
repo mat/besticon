@@ -1,8 +1,8 @@
 module github.com/mat/besticon/v3
 
-// +heroku goVersion go1.22.3
+// +heroku goVersion go1.23.1
 
-go 1.22.3
+go 1.23.1
 
 require (
 	github.com/PuerkitoBio/goquery v1.9.1
@@ -19,6 +19,7 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/mat/besticon v3.12.0+incompatible // indirect
 	github.com/prometheus/client_model v0.6.0 // indirect
 	github.com/prometheus/common v0.49.0 // indirect
 	github.com/prometheus/procfs v0.12.0 // indirect
