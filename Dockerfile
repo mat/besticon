@@ -16,7 +16,7 @@ RUN make build_linux_amd64
 
 # Use a Docker multi-stage build to create a lean production image.
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
-FROM alpine:3.18
+FROM alpine:3.20
 
 # Copy the binary to the production image from the builder stage.
 COPY --from=builder /app/bin/linux_amd64/iconserver /iconserver
