@@ -87,12 +87,6 @@ func parseIcondirEntry(r io.Reader, e *icondirEntry) error {
 	return nil
 }
 
-type dibHeader struct {
-	dibHeaderSize uint32
-	width         uint32
-	height        uint32
-}
-
 func (e *icondirEntry) ColorCount() int {
 	if e.PaletteCount == 0 {
 		return 256

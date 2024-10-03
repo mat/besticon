@@ -88,7 +88,7 @@ func logResponse(w io.Writer, res *http.Response, body bool) {
 const recordSeparator string = "*************vcr*************\n"
 
 func logSeparator(w io.Writer) {
-	fmt.Fprintf(w, recordSeparator)
+	fmt.Fprint(w, recordSeparator)
 }
 
 var defaultTransport = &http.Transport{}
@@ -147,7 +147,7 @@ func NewReplayerTransport(reader io.Reader) (*replayerTransport, error) {
 	r := bufio.NewReader(bytes.NewReader(conversation))
 
 	i := 0
-	for true {
+	for {
 		i++
 		//		fmt.Printf("Reading Request %d\n", i)
 		req, err := http.ReadRequest(r)
@@ -173,7 +173,7 @@ func NewReplayerTransport(reader io.Reader) (*replayerTransport, error) {
 		}
 
 		bodyBytes := []byte{}
-		for true {
+		for {
 			line, err := r.ReadBytes('\n')
 			separatorReached := strings.HasSuffix(string(line), recordSeparator)
 			if separatorReached {

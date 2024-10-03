@@ -272,12 +272,6 @@ func assertStringEquals(t *testing.T, expected string, actual string) {
 	}
 }
 
-func assertIntegerEquals(t *testing.T, expected int, actual int) {
-	if expected != actual {
-		fail(t, fmt.Sprintf("Expected %d to be %d", actual, expected))
-	}
-}
-
 func assertIntegerInInterval(t *testing.T, lower int, upper int, actual int) {
 	if actual < lower || actual > upper {
 		fail(t, fmt.Sprintf("Expected %d to be in interval [%d,%d]", actual, lower, upper))

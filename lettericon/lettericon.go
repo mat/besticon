@@ -37,7 +37,7 @@ func RenderPNG(letter string, bgColor color.Color, width int, out io.Writer) err
 	fg := pickForegroundColor(bgColor)
 
 	rgba := image.NewRGBA(image.Rect(0, 0, width, width))
-	draw.Draw(rgba, rgba.Bounds(), &image.Uniform{bgColor}, image.ZP, draw.Src)
+	draw.Draw(rgba, rgba.Bounds(), &image.Uniform{bgColor}, image.Point{}, draw.Src)
 
 	fontSize := fontSizeFactor * float64(width)
 	d := &font.Drawer{

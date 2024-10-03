@@ -67,7 +67,7 @@ func assertCorrectPNGData(t *testing.T, letter string, width int, hexColor strin
 	}
 
 	// "A-144-123456.png"
-	testdataDir := fmt.Sprintf("testdata/")
+	testdataDir := "testdata/"
 	file := fmt.Sprintf(testdataDir+"%s-%d-%s.png", letter, width, hexColor)
 	fileData, err := bytesFromFile(file)
 	if err != nil {
@@ -88,7 +88,7 @@ func assertCorrectSVGData(t *testing.T, letter string, hexColor string) {
 	imageData := b.Bytes()
 
 	// "A-144-123456.png"
-	testdataDir := fmt.Sprintf("testdata/")
+	testdataDir := "testdata/"
 	file := fmt.Sprintf(testdataDir+"%s-%s.svg", letter, hexColor)
 	fileData, err := bytesFromFile(file)
 	if err != nil {
