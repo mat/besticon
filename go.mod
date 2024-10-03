@@ -1,7 +1,5 @@
 module github.com/mat/besticon/v3
 
-// +heroku goVersion go1.23.1
-
 go 1.23.1
 
 require (
