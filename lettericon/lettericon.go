@@ -165,15 +165,15 @@ func ColorFromHex(hex string) (*color.RGBA, error) {
 	}
 	hex = strings.TrimPrefix(hex, "#")
 
-	r, err := strconv.ParseInt(hex[0:2], 16, 16)
+	r, err := strconv.ParseUint(hex[0:2], 16, 8)
 	if err != nil {
 		return nil, errMalformedColorString
 	}
-	g, err := strconv.ParseInt(hex[2:4], 16, 16)
+	g, err := strconv.ParseUint(hex[2:4], 16, 8)
 	if err != nil {
 		return nil, errMalformedColorString
 	}
-	b, err := strconv.ParseInt(hex[4:6], 16, 16)
+	b, err := strconv.ParseUint(hex[4:6], 16, 8)
 	if err != nil {
 		return nil, errMalformedColorString
 	}
