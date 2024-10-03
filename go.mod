@@ -1,6 +1,6 @@
 module github.com/mat/besticon/v3
 
-go 1.23.1
+go 1.23
 
 require (
 	github.com/PuerkitoBio/goquery v1.10.0
