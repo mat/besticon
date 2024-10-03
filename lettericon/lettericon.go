@@ -156,7 +156,7 @@ func foo(col uint32) float64 {
 }
 
 var (
-	errMalformedColorString = errors.New("Malformed hex color string")
+	errMalformedColorString = errors.New("malformed hex color string")
 )
 
 func ColorFromHex(hex string) (*color.RGBA, error) {

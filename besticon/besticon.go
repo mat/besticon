@@ -7,14 +7,15 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
-	"github.com/golang/groupcache"
 	"image"
 	"image/color"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
+
+	"github.com/golang/groupcache"
 
 	// Load supported image formats.
 	_ "image/gif"
@@ -255,7 +256,7 @@ func (b *Besticon) fetchHTML(url string) ([]byte, *url.URL, error) {
 	if e != nil {
 		return nil, nil, e
 	}
-	utf8bytes, e := ioutil.ReadAll(utf8reader)
+	utf8bytes, e := io.ReadAll(utf8reader)
 	if e != nil {
 		return nil, nil, e
 	}

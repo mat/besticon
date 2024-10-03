@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"image"
 	"image/color"
-	"io/ioutil"
 	"net/url"
 	"os"
 	"reflect"
@@ -361,7 +360,7 @@ func getImageWidthForFile(filename string) int {
 }
 
 func mustReadFile(filename string) []byte {
-	bytes, e := ioutil.ReadFile(filename)
+	bytes, e := os.ReadFile(filename)
 	check(e)
 	return bytes
 }

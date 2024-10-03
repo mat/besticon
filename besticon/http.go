@@ -3,7 +3,6 @@ package besticon
 import (
 	"errors"
 	"io"
-	"io/ioutil"
 	"net"
 	"net/http"
 	"net/http/cookiejar"
@@ -89,7 +88,7 @@ func isPrivateIP(ipAddr *net.IPAddr) bool {
 
 func (b *Besticon) GetBodyBytes(r *http.Response) ([]byte, error) {
 	limitReader := io.LimitReader(r.Body, b.maxResponseBodySize)
-	data, e := ioutil.ReadAll(limitReader)
+	data, e := io.ReadAll(limitReader)
 	r.Body.Close()
 
 	if int64(len(data)) >= b.maxResponseBodySize {

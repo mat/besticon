@@ -4,7 +4,8 @@ import (
 	"bytes"
 	"fmt"
 	"image/color"
-	"io/ioutil"
+	"io"
+	"os"
 	"reflect"
 	"testing"
 )
@@ -114,7 +115,7 @@ func BenchmarkColorFromHex(b *testing.B) {
 }
 
 func bytesFromFile(file string) ([]byte, error) {
-	dat, err := ioutil.ReadFile(file)
+	dat, err := os.ReadFile(file)
 	if err != nil {
 		return nil, err
 	}
@@ -132,11 +133,11 @@ func renderPNGBytes(letter string, bgColor color.Color, width int) ([]byte, erro
 }
 
 func BenchmarkRenderPNG(b *testing.B) {
-	RenderPNG("X", DefaultBackgroundColor, 144, ioutil.Discard) // warmup
+	RenderPNG("X", DefaultBackgroundColor, 144, io.Discard) // warmup
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		RenderPNG("X", DefaultBackgroundColor, 144, ioutil.Discard)
+		RenderPNG("X", DefaultBackgroundColor, 144, io.Discard)
 	}
 }
 

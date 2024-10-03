@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -300,6 +300,6 @@ func newTestServer() *server {
 	return &server{
 		maxIconSize:   500,
 		cacheDuration: 720 * time.Hour,
-		besticon:      besticon.New(besticon.WithLogger(besticon.NewDefaultLogger(ioutil.Discard))),
+		besticon:      besticon.New(besticon.WithLogger(besticon.NewDefaultLogger(io.Discard))),
 	}
 }

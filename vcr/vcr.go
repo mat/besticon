@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/http/httputil"
 	"os"
@@ -77,11 +76,11 @@ func logResponse(w io.Writer, res *http.Response, body bool) {
 	var err error
 	if body {
 		defer res.Body.Close()
-		bodyBytes, err = ioutil.ReadAll(res.Body)
+		bodyBytes, err = io.ReadAll(res.Body)
 		if err != nil {
 			fmt.Printf("could not record response: %s", err)
 		}
-		res.Body = ioutil.NopCloser(bytes.NewReader(bodyBytes))
+		res.Body = io.NopCloser(bytes.NewReader(bodyBytes))
 	}
 	dumpResonse(w, res, bodyBytes)
 }
@@ -141,7 +140,7 @@ func NewReplayerTransport(reader io.Reader) (*replayerTransport, error) {
 	t := &replayerTransport{mutex: sync.Mutex{}}
 	t.mutex.Lock()
 	defer t.mutex.Unlock()
-	conversation, err := ioutil.ReadAll(reader)
+	conversation, err := io.ReadAll(reader)
 	if err != nil {
 		return nil, fmt.Errorf("vcr: failed to read vcr file: %s", err)
 	}
@@ -184,7 +183,7 @@ func NewReplayerTransport(reader io.Reader) (*replayerTransport, error) {
 
 			if err == io.EOF || separatorReached {
 				bodyReader := bytes.NewReader(bodyBytes)
-				res.Body = ioutil.NopCloser(bodyReader)
+				res.Body = io.NopCloser(bodyReader)
 				break
 			} else if err == nil {
 			} else {

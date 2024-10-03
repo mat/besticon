@@ -8,7 +8,6 @@ import (
 	"errors"
 	"image"
 	"io"
-	"io/ioutil"
 
 	"image/png"
 
@@ -169,7 +168,7 @@ var errInvalid = errors.New("ico: invalid ICO image")
 // Decode returns the largest image contained in the icon
 // which might be a bmp or png
 func Decode(r io.Reader) (image.Image, error) {
-	icoBytes, err := ioutil.ReadAll(r)
+	icoBytes, err := io.ReadAll(r)
 	if err != nil {
 		return nil, err
 	}

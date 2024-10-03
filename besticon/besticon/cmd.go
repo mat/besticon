@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 
 	"github.com/mat/besticon/v3/besticon"
@@ -20,7 +20,7 @@ func main() {
 
 	url := os.Args[len(os.Args)-1]
 
-	b := besticon.New(besticon.WithLogger(besticon.NewDefaultLogger(ioutil.Discard))) // Disable verbose logging
+	b := besticon.New(besticon.WithLogger(besticon.NewDefaultLogger(io.Discard))) // Disable verbose logging
 
 	finder := b.NewIconFinder()
 	icons, err := finder.FetchIcons(url)

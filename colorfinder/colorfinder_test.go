@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"image"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"reflect"
@@ -76,7 +75,7 @@ func TestFindColors11(t *testing.T) {
 func BenchmarkFindMainColor152x152(b *testing.B) {
 	file, _ := os.Open(testdataDir + "icon02.png.gz")
 	gzReader, _ := gzip.NewReader(file)
-	byts, _ := ioutil.ReadAll(gzReader)
+	byts, _ := io.ReadAll(gzReader)
 	imgReader := bytes.NewReader(byts)
 	img, _, err := image.Decode(imgReader)
 	if err != nil {
@@ -102,7 +101,7 @@ func BenchmarkFindMainColor152x152(b *testing.B) {
 func BenchmarkFindMainColor57x57(b *testing.B) {
 	file, _ := os.Open(testdataDir + "icon07.png.gz")
 	gzReader, _ := gzip.NewReader(file)
-	byts, _ := ioutil.ReadAll(gzReader)
+	byts, _ := io.ReadAll(gzReader)
 	imgReader := bytes.NewReader(byts)
 	img, _, err := image.Decode(imgReader)
 	if err != nil {
