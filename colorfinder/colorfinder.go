@@ -24,6 +24,7 @@ import (
 	_ "github.com/mat/besticon/v3/ico"
 )
 
+//lint:ignore U1000 unused main function
 func main() {
 	arg := os.Args[1]
 

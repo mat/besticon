@@ -142,7 +142,7 @@ type bitmapHeaderRead struct {
 type bitmapHeaderWrite struct {
 	sigBM           [2]byte
 	fileSize        uint32
-	resverved       [2]uint16
+	resverved       [2]uint16 //lint:ignore U1000 unused
 	pixOffset       uint32
 	Size            uint32
 	Width           uint32

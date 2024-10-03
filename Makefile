@@ -51,6 +51,9 @@ minify_css:
 gotags:
 	gotags -tag-relative=true -R=true -sort=true -f="tags" -fields=+l .
 
+staticcheck:
+	staticcheck ./...
+
 #
 ## Building ##
 #
