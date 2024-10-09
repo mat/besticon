@@ -59,9 +59,6 @@ func (b *Besticon) generatorFunc(ctx context.Context, key string, sink groupcach
 	}
 
 	res := result{Icons: icons}
-	if err != nil {
-		res.Error = err.Error()
-	}
 	bytes, err := json.Marshal(res)
 	if err != nil {
 		panic(err)
