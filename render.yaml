@@ -2,6 +2,7 @@ services:
   - type: web
     name: besticon
     runtime: go
+    repo: https://github.com/mat/besticon
     buildCommand: go build -tags netgo -ldflags '-s -w' -o bin/iconserver github.com/mat/besticon/v3/besticon/iconserver
     startCommand: ./bin/iconserver
     plan: free
