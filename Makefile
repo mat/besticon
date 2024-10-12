@@ -29,7 +29,7 @@ install:
 	go get ./...
 
 run_server:
-	go build -o bin/iconserver github.com/mat/besticon/v3/besticon/iconserver
+	go build -tags netgo -ldflags '-s -w' -o bin/iconserver github.com/mat/besticon/v3/besticon/iconserver
 	PORT=3000 DEPLOYED_AT=`date +%s` HOST_ONLY_DOMAINS=* POPULAR_SITES=bing.com,github.com,instagram.com,reddit.com ./bin/iconserver
 
 coverage_besticon:
@@ -63,16 +63,16 @@ clean:
 	rm -f iconserver*.zip
 
 build_darwin_amd64:
-	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/darwin_amd64/iconserver -ldflags "-X github.com/mat/besticon/v3/besticon.BuildDate=`date +'%Y-%m-%d'`" github.com/mat/besticon/v3/besticon/iconserver
+	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/darwin_amd64/iconserver -ldflags "-s -w -X github.com/mat/besticon/v3/besticon.BuildDate=`date +'%Y-%m-%d'`" github.com/mat/besticon/v3/besticon/iconserver
 
 build_linux_amd64:
-	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/linux_amd64/iconserver -ldflags "-X github.com/mat/besticon/v3/besticon.BuildDate=`date +'%Y-%m-%d'`" github.com/mat/besticon/v3/besticon/iconserver
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/linux_amd64/iconserver -ldflags "-s -w -X github.com/mat/besticon/v3/besticon.BuildDate=`date +'%Y-%m-%d'`" github.com/mat/besticon/v3/besticon/iconserver
 
 build_linux_arm64:
-	GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/linux_arm64/iconserver -ldflags "-X github.com/mat/besticon/v3/besticon.BuildDate=`date +'%Y-%m-%d'`" github.com/mat/besticon/v3/besticon/iconserver
+	GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/linux_arm64/iconserver -ldflags "-s -w -X github.com/mat/besticon/v3/besticon.BuildDate=`date +'%Y-%m-%d'`" github.com/mat/besticon/v3/besticon/iconserver
 
 build_windows_amd64:
-	GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/windows_amd64/iconserver.exe -ldflags "-X github.com/mat/besticon/v3/besticon.BuildDate=`date +'%Y-%m-%d'`" github.com/mat/besticon/v3/besticon/iconserver
+	GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -a -installsuffix cgo -o bin/windows_amd64/iconserver.exe -ldflags "-s -w -X github.com/mat/besticon/v3/besticon.BuildDate=`date +'%Y-%m-%d'`" github.com/mat/besticon/v3/besticon/iconserver
 
 build_all_platforms: build_darwin_amd64 build_linux_amd64 build_linux_arm64 build_windows_amd64
 	find bin/ -type file | xargs file
