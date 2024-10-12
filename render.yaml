@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: besticon
+    runtime: go
+    buildCommand: go build -tags netgo -ldflags '-s -w' -o bin/iconserver github.com/mat/besticon/v3/besticon/iconserver
+    startCommand: ./bin/iconserver
+    plan: free
+    envVars:
+      - key: POPULAR_SITES
+        value: "github.com,render.com,heroku.com"
+      - key: HOST_ONLY_DOMAINS
+        value: "*"
+      - key: CACHE_SIZE_MB
+        value: "32"
+      - key: SERVER_MODE
+        value: "redirect"
+    autoDeploy: true

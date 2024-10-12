@@ -68,6 +68,7 @@ Feel free to file other bugs - and offer your help - at <https://github.com/mat/
 
 Simple options to host this service are, for example:
 
+- Render: <https://render.com/deploy>
 - Heroku: <https://heroku.com/deploy>
 - Google Cloud Run: <https://deploy.cloud.run>
 
