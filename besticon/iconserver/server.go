@@ -297,6 +297,7 @@ func startServer(port string, address string) {
 	registerHandler("/icon", s.iconHandler)
 	registerHandler("/allicons.json", s.alliconsHandler)
 	registerHandler("/lettericons/", s.lettericonHandler)
+	registerHandler("/up", s.upHandler)
 
 	disableBrowsePages := getTrueFromEnv("DISABLE_BROWSE_PAGES")
 
@@ -418,6 +419,12 @@ func serveAsset(path string, assetPath string, maxAge time.Duration) {
 
 func registerHandler(path string, f http.HandlerFunc) {
 	http.Handle(path, newPrometheusHandler(path, f))
+}
+
+// /up is a simple health check endpoint (used by kamal deploy)
+func (s *server) upHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("OK"))
 }
 
 func main() {
