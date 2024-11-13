@@ -28,7 +28,7 @@ jobs:
             password: ${{ secrets.DOCKERHUB_TOKEN }}
 
         - name: Build Docker image
-          run: docker build --platform=linux/amd64 -t matthiasluedtke/besticon:latest .
+          run: docker build --platform=linux/amd64 -t matthiasluedtke/iconserver:latest .
 
         - name: Push Docker image
-          run: docker push matthiasluedtke/besticon:latest
+          run: docker push matthiasluedtke/iconserver:latest
