@@ -9,6 +9,7 @@ on:
 jobs:
     build:
         name: Build
+        environment: besticon-docker
         runs-on: ubuntu-latest
         steps:
         - name: Set up Go 1.x
