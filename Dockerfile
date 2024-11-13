@@ -9,17 +9,24 @@ FROM golang:1.23 as builder
 WORKDIR /app
 COPY . .
 
+# TARGETARCH is set only by the docker buildx command - or manually
+ARG TARGETARCH
+
 # Build the command inside the container.
 # (You may fetch or manage dependencies here,
 # either manually or with a tool like "godep".)
-RUN make build_linux_amd64
+RUN make build_linux_${TARGETARCH}
 
 # Use a Docker multi-stage build to create a lean production image.
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
 FROM alpine:3.20
 
+
+# Have to define TARGETARCH again for the second stage
+ARG TARGETARCH
+
 # Copy the binary to the production image from the builder stage.
-COPY --from=builder /app/bin/linux_amd64/iconserver /iconserver
+COPY --from=builder /app/bin/linux_${TARGETARCH}/iconserver /iconserver
 
 ENV ADDRESS=''
 ENV CACHE_SIZE_MB=32

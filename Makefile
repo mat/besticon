@@ -79,7 +79,7 @@ build_all_platforms: build_darwin_amd64 build_linux_amd64 build_linux_arm64 buil
 
 ## Docker ##
 docker_build_image:
-	docker build --platform=linux/amd64 -t matthiasluedtke/iconserver:latest -t matthiasluedtke/iconserver:`cat VERSION` .
+	docker build --platform=linux/amd64 --build-arg TARGETARCH=amd64 -t matthiasluedtke/iconserver:latest -t matthiasluedtke/iconserver:`cat VERSION` .
 
 docker_run:
 	docker run -p 3000:8080 --env-file docker_run.env matthiasluedtke/iconserver:latest
