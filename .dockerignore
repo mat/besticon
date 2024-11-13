@@ -1,0 +1,11 @@
+# Ignore all .log files
+*.log
+
+*.zip
+
+# Ignore specific directories
+config/
+
+
+# Ignore other files
+.DS_Store
