@@ -30,9 +30,14 @@ jobs:
         - name: Set up Docker Buildx
           uses: docker/setup-buildx-action@v3
 
+        - name: Read VERSION
+          id: version
+          run: echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
+
         - name: Build and Push Multi-Platform Docker image
           run: |
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
               -t matthiasluedtke/iconserver:latest \
+              -t matthiasluedtke/iconserver:${{ env.VERSION }} \
               --push .
