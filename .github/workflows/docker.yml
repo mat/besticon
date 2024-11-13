@@ -27,8 +27,12 @@ jobs:
             username: ${{ vars.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-        - name: Build Docker image
-          run: docker build --platform=linux/amd64 -t matthiasluedtke/iconserver:latest .
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v3
 
-        - name: Push Docker image
-          run: docker push matthiasluedtke/iconserver:latest
+        - name: Build and Push Multi-Platform Docker image
+          run: |
+            docker buildx build \
+              --platform linux/amd64,linux/arm64 \
+              -t matthiasluedtke/iconserver:latest \
+              --push .
