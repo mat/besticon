@@ -1,9 +1,12 @@
 # Adapted from
 # https://cloud.google.com/run/docs/quickstarts/build-and-deploy#containerizing
 
-# Use the offical Golang image to create a build artifact.
+# Use the official Golang image to create a build artifact.
 # https://hub.docker.com/_/golang
 FROM golang:1.23 as builder
+
+LABEL org.opencontainers.image.source="https://github.com/mat/besticon"
+LABEL org.opencontainers.image.licenses="MIT"
 
 # Copy local code to the container image.
 WORKDIR /app
@@ -43,6 +46,12 @@ ENV HTTP_USER_AGENT=''
 ENV POPULAR_SITES=bing.com,github.com,instagram.com,reddit.com
 ENV PORT=8080
 ENV SERVER_MODE=redirect
+
+ARG VERSION=''
+ARG REVISION=''
+
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.revision="${REVISION}"
 
 # Run the web service on container startup.
 CMD ["/iconserver"]
