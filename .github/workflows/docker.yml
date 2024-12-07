@@ -38,6 +38,8 @@ jobs:
           run: |
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
+              --build-arg VERSION="$VERSION" \
+              --build-arg REVISION="$GITHUB_SHA" \
               -t matthiasluedtke/iconserver:latest \
-              -t matthiasluedtke/iconserver:${{ env.VERSION }} \
+              -t "matthiasluedtke/iconserver:$VERSION" \
               --push .
