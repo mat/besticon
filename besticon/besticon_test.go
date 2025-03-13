@@ -106,7 +106,6 @@ func TestFetchIcons(t *testing.T) {
 			{"https://github.com/apple-touch-icon.png", 120, "png"},
 			{"https://github.com/apple-touch-icon-114.png", 114, "png"},
 			{"https://github.com/apple-touch-icon-precomposed.png", 57, "png"},
-			{"https://assets-cdn.github.com/favicon.ico", 32, "ico"},
 			{"https://github.com/favicon.ico", 32, "ico"},
 		}},
 
