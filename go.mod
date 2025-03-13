@@ -1,6 +1,9 @@
 module github.com/mat/besticon/v3
 
-go 1.23
+go 1.23.0
+
+toolchain go1.23.4
+
 require (
 	github.com/PuerkitoBio/goquery v1.10.0
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
