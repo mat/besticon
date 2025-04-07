@@ -5,9 +5,6 @@
 # https://hub.docker.com/_/golang
 FROM golang:1.23 as builder
 
-LABEL org.opencontainers.image.source="https://github.com/mat/besticon"
-LABEL org.opencontainers.image.licenses="MIT"
-
 # Copy local code to the container image.
 WORKDIR /app
 COPY . .
@@ -50,6 +47,8 @@ ENV SERVER_MODE=redirect
 ARG VERSION=''
 ARG REVISION=''
 
+LABEL org.opencontainers.image.source="https://github.com/mat/besticon"
+LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.version="${VERSION}"
 LABEL org.opencontainers.image.revision="${REVISION}"
 
