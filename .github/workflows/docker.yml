@@ -13,7 +13,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         - name: Set up Go 1.x
-          uses: actions/setup-go@v4
+          uses: actions/setup-go@v6
 
         - name: Check out code into the Go module directory
           uses: actions/checkout@v2
