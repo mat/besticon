@@ -3,7 +3,7 @@
 
 # Use the official Golang image to create a build artifact.
 # https://hub.docker.com/_/golang
-FROM golang:1.25 as builder
+FROM golang:1.26 as builder
 
 # Copy local code to the container image.
 WORKDIR /app
