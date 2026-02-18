@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"os"
 	"runtime"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -218,7 +219,7 @@ const (
 	imageSVG        = "image/svg+xml"
 )
 
-func renderJSONResponse(w http.ResponseWriter, httpStatus int, data interface{}) {
+func renderJSONResponse(w http.ResponseWriter, httpStatus int, data any) {
 	w.Header().Add(contentType, applicationJSON)
 	w.WriteHeader(httpStatus)
 	enc := json.NewEncoder(w)
@@ -248,7 +249,7 @@ func (pi pageInfo) Best() string {
 	return ""
 }
 
-func renderHTMLTemplate(w http.ResponseWriter, httpStatus int, templ *template.Template, data interface{}) {
+func renderHTMLTemplate(w http.ResponseWriter, httpStatus int, templ *template.Template, data any) {
 	w.Header().Add(contentType, "text/html; charset=utf-8")
 	w.WriteHeader(httpStatus)
 
@@ -498,10 +499,5 @@ func getenvOrFallback(key string, fallbackValue string) string {
 }
 
 func includesString(arr []string, str string) bool {
-	for _, e := range arr {
-		if e == str {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(arr, str)
 }

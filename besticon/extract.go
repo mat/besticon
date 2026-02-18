@@ -67,9 +67,9 @@ func findIconLinks(siteURL *url.URL, html []byte) ([]string, error) {
 func determineBaseURL(siteURL *url.URL, doc *goquery.Document) *url.URL {
 	baseTagHref := extractBaseTag(doc)
 	if baseTagHref != "" {
-        if strings.HasPrefix(baseTagHref, "/") {
-            return siteURL.JoinPath(baseTagHref)
-        }
+		if strings.HasPrefix(baseTagHref, "/") {
+			return siteURL.JoinPath(baseTagHref)
+		}
 		baseTagURL, e := url.Parse(baseTagHref)
 		if e != nil {
 			return siteURL
@@ -126,7 +126,7 @@ func extractIconTag(s *goquery.Selection) string {
 	rel = strings.ToLower(rel)
 
 	var iconType string
-	for _, i := range strings.Fields(rel) {
+	for i := range strings.FieldsSeq(rel) {
 		if iconTypesRe.MatchString(i) {
 			iconType = i
 			break

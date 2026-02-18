@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"slices"
 	"strings"
 
 	"github.com/golang/groupcache"
@@ -198,12 +199,7 @@ func filterIcons(icons []Icon, pred iconPredicate) []Icon {
 }
 
 func includesString(arr []string, str string) bool {
-	for _, e := range arr {
-		if e == str {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(arr, str)
 }
 
 func (b *Besticon) fetchIcons(siteURL string) ([]Icon, error) {

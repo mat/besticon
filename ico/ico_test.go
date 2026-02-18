@@ -119,7 +119,7 @@ func mustParseIcoFile(t *testing.T, filename string) icondir {
 	return *dir
 }
 
-func assertEquals(t *testing.T, expected, actual interface{}) {
+func assertEquals(t *testing.T, expected, actual any) {
 	if !reflect.DeepEqual(expected, actual) {
 		fail(t, fmt.Sprintf("Not equal: %#v (expected)\n"+
 			"        != %#v (actual)", expected, actual))

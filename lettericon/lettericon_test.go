@@ -237,7 +237,7 @@ func assertColor(t *testing.T, hexColor string, expectedColor color.Color) {
 	assertEquals(t, expectedColor, actualColor)
 }
 
-func assertEquals(t *testing.T, expected, actual interface{}) {
+func assertEquals(t *testing.T, expected, actual any) {
 	if !reflect.DeepEqual(expected, actual) {
 		fail(t, fmt.Sprintf("Not equal: %v (expected)\n"+
 			"        != %v (actual)", expected, actual))
