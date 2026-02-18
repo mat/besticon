@@ -25,6 +25,9 @@ FROM alpine:3.23
 # Have to define TARGETARCH again for the second stage
 ARG TARGETARCH
 
+# Copy CA roots from the builder image so HTTPS certificate validation works.
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+
 # Copy the binary to the production image from the builder stage.
 COPY --from=builder /app/bin/linux_${TARGETARCH}/iconserver /iconserver
 
