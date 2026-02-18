@@ -19,7 +19,7 @@ RUN make build_linux_${TARGETARCH}
 
 # Use a Docker multi-stage build to create a lean production image.
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
-FROM alpine:3.22
+FROM alpine:3.23
 
 
 # Have to define TARGETARCH again for the second stage
