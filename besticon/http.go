@@ -39,6 +39,16 @@ func NewDefaultHTTPClient() *http.Client {
 		Timeout:   5 * time.Second,
 		Jar:       mustInitCookieJar(),
 		Transport: NewDefaultHTTPTransport("Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A5297c Safari/602.1"),
+		// Re-validate the target of every redirect hop. Without this, the
+		// initial-host check in Get only covers the first request: a public
+		// host could 302 to a private/loopback/link-local address and the
+		// default redirect-following client would happily follow it.
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			if len(via) >= 10 {
+				return errors.New("stopped after 10 redirects")
+			}
+			return checkPublicHost(req.URL.Hostname())
+		},
 	}
 }
 
@@ -54,13 +64,8 @@ func (b *Besticon) Get(urlstring string) (*http.Response, error) {
 		return nil, e
 	}
 
-	ipAddr, e := net.ResolveIPAddr("ip", u.Hostname())
-	if e != nil {
+	if e := checkPublicHost(u.Hostname()); e != nil {
 		return nil, e
-	}
-
-	if isPrivateIP(ipAddr) {
-		return nil, errors.New("private ip address disallowed")
 	}
 
 	req, e := http.NewRequest("GET", u.String(), nil)
@@ -76,6 +81,21 @@ func (b *Besticon) Get(urlstring string) (*http.Response, error) {
 	b.logger.LogResponse(req, resp, duration, err)
 
 	return resp, err
+}
+
+// checkPublicHost resolves host and rejects it if it maps to a
+// loopback/private address. It is applied both to the initial URL and to the
+// target of every redirect hop so that an allowed public host cannot be used
+// to bounce a request onto an internal address.
+func checkPublicHost(host string) error {
+	ipAddr, e := net.ResolveIPAddr("ip", host)
+	if e != nil {
+		return e
+	}
+	if isPrivateIP(ipAddr) {
+		return errors.New("private ip address disallowed")
+	}
+	return nil
 }
 
 func isPrivateIP(ipAddr *net.IPAddr) bool {
