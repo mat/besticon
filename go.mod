@@ -8,7 +8,7 @@ require (
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8
 	github.com/prometheus/client_golang v1.23.2
 	github.com/rs/cors v1.11.1
-	golang.org/x/image v0.38.0
+	golang.org/x/image v0.41.0
 	golang.org/x/net v0.52.0
 )
 
@@ -24,6 +24,6 @@ require (
 	github.com/prometheus/procfs v0.20.1 // indirect
 	go.yaml.in/yaml/v2 v2.4.4 // indirect
 	golang.org/x/sys v0.42.0 // indirect
-	golang.org/x/text v0.35.0 // indirect
+	golang.org/x/text v0.37.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 )
