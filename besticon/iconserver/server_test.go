@@ -117,6 +117,24 @@ func TestGetIconWith404Page(t *testing.T) {
 	assertStringEquals(t, "/lettericons/H-32.png", w.Header().Get("Location"))
 }
 
+func TestGetIconWithLetterFallbackDisabled(t *testing.T) {
+	t.Setenv("DISABLE_LETTER_FALLBACK", "true")
+
+	req, err := http.NewRequest("GET", "/icons?size=32&url=httpbin.org/status/404", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := httptest.NewRecorder()
+	s := newTestServer()
+	s.iconHandler(w, req)
+
+	assertStringEquals(t, "204", fmt.Sprintf("%d", w.Code))
+	assertStringEquals(t, "max-age=2592000", w.Header().Get("Cache-Control"))
+	assertStringEquals(t, "", w.Header().Get("Location"))
+	assertStringEquals(t, "", w.Body.String())
+}
+
 func TestGet404IconWithFallbackColor(t *testing.T) {
 	req, err := http.NewRequest("GET", "/icons?size=32&url=httpbin.org/status/404&fallback_icon_color=123456", nil)
 	if err != nil {
