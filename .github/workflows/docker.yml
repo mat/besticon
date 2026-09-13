@@ -1,49 +1,41 @@
 # github action to Build and publish Docker image
 
 name: Docker
-
 on:
-    push:
-      branches: [ master ]
-      paths-ignore:
-        - Readme.markdown
-
+  push:
+    branches: [master]
+    paths-ignore:
+      - Readme.markdown
 jobs:
-    build:
-        name: Build
-        environment: besticon-docker
-        runs-on: ubuntu-latest
-        steps:
-        - name: Set up Go 1.x
-          uses: actions/setup-go@v6
-          with:
-            go-version: ^1.26
-
-        - name: Check out code into the Go module directory
-          uses: actions/checkout@v5
-
-        - name: Build
-          run: go get github.com/mat/besticon/...
-
-        - name: Login to Docker Hub
-          uses: docker/login-action@v3
-          with:
-            username: ${{ vars.DOCKERHUB_USERNAME }}
-            password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-        - name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v3
-
-        - name: Read VERSION
-          id: version
-          run: echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
-
-        - name: Build and Push Multi-Platform Docker image
-          run: |
-            docker buildx build \
-              --platform linux/amd64,linux/arm64 \
-              --build-arg VERSION="$VERSION" \
-              --build-arg REVISION="$GITHUB_SHA" \
-              -t matthiasluedtke/iconserver:latest \
-              -t "matthiasluedtke/iconserver:$VERSION" \
-              --push .
+  build:
+    name: Build
+    environment: besticon-docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.x
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6 [pinned by action-pin]
+        with:
+          go-version: ^1.26
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5 [pinned by action-pin]
+      - name: Build
+        run: go get github.com/mat/besticon/...
+      - name: Login to Docker Hub
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3 [pinned by action-pin]
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3 [pinned by action-pin]
+      - name: Read VERSION
+        id: version
+        run: echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
+      - name: Build and Push Multi-Platform Docker image
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            --build-arg VERSION="$VERSION" \
+            --build-arg REVISION="$GITHUB_SHA" \
+            -t matthiasluedtke/iconserver:latest \
+            -t "matthiasluedtke/iconserver:$VERSION" \
+            --push .
