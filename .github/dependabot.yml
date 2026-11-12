@@ -14,3 +14,9 @@ updates:
     groups:
       go-modules:
         patterns: ["*"]
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "semiannually"
+    allow:
+      - dependency-name: "alpine"
