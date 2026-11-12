@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"image/color"
+	"image/png"
 	"io"
 	"os"
 	"reflect"
@@ -75,8 +76,20 @@ func assertCorrectPNGData(t *testing.T, letter string, width int, hexColor strin
 		return
 	}
 
-	assertEquals(t, len(fileData), len(imageData))
-	assertEquals(t, fileData, imageData)
+	// Compare decoded pixels rather than raw bytes: the compressed PNG stream
+	// can change between Go releases (compress/flate), the image does not.
+	expected, err := png.Decode(bytes.NewReader(fileData))
+	if err != nil {
+		fail(t, fmt.Sprintf("could not decode icon file: %s", err))
+		return
+	}
+	actual, err := png.Decode(bytes.NewReader(imageData))
+	if err != nil {
+		fail(t, fmt.Sprintf("could not decode generated icon: %s", err))
+		return
+	}
+	assertEquals(t, expected.Bounds(), actual.Bounds())
+	assertEquals(t, expected, actual)
 }
 
 func assertCorrectSVGData(t *testing.T, letter string, hexColor string) {
