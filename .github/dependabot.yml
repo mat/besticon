@@ -7,3 +7,10 @@ updates:
     groups:
       github-actions:
         patterns: ["*"]
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "quarterly"
+    groups:
+      go-modules:
+        patterns: ["*"]
