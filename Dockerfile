@@ -21,6 +21,8 @@ RUN make build_linux_${TARGETARCH}
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
 FROM alpine:3.24
 
+# Pull in security fixes Alpine has published but not yet baked into the base image.
+RUN apk upgrade --no-cache
 
 # Have to define TARGETARCH again for the second stage
 ARG TARGETARCH
