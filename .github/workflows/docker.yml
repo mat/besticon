@@ -7,6 +7,10 @@ on:
       branches: [ master ]
       paths-ignore:
         - Readme.markdown
+    # Rebuild weekly so the image picks up Alpine/Go security patches.
+    schedule:
+      - cron: "0 4 * * 1"
+    workflow_dispatch:
 
 jobs:
     build:
@@ -40,10 +44,16 @@ jobs:
 
         - name: Build and Push Multi-Platform Docker image
           run: |
+            # Scheduled/manual rebuilds only refresh :latest; the version tag
+            # is pushed on master pushes only.
+            TAGS="-t matthiasluedtke/iconserver:latest"
+            if [ "$GITHUB_EVENT_NAME" = "push" ]; then
+              TAGS="$TAGS -t matthiasluedtke/iconserver:$VERSION"
+            fi
             docker buildx build \
+              --pull \
               --platform linux/amd64,linux/arm64 \
               --build-arg VERSION="$VERSION" \
               --build-arg REVISION="$GITHUB_SHA" \
-              -t matthiasluedtke/iconserver:latest \
-              -t "matthiasluedtke/iconserver:$VERSION" \
+              $TAGS \
               --push .
