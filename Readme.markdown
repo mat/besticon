@@ -68,8 +68,8 @@ Feel free to file other bugs - and offer your help - at <https://github.com/mat/
 Simple options to host this service are, for example:
 
 - Render: <https://render.com/deploy?repo=https://github.com/mat/besticon>
-- Heroku: <https://heroku.com/deploy>
-- Google Cloud Run: <https://deploy.cloud.run>
+- Heroku: <https://heroku.com/deploy?template=https://github.com/mat/besticon>
+- Google Cloud Run: <https://deploy.cloud.run/?git_repo=https://github.com/mat/besticon>
 
 ## Docker
 
