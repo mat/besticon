@@ -34,7 +34,7 @@ install:
 
 RUN_SERVER_PORT ?= 3000
 RUN_SERVER_SERVE_ASSETS_FROM_DISK ?= true
-DEMO_SITES ?= bing.com,github.com,instagram.com,reddit.com
+DEMO_SITES ?= bing.com,github.com,reddit.com
 
 run_server:
 	go build -tags netgo -ldflags '-s -w' -o bin/iconserver github.com/mat/besticon/v3/besticon/iconserver
